@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from './Constants/style.js'
+import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from '../Style/style.js'
 const Wrap = styled.footer`
   margin-top : 48px;
 `
