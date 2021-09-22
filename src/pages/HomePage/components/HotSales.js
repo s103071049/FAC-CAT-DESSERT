@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from './Constants/style.js'
+import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from '../../../components/Style/style.js'
 import cake from './Image/cake.jpg'
 import cake3 from './Image/cake3.jpg'
 import cake4 from './Image/cake4.jpg'

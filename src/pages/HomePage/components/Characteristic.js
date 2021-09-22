@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from './Constants/style.js'
+import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from '../../../components/Style/style.js'
 import cat1 from './Image/cat1.png'
 import cat2 from './Image/cat2.png'
 import cat3 from './Image/cat3.png'
