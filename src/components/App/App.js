@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import {
   HashRouter as Router,
   Switch,
@@ -11,7 +10,7 @@ import HomePage from "../../pages/HomePage"
 import ProductsPage from "../../pages/ProductsPage"
 
 const Root = styled.div`
-
+  
 `
 
 function App() {
@@ -25,6 +24,9 @@ function App() {
           </Route>
           <Route path="/products">
             <ProductsPage />
+          </Route>
+          <Route path="/product">
+            {/* <ProductPage /> */}
           </Route>
         </Switch>
         <Footer/>
