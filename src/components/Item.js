@@ -5,7 +5,7 @@ const Dessert = styled.div`
   display: flex;
   width: 20%;
   & + & {
-    margin-left: 2%;
+    margin-left: 4%;
   }
   flex-direction: column;
   ${MEDIA_QUERY_MD} {
