@@ -1,20 +1,19 @@
-// export default function ProductsPage() {
-//   return 456
-// }
-
 import styled from 'styled-components'
 import Banner from '../../components/Banner.js'
 import Item from '../../components/Item.js'
-//import HomeIcon from '../components/HomeIcon'
+import HomeIcon from '../../components/HomeIcon'
 import banner from '../../components/img/productsbanner.jpg'
+import { AiFillHome } from "react-icons/ai";
+import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from '../../components/Style/style.js'
+
 import cake from '../HomePage/components/Image/cake.jpg'
 import cake3 from '../HomePage/components/Image/cake3.jpg'
 import cake4 from '../HomePage/components/Image/cake4.jpg'
-import { AiFillHome } from "react-icons/ai";
 
 const Wrapper = styled.div`
   max-width: 1024px;
   margin: 0 auto;
+  
 `
 const Section = styled.div`
   display: flex;
@@ -31,6 +30,10 @@ const ProductsCategory = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
+  ${MEDIA_QUERY_SD} {
+    flex-direction: column;
+    justify-content: space-between;
+  }
 `
 
 const Category = styled.div`
@@ -39,16 +42,6 @@ const Category = styled.div`
   font-size: 16px;
   text-align: center;
 `
-
-const HomeIcon = ( {pageName} ) => {
-  const style = {
-    'justify-content':'center',
-    'padding':'12px'
-  }
-  return (
-    <div style={style}><AiFillHome /> {'>'} {pageName} </div>
-  );
-}
 
 const Title = ( {titleName} ) => {
   const style = {
