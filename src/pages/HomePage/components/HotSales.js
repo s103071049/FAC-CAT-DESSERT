@@ -15,12 +15,16 @@ const Section = styled.div`
 const Category = styled(Section)`
   flex-direction: column;
   align-items: center;
+  ${MEDIA_QUERY_MD} {
+    display: none;
+  }
 `
 const SectionTitle = styled.div`
   font-size: 24px;
   color: #64363c;
   font-weight: bold;
   padding: 5px 0;
+  text-align: center;
 `
 const SectionLine = styled.div`
   border: 1px solid #dac9a6;
@@ -30,11 +34,17 @@ const Dessert = styled.div`
   display: flex;
   width: 20%;
   & + & {
-    margin-left: 4%;
+    margin-left: 2%;
   }
   flex-direction: column;
   ${MEDIA_QUERY_MD} {
     width: 50%;
+    & + & {
+      margin-left: 0%;
+    }
+  }
+  ${MEDIA_QUERY_SD} {
+    width: 100%;
     & + & {
       margin-left: 0%;
     }
@@ -46,6 +56,13 @@ const DessertImg = styled.img`
   object-fit: cover;
   margin: 0 auto;
   border-radius: 8px;
+  cursor: pointer;
+  &: hover {
+    filter: brightness(110%);
+  }
+  ${MEDIA_QUERY_MD} {
+    border-radius: 0;
+  }
 `
 const DessertName = styled.div`
   text-align: center;
@@ -54,12 +71,12 @@ const DessertName = styled.div`
   color: #a96360;
 `
 const DessertPrice = styled.div`
+  margin-top: 4px;
   text-align: center;
   color: #a96360;
   margin-bottom: 8px;
 `
 const CartButton = styled.div`
-  width: 50%;
   margin: 0 auto;
   border: 2px solid #dac9a6;
   color: #dac9a6;
@@ -67,9 +84,7 @@ const CartButton = styled.div`
   border-radius: 6%;
   text-align: center;
   cursor: pointer;
-  &: hover {
-    background: #60373e;
-  }
+  transition: background 0.5s ease-out;
 `
 function HotSales() {
   return (
@@ -79,7 +94,7 @@ function HotSales() {
         <SectionLine/>
         <SectionTitle>主廚推薦</SectionTitle>
         <Section>
-          <Dessert>
+        <Dessert>
             <DessertImg src={cake}/>
             <DessertName>阿嬤的蘋果派</DessertName>
             <DessertPrice>NT$ 160</DessertPrice>

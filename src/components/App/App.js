@@ -10,7 +10,6 @@ import HomePage from "../../pages/HomePage"
 import ProductsPage from "../../pages/ProductsPage"
 
 const Root = styled.div`
-  
 `
 
 function App() {
