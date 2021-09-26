@@ -28,6 +28,10 @@ const Logo = styled.div`
   cursor: pointer;
   text-align: center;
   ${MEDIA_QUERY_MD} {
+    font-size: 40px;
+    padding: 0;
+  }
+  ${MEDIA_QUERY_SD} {
     font-size: 32px;
     padding: 0;
   }
