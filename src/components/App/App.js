@@ -8,6 +8,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import HomePage from "../../pages/HomePage"
 import ProductsPage from "../../pages/ProductsPage"
+import FaqPage from '../../pages/FaqPage/FaqPage';
 
 const Root = styled.div`
   
@@ -20,7 +21,7 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            <HomePage/>
+            <HomePage />
           </Route>
           <Route path="/products">
             <ProductsPage />
@@ -28,8 +29,11 @@ function App() {
           <Route path="/product">
             {/* <ProductPage /> */}
           </Route>
+          <Route path="/faq">
+            <FaqPage />
+          </Route>
         </Switch>
-        <Footer/>
+        <Footer />
       </Router>
     </Root>
   );
