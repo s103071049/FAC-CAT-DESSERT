@@ -8,15 +8,23 @@ import cake2 from "../../HomePage/components/Image/cake4.jpg"
 import cake3 from "../../HomePage/components/Image/cake3.jpg"
 import {Link} from "react-router-dom"
 
-function ProductsSectionTiTle({handletoggleSquares,handletoggleLists}) {
+function ProductsSectionTiTle({handletoggleSquares,handletoggleLists,section}) {
+  let IsLists = null
+  if(section==="lists"){
+    IsLists = "Lists"
+  }
+  let IsSuares = null
+  if(section==="sqares"){
+    IsSuares = "sqares"
+  }
   return(
     <ProductsSectionTiTleWapper>
       <ProductsSectionTiTleContent>所有甜點</ProductsSectionTiTleContent>
       <ProductsSectionTiTleInfo>
       <ProductsSectionTiTleInfoContent>共6個商品</ProductsSectionTiTleInfoContent>
       <TitleButtonWrapper>
-        <TitleButton onClick={handletoggleSquares}><Icon src={squares}/></TitleButton>
-        <TitleButton onClick={handletoggleLists}><Icon src={list}/></TitleButton>
+        <TitleSquaresButton onClick={handletoggleSquares} $section={IsSuares}><Icon src={squares}/></TitleSquaresButton>
+        <TitleListsButton onClick={handletoggleLists} $section={IsLists}><Icon src={list}/></TitleListsButton>
       </TitleButtonWrapper>
       </ProductsSectionTiTleInfo>
     </ProductsSectionTiTleWapper>
@@ -51,19 +59,22 @@ const TitleButtonWrapper = styled.div`
   border: 1px solid #E2E2E2;
   border-radius: 8px;
 `
-const TitleButton = styled.button`
+const TitleSquaresButton = styled.button`
 display: inline-flex;
 justify-content: center;
 align-items: center;
 width: 30px;
 height: 30px;
 border:none;
-background-color:#E2E2E2;
+background-color:${props=>props.$section?"#E2E2E2":"white"};
 border-radius: 8px 0 0 8px;
-&+&{
-  border-radius: 0 8px 8px 0;
-  background-color:white;
+&:hover {
+  background-color:#E2E2E2;
 }
+`
+const TitleListsButton= styled(TitleSquaresButton)`
+background-color:${props=>props.$section?"#E2E2E2":"white"};
+border-radius: 0 8px 8px 0;
 &:hover {
   background-color:#E2E2E2;
 }
@@ -77,62 +88,62 @@ const Icon = styled.img`
 function ProductsSectionSqaresContents() {
   return(
     <ProductsSectionContentsWrapper>
-      <ProductWapper>
-      <ProductImageWrapper>        
-        <Link to={"#"}>
-          <ProductImage src={cake1}/>
-        </Link>
-      </ProductImageWrapper>
+      <ProductWapper>    
+        <ProductImageWrapper>
+          <Link to={"#"}>
+            <ProductImage img={cake1}/>
+          </Link>
+        </ProductImageWrapper>
         <ProductName>阿嬤的蘋果派</ProductName>
         <ProductPrice>NT$ 160</ProductPrice>
         <ProductButton>加入購物車</ProductButton>
       </ProductWapper>
       <ProductWapper>
-      <ProductImageWrapper>
-        <Link to={"#"}>
-          <ProductImage src={cake2}/>
-        </Link>
-      </ProductImageWrapper>
+        <ProductImageWrapper>
+          <Link to={"#"}>
+            <ProductImage img={cake2}/>
+          </Link>
+        </ProductImageWrapper>
         <ProductName>我的梅果花園</ProductName>
         <ProductPrice>NT$ 180</ProductPrice>
         <ProductButton>加入購物車</ProductButton>
       </ProductWapper>
       <ProductWapper>
-      <ProductImageWrapper>
-        <Link to={"#"}>
-          <ProductImage src={cake3}/>
-        </Link>
-      </ProductImageWrapper>
+        <ProductImageWrapper>
+          <Link to={"#"}>
+            <ProductImage img={cake3}/>
+          </Link>
+        </ProductImageWrapper>
         <ProductName>藍莓珠寶盒</ProductName>
         <ProductPrice>NT$ 100</ProductPrice>
         <ProductButton>加入購物車</ProductButton>
       </ProductWapper>
       <ProductWapper>
-      <ProductImageWrapper>
-        <Link to={"#"}>
-          <ProductImage src={cake1}/>
-        </Link>
-      </ProductImageWrapper>
+        <ProductImageWrapper>
+          <Link to={"#"}>
+            <ProductImage img={cake1}/>
+          </Link>
+        </ProductImageWrapper>
         <ProductName>阿嬤的蘋果派</ProductName>
         <ProductPrice>NT$ 160</ProductPrice>
         <ProductButton>加入購物車</ProductButton>
       </ProductWapper>
       <ProductWapper>
-      <ProductImageWrapper>
-        <Link to={"#"}>
-          <ProductImage src={cake2}/>
-        </Link>
-      </ProductImageWrapper>
+        <ProductImageWrapper>
+          <Link to={"#"}>
+            <ProductImage img={cake2}/>
+          </Link>
+        </ProductImageWrapper>
         <ProductName>我的梅果花園</ProductName>
         <ProductPrice>NT$ 180</ProductPrice>
         <ProductButton>加入購物車</ProductButton>
       </ProductWapper>
       <ProductWapper>
-      <ProductImageWrapper>
-        <Link to={"#"}>
-          <ProductImage src={cake3}/>
-        </Link>
-      </ProductImageWrapper>
+        <ProductImageWrapper>
+          <Link to={"#"}>
+            <ProductImage img={cake3}/>
+          </Link>
+        </ProductImageWrapper>
         <ProductName>藍莓珠寶盒</ProductName>
         <ProductPrice>NT$ 100</ProductPrice>
         <ProductButton>加入購物車</ProductButton>
@@ -161,15 +172,18 @@ const ProductWapper = styled.div`
     width: 98%;
   }
 `
-const ProductImageWrapper =styled.div`
-  width:100%;
-  height: 250px;
-  margin-bottom:10px;
+const ProductImageWrapper = styled.div`
+  width: 100%;
 `
-const ProductImage  = styled.img`
-width: 100%;
-height: 100%;
-object-fit: cover;
+const ProductImage =styled.div`
+  background-image: url(${props=>props.img});
+  width:100%;
+  height: 0px;
+  padding-bottom: 100%;
+  background-size: cover;
+  background-position:center center ;
+  overflow: hidden;
+  margin-bottom:10px;
 `
 const ProductName = styled.p`
   font-size: 18px;
@@ -182,12 +196,14 @@ const ProductButton = styled.button`
   display: block;
   width: 125px;
   height: 40px;
-  color: #ffffff;
-  background: #D49E6A;
-  border: none;
-  border-radius: 8px;
+  margin: 0 auto;
+  border: 2px solid #dac9a6;
+  color: #dac9a6;
+  padding: 3%;
+  border-radius: 6%;
+  text-align: center;
   cursor: pointer;
-  box-shadow: 3px 3px 3px #e8c09a;
+  transition: background 0.5s ease-out;
   margin-top: 10px;
 `
 
@@ -197,7 +213,7 @@ function ProductsSectionListsContents(){
       <ProductsListsWrapper>
         <div style={{display:"flex"}}>
           <ProductListsImageWrapper>
-            <ProductListsImage src={cake1}/>
+            <ProductListsImage img={cake1}/>
           </ProductListsImageWrapper>
             <ProductListsInfo>
               <ProductListsInfoSection>
@@ -219,7 +235,7 @@ function ProductsSectionListsContents(){
       <ProductsListsWrapper>
         <div style={{display:"flex"}}>
           <ProductListsImageWrapper>
-            <ProductListsImage src={cake2}/>
+            <ProductListsImage img={cake2}/>
           </ProductListsImageWrapper>
             <ProductListsInfo>
               <ProductListsInfoSection>
@@ -241,7 +257,7 @@ function ProductsSectionListsContents(){
       <ProductsListsWrapper>
         <div style={{display:"flex"}}>
           <ProductListsImageWrapper>
-            <ProductListsImage src={cake3}/>
+            <ProductListsImage img={cake3}/>
           </ProductListsImageWrapper>
             <ProductListsInfo>
               <ProductListsInfoSection>
@@ -275,18 +291,28 @@ const ProductsListsWrapper = styled.div`
   }
 `
 const ProductListsImageWrapper =styled.div`
-  width: 200px;
-  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
   margin-right: 50px;
+  @media screen and (max-width: 550px){
+    width:40%;
+    margin-right: 20px;
+  }
 `
-const ProductListsImage =styled.img`
-  width: 100%;
-  height: 100%;
+const ProductListsImage =styled.div`
+  background-image: url(${props=>props.img});
+  width:100%;
+  height: 0px;
+  padding-bottom: 100%;
+  background-size: cover;
+  background-position:center center ;
 `
 const ProductListsInfo =styled.div`
   width:60%;
   @media screen and (max-width: 550px){
-    width: 30%;
+    width: 50%;
   }
 `
 const ProductListsInfoSection =styled.div`
@@ -309,7 +335,18 @@ const ProductListsCaption = styled.p`
   color:#A3A3A3;
   font-size: 20px;
   margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; //行數
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow:hidden;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
   ${MEDIA_QUERY_MD}{
+    -webkit-line-clamp: 2; //行數
+  }
+  @media screen and (max-width: 550px){
     display: none;
   }
 `
@@ -330,12 +367,14 @@ const ProductListsButtonWrapper = styled.div`
 const ProductListsButton = styled.button`
   width: 125px;
   height: 40px;
-  color: #ffffff;
-  background: #D49E6A;
-  border: none;
-  border-radius: 8px;
+  margin: 0 auto;
+  border: 2px solid #dac9a6;
+  color: #dac9a6;
+  padding: 3%;
+  border-radius: 6%;
+  text-align: center;
   cursor: pointer;
-  box-shadow: 3px 3px 3px #e8c09a;
+  transition: background 0.5s ease-out;
 `
 const ProductListsMDButton = styled(ProductListsButton)`
   display:none;
@@ -354,7 +393,7 @@ export default function ProductsSection() {
   }
   return(
     <div>
-    <ProductsSectionTiTle handletoggleSquares={handletoggleSquares} handletoggleLists={handletoggleLists}/>
+    <ProductsSectionTiTle handletoggleSquares={handletoggleSquares} handletoggleLists={handletoggleLists} section={section}/>
     {section==='sqares'&&<ProductsSectionSqaresContents/>}
     {section==='lists'&&<ProductsSectionListsContents/>}
     </div>
