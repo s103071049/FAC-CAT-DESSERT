@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import homeIcon from '../../components/img/icon/home.svg'
+import { MEDIA_QUERY_SD } from '../../components/Style/style'
 
 const AboutWrapper = styled.div`
   max-width:1042px;
@@ -28,6 +29,18 @@ const AboutContentWrapper = styled.section`
   line-height:40px;
   letter-spacing:0.15em;
   color:#212529;
+  margin-top:20px;
+  
+  div + div {
+    margin-top:80px;
+  }
+
+  ${MEDIA_QUERY_SD} {
+    padding:20px;
+  }
+`
+const ShopMap = styled.iframe`
+  width:100%
 `
 
 const aboutContent = `(等確定 logo 和品牌名稱我再來編故事，這裡先copy法米)
@@ -56,7 +69,13 @@ const AboutPage = () => {
           <Mark>{'>'} 關於我們</Mark>
         </IconMark>
         <AboutContentWrapper>
-          {aboutContent}
+          <div>
+            {aboutContent}
+          </div>
+          <div>
+            <ShopMap src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.211768404918!2d120.28109231526243!3d22.794615730528527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e0c2656db11c1%3A0xeb41f83a6fbc1573!2zODIw6auY6ZuE5biC5bKh5bGx5Y2A5YWs5ZyS6KW_6Lev5LiJ5q61ODTlt7czM-iZnw!5e0!3m2!1szh-TW!2stw!4v1633022800098!5m2!1szh-TW!2stw" width="600" height="450" style={{ border: 0 }} loading="lazy" title="shop map"></ShopMap>
+          </div>
+
         </AboutContentWrapper>
       </AboutWrapper>
     </>
