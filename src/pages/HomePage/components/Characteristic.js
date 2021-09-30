@@ -12,6 +12,7 @@ const Section = styled.div`
   margin: 0 auto;
   background: #dac9a6;
   border-radius: 6px;
+  margin-bottom: 24px;
   ${MEDIA_QUERY_MD} {
     margin: 24px auto;
   }

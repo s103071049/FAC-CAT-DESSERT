@@ -5,24 +5,17 @@ import youtube from '../img/icon/youtube.svg'
 import facebook from '../img/icon/facebook.svg'
 
 const Wrap = styled.footer`
-  margin-top : 48px;
-  ${MEDIA_QUERY_MD} {
-    margin-top: 0;
-  }
 `
 const Img = styled.img`
-  width: 24px;
+  width: 1.5rem;
   & + & {
-    margin-left: 12px;
+    margin-left: 0.8rem;
   }
 `
 const FooterTop = styled.div`
   background: #FBF3EA;
-  padding: 32px;
+  padding: 1rem;
   color: #9e7a7a;
-  ${MEDIA_QUERY_MD} {
-    padding: 24px;
-  }
 `
 const FooterWrapper = styled.div`
   display: flex;
@@ -32,41 +25,45 @@ const FooterWrapper = styled.div`
   }
 `
 const FooterInfo = styled.div`
-  margin-right: 32px;
-  line-height: 1.5rem;
+  margin-right: 2rem;
+  line-height: 1.2rem;
   word-break: break-word;
 `
 const Info = styled.div`
- & + & {
-  margin-top: 10px;
- }
+  & + & {
+    margin-top: 0.3rem;
+  }
 `
 const AboutMe = styled.div`
-  position: relative;
   ${MEDIA_QUERY_SD, MEDIA_QUERY_MD} {
-    margin-bottom: 12px;
+    margin-bottom: 1rem;
   }
 `
 const FooterSite = styled.div`
-  font-size: 36px;
+  font-size: 2.4rem;
   color: #967249;
   font-weight: bold;
-  word-break: break-word;
+  white-space: nowrap;
+  ${MEDIA_QUERY_SD} {
+    font-size: 1.8rem;
+  }
+  ${'@media screen and (max-width: 265px)'} {
+    font-size: 1.2rem;
+  }
 `
 const FooterLink = styled.div`
-  padding: 6px 0;
+  padding-top: 0.3rem;
   display: flex;
   align-items: center;
 `
 const FooterBottom = styled.div`
   background-color: #9e7a7a;
-  padding: 12px;
+  padding: 0.4rem 0;
   text-align: center;
   color: white;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bold;
-  line-height: 1.5rem;
-  word-break: break-word;
+  line-height: 1.2rem;
 `
 function Footer() {
   return (
@@ -93,10 +90,9 @@ function Footer() {
           </FooterWrapper>
         </FooterTop>
         <FooterBottom>
-          Copyright © 2021 Fat Cat Dessert All Rights Reserved. 肥貓甜點股份有限公司版權所有
+          Copyright © 2021 Fat Cat Dessert All Rights Reserved.
         </FooterBottom>
       </Wrap>
-
     </div>
   );
 }

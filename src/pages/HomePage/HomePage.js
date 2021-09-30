@@ -5,6 +5,7 @@ import HotSales from './components/HotSales.js'
 
 const Wrapper = styled.div`
   max-width: 1024px;
+  min-height: 80vh;
   margin: 0 auto;
 `
 function HomePage() {
