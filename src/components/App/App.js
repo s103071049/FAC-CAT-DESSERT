@@ -30,16 +30,14 @@ function App() {
           <Route path="/product">
             {/* <ProductPage /> */}
           </Route>
-<<<<<<< HEAD
           <Route path="/about">
             <AboutPage />
-=======
+          </Route>
           <Route path="/faq">
-      <FaqPage />
->>>>>>> a68f6d31f259aac2f6dbc43f90a74b7a4c466763
-    </Route>
-  </Switch>
-    <Footer />
+            <FaqPage />
+          </Route>
+        </Switch>
+        <Footer />
       </Router >
     </Root >
   );
