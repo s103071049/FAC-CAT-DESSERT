@@ -10,6 +10,7 @@ import HomePage from "../../pages/HomePage"
 import ProductsPage from "../../pages/ProductsPage"
 import AboutPage from '../../pages/AboutPage'
 import FaqPage from '../../pages/FaqPage';
+import SingleProductPage from '../../pages/SingleProductPage';
 
 const Root = styled.div`
   
@@ -27,15 +28,13 @@ function App() {
           <Route path="/products">
             <ProductsPage />
           </Route>
-          <Route path="/product">
-            {/* <ProductPage /> */}
-          </Route>
           <Route path="/about">
             <AboutPage />
           </Route>
           <Route path="/faq">
             <FaqPage />
           </Route>
+          <Route path="/product" component={SingleProductPage}/>
         </Switch>
         <Footer />
       </Router >
