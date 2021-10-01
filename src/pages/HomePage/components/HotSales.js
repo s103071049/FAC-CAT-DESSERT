@@ -9,9 +9,9 @@ const Section = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 24px;
+  padding: 2%;
+  width: 100%;
 `
-
 const Category = styled(Section)`
   flex-direction: column;
   align-items: center;
@@ -21,6 +21,7 @@ const SectionTitle = styled.div`
   color: #64363c;
   font-weight: bold;
   padding: 5px 0;
+  text-align: center;
 `
 const SectionLine = styled.div`
   border: 1px solid #dac9a6;
@@ -30,22 +31,37 @@ const Dessert = styled.div`
   display: flex;
   width: 20%;
   & + & {
-    margin-left: 4%;
+    margin-left: 2%;
   }
   flex-direction: column;
   ${MEDIA_QUERY_MD} {
     width: 50%;
+    padding: 2%;
+    & + & {
+      margin-left: 0%;
+    }
+  }
+  ${MEDIA_QUERY_SD} {
     & + & {
       margin-left: 0%;
     }
   }
 `
-const DessertImg = styled.img`
+const DessertImg = styled.div`
   width: 100%;
-  height: 50%;
-  object-fit: cover;
-  margin: 0 auto;
+  height: 0;
+  background: url(${props => props.url});
+  border: 1px sold red;
+  padding-bottom: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   border-radius: 8px;
+  cursor: pointer;
+  &: hover {
+    filter: brightness(110%);
+  }
 `
 const DessertName = styled.div`
   text-align: center;
@@ -54,12 +70,12 @@ const DessertName = styled.div`
   color: #a96360;
 `
 const DessertPrice = styled.div`
+  margin-top: 4px;
   text-align: center;
   color: #a96360;
   margin-bottom: 8px;
 `
 const CartButton = styled.div`
-  width: 50%;
   margin: 0 auto;
   border: 2px solid #dac9a6;
   color: #dac9a6;
@@ -67,73 +83,49 @@ const CartButton = styled.div`
   border-radius: 6%;
   text-align: center;
   cursor: pointer;
-  &: hover {
-    background: #60373e;
-  }
+  transition: background 0.5s ease-out;
+  white-space: nowrap;
 `
+const Img = styled.div`
+`
+function Advertisement({enTitle, chTitle}) {
+  return (
+    < >
+      <SectionTitle>{enTitle}</SectionTitle>
+      <SectionLine/>
+      <SectionTitle>{chTitle}</SectionTitle>
+    </>
+  )
+}
+function Sales({url, name, price}) {
+  return (
+      <Dessert>
+        <Img><DessertImg url={url}/></Img>
+        <DessertName>{name}</DessertName>
+        <DessertPrice>{price}</DessertPrice>
+        <CartButton>加入購物車</CartButton>
+      </Dessert>
+  )
+}
 function HotSales() {
   return (
     <div>
       <Category>
-        <SectionTitle>Recommended Goods</SectionTitle>
-        <SectionLine/>
-        <SectionTitle>主廚推薦</SectionTitle>
+        <Advertisement enTitle={'Recommended Goods'} chTitle={'主廚推薦'}/>
         <Section>
-          <Dessert>
-            <DessertImg src={cake}/>
-            <DessertName>阿嬤的蘋果派</DessertName>
-            <DessertPrice>NT$ 160</DessertPrice>
-            <CartButton>加入購物車</CartButton>
-          </Dessert>
-          <Dessert>
-            <DessertImg src={cake4}/>
-            <DessertName>我的梅果花園</DessertName>
-            <DessertPrice>NT$ 180</DessertPrice>
-            <CartButton>加入購物車</CartButton>
-          </Dessert>
-          <Dessert>
-            <DessertImg src={orangePie}/>
-            <DessertName>青春橘子派</DessertName>
-            <DessertPrice>NT$ 260</DessertPrice>
-            <CartButton>加入購物車</CartButton>
-          </Dessert>
-          <Dessert>
-            <DessertImg src={cake3}/>
-            <DessertName>藍莓珠寶盒</DessertName>
-            <DessertPrice>NT$ 100</DessertPrice>
-            <CartButton>加入購物車</CartButton>
-          </Dessert>
+          <Sales url={cake} name={'阿嬤的蘋果派'} price={'NT$ 160'}/>
+          <Sales url={cake4} name={'我的梅果花園'} price={'NT$ 180'}/>
+          <Sales url={orangePie} name={'青春橘子派'} price={'NT$ 260'}/>
+          <Sales url={cake3} name={'藍莓珠寶盒'} price={'NT$ 100'}/>
         </Section>
       </Category>
       <Category>
-        <SectionTitle>Hot Sales</SectionTitle>
-        <SectionLine/>
-        <SectionTitle>熱銷甜點</SectionTitle>
+        <Advertisement enTitle={'Hot Sales'} chTitle={'熱銷甜點'}/>
         <Section>
-          <Dessert>
-            <DessertImg src={cake}/>
-            <DessertName>阿嬤的蘋果派</DessertName>
-            <DessertPrice>NT$ 160</DessertPrice>
-            <CartButton>加入購物車</CartButton>
-          </Dessert>
-          <Dessert>
-            <DessertImg src={cake4}/>
-            <DessertName>我的梅果花園</DessertName>
-            <DessertPrice>NT$ 180</DessertPrice>
-            <CartButton>加入購物車</CartButton>
-          </Dessert>
-          <Dessert>
-            <DessertImg src={orangePie}/>
-            <DessertName>青春橘子派</DessertName>
-            <DessertPrice>NT$ 260</DessertPrice>
-            <CartButton>加入購物車</CartButton>
-          </Dessert>
-          <Dessert>
-            <DessertImg src={cake3}/>
-            <DessertName>藍莓珠寶盒</DessertName>
-            <DessertPrice>NT$ 100</DessertPrice>
-            <CartButton>加入購物車</CartButton>
-          </Dessert>
+          <Sales url={cake} name={'阿嬤的蘋果派'} price={'NT$ 160'}/>
+          <Sales url={cake4} name={'我的梅果花園'} price={'NT$ 180'}/>
+          <Sales url={orangePie} name={'青春橘子派'} price={'NT$ 260'}/>
+          <Sales url={cake3} name={'藍莓珠寶盒'} price={'NT$ 100'}/>
         </Section>
       </Category>
     </div>

@@ -11,7 +11,6 @@ import ProductsPage from "../../pages/ProductsPage"
 import AboutPage from '../../pages/AboutPage'
 
 const Root = styled.div`
-  
 `
 
 function App() {
