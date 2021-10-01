@@ -9,6 +9,7 @@ import Footer from '../Footer';
 import HomePage from "../../pages/HomePage"
 import ProductsPage from "../../pages/ProductsPage"
 import AboutPage from '../../pages/AboutPage'
+import FaqPage from '../../pages/FaqPage';
 
 const Root = styled.div`
   
@@ -32,10 +33,13 @@ function App() {
           <Route path="/about">
             <AboutPage />
           </Route>
+          <Route path="/faq">
+            <FaqPage />
+          </Route>
         </Switch>
         <Footer />
-      </Router>
-    </Root>
+      </Router >
+    </Root >
   );
 }
 
