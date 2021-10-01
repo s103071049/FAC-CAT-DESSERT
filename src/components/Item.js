@@ -1,26 +1,41 @@
 import styled from 'styled-components'
-import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from './Style/style.js'
+import {MEDIA_QUERY_MD, MEDIA_QUERY_SD, CartButton} from './Style/style.js'
 
 const Dessert = styled.div`
   display: flex;
   width: 20%;
   & + & {
-    margin-left: 4%;
+    margin-left: 2%;
   }
   flex-direction: column;
   ${MEDIA_QUERY_MD} {
     width: 50%;
+    padding: 2%;
+    & + & {
+      margin-left: 0%;
+    }
+  }
+  ${MEDIA_QUERY_SD} {
     & + & {
       margin-left: 0%;
     }
   }
 `
-const DessertImg = styled.img`
+const DessertImg = styled.div`
   width: 100%;
-  height: 50%;
-  object-fit: cover;
-  margin: 0 auto;
+  height: 0;
+  background: url(${props => props.imgUrl});
+  border: 1px sold red;
+  padding-bottom: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   border-radius: 8px;
+  cursor: pointer;
+  &: hover {
+    filter: brightness(110%);
+  }
 `
 const DessertName = styled.div`
   text-align: center;
@@ -29,31 +44,22 @@ const DessertName = styled.div`
   color: #a96360;
 `
 const DessertPrice = styled.div`
+  margin-top: 4px;
   text-align: center;
   color: #a96360;
   margin-bottom: 8px;
 `
-const CartButton = styled.div`
-  width: 50%;
-  margin: 0 auto;
-  border: 2px solid #dac9a6;
-  color: #dac9a6;
-  padding: 3%;
-  border-radius: 6%;
-  text-align: center;
-  cursor: pointer;
-  &: hover {
-    background: #60373e;
-  }
+const Img = styled.div`
 `
-
-const Item = ({dessert}) => (
-  <Dessert>
-    <DessertImg src={dessert.img}/>
-    <DessertName>${dessert.name}</DessertName>
-    <DessertPrice>${dessert.price}</DessertPrice>
-    <CartButton>加入購物車</CartButton>
-  </Dessert>
-)
+function Item({ dessert }) {
+  return (
+      <Dessert>
+        <Img><DessertImg imgUrl={ dessert.imgUrl }/></Img>
+        <DessertName>{ dessert.name }</DessertName>
+        <DessertPrice>NT${ dessert.price }</DessertPrice>
+        <CartButton>加入購物車</CartButton>
+      </Dessert>
+  )
+}
 
 export default Item

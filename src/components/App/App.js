@@ -11,6 +11,7 @@ import ProductsPage from "../../pages/ProductsPage"
 import AboutPage from '../../pages/AboutPage'
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
+import SingleProductPage from '../../pages/SingleProductPage';
 
 const Root = styled.div`
 `
@@ -27,9 +28,6 @@ function App() {
           <Route path="/products">
             <ProductsPage />
           </Route>
-          <Route path="/product">
-            {/* <ProductPage /> */}
-          </Route>
           <Route path="/about">
             <AboutPage />
           </Route>
@@ -39,6 +37,7 @@ function App() {
           <Route path="/search">
             <SearchPage />
           </Route>
+          <Route path="/product" component={SingleProductPage}/>
         </Switch>
         <Footer />
       </Router >
