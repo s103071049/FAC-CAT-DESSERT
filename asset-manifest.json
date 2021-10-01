@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/finalProjectUI/static/css/main.7c2b2686.chunk.css",
-    "main.js": "/finalProjectUI/static/js/main.ee1bdff2.chunk.js",
-    "main.js.map": "/finalProjectUI/static/js/main.ee1bdff2.chunk.js.map",
+    "main.js": "/finalProjectUI/static/js/main.d10307ea.chunk.js",
+    "main.js.map": "/finalProjectUI/static/js/main.d10307ea.chunk.js.map",
     "runtime-main.js": "/finalProjectUI/static/js/runtime-main.b2cc9b15.js",
     "runtime-main.js.map": "/finalProjectUI/static/js/runtime-main.b2cc9b15.js.map",
-    "static/js/2.46e9e097.chunk.js": "/finalProjectUI/static/js/2.46e9e097.chunk.js",
-    "static/js/2.46e9e097.chunk.js.map": "/finalProjectUI/static/js/2.46e9e097.chunk.js.map",
+    "static/js/2.451c2d13.chunk.js": "/finalProjectUI/static/js/2.451c2d13.chunk.js",
+    "static/js/2.451c2d13.chunk.js.map": "/finalProjectUI/static/js/2.451c2d13.chunk.js.map",
     "static/js/3.92f2eb93.chunk.js": "/finalProjectUI/static/js/3.92f2eb93.chunk.js",
     "static/js/3.92f2eb93.chunk.js.map": "/finalProjectUI/static/js/3.92f2eb93.chunk.js.map",
     "index.html": "/finalProjectUI/index.html",
     "static/css/main.7c2b2686.chunk.css.map": "/finalProjectUI/static/css/main.7c2b2686.chunk.css.map",
-    "static/js/2.46e9e097.chunk.js.LICENSE.txt": "/finalProjectUI/static/js/2.46e9e097.chunk.js.LICENSE.txt",
+    "static/js/2.451c2d13.chunk.js.LICENSE.txt": "/finalProjectUI/static/js/2.451c2d13.chunk.js.LICENSE.txt",
     "static/media/banner3.e8d438a2.jpg": "/finalProjectUI/static/media/banner3.e8d438a2.jpg",
     "static/media/cake.3691e49b.jpg": "/finalProjectUI/static/media/cake.3691e49b.jpg",
     "static/media/cake3.6603d24b.jpg": "/finalProjectUI/static/media/cake3.6603d24b.jpg",
@@ -23,15 +23,15 @@
     "static/media/question.5d816a64.svg": "/finalProjectUI/static/media/question.5d816a64.svg",
     "static/media/search.bc6ceb9d.svg": "/finalProjectUI/static/media/search.bc6ceb9d.svg",
     "static/media/shopping-cart.cab64d74.svg": "/finalProjectUI/static/media/shopping-cart.cab64d74.svg",
-    "static/media/truck.5aea7f2d.svg": "/finalProjectUI/static/media/truck.5aea7f2d.svg",
+    "static/media/truck.6d58ddba.svg": "/finalProjectUI/static/media/truck.6d58ddba.svg",
     "static/media/user.2300e7cb.svg": "/finalProjectUI/static/media/user.2300e7cb.svg",
     "static/media/vegetables.301845a2.svg": "/finalProjectUI/static/media/vegetables.301845a2.svg",
     "static/media/youtube.e57613c9.svg": "/finalProjectUI/static/media/youtube.e57613c9.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.b2cc9b15.js",
-    "static/js/2.46e9e097.chunk.js",
+    "static/js/2.451c2d13.chunk.js",
     "static/css/main.7c2b2686.chunk.css",
-    "static/js/main.ee1bdff2.chunk.js"
+    "static/js/main.d10307ea.chunk.js"
   ]
 }
