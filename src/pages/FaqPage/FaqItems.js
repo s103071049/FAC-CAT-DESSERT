@@ -94,7 +94,6 @@ Step6.最後確認`,
 
 const RenderFaqItems = () => {
   const [selectedOption, setSelectedOption] = useState(faqOptions)
-  const [isShowed, setIsShowed] = useState(false)
 
   const handleQuestionClick = (selectedItem) => {
     setSelectedOption(selectedOption.map(item => {
