@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import homeIcon from '../../components/img/icon/home.svg'
+import { MEDIA_QUERY_SD } from '../../components/Style/style'
 
 import FaqItems from './FaqItems'
 
@@ -31,6 +32,9 @@ const FaqContentWrapper = styled.section`
   line-height:40px;
   letter-spacing:0.15em;
   color:#212529;
+  ${MEDIA_QUERY_SD} {
+    padding:20px;
+  }
 `
 
 

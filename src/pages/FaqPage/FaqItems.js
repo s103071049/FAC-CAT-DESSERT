@@ -25,7 +25,7 @@ const FaqItemAns = styled.div`
   margin-top:20px;
 `
 
-const faqOption = [
+const faqOptions = [
   {
     question: '宅配蛋糕的注意事項',
     answer: `為維持甜點的品質，我們堅持蛋糕寄出當天製作，並以冷凍送，
@@ -93,11 +93,13 @@ Step6.最後確認`,
 
 
 const RenderFaqItems = () => {
-  const [selectedOption, setSelectedOption] = useState(faqOption)
+  const [selectedOption, setSelectedOption] = useState(faqOptions)
+  const [isShowed, setIsShowed] = useState(false)
 
   const handleQuestionClick = (selectedItem) => {
-    setSelectedOption(faqOption.map(item => {
+    setSelectedOption(selectedOption.map(item => {
       if (selectedItem.id === item.id) {
+
         const { isShowed } = item
         return {
           ...item,
@@ -109,6 +111,7 @@ const RenderFaqItems = () => {
   }
 
   return selectedOption.map(item => {
+    console.log(item.isShowed, item.id)
     return (
       <FaqItems key={item.id}>
         <div>
@@ -118,6 +121,8 @@ const RenderFaqItems = () => {
           <FaqItemHeader onClick={() => handleQuestionClick(item)}> {item.question} </FaqItemHeader>
           {item.isShowed && <FaqItemAns> {item.answer} </FaqItemAns>}
         </FaqItemDetail>
+        {console.log('====')}
+
       </FaqItems>
     )
   })
