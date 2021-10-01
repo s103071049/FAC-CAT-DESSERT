@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import banner from './Image/banner3.jpg'
-import {MEDIA_QUERY_MD, MEDIA_QUERY_SD} from '../../../components/Style/style.js'
+import {MEDIA_QUERY_MD} from '../../../components/Style/style.js'
 const Wrap = styled.div`
   margin-bottom: 28px;
   position: relative;

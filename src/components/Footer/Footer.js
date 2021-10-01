@@ -7,14 +7,14 @@ import facebook from '../img/icon/facebook.svg'
 const Wrap = styled.footer`
 `
 const Img = styled.img`
-  width: 1.5rem;
+  width: 24px;
   & + & {
-    margin-left: 0.8rem;
+    margin-left: 12px;
   }
 `
 const FooterTop = styled.div`
   background: #FBF3EA;
-  padding: 1rem;
+  padding: 16px;
   color: #9e7a7a;
 `
 const FooterWrapper = styled.div`
@@ -25,45 +25,55 @@ const FooterWrapper = styled.div`
   }
 `
 const FooterInfo = styled.div`
-  margin-right: 2rem;
-  line-height: 1.2rem;
+  margin-right: 32px;
+  line-height: 18px;
   word-break: break-word;
+  ${MEDIA_QUERY_SD, MEDIA_QUERY_MD} {
+    margin-right: 0px;
+  }
+  ${'@media screen and (max-width: 170px)'} {
+    font-size: 14px;
+  }
 `
 const Info = styled.div`
   & + & {
-    margin-top: 0.3rem;
+    margin-top: 4px;
   }
 `
 const AboutMe = styled.div`
   ${MEDIA_QUERY_SD, MEDIA_QUERY_MD} {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
   }
 `
 const FooterSite = styled.div`
-  font-size: 2.4rem;
+  font-size: 32px;
   color: #967249;
   font-weight: bold;
   white-space: nowrap;
   ${MEDIA_QUERY_SD} {
-    font-size: 1.8rem;
+    font-size: 24px;
   }
   ${'@media screen and (max-width: 265px)'} {
-    font-size: 1.2rem;
+    font-size: 20px;
+  }
+  ${'@media screen and (max-width: 170px)'} {
+    font-size: 14px;
+    white-space: wrap;
   }
 `
 const FooterLink = styled.div`
-  padding-top: 0.3rem;
+  padding-top: 4px;
   display: flex;
   align-items: center;
 `
 const FooterBottom = styled.div`
   background-color: #9e7a7a;
-  padding: 0.4rem 0;
+  padding: 6px 0;
   text-align: center;
   color: white;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: bold;
-  line-height: 1.2rem;
+  line-height: 14px;
 `
 function Footer() {
   return (

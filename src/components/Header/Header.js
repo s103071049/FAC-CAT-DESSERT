@@ -12,8 +12,8 @@ const Navbar = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-`
 
+`
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -132,6 +132,11 @@ const MenuItem = styled.a`
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const toggleHamburger = () => {
+    if (hamburgerOpen) {
+      document.body.style.overflow = "auto"
+    } else {
+      document.body.style.overflow = "hidden"
+    }
     setHamburgerOpen(!hamburgerOpen)
   }
   return (
@@ -149,6 +154,7 @@ function Header() {
             <MenuItem href="#">購物車</MenuItem>
             <MenuItem href="#">會員中心</MenuItem>
             <MenuItem href="#">FAQ</MenuItem>
+            <MenuItem href="#">關於我們</MenuItem>
           </Menu>
           <List>
             <Item>新品上市</Item>

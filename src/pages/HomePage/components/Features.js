@@ -65,34 +65,27 @@ const Desc = styled.div`
   color: #60373e;
   font-weight: bold;
 `
-function Characteristic() {
+function Item({src, title, content}) {
+  return (
+    <SectionItem>
+      <Img src={src}/>
+      <Desc>
+        <Title>{title}</Title>
+        <Content>{content}</Content>
+      </Desc>
+    </SectionItem>
+  )
+}
+function Features() {
   return (
     <div>
       <Section>
-        <SectionItem>
-          <Img src={vegetables}/>
-          <Desc>
-            <Title>嚴選好食材</Title>
-            <Content>有機最安心!</Content>
-          </Desc>
-        </SectionItem>
-        <SectionItem>
-          <Img src={thumb}/>
-          <Desc>
-            <Title>一千種味道</Title>
-            <Content>吃過都說讚!</Content>
-          </Desc>
-        </SectionItem>
-        <SectionItem>
-          <Img src={truck}/>
-          <Desc>
-            <Title>在家輕鬆購</Title>
-            <Content>網購新鮮送!</Content>
-          </Desc>
-        </SectionItem>
+        <Item src={vegetables} title={'嚴選好食材'} content={'有機最安心'}/>
+        <Item src={thumb} title={'一千種味道'} content={'吃過都說讚'}/>
+        <Item src={truck} title={'在家輕鬆購'} content={'網購新鮮送'}/>
       </Section>
     </div>
   );
 }
 
-export default Characteristic;
+export default Features;
