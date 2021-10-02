@@ -77,6 +77,7 @@ const Title = styled.h3`
   ${MEDIA_QUERY_SD}{
     display: block;
     margin-bottom: 10px;
+    margin-left: 10px;
   }
 `
 const SingleProduct = ({ dessert, numbers }) => {
