@@ -1,6 +1,8 @@
 import { useState } from "react"
 import styled from "styled-components"
 import {MEDIA_QUERY_MD, MEDIA_QUERY_SD}from "../../../components/Style/style"
+import PageChange from "../../../components/contexts/PageChange"
+import ProductsSectionTiTleContent from "../../../components/contexts/ProductsSectionTiTleContent"
 import squares from "../../../components/img/icon/squares.svg"
 import list from "../../../components/img/icon/list.svg"
 import cake1 from "../../HomePage/components/Image/cake.jpg"
@@ -19,7 +21,7 @@ function ProductsSectionTiTle({handletoggleSquares,handletoggleLists,section}) {
   }
   return(
     <ProductsSectionTiTleWapper>
-      <ProductsSectionTiTleContent>所有甜點</ProductsSectionTiTleContent>
+      <ProductsSectionTiTleContent context={"所有甜點"}/>
       <ProductsSectionTiTleInfo>
       <ProductsSectionTiTleInfoContent>共6個商品</ProductsSectionTiTleInfoContent>
       <TitleButtonWrapper>
@@ -42,15 +44,6 @@ const ProductsSectionTiTleWapper = styled.div`
 const ProductsSectionTiTleInfo = styled.div`
   display: flex;
   align-items: center;
-`
-const ProductsSectionTiTleContent = styled.h2`
-  margin: 0;
-  padding-left: 15px;
-  border-left: 3px solid#D49E6A;
-  ${MEDIA_QUERY_SD}{
-    display: block;
-    margin-bottom: 10px;
-  }
 `
 const ProductsSectionTiTleInfoContent = styled.p`
 margin: 0px 15px 0 0;
@@ -184,6 +177,9 @@ const ProductImage =styled.div`
   background-position:center center ;
   overflow: hidden;
   margin-bottom:10px;
+  &:hover{
+    filter: brightness(110%);
+  }
 `
 const ProductName = styled.p`
   font-size: 18px;
@@ -205,6 +201,9 @@ const ProductButton = styled.button`
   cursor: pointer;
   transition: background 0.5s ease-out;
   margin-top: 10px;
+  &:hover {
+    background: #60373e;
+  }
 `
 
 function ProductsSectionListsContents(){
@@ -308,6 +307,9 @@ const ProductListsImage =styled.div`
   padding-bottom: 100%;
   background-size: cover;
   background-position:center center ;
+  &:hover{
+    filter: brightness(110%);
+  }
 `
 const ProductListsInfo =styled.div`
   width:60%;
@@ -375,6 +377,9 @@ const ProductListsButton = styled.button`
   text-align: center;
   cursor: pointer;
   transition: background 0.5s ease-out;
+  &:hover {
+    background: #60373e;
+  }
 `
 const ProductListsMDButton = styled(ProductListsButton)`
   display:none;
@@ -396,6 +401,7 @@ export default function ProductsSection() {
     <ProductsSectionTiTle handletoggleSquares={handletoggleSquares} handletoggleLists={handletoggleLists} section={section}/>
     {section==='sqares'&&<ProductsSectionSqaresContents/>}
     {section==='lists'&&<ProductsSectionListsContents/>}
+    <PageChange/>
     </div>
   )
 }
