@@ -7,7 +7,7 @@ import {
 import Header from '../Header';
 import Footer from '../Footer';
 import HomePage from "../../pages/HomePage"
-import ProductsPage from "../../pages/ProductsPage"
+//import ProductsPage from "../../pages/ProductsPage"
 import AboutPage from '../../pages/AboutPage'
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
@@ -26,7 +26,7 @@ function App() {
             <HomePage />
           </Route>
           <Route path="/products">
-            <ProductsPage />
+            {/* <ProductsPage /> */}
           </Route>
           <Route path="/about">
             <AboutPage />
