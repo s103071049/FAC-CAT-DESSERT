@@ -12,7 +12,6 @@ import AboutPage from '../../pages/AboutPage'
 import FaqPage from '../../pages/FaqPage';
 
 const Root = styled.div`
-  
 `
 
 function App() {
