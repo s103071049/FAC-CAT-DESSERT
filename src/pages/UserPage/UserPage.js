@@ -8,11 +8,14 @@ import {
 } from 'react-router-dom'
 import IconMark from "../../components/contexts/IconMark"
 import UserInfo from "./components/UserInfo"
+import { MEDIA_QUERY_SD } from "../../components/Style/style"
+
 
 const Wrapper = styled.div`
   max-width:1042px;
   margin:30px auto 60px;
   padding:0 16px;
+  min-height:60vh;
 `
 const UserWrapper = styled.div`
   max-width:1042px;
@@ -20,14 +23,26 @@ const UserWrapper = styled.div`
   padding:0 16px;
   display:flex;
 
+  ${MEDIA_QUERY_SD} {
+    flex-direction:column;
+    align-items:center;
+  }
+
 `
 const SideBar = styled.div`
   padding:12px;
   width:250px;
+  ${MEDIA_QUERY_SD} {
+   margin-bottom:40px;
+  }
 `
 const Main = styled.div`
   flex-grow:1;
   padding:12px;
+   ${MEDIA_QUERY_SD} {
+    border-top:2px solid #E2E2E2;
+    padding-top:40px;
+  }
 `
 const SideBarHeader = styled.div`
   background:#FBF6EA;

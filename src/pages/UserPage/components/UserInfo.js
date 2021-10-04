@@ -1,60 +1,138 @@
+import { useState } from "react/cjs/react.development"
 import styled from "styled-components"
+import { MEDIA_QUERY_SD } from "../../../components/Style/style"
+
 const FormWrapper = styled.div`
   margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  
   & div {
-    display:flex;
     margin-bottom:20px;
+  }
+
+ 
+`
+const FormRow = styled.div`
+  display:flex;
+  &:last-child {
+    margin-top:50px;
+  }
+
+  ${MEDIA_QUERY_SD} {
+    display:flex;
+    flex-direction:column;
+    &:last-child {
+      text-align:center;
+    }
   }
 `
 const FormItem = styled.div`
+  padding: 0 20px;
+  flex-grow:1;
+  & label {
+    color:#212529;
+    font-size:16px;
+    display:block;
+  }
+
+  & input {
+    margin-top:10px;
+    width:100%;
+    border:1px solid #CED4DA;
+    padding:10px 20px;
+    border-radius:6px;
+  }
+
+   
   
+`
+const Button = styled.button`
+  color : #ABB4BB;
+  border:1px solid #ABB4BB;
+  background:#fff;
+  border-radius:6px;
+  padding:6px 60px;
+  cursor:pointer;
+  transition:all 0.1s;
+
   & + & {
     margin-left:30px;
   }
-  
+ 
+  &[type="submit"] {
+    color:#D49E6A;
+    border:1px solid #D49E6A;
+  }
+
+  &:hover {
+    background:#D49E6A;
+    color:white;
+  }
+
+   ${MEDIA_QUERY_SD} {
+    & + & {
+      margin:0;
+      margin-top:30px;
+    }
+  }
+
 `
 
 const UserAction = () => {
+  const [lastName, setLastName] = useState('Yang')
+  const [firstName, setFirstName] = useState('Ashi')
+  const [nickName, setNickName] = useState('yangyang')
+  const [phone, setPhone] = useState('0912345678')
   return (
     <FormWrapper>
-      <div>
+      <FormRow>
         <FormItem>
           <label htmlFor="lastName">
-            姓<br />
-            <input value={"Yang"} id="lastName" />
+            姓
           </label>
+          <input value={lastName} id="lastName" onChange={(e) => setLastName(e.target.value)} />
+
         </FormItem>
         <FormItem>
           <label htmlFor="firstName">
-            名 <br />
-            <input value={"Ashi"} id="firstName" />
+            名
           </label>
+          <input value={firstName} id="firstName" onChange={(e) => setFirstName(e.target.value)} />
+
         </FormItem>
-      </div>
-      <div>
+      </FormRow>
+      <FormRow>
         <FormItem>
           <label htmlFor="nickName">
-            暱稱 <br />
-            <input value={"Yang"} id="nickName" />
+            暱稱
           </label>
+          <input value={nickName} id="nickName" onChange={(e) => setNickName(e.target.value)} />
+
         </FormItem>
         <FormItem>
           <label htmlFor="phone">
-            手機 <br />
-            <input value={"Yang"} id="phone" />
+            手機
           </label>
+          <input value={phone} id="phone" onChange={(e) => setPhone(e.target.value)} />
+
         </FormItem>
-      </div>
-      <div>
-        <label htmlFor="email">
-          Email <br />
-          <input type="email" value={"123@gmail.com"} id="email" disabled="disabled" />
-        </label>
-      </div>
-      <div>
-        <button>重新填寫</button>
-        <button type="submit">確定修改</button>
-      </div>
+      </FormRow>
+      <FormRow>
+        <FormItem>
+          <label>
+            Email
+          </label>
+          <input type="email" value={"123@gmail.com"} disabled="disabled" />
+
+        </FormItem>
+      </FormRow>
+      <FormRow>
+        <FormItem>
+          <Button>重新填寫</Button>
+          <Button type="submit">確定修改</Button>
+        </FormItem>
+      </FormRow>
 
 
     </FormWrapper>
