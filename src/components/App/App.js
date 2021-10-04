@@ -13,7 +13,6 @@ import FaqPage from '../../pages/FaqPage';
 import UserPage from '../../pages/UserPage';
 
 const Root = styled.div`
-  
 `
 
 function App() {
