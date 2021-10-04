@@ -9,9 +9,9 @@ export const DropdownWrapper = styled.form`
   margin: 12px;
 `
 export const StyledSelect = styled.select`
-  max-width: 60%;
-  height: 60%;
-  padding: 10px;
+  max-width: 70%;
+  height: 70%;
+  padding: 8px;
   margin: 10px;
 `
 export const StyledOption = styled.option`
