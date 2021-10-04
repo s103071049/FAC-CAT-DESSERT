@@ -6,6 +6,9 @@ export const Wrapper = styled.div`
   max-width: 1024px;
   min-height: 80vh;
   margin: 0 auto;
+  ${MEDIA_QUERY_MD} {
+    padding: 0 10px;
+  }
 `
 export const Section = styled.div`
   display: flex;
@@ -24,4 +27,7 @@ export const CartButton = styled.div`
   cursor: pointer;
   transition: background 0.5s ease-out;
   white-space: nowrap;
+  &:hover {
+    background: #60373e;
+  }
 `

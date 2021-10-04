@@ -1,7 +1,9 @@
+import React, { useState } from "react";
 import styled from 'styled-components'
 import Item from '../components/Item.js'
 import { Wrapper, Section, MEDIA_QUERY_MD, MEDIA_QUERY_SD } from '../components/Style/style.js'
-import { Dropdown, Option } from "../components/Dropdown";
+import ProductsSectionTiTleContent from "../components/contexts/ProductsSectionTiTleContent.js";
+import { Counter } from '../components/Counter'
 
 import cake from './HomePage/components/Image/cake.jpg'
 import cake3 from './HomePage/components/Image/cake3.jpg'
@@ -30,10 +32,10 @@ const SingleProductImage = styled.img`
   }
 `
 const SingleProductDescription = styled.div`
-  width: 55%;
+  width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-left: 100px;
   ${MEDIA_QUERY_MD} {
@@ -68,19 +70,10 @@ const SingleProductDescriptionText = styled.div`
   align-items: center;
   ${MEDIA_QUERY_MD} {
     padding: 0px 10px;
+    text-align: center;
   }
 `
-const Title = styled.h3`
-  margin: 0;
-  padding-left: 15px;
-  border-left: 3px solid#D49E6A;
-  ${MEDIA_QUERY_SD}{
-    display: block;
-    margin-bottom: 10px;
-    margin-left: 10px;
-  }
-`
-const SingleProduct = ({ dessert, numbers }) => {
+const SingleProduct = ({ dessert }) => {
   return (
     <SingleProductWrapper>
       <SingleProductImage src={dessert.imgUrl} />
@@ -92,20 +85,13 @@ const SingleProduct = ({ dessert, numbers }) => {
         <SingleProductDescriptionText>
           {dessert.desc}
         </SingleProductDescriptionText>
-        <Dropdown
-          formLabel="數量"
-          buttonText="加入購物車"
-          action="#"
-        >
-          <Option selected value="1" />
-          {numbers.map((number,i) => <Option value={number}/>)}
-        </Dropdown>
+        <Counter />
       </SingleProductDescription>
     </SingleProductWrapper>
   )
 }
 
-const SingleProductPage = ({ children }) => {
+const SingleProductPage = () => {
   const desserts = [
     {
       id: 1,
@@ -114,18 +100,11 @@ const SingleProductPage = ({ children }) => {
       imgUrl: cake,
       desc: `2020新品
 
+      日本柚子帶出輕盈微酸的口感，臺灣鐵觀音帶出濃郁茶香,
+      日本柚子帶出輕盈微酸的口感，臺灣鐵觀音帶出濃郁茶香,
+      日本柚子帶出輕盈微酸的口感，臺灣鐵觀音帶出濃郁茶香,
       日本柚子帶出輕盈微酸的口感，臺灣鐵觀音帶出濃郁茶香
-      
-      －
-      
-      日本100%柚子汁，柚子輕盈甘納許，臺灣鐵觀音甘納許
-      
-      
-      **甘納許為巧克力加上鮮奶油製成
-      
-      照片中白色的部分為柚子輕盈甘納許，非鮮奶油打發製作而成
-      
-      而有一種更輕盈順口的口感`
+      `
     },
     {
       id: 2,
@@ -138,6 +117,12 @@ const SingleProductPage = ({ children }) => {
       name: '青春橘子派',
       price: '260',
       imgUrl: cake4,
+    },
+    {
+      id: 4,
+      name: '青春橘子派',
+      price: '260',
+      imgUrl: cake,
     }
   ]
 
@@ -146,8 +131,8 @@ const SingleProductPage = ({ children }) => {
   return (
     <div>
       <Wrapper>
-        <SingleProduct dessert={desserts[0]} numbers={numbers}/>
-        <Title>推薦商品</Title>
+        <SingleProduct dessert={desserts[0]} numbers={numbers} key={0}/>
+        <ProductsSectionTiTleContent context={'推薦商品'}/>
         <Section>
           {desserts.map((dessert,i) => <Item dessert={dessert} key={i}/>)}
         </Section>
