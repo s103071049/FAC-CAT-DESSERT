@@ -6,28 +6,13 @@ import {
   useRouteMatch,
   useLocation
 } from 'react-router-dom'
-
-import homeIcon from '../../components/img/icon/home.svg'
+import IconMark from "../../components/contexts/IconMark"
 import UserInfo from "./components/UserInfo"
 
 const Wrapper = styled.div`
   max-width:1042px;
   margin:30px auto 60px;
   padding:0 16px;
-`
-const IconMark = styled.div`
-  padding:20px;
-  display:flex;
-`
-const Icon = styled.img`
-  padding:0 px;
-  width:15px;
-  height:15px;
-`
-
-const Mark = styled.p`
-  padding-left:8px;
-  margin:0;
 `
 const UserWrapper = styled.div`
   max-width:1042px;
@@ -82,10 +67,7 @@ const UserPage = () => {
   return (
     <>
       <Wrapper>
-        <IconMark>
-          <Icon src={homeIcon} />
-          <Mark>{'>'} 關於我們</Mark>
-        </IconMark>
+        <IconMark context={"會員專區"} />
         <UserWrapper>
           <SideBar>
             <SideBarHeader>我的帳戶</SideBarHeader>
