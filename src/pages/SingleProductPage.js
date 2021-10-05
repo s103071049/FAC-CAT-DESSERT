@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from 'styled-components'
 import Item from '../components/Item.js'
-import { Wrapper, Section, MEDIA_QUERY_MD, MEDIA_QUERY_SD } from '../components/Style/style.js'
+import { Wrapper, Section, CartButton, MEDIA_QUERY_MD, MEDIA_QUERY_SD } from '../components/Style/style.js'
 import ProductsSectionTiTleContent from "../components/contexts/ProductsSectionTiTleContent.js";
 import { Counter } from '../components/Counter'
 
@@ -10,25 +10,41 @@ import cake3 from './HomePage/components/Image/cake3.jpg'
 import cake4 from './HomePage/components/Image/cake4.jpg'
 
 const SingleProductWrapper = styled.div`
-  margin: 50px 0px;
-  height: 100%;
+  margin: 50px 20px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   ${MEDIA_QUERY_MD} {
     flex-direction:column;
     margin-top: 0;
+    margin:50px 10px;
   }
   ${MEDIA_QUERY_SD}{
     display: block;
   }
 `
-const SingleProductImage = styled.img`
-  width: 50%;
-  object-fit: cover;
-  border-radius: 10px;
+const Img = styled.div`
+  width:50%;
   ${MEDIA_QUERY_MD} {
-    border-radius: 0;
     width: 100%;
+  }
+`
+const SingleProductImage = styled.div`
+  display:block;
+  width: 100%;
+  height: 0;
+  background: url(${props => props.imgUrl});
+  border: 1px sold red;
+  padding-bottom: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 8px;
+  cursor: pointer;
+  &: hover {
+    filter: brightness(110%);
+    width: 100%
   }
 `
 const SingleProductDescription = styled.div`
@@ -68,6 +84,7 @@ const SingleProductDescriptionText = styled.div`
   font-size: 18px;
   white-space: pre-line;
   align-items: center;
+  line-height: 1.5;
   ${MEDIA_QUERY_MD} {
     padding: 0px 10px;
     text-align: center;
@@ -76,7 +93,7 @@ const SingleProductDescriptionText = styled.div`
 const SingleProduct = ({ dessert }) => {
   return (
     <SingleProductWrapper>
-      <SingleProductImage src={dessert.imgUrl} />
+      <Img><SingleProductImage imgUrl={ dessert.imgUrl } /></Img>
       <SingleProductDescription>
         <SingleProductInfo>
           <SingleProductTitle>{dessert.name}</SingleProductTitle>
@@ -86,6 +103,7 @@ const SingleProduct = ({ dessert }) => {
           {dessert.desc}
         </SingleProductDescriptionText>
         <Counter />
+        <CartButton>加入購物車</CartButton>
       </SingleProductDescription>
     </SingleProductWrapper>
   )
@@ -138,7 +156,7 @@ const SingleProductPage = () => {
   return (
     <div>
       <Wrapper>
-        <SingleProduct dessert={desserts[0]} numbers={numbers} key={0}/>
+        <SingleProduct dessert={desserts[0]} key={0}/>
         <ProductsSectionTiTleContent context={'推薦商品'}/>
         <Section>
           {desserts.map((dessert,i) => <Item dessert={dessert} key={i}/>)}
