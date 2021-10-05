@@ -1,5 +1,7 @@
-import IconMark from "../../../components/contexts/IconMark"
 import styled from "styled-components"
+
+import IconMark from "../../../components/contexts/IconMark"
+import PageChange from "../../../components/contexts/PageChange"
 import { MEDIA_QUERY_SD } from "../../../components/Style/style"
 
 const Wrapper = styled.div`
@@ -246,6 +248,7 @@ const OrderPage = () => {
             </Table>
           </OrderSection>
         </Main>
+        <PageChange />
       </Wrapper>
     </>
   )
