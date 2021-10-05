@@ -45,7 +45,7 @@ const FormItem = styled.div`
   
 `
 
-const UserAction = () => {
+const User = () => {
   return (
     <FormWrapper>
       <H2>個人資訊</H2>
@@ -96,4 +96,4 @@ const UserAction = () => {
   )
 }
 
-export default UserAction
+export default User

@@ -4,8 +4,6 @@ import { MEDIA_QUERY_SD } from "../../../components/Style/style"
 
 const FormWrapper = styled.div`
   margin:0 auto;
-  display:flex;
-  flex-direction:column;
   padding-top:80px;
   padding-left:20px;
   & div {
@@ -20,14 +18,11 @@ const FormWrapper = styled.div`
  
 `
 const FormRow = styled.div`
-  display:flex;
   &:last-child {
     margin-top:50px;
   }
 
   ${MEDIA_QUERY_SD} {
-    display:flex;
-    flex-direction:column;
     &:last-child {
       text-align:center;
     }
@@ -35,7 +30,7 @@ const FormRow = styled.div`
 `
 const FormItem = styled.div`
   padding: 0 20px;
-  flex-grow:1;
+  
   & label {
     color:#212529;
     font-size:16px;
@@ -52,6 +47,11 @@ const FormItem = styled.div`
 
    
   
+`
+const WarnningText = styled.p`
+  padding: 0 20px;
+  color:#E55555;
+  margin-bottom:50px;
 `
 const Button = styled.button`
   color : #ABB4BB;
@@ -85,52 +85,37 @@ const Button = styled.button`
 
 `
 
-const UserInfo = () => {
-  const [lastName, setLastName] = useState('Yang')
-  const [firstName, setFirstName] = useState('Ashi')
-  const [nickName, setNickName] = useState('yangyang')
-  const [phone, setPhone] = useState('0912345678')
+const EditPassword = () => {
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [newPassword2, setNewPassword2] = useState('')
+
   return (
     <FormWrapper>
       <FormRow>
         <FormItem>
-          <label htmlFor="lastName">
-            姓
+          <label htmlFor="oldPassword">
+            目前的密碼
           </label>
-          <input value={lastName} id="lastName" onChange={(e) => setLastName(e.target.value)} />
-
-        </FormItem>
-        <FormItem>
-          <label htmlFor="firstName">
-            名
-          </label>
-          <input value={firstName} id="firstName" onChange={(e) => setFirstName(e.target.value)} />
+          <input value={oldPassword} id="oldPassword" onChange={(e) => setOldPassword(e.target.value)} type="password" />
 
         </FormItem>
       </FormRow>
       <FormRow>
         <FormItem>
-          <label htmlFor="nickName">
-            暱稱
+          <label htmlFor="newPassword">
+            新的密碼
           </label>
-          <input value={nickName} id="nickName" onChange={(e) => setNickName(e.target.value)} />
-
+          <input value={newPassword} id="newPassword" onChange={(e) => setNewPassword(e.target.value)} type="password" />
         </FormItem>
-        <FormItem>
-          <label htmlFor="phone">
-            手機
-          </label>
-          <input value={phone} id="phone" onChange={(e) => setPhone(e.target.value)} />
-
-        </FormItem>
+        <WarnningText>*請輸入6個字元以上的英文字母及數字，不可使用特殊符號</WarnningText>
       </FormRow>
       <FormRow>
         <FormItem>
-          <label>
-            Email
+          <label htmlFor="newPassword2">
+            新密碼確認
           </label>
-          <input type="email" value={"123@gmail.com"} disabled="disabled" />
-
+          <input value={newPassword2} id="newPassword2" onChange={(e) => setNewPassword2(e.target.value)} type="password" />
         </FormItem>
       </FormRow>
       <FormRow>
@@ -145,4 +130,4 @@ const UserInfo = () => {
   )
 }
 
-export default UserInfo
+export default EditPassword

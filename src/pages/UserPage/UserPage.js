@@ -9,6 +9,7 @@ import {
 import IconMark from "../../components/contexts/IconMark"
 import UserInfo from "./components/UserInfo"
 import User from './components/User'
+import EditPassword from "./components/EditPassword"
 import { MEDIA_QUERY_SD } from "../../components/Style/style"
 
 
@@ -122,7 +123,7 @@ const UserPage = () => {
                 <UserInfo />
               </Route>
               <Route path={`${path}/editPWD`}>
-                修改密碼
+                <EditPassword />
               </Route>
               <Route path={`${path}/myorders`}>
                 我的訂單
