@@ -10,6 +10,7 @@ import HomePage from "../../pages/HomePage"
 import ProductsPage from "../../pages/ProductsPage"
 import AboutPage from '../../pages/AboutPage'
 import FaqPage from '../../pages/FaqPage';
+import SearchPage from '../../pages/SearchPage';
 
 const Root = styled.div`
 `
@@ -34,6 +35,9 @@ function App() {
           </Route>
           <Route path="/faq">
             <FaqPage />
+          </Route>
+          <Route path="/search">
+            <SearchPage />
           </Route>
         </Switch>
         <Footer />
