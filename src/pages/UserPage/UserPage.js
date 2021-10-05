@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 import IconMark from "../../components/contexts/IconMark"
 import UserInfo from "./components/UserInfo"
+import User from './components/User'
 import { MEDIA_QUERY_SD } from "../../components/Style/style"
 
 
@@ -38,7 +39,6 @@ const SideBar = styled.div`
 `
 const Main = styled.div`
   flex-grow:1;
-  padding:12px;
    ${MEDIA_QUERY_SD} {
     border-top:2px solid #E2E2E2;
     padding-top:40px;
@@ -63,6 +63,11 @@ const SideBarItem = styled(Link)`
   padding:20px;
   border-bottom: 1px solid #808080;
   position:relative;
+
+  &:hover {
+    color:#D49E6A;
+  }
+
   ${props => props.$active && `
     color:#D49E6A;
     font-weight:700;
@@ -110,7 +115,9 @@ const UserPage = () => {
           </SideBar>
           <Switch>
             <Main>
-              <Route exact path={path}>第一個畫面</Route>
+              <Route exact path={path}>
+                <User />
+              </Route>
               <Route path={`${path}/info`}>
                 <UserInfo />
               </Route>
