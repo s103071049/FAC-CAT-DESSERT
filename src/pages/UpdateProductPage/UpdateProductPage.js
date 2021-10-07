@@ -1,8 +1,7 @@
-import React from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from '../../components/Style/style'
 import cameraIcon from '../../components/img/icon/camera.svg'
-
 const desc = `2020新品，日本柚子帶出輕盈微酸的口感。
 
 臺灣鐵觀音帶出濃郁茶香
@@ -20,7 +19,7 @@ const desc = `2020新品，日本柚子帶出輕盈微酸的口感。
 
 而有一種更輕盈順口的口感
 `
-const description = `從電腦中選取圖檔，
+const imgLoadingDesc = `從電腦中選取圖檔，
 最佳大小為 600px * 600px`
 
 const Wrapper = styled.div`
@@ -29,6 +28,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
   padding: 12px;
 `
+
 const Title = styled.h2`
   color: #333;
 `
@@ -47,11 +47,12 @@ const Column = styled.div`
   white-space: nowrap;
   color: #917856;
   font-weight: bold;
-  padding: ${props => props.as === 'img' ? '0 28px' : '8px'};
+  padding: 8px;
 `
+
 const Row = styled.input`
-  padding: ${props => props.as === 'img' ? '0 28px' : '8px'};
-  width: ${props => props.as === 'img' ? '25%' : '100%'};
+  padding: 8px;
+  width: 100%;
   height: ${props => props.as === 'textarea' ? '200px' : 'auto'};
   outline: none;
   background: rgb(201, 186, 152, 0.4);
@@ -64,52 +65,72 @@ const Row = styled.input`
     font-weight: bold;
   }
 `
-const Desc = styled.div`
-  display: flex;
-  flex-direction: column;
-  white-space: pre-wrap;
-  color: #917856;
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 1.5rem;
-  padding: 0 24px;
+const Img = styled.img`
+  width: 50%;
+  padding: 0 28px;
+  background: rgb(201, 186, 152, 0.4);
+  ${MEDIA_QUERY_SD} {
+    width: 100%;
+  }
 `
+
 const Button = styled.div`
-  background: rgba(201, 186, 152, 0.7);
-  padding: 8px;
+  background: rgba(201, 186, 152, 2);
+  padding: 16px 0;
   text-align: center;
-  width: 15%;
-  margin: 0 auto;
-  margin-top: -36px;
+  color: #917856;
   cursor: pointer;
   border-radius: 8px;
   &: hover {
-    background: rgba(201, 186, 152, 2);
+    color: white;
+    font-weight: bold;
     transition: all 0.5s ease-out;
   }
 `
 const Submit = styled.div`
   text-align: center;
+  border-radius: 8px;
   cursor: pointer;
+  color: #917856;
+  font-weight: bold;
   padding: 16px;
   background: white;
   border: 1px solid rgba(201, 186, 152, 0.9);
   margin: 0;
   margin-top: 36px;
   &: hover {
-    background: rgba(201, 186, 152, 2);
-    transition: all 0.5s ease-out;
+    color: white;
+    background: rgba(201, 186, 152, 1.5);
+    transition: all 0.5s ease;
   }
   margin-bottom: 18px;
 `
-function Input({name, value, as, src, children}) {
+const Desc = styled.div`
+  white-space: wrap;
+  line-height: 1.5rem;
+  padding: 6px;
+  color: #917856;
+  font-weight: bold;
+  font-size: 20px;
+  ${MEDIA_QUERY_SD} {
+    font-size: 18px;
+  }
+`
+function Input({name, value, as}) {
+  const [allValues, setAllValues] = useState({
+    '商品名：': '柚香鐵觀音',
+    '商品介紹：': `${desc}`,
+    '售價：': 200,
+    '限量：': 500
+  })
+  const handleInputChange = (e) => {
+    console.log(e.target.name)
+    setAllValues({...allValues, [e.target.name]: e.target.value})
+  }
   return (
     <Content>
       <Column>{name}</Column>
-      <Row value={value} as={as} src={src}/>
-      <Desc>
-          {children}
-      </Desc>
+      <Row name={name} value={allValues[value]} as={as} onChange={handleInputChange} placeholder={'請輸入'}/>
    </Content>
   )
 }
@@ -123,10 +144,18 @@ const UpdateProductPage = () => {
       <div>
         <Wrapper>
           <Title>編輯商品：id = 1 柚香鐵觀音</Title>
-            <Input name={'商品名：'} value={'柚香鐵觀音'}/>
-            <Input name={'商品介紹：'} as={'textarea'} value={desc}/>
-            <Input name={'售價：'} value={'220'}/>
-            <Input name={'限量：'} value={'0'}/>
+            <Input name={'商品名：'} value={'商品名：'}/>
+            <Input name={'商品介紹：'} as={'textarea'} value={'商品介紹：'} />
+            <Input name={'售價：'} value={'售價：'} />
+            <Input name={'限量：'} value={'限量：'} />
+            <Content>
+                <Column>{`上傳圖片：`}</Column>
+            </Content>
+            <Content>
+              <Img src={cameraIcon}/>
+              <Desc>{`${imgLoadingDesc}`}</Desc>
+            </Content>
+            <Button>上傳圖片</Button>
             <Bottom>
               <Submit>編輯完成</Submit>
             </Bottom>
