@@ -38,7 +38,7 @@ const Content = styled.div`
   & + & {
     margin-top: 24px;
   }
-  ${MEDIA_QUERY_SD} {
+  ${`@media screen and (max-width: 400px)`} {
     flex-direction: column;
   }
 `
@@ -69,7 +69,7 @@ const Img = styled.img`
   width: 50%;
   padding: 0 28px;
   background: rgb(201, 186, 152, 0.4);
-  ${MEDIA_QUERY_SD} {
+  ${`@media screen and (max-width: 400px)`} {
     width: 100%;
   }
 `
@@ -135,6 +135,20 @@ function Input({name, value, as}) {
   )
 }
 
+function UploadImg({name, src, desc}) {
+  return (
+    <>
+    <Content>
+      <Column>{name}</Column>
+    </Content>
+    <Content>
+      <Img src={src}/>
+      <Desc>{desc}</Desc>
+    </Content>
+    <Button>上傳圖片</Button>
+    </>
+  )
+}
 const Bottom = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -148,21 +162,13 @@ const UpdateProductPage = () => {
             <Input name={'商品介紹：'} as={'textarea'} value={'商品介紹：'} />
             <Input name={'售價：'} value={'售價：'} />
             <Input name={'限量：'} value={'限量：'} />
-            <Content>
-                <Column>{`上傳圖片：`}</Column>
-            </Content>
-            <Content>
-              <Img src={cameraIcon}/>
-              <Desc>{`${imgLoadingDesc}`}</Desc>
-            </Content>
-            <Button>上傳圖片</Button>
+            <UploadImg name={'上傳圖片：'} src={cameraIcon} desc={`${imgLoadingDesc}`}/>
             <Bottom>
               <Submit>編輯完成</Submit>
             </Bottom>
         </Wrapper>
       </div>
     )
-  
   }
   
 export default UpdateProductPage
