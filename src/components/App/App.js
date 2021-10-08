@@ -4,6 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+
 import Header from '../Header';
 import Footer from '../Footer';
 import HomePage from "../../pages/HomePage";
@@ -13,6 +14,9 @@ import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
 import AddProductPage from '../../pages/AddProductPage';
 import UpdateProductPage from '../../pages/UpdateProductPage';
+import AddDiscountPage from '../../pages/AddDiscountPage';
+import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
+
 const Root = styled.div`
 `
 
@@ -45,6 +49,12 @@ function App() {
             </Route>
             <Route path="/adminUpdateProduct">
               <UpdateProductPage />
+            </Route>
+            <Route path="/adminAddDiscount">
+              <AddDiscountPage />
+            </Route>
+            <Route path="/adminUpdateDiscount">
+              <UpdateDiscountPage />
             </Route>
           </Switch>
         <Footer />

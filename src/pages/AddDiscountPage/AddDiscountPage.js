@@ -1,10 +1,6 @@
 import React, {useState} from "react"
 import styled from "styled-components"
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from '../../components/Style/style'
-import cameraIcon from '../../components/img/icon/camera.svg'
-
-const imgLoadingDesc = `從電腦中選取圖檔，
-最佳大小為 600px * 600px`
 
 const Wrapper = styled.div`
   max-width: 1024px;
@@ -28,10 +24,10 @@ const Content = styled.div`
 `
 const Column = styled.div`
   font-size: 20px;
-  white-space: nowrap;
   color: #917856;
   font-weight: bold;
   padding: 8px;
+  white-space: nowrap;
 `
 
 const Row = styled.input`
@@ -42,35 +38,14 @@ const Row = styled.input`
   background: rgb(201, 186, 152, 0.4);
   border: rgb(201, 186, 152, 0.4);
   border-radius: 4px;
-  font-size: 18px;
+  font-size: 20px;
   color: #917856;
   &:: placeholder {
     color: #917856;
     font-weight: bold;
   }
 `
-const Img = styled.img`
-  width: 50%;
-  padding: 0 28px;
-  background: rgb(201, 186, 152, 0.4);
-  ${`@media screen and (max-width: 400px)`} {
-    width: 100%;
-  }
-`
 
-const Button = styled.div`
-  background: rgba(201, 186, 152, 2);
-  padding: 16px 0;
-  text-align: center;
-  color: #917856;
-  cursor: pointer;
-  border-radius: 8px;
-  &: hover {
-    color: white;
-    font-weight: bold;
-    transition: all 0.5s ease-out;
-  }
-`
 const Submit = styled.div`
   text-align: center;
   border-radius: 8px;
@@ -89,26 +64,13 @@ const Submit = styled.div`
   }
   margin-bottom: 18px;
 `
-const Desc = styled.div`
-  white-space: wrap;
-  line-height: 1.5rem;
-  padding: 6px;
-  color: #917856;
-  font-weight: bold;
-  font-size: 20px;
-  ${MEDIA_QUERY_SD} {
-    font-size: 18px;
-  }
-`
+
 function Input({name, value, as, placeholder}) {
   const [allValues, setAllValues] = useState({
-    '商品名：': '',
-    '商品介紹：': '',
-    '售價：': '',
-    '限量：': ''
+    '運費門檻：': '',
+    '運費說明：': ''
   })
   const handleInputChange = (e) => {
-    console.log(e.target.name)
     setAllValues({...allValues, [e.target.name]: e.target.value})
   }
   return (
@@ -119,34 +81,18 @@ function Input({name, value, as, placeholder}) {
   )
 }
 
-function UploadImg({name, src, desc}) {
-  return (
-    <>
-    <Content>
-      <Column>{name}</Column>
-    </Content>
-    <Content>
-      <Img src={src}/>
-      <Desc>{desc}</Desc>
-    </Content>
-    <Button>上傳圖片</Button>
-    </>
-  )
-}
+
 const Bottom = styled.div`
   display: flex;
   justify-content: flex-end;
 `
-const AddProductPage = () => {
+const AddDiscountPage = () => {
     return (
       <div>
         <Wrapper>
-          <Title>新增商品：</Title>
-            <Input name={'商品名：'} value={'商品名：'} placeholder={'請輸入商品名稱'}/>
-            <Input name={'商品介紹：'} as={'textarea'} value={'商品介紹：'} placeholder={'請輸入產品介紹'} />
-            <Input name={'售價：'} value={'售價：'} placeholder={'請輸入產品售價'} />
-            <Input name={'限量：'} value={'限量：'} placeholder={'請輸入產品限定數量'} />
-            <UploadImg name={'上傳圖片：'} src={cameraIcon} desc={`${imgLoadingDesc}`}/>
+          <Title>新增運費規則</Title>
+            <Input name={'運費門檻：'} value={'運費門檻：'} placeholder={'請輸入運費門檻'}/>
+            <Input name={'運費說明：'} as={'textarea'} value={'運費說明：'} placeholder={'請輸入運費說明'} />
             <Bottom>
               <Submit>提交</Submit>
             </Bottom>
@@ -155,4 +101,4 @@ const AddProductPage = () => {
     )
   }
   
-export default AddProductPage
+export default AddDiscountPage
