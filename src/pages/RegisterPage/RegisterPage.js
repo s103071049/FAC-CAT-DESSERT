@@ -1,0 +1,141 @@
+import React from "react";
+import styled from "styled-components";
+import { MEDIA_QUERY_MD,MEDIA_QUERY_SD  } from '../../components/Style/style'
+import IconMark from "../../components/contexts/IconMark"
+import ProductsSectionTiTleContent from "../../components/contexts/ProductsSectionTiTleContent";
+import RegisterFormContext from "./components/RegisterFormContext";
+import { Link } from "react-router-dom";
+
+const RegisterWrapper = styled.div`
+  max-width: 1024px;
+  margin: 0 auto;
+  margin-top:15px;
+  padding:10px;
+  min-height:70vh;
+`
+const RegisterContentWrapper = styled.div`
+  width: 100%;
+  border: 1px solid #E2E2E2;
+  text-align:center;
+  margin-top:15px;
+  padding:15px;
+`
+const RegisterContentTitle = styled.h2`
+font-size: 24px;
+`
+const FBButton = styled.button`
+  color:#fff;
+  background: #3A59A4;
+  border: none;
+  box-shadow: 3px 3px 3px #6f89c7;
+  border-radius: 8px;
+  padding: 5px 40px;
+  font-size: 24px;
+  cursor:pointer;
+  margin-bottom: 15px;
+`
+const Hr = styled.hr`
+  border:0;
+  height: 1px;
+  background-color: #E2E2E2;
+  width: 90%;
+`
+const RegisterForm = styled.form`
+  margin:0 auto;
+  padding: 30px 0;
+  max-width: 390px;
+`
+
+const TextAlignStartWrapper =styled.div`
+  text-align:start;
+`
+const RegisterFormSubmit = styled.button`
+  width:100%; 
+  margin-top:20px;
+  color:#fff;
+  background:#E1C09F;
+  border: none;
+  box-shadow: 3px 3px 3px #f0cdab;
+  border-radius: 8px;
+  padding: 5px 0;
+  font-size: 24px;
+  cursor:pointer;
+`
+const KeepRegister = styled.div`
+padding-top:10px;
+`
+
+const RegisterFormContextCheckboxInput = styled.input`
+`
+const RegisterFormContextCheckboxInputlabel = styled.label`
+    margin-left:15px;
+`
+const RegisterAnotherInfo = styled.div`
+
+`
+const IsmemberInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom:15px;
+`
+const IsmemberTitle = styled.p`
+  margin:0;
+`
+const LoginLink = styled(Link)`
+  text-decoration:none;
+  color: #33A4E8;
+  font-size:18px;
+  margin-left:15px;
+`
+
+const ServerList = styled(Link)`
+  text-decoration:none;
+  color: #33A4E8;
+  font-size:18px;
+`
+const Statement = styled(ServerList)`
+`
+const RegisterPage = () => {
+  return (
+    <div>
+      <IconMark context={"註冊新帳號"}/>
+      <RegisterWrapper>
+        <ProductsSectionTiTleContent context={"註冊新帳號"}/>
+        <RegisterContentWrapper>
+          <RegisterContentTitle>加入會員享受輕鬆購物</RegisterContentTitle>
+          <FBButton>快速註冊</FBButton>
+          <Hr/>
+          <RegisterContentTitle>電子郵件註冊</RegisterContentTitle>
+          <RegisterForm>
+          <RegisterFormContext  labalfor="name" id="name" type="text" name="name">姓名<span style={{color:'red'}}>*</span></RegisterFormContext>
+          <RegisterFormContext  labalfor="email" id="email" type="email" name="email">電子郵件<span style={{color:'red'}}>*</span></RegisterFormContext>
+          <RegisterFormContext  labalfor="tele" id="tele" type="tel" name="tele">手機</RegisterFormContext>
+          <RegisterFormContext  labalfor="birth" id="birth" type="date" name="birth">生日</RegisterFormContext>
+          <RegisterFormContext  labalfor="password" id="password" type="password" name="password">密碼<span style={{color:'red'}}>*</span></RegisterFormContext>
+          <RegisterFormContext  labalfor="confirmPassword" id="confirmPassword" type="password" name="confirmPassword">確認密碼<span style={{color:'red'}}>*</span></RegisterFormContext>
+          <TextAlignStartWrapper>
+            <RegisterFormSubmit>加入會員</RegisterFormSubmit>
+            <KeepRegister>
+              <RegisterFormContextCheckboxInput type="checkbox" name="noSubscription" id="noSubscription" value="noSubscription"/><RegisterFormContextCheckboxInputlabel for="noSubscription">不訂閱店家優惠</RegisterFormContextCheckboxInputlabel>
+            </KeepRegister>
+          </TextAlignStartWrapper >
+          </RegisterForm>
+          <RegisterAnotherInfo>
+            <IsmemberInfo>
+              <IsmemberTitle>我已經有會員帳號了？</IsmemberTitle>
+              <LoginLink to="#">回登入頁面</LoginLink>
+            </IsmemberInfo>
+            <div>
+              註冊表示同意 &nbsp;
+              <ServerList to="#">商店服務條例</ServerList>
+              &nbsp;與 &nbsp;
+              <Statement to="#">會員責任規範及個資聲明</Statement>
+            </div>
+          </RegisterAnotherInfo>
+        </RegisterContentWrapper>
+      </RegisterWrapper>
+    </div>
+    )
+}
+
+export default RegisterPage
