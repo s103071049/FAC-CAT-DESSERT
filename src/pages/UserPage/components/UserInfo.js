@@ -30,6 +30,8 @@ const FormRow = styled.div`
     flex-direction:column;
     &:last-child {
       text-align:center;
+      margin-top:20px;
+
     }
   }
 `
@@ -49,21 +51,18 @@ const FormItem = styled.div`
     padding:10px 20px;
     border-radius:6px;
   }
-
-   
-  
 `
 const Button = styled.button`
   color : #ABB4BB;
   border:1px solid #ABB4BB;
   background:#fff;
   border-radius:6px;
-  padding:6px 60px;
+  padding:6px 36px;
   cursor:pointer;
   transition:all 0.1s;
 
   & + & {
-    margin-left:30px;
+    margin-left:8px;
   }
  
   &[type="submit"] {
@@ -79,7 +78,7 @@ const Button = styled.button`
    ${MEDIA_QUERY_SD} {
     & + & {
       margin:0;
-      margin-top:30px;
+      margin-top:20px;
     }
   }
 
@@ -139,8 +138,6 @@ const UserInfo = () => {
           <Button type="submit">確定修改</Button>
         </FormItem>
       </FormRow>
-
-
     </FormWrapper>
   )
 }
