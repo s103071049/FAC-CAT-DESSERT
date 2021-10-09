@@ -22,6 +22,9 @@ const PreviousPageButton = styled.button`
   text-align: center;
   cursor: pointer;
   transition: background 0.5s ease-out;
+  &:hover {
+    background: #60373e;
+  }
 `
 const NextPageButton = styled(PreviousPageButton)`
   margin-left:5px;
