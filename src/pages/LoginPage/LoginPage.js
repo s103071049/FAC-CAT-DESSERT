@@ -99,7 +99,7 @@ const LoginPage = () => {
           <TextAlignStartWrapper>
             <LoginFormSubmit>會員登入</LoginFormSubmit>
             <KeepLogin>
-              <LoginFormContextCheckboxInput type="checkbox" name="keepLogin" id="keepLogin" value="yes"/><LoginFormContextCheckboxInputlabel for="keepLogin">保持登入</LoginFormContextCheckboxInputlabel>
+              <LoginFormContextCheckboxInput type="checkbox" name="keepLogin" id="keepLogin" value="yes"/><LoginFormContextCheckboxInputlabel htmlFor="keepLogin">保持登入</LoginFormContextCheckboxInputlabel>
             </KeepLogin>
           </TextAlignStartWrapper >
           </LoginForm>

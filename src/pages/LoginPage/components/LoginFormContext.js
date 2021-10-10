@@ -22,7 +22,7 @@ const LoginFormContextInput = styled.input`
 export default function LoginFormContext  ({labalfor,children,id,type ,name}){
   return(
     <LoginFormContextWrapper>
-    <LoginFormContextLabel for={labalfor}>{children}</LoginFormContextLabel>
+    <LoginFormContextLabel htmlFor={labalfor}>{children}</LoginFormContextLabel>
     <LoginFormContextInput id={id} type={type} name={name}/>
   </LoginFormContextWrapper>
   )
