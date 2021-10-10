@@ -167,7 +167,7 @@ export default function OrderWholeListPage() {
             </Tr>
           </Thead>
           <Tbody>
-            {tdcontexts.map(tdcontext=><Tr>{tdcontext.map((context,index)=><Td><RWDTitleSpan>{context.title}</RWDTitleSpan>{context.td}</Td>)}</Tr>)}
+            {tdcontexts.map((tdcontext,index)=><Tr key={index}>{tdcontext.map((context,index)=><Td key={index}><RWDTitleSpan>{context.title}</RWDTitleSpan>{context.td}</Td>)}</Tr>)}
           </Tbody>
         </Table>
       </OrderSection>
