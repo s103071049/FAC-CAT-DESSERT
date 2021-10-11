@@ -14,6 +14,8 @@ import SearchPage from '../../pages/SearchPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
+import AddProductPage from '../../pages/AddProductPage';
+
 const Root = styled.div`
 `
 
@@ -49,6 +51,9 @@ function App() {
           </Route>
           <Route path="/admin/updateDiscount">
             <UpdateDiscountPage />
+          </Route>
+          <Route path="/admin/addProduct">
+            <AddProductPage />
           </Route>
         </Switch>
         <Footer />
