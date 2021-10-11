@@ -56,8 +56,10 @@ function App() {
           <Route path="/admin/addProduct">
             <AddProductPage />
           </Route>
+          <Route path="/admin/updateProduct">
+            <UpdateProductPage />
+          </Route>
         </Switch>
-
         <Footer />
       </Router >
     </Root >
