@@ -4,6 +4,7 @@ import IconMark from "../../components/contexts/IconMark"
 import PageChange from "../../components/contexts/PageChange"
 import OrderStatusFilter from "./components/OrderStatusFilter"
 import OrderStatusSection from "./components/OrderStatusSection"
+import HandledOrderDropdown from "./components/HandledOrderDropdown"
 
 const Wrapper = styled.div`
   max-width:1042px;
@@ -78,8 +79,15 @@ const OrderPage = () => {
       <Wrapper>
         <IconMark context={"訂單管理"} />
         <Main>
-          <OrderStatusFilter selectOrderStatus={selectOrderStatus} handleOrderFilterClick={handleOrderFilterClick} />
-          <OrderStatusSection orders={currentOrders} />
+          <OrderStatusFilter
+            selectOrderStatus={selectOrderStatus}
+            handleOrderFilterClick={handleOrderFilterClick}
+          />
+          {selectOrderStatus === 'handled' ? <HandledOrderDropdown /> : ''}
+          <OrderStatusSection
+            orders={currentOrders}
+            selectOrderStatus={selectOrderStatus}
+          />
         </Main>
         <PageChange />
       </Wrapper>

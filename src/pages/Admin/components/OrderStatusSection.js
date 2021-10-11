@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { Link } from 'react-router-dom'
+import { useState } from "react/cjs/react.development"
 
 
 const OrderSection = styled.section`
@@ -80,8 +81,30 @@ const OrderNumber = styled(Link)`
   color:#917856;
   font-weight:bold;
 `
-
-export default function OrderStatusSection({ orders }) {
+const orderTableHeads = [
+  {
+    status: 'unhandled',
+    heads: ['訂單編號', '訂單時間']
+  },
+  {
+    status: 'handled',
+    heads: ['訂單編號', '訂單時間', '處理時間', '訂單狀態']
+  },
+  {
+    status: 'handled-accepted',
+    heads: ['訂單編號', '訂單時間', '處理時間', '出貨時間']
+  },
+  {
+    status: 'handled-rejected',
+    heads: ['訂單編號', '訂單時間', '處理時間', '拒單原因']
+  },
+  {
+    status: 'all',
+    heads: ['訂單編號', '訂單時間', '處理時間', '訂單狀態']
+  }
+]
+export default function OrderStatusSection({ orders, selectOrderStatus }) {
+  const [ordersStatus, setOrdersStatus] = useState(selectOrderStatus)
   const RenderOrderData = () => {
     return orders.map((order, index) => {
       return (
@@ -100,19 +123,23 @@ export default function OrderStatusSection({ orders }) {
     })
   }
 
+  const RenderOrderTableHeads = () => {
+    const [selectTableHeads] = orderTableHeads.filter(orderTableHead => orderTableHead.status === selectOrderStatus)
+    const { heads } = selectTableHeads
+    return heads.map(head => {
+      return (
+        <Th key={head}>{head}</Th>
+      )
+    })
+  }
+
   return (
     <OrderSection>
       <Table>
         <Thead>
           <Tr>
-            <Th>
-            </Th>
-            <Th>
-              訂單編號
-            </Th>
-            <Th>
-              訂單時間
-            </Th>
+            <Th></Th>
+            <RenderOrderTableHeads />
           </Tr>
         </Thead>
         <Tbody>
