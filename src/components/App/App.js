@@ -11,8 +11,14 @@ import ProductsPage from "../../pages/ProductsPage";
 import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
+
 import AddProductPage from '../../pages/AddProductPage';
 import UpdateProductPage from '../../pages/UpdateProductPage';
+
+import LoginPage from '../../pages/LoginPage/LoginPage';
+import AddDiscountPage from '../../pages/AddDiscountPage';
+import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
+
 const Root = styled.div`
 `
 
@@ -21,32 +27,39 @@ function App() {
     <Root>
       <Router>
         <Header />
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path="/products">
-              <ProductsPage />
-            </Route>
-            <Route path="/product">
-              {/* <ProductPage /> */}
-            </Route>
-            <Route path="/about">
-              <AboutPage />
-            </Route>
-            <Route path="/faq">
-              <FaqPage />
-            </Route>
-            <Route path="/search">
-              <SearchPage />
-            </Route>
-            <Route path="/adminAddProduct">
-              <AddProductPage />
-            </Route>
-            <Route path="/adminUpdateProduct">
-              <UpdateProductPage />
-            </Route>
-          </Switch>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path="/products">
+            <ProductsPage />
+          </Route>
+          <Route path="/product">
+            {/* <ProductPage /> */}
+          </Route>
+          <Route path="/about">
+            <AboutPage />
+          </Route>
+          <Route path="/faq">
+            <FaqPage />
+          </Route>
+          <Route path="/search">
+            <SearchPage />
+          </Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/admin/addDiscount">
+            <AddDiscountPage />
+          </Route>
+          <Route path="/admin/updateDiscount">
+            <UpdateDiscountPage />
+          </Route>
+          <Route path="/admin/addProduct">
+            <AddProductPage />
+          </Route>
+        </Switch>
+
         <Footer />
       </Router >
     </Root >
