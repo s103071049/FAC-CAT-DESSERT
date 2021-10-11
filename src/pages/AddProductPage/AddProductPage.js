@@ -3,7 +3,9 @@ import styled from "styled-components"
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from '../../components/Style/style'
 import cameraIcon from '../../components/img/icon/camera.svg'
 
-const imgLoadingDesc = `從電腦中選取圖檔，
+
+const imgLoadingDesc = `
+從電腦中選取圖檔，
 最佳大小為 600px * 600px`
 
 const Wrapper = styled.div`
@@ -18,12 +20,13 @@ const Title = styled.h2`
 `
 const Content = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   & + & {
     margin-top: 24px;
   }
   ${`@media screen and (max-width: 400px)`} {
     flex-direction: column;
+    align-items: start;
   }
 `
 const Column = styled.div`
@@ -32,6 +35,10 @@ const Column = styled.div`
   color: #917856;
   font-weight: bold;
   padding: 8px;
+  flex-basis: 200px;
+  ${`@media screen and (max-width: 400px)`} {
+    flex-basis: 0;
+  }
 `
 
 const Row = styled.input`
@@ -49,26 +56,39 @@ const Row = styled.input`
     font-weight: bold;
   }
 `
-const Img = styled.img`
-  width: 50%;
-  padding: 0 28px;
-  background: rgb(201, 186, 152, 0.4);
-  ${`@media screen and (max-width: 400px)`} {
-    width: 100%;
-  }
+
+const Img = styled.div`
+  width: 100%;
+  height: 0;
+  background: url(${props => props.url});
+  padding-bottom: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 8px;
+  cursor: pointer;
+  &: hover {
+    filter: brightness(110%);
 `
 
 const Button = styled.div`
   background: rgba(201, 186, 152, 2);
-  padding: 16px 0;
+  padding: 16px 32px;
   text-align: center;
   color: #917856;
   cursor: pointer;
   border-radius: 8px;
+  justify-self: center;
+  display: inline-block;
   &: hover {
     color: white;
     font-weight: bold;
     transition: all 0.5s ease-out;
+  }
+  ${`@media screen and (max-width: 400px)`} {
+    margin: 0 auto;
+    white-space: nowrap;
   }
 `
 const Submit = styled.div`
@@ -90,15 +110,38 @@ const Submit = styled.div`
   margin-bottom: 18px;
 `
 const Desc = styled.div`
-  white-space: wrap;
+  white-space: pre-wrap;
   line-height: 1.5rem;
-  padding: 6px;
+  margin-bottom: 6px;
   color: #917856;
   font-weight: bold;
   font-size: 20px;
-  ${MEDIA_QUERY_SD} {
+  text-align: center;
+  ${MEDIA_QUERY_MD} {
     font-size: 18px;
   }
+`
+const Wrap = styled.div`
+  width: 30%;
+  max-width: 1200px;
+  padding: 0 28px;
+  background: rgb(201, 186, 152, 0.4);
+  ${MEDIA_QUERY_MD} {
+    width: 240px;
+    margin: 0 auto;
+  }
+  ${MEDIA_QUERY_SD} {
+    width: 100%;
+  }
+
+`
+const Upload = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 26px;
+  ${MEDIA_QUERY_MD} {
+    margin: 0 auto;
+  }  
 `
 function Input({name, value, as, placeholder}) {
   const [allValues, setAllValues] = useState({
@@ -126,10 +169,12 @@ function UploadImg({name, src, desc}) {
       <Column>{name}</Column>
     </Content>
     <Content>
-      <Img src={src}/>
-      <Desc>{desc}</Desc>
+      <Wrap><Img url={src}/></Wrap>
+      <Upload>
+        <Desc>{desc}</Desc>
+        <Button>上傳圖片</Button>
+      </Upload>
     </Content>
-    <Button>上傳圖片</Button>
     </>
   )
 }
@@ -148,7 +193,7 @@ const AddProductPage = () => {
             <Input name={'限量：'} value={'限量：'} placeholder={'請輸入產品限定數量'} />
             <UploadImg name={'上傳圖片：'} src={cameraIcon} desc={`${imgLoadingDesc}`}/>
             <Bottom>
-              <Submit>編輯完成</Submit>
+              <Submit>提交</Submit>
             </Bottom>
         </Wrapper>
       </div>

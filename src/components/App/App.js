@@ -11,10 +11,8 @@ import ProductsPage from "../../pages/ProductsPage";
 import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
-
 import AddProductPage from '../../pages/AddProductPage';
 import UpdateProductPage from '../../pages/UpdateProductPage';
-
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
