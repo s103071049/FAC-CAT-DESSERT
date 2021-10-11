@@ -1,8 +1,9 @@
 import styled from "styled-components"
-
+import { Link } from 'react-router-dom'
 import IconMark from "../../components/contexts/IconMark"
 import PageChange from "../../components/contexts/PageChange"
-import OrderStatus from "./components/OrderStatus"
+import OrderStatusFilter from "./components/OrderStatusFilter"
+import { useState } from "react"
 
 const Wrapper = styled.div`
   max-width:1042px;
@@ -14,11 +15,13 @@ const Main = styled.main`
 `
 
 const OrderSection = styled.section`
-  padding-top:40px;
+  margin-top:90px;
 `
 
 const Table = styled.table`
   border-spacing: 1;
+  box-shadow: rgb(201,186,152) 0px 0px 0px 2px, rgb(201,186,152) 0px 4px 6px -1px, rgb(201,186,152) 0px 1px 0px inset;
+
   border-collapse: collapse;
   background: white;
   border-radius: 6px;
@@ -84,90 +87,65 @@ const Td = styled.td`
     margin-bottom: 12px;
   }
 `
-const OrderAction = styled.button`
+const OrderNumber = styled(Link)`
   text-decoration:none;
-  background:#fff;
-  color:#C9BA98;
-  padding:6px 20px;
-  border:1px solid #C9BA98;
-  border-radius:6px;
-  transition: all 0.15s;
-  & + & {
-    margin-left:6px;
-  }
-  &:hover {
-    background:#C9BA98;
-    color:#fff;
-  }
-  @media screen and (max-width: 535px) {
-    & + & {
-      margin-left:10px;
-    }
-    display:inline-block;
-  }
+  color:#917856;
+  font-weight:bold;
 `
 
 const fakeOrders = [
   {
-    id: '#001',
-    orderNum: '123456789AB',
-    orderDate: '2021-09-20-15:34',
-    orderStatus: null
+    order_id: '123456789AB',
+    created_at: '2021-09-20-15:34',
+    accepted_at: '2021-09-20-16:10',
+    completed_at: null,
+    is_accepted: true
   },
   {
-    id: '#002',
-    orderNum: '987654321CD',
-    orderDate: '2021-09-21-15:34',
-    orderStatus: null
+    order_id: '987654321CD',
+    created_at: '2021-09-21-15:34',
+    accepted_at: '2021-09-21-16:10',
+    completed_at: '2021-09-22-09:30',
+    is_accepted: true
   },
   {
-    id: '#003',
-    orderNum: '888888888AA',
-    orderDate: '2021-09-20-15:34',
-    orderStatus: null
+    order_id: '888878888AA',
+    created_at: '2021-09-20-15:34',
+    accepted_at: null,
+    completed_at: null,
+    is_accepted: false
   },
   {
-    id: '#004',
-    orderNum: '888wefew8AA',
-    orderDate: '2021-09-28-15:34',
-    orderStatus: null
+    order_id: '888wefew8AA',
+    created_at: '2021-09-28-15:34',
+    accepted_at: '2021-09-28-16:10',
+    completed_at: null,
+    is_accepted: true
   },
   {
-    id: '#005',
-    orderNum: '888wefew8AA',
-    orderDate: '2021-09-28-15:34',
-    orderStatus: null
+    order_id: '668wefew8AA',
+    created_at: '2021-09-28-15:34',
+    accepted_at: '2021-09-28-16:10',
+    completed_at: '2021-09-29-08:30',
+    is_accepted: true
   },
 ]
 
-const OrderActions = () => {
-  return (
-    <>
-      <OrderAction>
-        Accept
-      </OrderAction>
-      <OrderAction>
-        Reject
-      </OrderAction>
-    </>
-  )
-}
+
 
 const RenderOrderData = ({ orders }) => {
-  return orders.map(order => {
+
+  return orders.map((order, index) => {
     return (
-      <Tr key={order.id}>
+      <Tr key={order.order_id}>
         <Td>
-          {order.id}
+          {index}
         </Td>
         <Td>
-          {order.orderNum}
+          <OrderNumber to={`/admin/orders/${order.order_id}`}>{order.order_id}</OrderNumber>
         </Td>
         <Td>
-          {order.orderDate}
-        </Td>
-        <Td>
-          <OrderActions />
+          {order.created_at}
         </Td>
       </Tr>
     )
@@ -182,16 +160,12 @@ const RenderOrderSection = () => {
         <Thead>
           <Tr>
             <Th>
-              id
             </Th>
             <Th>
               訂單編號
             </Th>
             <Th>
               訂單時間
-            </Th>
-            <Th>
-              訂單處理
             </Th>
           </Tr>
         </Thead>
@@ -203,12 +177,16 @@ const RenderOrderSection = () => {
   )
 }
 const OrderPage = () => {
+  const [selectOrderStatus, setSelectOrderStatus] = useState('unhandled')
+  const handleOrderFilterClick = (selectedStatus) => {
+    setSelectOrderStatus(selectedStatus)
+  }
   return (
     <>
       <Wrapper>
         <IconMark context={"訂單管理"} />
         <Main>
-          <OrderStatus />
+          <OrderStatusFilter selectOrderStatus={selectOrderStatus} handleOrderFilterClick={handleOrderFilterClick} />
           <RenderOrderSection />
         </Main>
         <PageChange />
