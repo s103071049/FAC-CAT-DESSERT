@@ -138,7 +138,7 @@ const Wrap = styled.div`
 const Upload = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 28px;
+  padding: 0 26px;
   ${MEDIA_QUERY_MD} {
     margin: 0 auto;
   }  
