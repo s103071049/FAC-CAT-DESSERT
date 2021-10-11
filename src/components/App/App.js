@@ -16,7 +16,7 @@ import UpdateProductPage from '../../pages/UpdateProductPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
-
+import TransactionPage from '../../pages/TransactionPage';
 const Root = styled.div`
 `
 
@@ -46,6 +46,9 @@ function App() {
           </Route>
           <Route path="/login">
             <LoginPage />
+          </Route>
+          <Route path="/transaction">
+            <TransactionPage />
           </Route>
           <Route path="/admin/addDiscount">
             <AddDiscountPage />
