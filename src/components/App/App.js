@@ -12,6 +12,8 @@ import AboutPage from '../../pages/AboutPage'
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
+import AdminDiscountsPage from '../../pages/AdminDiscountsPage';
+import AdminDiscountsRestorePage from '../../pages/AdminDiscountsRestorePage';
 
 const Root = styled.div`
 `
@@ -42,6 +44,12 @@ function App() {
           </Route>
           <Route path="/login">
             <LoginPage />
+          </Route>
+          <Route exact path="/admin/discounts">
+            <AdminDiscountsPage />
+          </Route>
+          <Route path="/admin/discounts/restore">
+            <AdminDiscountsRestorePage />
           </Route>
         </Switch>
         <Footer />
