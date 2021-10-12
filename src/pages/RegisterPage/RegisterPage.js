@@ -10,8 +10,9 @@ const RegisterWrapper = styled.div`
   max-width: 1024px;
   margin: 0 auto;
   margin-top:15px;
+  margin-bottom:20px;
   padding:10px;
-  min-height:70vh;
+  min-height:73vh;
 `
 const RegisterContentWrapper = styled.div`
   width: 100%;
@@ -21,6 +22,7 @@ const RegisterContentWrapper = styled.div`
   padding:15px;
 `
 const RegisterContentTitle = styled.h2`
+margin:0px;
 font-size: 24px;
 `
 const FBButton = styled.button`
@@ -79,19 +81,20 @@ const IsmemberInfo = styled.div`
   margin-bottom:15px;
 `
 const IsmemberTitle = styled.p`
+  font-size:16px;
   margin:0;
 `
 const LoginLink = styled(Link)`
   text-decoration:none;
   color: #33A4E8;
-  font-size:18px;
+  font-size:16px;
   margin-left:15px;
 `
 
 const ServerList = styled(Link)`
   text-decoration:none;
   color: #33A4E8;
-  font-size:18px;
+  font-size:16px;
 `
 const Statement = styled(ServerList)`
 `
@@ -116,7 +119,7 @@ const RegisterPage = () => {
           <TextAlignStartWrapper>
             <RegisterFormSubmit>加入會員</RegisterFormSubmit>
             <KeepRegister>
-              <RegisterFormContextCheckboxInput type="checkbox" name="noSubscription" id="noSubscription" value="noSubscription"/><RegisterFormContextCheckboxInputlabel for="noSubscription">不訂閱店家優惠</RegisterFormContextCheckboxInputlabel>
+              <RegisterFormContextCheckboxInput type="checkbox" name="noSubscription" id="noSubscription" value="noSubscription"/><RegisterFormContextCheckboxInputlabel htmlFor="noSubscription">不訂閱店家優惠</RegisterFormContextCheckboxInputlabel>
             </KeepRegister>
           </TextAlignStartWrapper >
           </RegisterForm>
@@ -125,7 +128,7 @@ const RegisterPage = () => {
               <IsmemberTitle>我已經有會員帳號了？</IsmemberTitle>
               <LoginLink to="#">回登入頁面</LoginLink>
             </IsmemberInfo>
-            <div>
+            <div style={{fontSize:"16px"}}>
               註冊表示同意 &nbsp;
               <ServerList to="#">商店服務條例</ServerList>
               &nbsp;與 &nbsp;

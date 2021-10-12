@@ -22,7 +22,7 @@ const RegisterFormContextInput = styled.input`
 export default function RegisterFormContext  ({labalfor,children,id,type ,name}){
   return(
     <RegisterFormContextWrapper>
-    <RegisterFormContextLabel for={labalfor}>{children}</RegisterFormContextLabel>
+    <RegisterFormContextLabel htmlFor={labalfor}>{children}</RegisterFormContextLabel>
     <RegisterFormContextInput id={id} type={type} name={name}/>
   </RegisterFormContextWrapper>
   )
