@@ -49,6 +49,7 @@ const SingleProductImage = styled.div`
 `
 const SingleProductDescription = styled.div`
   width: 50%;
+  height: 442px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -81,6 +82,7 @@ const SingleProductPrice = styled.h2`
 const SingleProductDescriptionText = styled.div`
   margin-top: 24px;
   width: 100%;
+  height: 216px;
   font-size: 18px;
   white-space: pre-line;
   align-items: center;
@@ -120,16 +122,10 @@ const SingleProductPage = () => {
 
       日本柚子帶出輕盈微酸的口感，臺灣鐵觀音帶出濃郁茶香
       
-      －
-      
       日本100%柚子汁，柚子輕盈甘納許，臺灣鐵觀音甘納許
       
-      
       **甘納許為巧克力加上鮮奶油製成
-      
-      照片中白色的部分為柚子輕盈甘納許，非鮮奶油打發製作而成
-      
-      而有一種更輕盈順口的口感`
+      `
     },
     {
       id: 2,

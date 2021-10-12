@@ -40,6 +40,9 @@ export function Counter() {
   };
 
   const handleDecrement = () => {
+    if(count === 0){
+      return;  
+    }
     setCount(prevCount => prevCount - 1);
   };
 
