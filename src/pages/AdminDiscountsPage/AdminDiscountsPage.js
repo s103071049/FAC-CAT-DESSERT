@@ -54,12 +54,17 @@ const TitleButton = styled(Link)`
   &+&{
     margin-left:10px;
   }
+  &:hover {
+    background: #60373e;
+    color:#fff;
+  }
   ${MEDIA_QUERY_SD}{
     font-size: 20px;
   }
 `
 const AdminProductsContent = styled.div`
 padding: 15px 0;
+margin-bottom:15px;
 `
 
 const Table = styled.table`
@@ -125,7 +130,7 @@ const AdminDiscountsPage = () => {
     <AdminProductsWrapper>
       <AdminProductsTitle>促銷管理：運費</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput name="productSearch" placeholder= "| 搜尋運費規則"/>
+        <SearchInput name="productSearch" placeholder= "搜尋運費規則"/>
         <div>
           <TitleButton to="/admin/discounts/restore">還原刪除規則</TitleButton>
           <TitleButton to="#">新增規則</TitleButton>

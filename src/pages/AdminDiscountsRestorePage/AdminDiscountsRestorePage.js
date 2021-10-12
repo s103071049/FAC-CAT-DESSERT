@@ -39,13 +39,13 @@ const SearchInput = styled.input`
     font-weight: bold;
   }
   ${MEDIA_QUERY_MD}{
-    margin-bottom: 30px;
     width: 100%;
   }
 
 `
 const AdminProductsContent = styled.div`
 padding: 15px 0;
+margin-bottom:15px;
 `
 
 const Table = styled.table`
@@ -111,7 +111,7 @@ const AdminDiscountsRestorePage = () => {
     <AdminProductsWrapper>
       <AdminProductsTitle>還原運費促銷規則</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput name="productSearch" placeholder= "| 搜尋已刪除運費規則"/>
+        <SearchInput name="productSearch" placeholder= "搜尋已刪除運費規則"/>
       </AdminProductsInfo>
       <AdminProductsContent>
       <Table>

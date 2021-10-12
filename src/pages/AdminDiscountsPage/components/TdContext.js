@@ -16,18 +16,6 @@ export const TdContext = ({tdcontext})=>{
 }
 const Tr = styled.tr`
 `
-const Phote = styled.div`
-  background-image:url(${props=>props.img});
-  width: 100%;
-  padding-bottom: 100%;
-  background-size: cover;
-  background-position:center center ;
-  ${MEDIA_QUERY_MD} {
-    display: block;
-    width: 50%;
-    padding-bottom: 50%;
-  }
-`
 const Pricespan = styled.span`
   color:red;
   display: inline;
@@ -39,17 +27,15 @@ const ProductTdButton = styled(Link)`
   border:1px solid #C9BA98;
   border-radius: 8px;
   font-size: 20px;
+  &:hover {
+    background: #60373e;
+    color:#fff;
+  }
   ${MEDIA_QUERY_MD} {
     display:inline-block;
   }
 `
 const Td = styled.td`
-${props=>props.$photo&&`
-width:100%;
-display:inline-flex;
-justify-content:center;
-`
-}
   ${MEDIA_QUERY_MD} {
     padding-left: 10%;
     margin-bottom: 12px;
