@@ -18,6 +18,7 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
+import singleProductPage from '../../pages/SingleProductPage'
 
 const Root = styled.div`
 `
@@ -32,10 +33,7 @@ function App() {
             <HomePage />
           </Route>
           <Route path="/products">
-            <ProductsPage />
-          </Route>
-          <Route path="/product">
-            {/* <ProductPage /> */}
+            {/* <ProductsPage /> */}
           </Route>
           <Route path="/about">
             <AboutPage />
@@ -64,6 +62,7 @@ function App() {
           <Route path="/admin/updateProduct">
             <UpdateProductPage />
           </Route>
+          <Route path="product" component={singleProductPage}/>
         </Switch>
         <Footer />
       </Router >
