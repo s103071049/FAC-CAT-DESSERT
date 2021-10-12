@@ -11,9 +11,11 @@ import ProductsPage from "../../pages/ProductsPage";
 import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
+import RegisterPage from '../../pages/RegisterPage';
 import AddProductPage from '../../pages/AddProductPage';
 import UpdateProductPage from '../../pages/UpdateProductPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
+import RegisterPage from '../../pages/RegisterPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
 
@@ -47,6 +49,9 @@ function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
+          <Route path="/register">
+            <RegisterPage />
+           </Route>
           <Route path="/admin/addDiscount">
             <AddDiscountPage />
           </Route>
