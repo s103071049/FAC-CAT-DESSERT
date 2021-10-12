@@ -1,7 +1,7 @@
 import cake2 from"../../HomePage/components/Image/cake2.jpg"
 import cake3 from"../../HomePage/components/Image/cake3.jpg"
 
-export const thcontexts = ["id","運費門檻","免運說明","刪除","編輯"]
+export const thcontexts = ["id","運費門檻","免運說明","還原","編輯"]
 export const tdcontexts = [
   {
     id:1,

@@ -109,9 +109,9 @@ const Tr = styled.tr`
 const AdminDiscountsRestorePage = () => {
   return (
     <AdminProductsWrapper>
-      <AdminProductsTitle>促銷管理：運費</AdminProductsTitle>
+      <AdminProductsTitle>還原運費促銷規則</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput name="productSearch" placeholder= "| 搜尋運費規則"/>
+        <SearchInput name="productSearch" placeholder= "| 搜尋已刪除運費規則"/>
       </AdminProductsInfo>
       <AdminProductsContent>
       <Table>

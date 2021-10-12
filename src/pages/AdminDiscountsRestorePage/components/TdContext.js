@@ -9,7 +9,7 @@ export const TdContext = ({tdcontext})=>{
       <Td data-title="id">{tdcontext.id}</Td>
       <Td data-title="免運門檻"><Pricespan>{tdcontext.freeDeliveryPrizce}</Pricespan></Td>
       <Td data-title="免運說明">{tdcontext.desc}</Td>
-      <Td data-title="刪除" ><ProductTdButton to="#">刪除</ProductTdButton></Td>
+      <Td data-title="還原" ><ProductTdButton to="#">還原</ProductTdButton></Td>
       <Td data-title="編輯"><ProductTdButton to="#">編輯</ProductTdButton></Td>
     </Tr>
   )

@@ -127,7 +127,7 @@ const AdminDiscountsPage = () => {
       <AdminProductsInfo>
         <SearchInput name="productSearch" placeholder= "| 搜尋運費規則"/>
         <div>
-          <TitleButton to="/admin/products/restore">還原刪除規則</TitleButton>
+          <TitleButton to="/admin/discounts/restore">還原刪除規則</TitleButton>
           <TitleButton to="#">新增規則</TitleButton>
         </div>
       </AdminProductsInfo>
