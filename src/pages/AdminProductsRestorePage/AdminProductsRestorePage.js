@@ -46,6 +46,7 @@ const SearchInput = styled.input`
 `
 const AdminProductsContent = styled.div`
 padding: 15px 0;
+margin-bottom: 15px;
 `
 
 const Table = styled.table`
@@ -111,7 +112,7 @@ const AdminProductsRestorePage = () => {
     <AdminProductsWrapper>
       <AdminProductsTitle>重上架已刪除商品</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput name="productSearch" placeholder= "| 搜尋已刪除之商品"/>
+        <SearchInput name="productSearch" placeholder= "搜尋已刪除之商品"/>
       </AdminProductsInfo>
       <AdminProductsContent>
       <Table>

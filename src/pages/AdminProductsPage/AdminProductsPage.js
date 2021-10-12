@@ -54,12 +54,17 @@ const TitleButton = styled(Link)`
   &+&{
     margin-left:10px;
   }
+  &:hover {
+    background: #60373e;
+    color:#fff;
+  }
   ${MEDIA_QUERY_SD}{
     font-size: 20px;
   }
 `
 const AdminProductsContent = styled.div`
 padding: 15px 0;
+margin-bottom: 15px;
 `
 
 const Table = styled.table`

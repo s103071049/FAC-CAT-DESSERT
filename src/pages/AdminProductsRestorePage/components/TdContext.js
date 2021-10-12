@@ -8,7 +8,7 @@ export const TdContext = ({tdcontext})=>{
     <Tr>
       <Td data-title="id">{tdcontext.id}</Td>
       <Td data-title="商品名">{tdcontext.name}</Td>
-      <Td data-title="商品介紹"><ProductTdButton>詳細資訊</ProductTdButton></Td>
+      <Td data-title="商品介紹"><ProductTdButton to="#">詳細資訊</ProductTdButton></Td>
       <Td data-title="商品圖" $photo={true}><Phote img={tdcontext.photo}/></Td>
       <Td data-title="價格"><Pricespan>{tdcontext.price}</Pricespan></Td>
       <Td data-title="限量">{tdcontext.limit}</Td>
@@ -42,11 +42,19 @@ const ProductTdButton = styled(Link)`
   border:1px solid #C9BA98;
   border-radius: 8px;
   font-size: 20px;
+  &:hover {
+    background: #60373e;
+    color:#fff;
+  }
   ${MEDIA_QUERY_MD} {
     display:inline-block;
   }
 `
 const Td = styled.td`
+  margin-bottom:10px;
+&+&{
+  margin-top:10px;
+}
 ${props=>props.$photo&&`
 width:100%;
 display:inline-flex;
