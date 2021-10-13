@@ -6,12 +6,24 @@ import {
 } from "react-router-dom";
 import Header from '../Header';
 import Footer from '../Footer';
-import HomePage from "../../pages/HomePage"
-import ProductsPage from "../../pages/ProductsPage"
-import AboutPage from '../../pages/AboutPage'
+import HomePage from "../../pages/HomePage";
+import ProductsPage from "../../pages/ProductsPage";
+import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
+
 import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
+
+import RegisterPage from '../../pages/RegisterPage';
+import AddProductPage from '../../pages/AddProductPage';
+import UpdateProductPage from '../../pages/UpdateProductPage';
+import LoginPage from '../../pages/LoginPage/LoginPage';
+import RegisterPage from '../../pages/RegisterPage';
+import AddDiscountPage from '../../pages/AddDiscountPage';
+import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
+import singleProductPage from '../../pages/SingleProductPage'
+import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
+
 
 const Root = styled.div`
 `
@@ -26,10 +38,7 @@ function App() {
             <HomePage />
           </Route>
           <Route path="/products">
-            <ProductsPage />
-          </Route>
-          <Route path="/product">
-            {/* <ProductPage /> */}
+            {/* <ProductsPage /> */}
           </Route>
           <Route path="/about">
             <AboutPage />
@@ -40,9 +49,34 @@ function App() {
           <Route path="/search">
             <SearchPage />
           </Route>
+
           <Route path="/admin/order/1">
             <OrderWholeListPage />
           </Route>
+
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/register">
+            <RegisterPage />
+           </Route>
+          <Route path="/admin/addDiscount">
+            <AddDiscountPage />
+          </Route>
+          <Route path="/admin/updateDiscount">
+            <UpdateDiscountPage />
+          </Route>
+          <Route path="/admin/addProduct">
+            <AddProductPage />
+          </Route>
+          <Route path="/admin/updateProduct">
+            <UpdateProductPage />
+          </Route>
+          <Route path="/admin/order/1">
+            <OrderWholeListPage />
+          </Route>
+          <Route path="product" component={singleProductPage}/>
+
         </Switch>
         <Footer />
       </Router >
