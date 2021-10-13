@@ -24,6 +24,7 @@ import AdminProductsPage from '../../pages/AdminProductsPage';
 import AdminProductsRestorePage from '../../pages/AdminProductsRestorePage';
 import AdminDiscountsPage from '../../pages/AdminDiscountsPage';
 import AdminDiscountsRestorePage from '../../pages/AdminDiscountsRestorePage';
+import OrderPage from '../../pages/Admin/OrderPage';
 
 const Root = styled.div`
 `
@@ -91,6 +92,9 @@ function App() {
             <OrderWholeListPage />
           </Route>
           <Route path="product" component={singleProductPage}/>
+          <Route path="/admin/orders">
+            <OrderPage />
+          </Route>
         </Switch>
         <Footer />
       </Router >
