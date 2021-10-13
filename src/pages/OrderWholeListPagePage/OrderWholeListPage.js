@@ -21,12 +21,19 @@ const Mark = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 const OrderPopupContext = styled.h2`
-  margin: 0px & + & {
+  margin: 0px;
+  & + & {
     padding-top: 15px;
+  }
+  ${MEDIA_QUERY_SD} {
+    font-size: 20px;
   }
 `;
 const OrderSection = styled.section`
   padding-top: 40px;
+  ${MEDIA_QUERY_MD} {
+    padding-top: 20px;
+  }
 `;
 
 const Table = styled.table`
@@ -110,12 +117,19 @@ const AcceptButton = styled.button`
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  &:hover {
+    background: #60373e;
+  }
 `;
 const RejectButton = styled(AcceptButton)`
   color: #917856;
   background: #fff;
   border: 1px #c9ba98 solid;
   margin-left: 20px;
+  &:hover {
+    background: #c9ba98;
+    color: #fff;
+  }
 `;
 
 export default function OrderWholeListPage() {
