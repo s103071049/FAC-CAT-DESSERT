@@ -11,8 +11,6 @@ import ProductsPage from "../../pages/ProductsPage";
 import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
-
-
 import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
 import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
@@ -25,7 +23,8 @@ import singleProductPage from '../../pages/SingleProductPage'
 import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
 import AdminProductsPage from '../../pages/AdminProductsPage';
 import AdminProductsRestorePage from '../../pages/AdminProductsRestorePage';
-
+import AdminDiscountsPage from '../../pages/AdminDiscountsPage';
+import AdminDiscountsRestorePage from '../../pages/AdminDiscountsRestorePage';
 
 const Root = styled.div`
 `
@@ -59,10 +58,15 @@ function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
-
           <Route path="/register">
             <RegisterPage />
            </Route>
+          <Route exact path="/admin/discounts">
+            <AdminDiscountsPage />
+          </Route>
+          <Route path="/admin/discounts/restore">
+            <AdminDiscountsRestorePage />
+          </Route>
           <Route path="/admin/addDiscount">
             <AddDiscountPage />
           </Route>
@@ -85,8 +89,6 @@ function App() {
             <OrderWholeListPage />
           </Route>
           <Route path="product" component={singleProductPage}/>
-
-
         </Switch>
         <Footer />
       </Router >
