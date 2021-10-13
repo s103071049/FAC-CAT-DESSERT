@@ -10,6 +10,7 @@ import HomePage from "../../pages/HomePage";
 import ProductsPage from "../../pages/ProductsPage";
 import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
+import UserPage from '../../pages/UserPage';
 import SearchPage from '../../pages/SearchPage';
 import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
 import LoginPage from '../../pages/LoginPage';
@@ -46,6 +47,9 @@ function App() {
           </Route>
           <Route path="/faq">
             <FaqPage />
+          </Route>
+          <Route path="/user">
+            <UserPage />
           </Route>
           <Route path="/search">
             <SearchPage />
