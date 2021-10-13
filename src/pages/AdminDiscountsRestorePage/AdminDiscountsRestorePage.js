@@ -15,6 +15,12 @@ const AdminProductsWrapper = styled.div`
 const AdminProductsTitle = styled.h2`
 font-size: 36px;
 margin:0;
+${MEDIA_QUERY_MD}{
+  font-size: 30px;
+  }
+${MEDIA_QUERY_SD}{
+  font-size: 24px;
+  }
 `
 const AdminProductsInfo = styled.div`
   display: flex;
@@ -27,7 +33,7 @@ const AdminProductsInfo = styled.div`
 `
 const SearchInput = styled.input`
   padding: 8px;
-  width: 60%;
+  width: 40%;
   outline: none;
   background: rgb(201, 186, 152, 0.4);
   border: rgb(201, 186, 152, 0.4);
@@ -39,10 +45,12 @@ const SearchInput = styled.input`
     font-weight: bold;
   }
   ${MEDIA_QUERY_MD}{
+    /* margin-bottom: 30px; */
     width: 100%;
   }
 
 `
+
 const AdminProductsContent = styled.div`
 padding: 15px 0;
 margin-bottom:15px;
@@ -63,7 +71,6 @@ const Table = styled.table`
   ${MEDIA_QUERY_MD} {
     display:block;
     & tr, & td, & th {
-      display:block;
       text-align:start;
     }
     & td{

@@ -8,13 +8,21 @@ export const TdContext = ({tdcontext})=>{
     <Tr>
       <Td data-title="id">{tdcontext.id}</Td>
       <Td data-title="免運門檻"><Pricespan>{tdcontext.freeDeliveryPrizce}</Pricespan></Td>
-      <Td data-title="免運說明">{tdcontext.desc}</Td>
-      <Td data-title="刪除" ><ProductTdButton to="#">刪除</ProductTdButton></Td>
-      <Td data-title="編輯"><ProductTdButton to="#">編輯</ProductTdButton></Td>
+      <Td data-title="免運說明" $block={true}><TdcontextDesc title={tdcontext.desc}>{tdcontext.desc}</TdcontextDesc></Td>
+      <Td data-title="刪除" $none={true}><ProductTdButton to="#">刪除</ProductTdButton></Td>
+      <Td data-title="編輯" $none={true}><ProductTdButton to="#">編輯</ProductTdButton></Td>
+      <RWDButtonWrapper>
+        <ProductTdButton to="#">刪除</ProductTdButton>
+        <ProductTdButton to="#">編輯</ProductTdButton>
+      </RWDButtonWrapper>
     </Tr>
   )
 }
 const Tr = styled.tr`
+${MEDIA_QUERY_MD} {
+  display: block;
+  padding: 10px;
+  }
 `
 const Pricespan = styled.span`
   color:red;
@@ -32,20 +40,49 @@ const ProductTdButton = styled(Link)`
     color:#fff;
   }
   ${MEDIA_QUERY_MD} {
-    display:inline-block;
+    &+&{
+      margin-left: 20px;
+    }
   }
 `
 const Td = styled.td`
+  width:0;
   ${MEDIA_QUERY_MD} {
+    width:100%;
     padding-left: 10%;
     margin-bottom: 12px;
+    display: block;
+    ${props=>props.$none&&`display: none;`}
     &:before{
-    content: attr(data-title);
-    display: inline-block;
+      content: attr(data-title);
+      display: inline-block;
+      ${props=>props.$block&&`display: block;`}
+    text-decoration:underline;
     width: auto;
     min-width: 20%;
     font-weight: 900;
     padding-right: 1rem;
+    margin-bottom: 8px;
     }
+  }
+`
+const TdcontextDesc = styled.p`
+  margin:0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; //行數
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  ${MEDIA_QUERY_MD}{
+    display:block;
+  }
+`
+const RWDButtonWrapper = styled.td`
+display: none;
+  ${MEDIA_QUERY_MD}{
+
+    display: flex;
+    justify-content: center;
   }
 `

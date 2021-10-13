@@ -15,6 +15,12 @@ const AdminProductsWrapper = styled.div`
 const AdminProductsTitle = styled.h2`
 font-size: 36px;
 margin:0;
+${MEDIA_QUERY_MD}{
+  font-size: 30px;
+  }
+${MEDIA_QUERY_SD}{
+  font-size: 24px;
+  }
 `
 const AdminProductsInfo = styled.div`
   display: flex;
@@ -46,7 +52,7 @@ const SearchInput = styled.input`
 `
 const TitleButton = styled(Link)`
   text-decoration: none;
-  font-size: 24px;
+  font-size: 20px;
   color: #000;
   padding:5px 10px;
   border:1px solid #C9BA98;
@@ -82,7 +88,6 @@ const Table = styled.table`
   ${MEDIA_QUERY_MD} {
     display:block;
     & tr, & td, & th {
-      display:block;
       text-align:start;
     }
     & td{
