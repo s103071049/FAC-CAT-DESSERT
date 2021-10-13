@@ -17,6 +17,12 @@ const Wrapper = styled.div`
   margin:30px auto 60px;
   padding:0 16px;
   min-height:60vh;
+  ${MEDIA_QUERY_MD} {
+    flex-direction:column;
+    padding:0 10px;
+    margin:0 auto;
+    justify-content:space-between;
+  }
 `
 const UserWrapper = styled.div`
   max-width:1042px;
@@ -92,9 +98,12 @@ const SideBarItem = styled(Link)`
     padding:20px;
     border-bottom: 0;
     text-align:center;
+    font-size:14px;
+    word-break: keep-all;
     &:not(:last-child)::after {
       content:"";
     }
+
   }
 `
 const Main = styled.div`
@@ -128,9 +137,9 @@ const UserPage = () => {
           <SideBar>
             <SideBarHeader>我的帳戶</SideBarHeader>
             <SideBarbody>
-              <SideBarItems toUrl={''} title='更新個人資訊' />
+              <SideBarItems toUrl={''} title='個人資訊' />
               <SideBarItems toUrl={'/editPWD'} title='更改密碼' />
-              <SideBarItems toUrl={'/myorders'} title='我的訂單' />
+              <SideBarItems toUrl={'/myorders'} title='訂單' />
               <SideBarItems toUrl={'/logout'} title='登出' />
 
             </SideBarbody>
