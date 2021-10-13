@@ -71,6 +71,10 @@ const Tr = styled.tr`
  
 `
 const Td = styled.td`
+  ${props => props.$active && `
+    color:#E55555;
+    font-weight:bold;
+  `}
   @media screen and (max-width: 535px) {
     padding-left: 45%;
     margin-bottom: 12px;
@@ -81,34 +85,37 @@ const OrderNumber = styled(Link)`
   color:#917856;
   font-weight:bold;
 `
+// 1-待處理訂單, 2-已處理訂單, 3-全部訂單, 4-已處裡/accpeted訂單, 5已處理/rejected-all 訂單, 
 const orderTableHeads = [
   {
-    status: 'unhandled',
+    statusCode: 1,
     heads: ['訂單編號', '訂單時間']
   },
   {
-    status: 'handled',
+    statusCode: 2,
     heads: ['訂單編號', '訂單時間', '處理時間', '訂單狀態']
   },
   {
-    status: 'handled-accepted',
-    heads: ['訂單編號', '訂單時間', '處理時間', '出貨時間']
+    statusCode: 3,
+    heads: ['訂單編號', '訂單時間', '處理時間', '訂單狀態']
   },
   {
-    status: 'handled-rejected',
+    statusCode: 4,
+    heads: ['訂單編號', '訂單時間', '處理時間']
+  },
+  {
+    statusCode: 5,
     heads: ['訂單編號', '訂單時間', '處理時間', '拒單原因']
   },
-  {
-    status: 'all',
-    heads: ['訂單編號', '訂單時間', '處理時間', '訂單狀態']
-  }
 ]
 export default function OrderStatusSection({ orders, selectOrderStatus }) {
-  const [ordersStatus, setOrdersStatus] = useState(selectOrderStatus)
-  const RenderOrderData = () => {
+
+
+  const RenderOrderTr = () => {
     return orders.map((order, index) => {
       return (
         <Tr key={order.order_id}>
+          {/* 待處理訂單 */}
           <Td>
             {index + 1}
           </Td>
@@ -118,13 +125,42 @@ export default function OrderStatusSection({ orders, selectOrderStatus }) {
           <Td>
             {order.created_at}
           </Td>
+          {/* 已處理訂單 - all */}
+          {(selectOrderStatus === 2 || selectOrderStatus === 6) && (
+            <>
+              <Td>
+                {order.accepted_at}
+              </Td>
+              <Td>
+                {order.is_accepted === 1 && '系統拒單'}
+                {order.is_accepted === 2 && '人工拒單'}
+                {order.is_accepted === 3 && 'Accepted'}
+              </Td>
+            </>
+          )}
+          {/* 全部訂單 */}
+          {(selectOrderStatus === 3) && (
+            <>
+              <Td>
+                {order.accepted_at ? order.accepted_at : '-'}
+              </Td>
+              <Td $active={order.is_accepted === 0}>
+                {order.is_accepted === 0 && '待處理'}
+                {order.is_accepted === 1 && '系統拒單'}
+                {order.is_accepted === 2 && '人工拒單'}
+                {order.is_accepted === 3 && 'Accepted'}
+
+              </Td>
+            </>
+          )}
         </Tr>
       )
     })
   }
 
   const RenderOrderTableHeads = () => {
-    const [selectTableHeads] = orderTableHeads.filter(orderTableHead => orderTableHead.status === selectOrderStatus)
+    console.log('selectOrderStatus', selectOrderStatus)
+    const [selectTableHeads] = orderTableHeads.filter(orderTableHead => orderTableHead.statusCode === selectOrderStatus)
     const { heads } = selectTableHeads
     return heads.map(head => {
       return (
@@ -143,7 +179,7 @@ export default function OrderStatusSection({ orders, selectOrderStatus }) {
           </Tr>
         </Thead>
         <Tbody>
-          <RenderOrderData />
+          <RenderOrderTr />
         </Tbody>
       </Table>
     </OrderSection>
