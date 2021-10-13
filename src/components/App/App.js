@@ -17,11 +17,9 @@ import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
 import AddProductPage from '../../pages/AddProductPage';
 import UpdateProductPage from '../../pages/UpdateProductPage';
-import RegisterPage from '../../pages/RegisterPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
 import singleProductPage from '../../pages/SingleProductPage'
-import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
 import AdminProductsPage from '../../pages/AdminProductsPage';
 import AdminProductsRestorePage from '../../pages/AdminProductsRestorePage';
 import AdminDiscountsPage from '../../pages/AdminDiscountsPage';
