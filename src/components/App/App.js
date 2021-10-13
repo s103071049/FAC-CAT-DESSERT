@@ -6,12 +6,23 @@ import {
 } from "react-router-dom";
 import Header from '../Header';
 import Footer from '../Footer';
-import HomePage from "../../pages/HomePage"
-import ProductsPage from "../../pages/ProductsPage"
-import AboutPage from '../../pages/AboutPage'
+import HomePage from "../../pages/HomePage";
+import ProductsPage from "../../pages/ProductsPage";
+import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
-import LoginPage from '../../pages/LoginPage/LoginPage';
+import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
+import LoginPage from '../../pages/LoginPage';
+import RegisterPage from '../../pages/RegisterPage';
+import AddProductPage from '../../pages/AddProductPage';
+import UpdateProductPage from '../../pages/UpdateProductPage';
+import RegisterPage from '../../pages/RegisterPage';
+import AddDiscountPage from '../../pages/AddDiscountPage';
+import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
+import singleProductPage from '../../pages/SingleProductPage'
+import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
+import AdminProductsPage from '../../pages/AdminProductsPage';
+import AdminProductsRestorePage from '../../pages/AdminProductsRestorePage';
 import AdminDiscountsPage from '../../pages/AdminDiscountsPage';
 import AdminDiscountsRestorePage from '../../pages/AdminDiscountsRestorePage';
 
@@ -28,10 +39,7 @@ function App() {
             <HomePage />
           </Route>
           <Route path="/products">
-            <ProductsPage />
-          </Route>
-          <Route path="/product">
-            {/* <ProductPage /> */}
+            {/* <ProductsPage /> */}
           </Route>
           <Route path="/about">
             <AboutPage />
@@ -42,15 +50,45 @@ function App() {
           <Route path="/search">
             <SearchPage />
           </Route>
+
+          <Route path="/admin/order/1">
+            <OrderWholeListPage />
+          </Route>
+
           <Route path="/login">
             <LoginPage />
           </Route>
+          <Route path="/register">
+            <RegisterPage />
+           </Route>
           <Route exact path="/admin/discounts">
             <AdminDiscountsPage />
           </Route>
           <Route path="/admin/discounts/restore">
             <AdminDiscountsRestorePage />
           </Route>
+          <Route path="/admin/addDiscount">
+            <AddDiscountPage />
+          </Route>
+          <Route path="/admin/updateDiscount">
+            <UpdateDiscountPage />
+          </Route>
+          <Route exact path="/admin/products">
+            <AdminProductsPage />
+          </Route>
+          <Route path="/admin/products/restore">
+            <AdminProductsRestorePage />
+          </Route>
+          <Route path="/admin/addProduct">
+            <AddProductPage />
+          </Route>
+          <Route path="/admin/updateProduct">
+            <UpdateProductPage />
+          </Route>
+          <Route path="/admin/order/1">
+            <OrderWholeListPage />
+          </Route>
+          <Route path="product" component={singleProductPage}/>
         </Switch>
         <Footer />
       </Router >
