@@ -7,6 +7,7 @@ const UserInfo = () => {
   const [firstName, setFirstName] = useState('Ashi')
   const [nickName, setNickName] = useState('yangyang')
   const [phone, setPhone] = useState('0912345678')
+  const [address, setAddress] = useState("高雄市岡山區貓貓路三段84巷33號")
   return (
     <UFS.FormWrapper>
       <UFS.FormRow>
@@ -14,14 +15,14 @@ const UserInfo = () => {
           <label htmlFor="lastName">
             姓
           </label>
-          <input value={lastName} id="lastName" onChange={(e) => setLastName(e.target.value)} />
+          <input placeholder={lastName} id="lastName" onChange={(e) => setLastName(e.target.value)} />
 
         </UFS.FormItem>
         <UFS.FormItem>
           <label htmlFor="firstName">
             名
           </label>
-          <input value={firstName} id="firstName" onChange={(e) => setFirstName(e.target.value)} />
+          <input placeholder={firstName} id="firstName" onChange={e => setFirstName(e.target.value)} />
 
         </UFS.FormItem>
       </UFS.FormRow>
@@ -30,15 +31,23 @@ const UserInfo = () => {
           <label htmlFor="nickName">
             暱稱
           </label>
-          <input value={nickName} id="nickName" onChange={(e) => setNickName(e.target.value)} />
+          <input placeholder={nickName} id="nickName" onChange={e => setNickName(e.target.value)} />
 
         </UFS.FormItem>
         <UFS.FormItem>
           <label htmlFor="phone">
             手機
           </label>
-          <input value={phone} id="phone" onChange={(e) => setPhone(e.target.value)} />
+          <input placeholder={phone} id="phone" onChange={e => setPhone(e.target.value)} />
 
+        </UFS.FormItem>
+      </UFS.FormRow>
+      <UFS.FormRow>
+        <UFS.FormItem>
+          <label>
+            地址
+          </label>
+          <input type="text" placeholder={address} onChange={e => setAddress(e.target.value)} />
         </UFS.FormItem>
       </UFS.FormRow>
       <UFS.FormRow>
