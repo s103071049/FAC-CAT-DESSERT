@@ -11,6 +11,9 @@ import ProductsPage from "../../pages/ProductsPage";
 import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
 import SearchPage from '../../pages/SearchPage';
+
+import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
+
 import RegisterPage from '../../pages/RegisterPage';
 import AddProductPage from '../../pages/AddProductPage';
 import UpdateProductPage from '../../pages/UpdateProductPage';
@@ -19,6 +22,8 @@ import RegisterPage from '../../pages/RegisterPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
 import singleProductPage from '../../pages/SingleProductPage'
+import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
+
 
 const Root = styled.div`
 `
@@ -44,6 +49,11 @@ function App() {
           <Route path="/search">
             <SearchPage />
           </Route>
+
+          <Route path="/admin/order/1">
+            <OrderWholeListPage />
+          </Route>
+
           <Route path="/login">
             <LoginPage />
           </Route>
@@ -62,7 +72,11 @@ function App() {
           <Route path="/admin/updateProduct">
             <UpdateProductPage />
           </Route>
+          <Route path="/admin/order/1">
+            <OrderWholeListPage />
+          </Route>
           <Route path="product" component={singleProductPage}/>
+
         </Switch>
         <Footer />
       </Router >
