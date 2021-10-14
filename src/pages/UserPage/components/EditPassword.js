@@ -7,7 +7,6 @@ function EditPassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
-
   return (
     <UFS.FormWrapper>
       <UFS.FormRow>
