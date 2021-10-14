@@ -7,8 +7,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import IconMark from "../../components/contexts/IconMark";
-import UserInfo from "./components/UserInfo.js";
-import EditPassword from "./components/EditPassword.js";
+import { UserInfo } from "./components/UserInfo";
+import { EditPassword } from "./components/EditPassword";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
 
 const Wrapper = styled.div`

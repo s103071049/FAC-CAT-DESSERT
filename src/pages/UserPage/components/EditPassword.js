@@ -3,7 +3,7 @@ import * as UFS from "./UserLayout/UserFormStyle";
 
 import UserActionBtn from "./UserLayout/UserActionBtn";
 
-function EditPassword() {
+export const EditPassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
@@ -50,6 +50,4 @@ function EditPassword() {
       </UFS.FormRow>
     </UFS.FormWrapper>
   );
-}
-
-export default EditPassword;
+};
