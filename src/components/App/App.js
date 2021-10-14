@@ -19,6 +19,8 @@ import AddProductPage from '../../pages/AddProductPage';
 import UpdateProductPage from '../../pages/UpdateProductPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
+
+import TransactionPage from '../../pages/TransactionPage';
 import singleProductPage from '../../pages/SingleProductPage'
 import AdminProductsPage from '../../pages/AdminProductsPage';
 import AdminProductsRestorePage from '../../pages/AdminProductsRestorePage';
@@ -61,6 +63,10 @@ function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
+
+          <Route path="/transaction">
+            <TransactionPage />
+
           <Route path="/register">
             <RegisterPage />
            </Route>
@@ -69,6 +75,7 @@ function App() {
           </Route>
           <Route path="/admin/discounts/restore">
             <AdminDiscountsRestorePage />
+
           </Route>
           <Route path="/admin/addDiscount">
             <AddDiscountPage />
