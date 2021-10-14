@@ -1,9 +1,10 @@
-import { useState } from "react/cjs/react.development";
+import React, { useState } from "react";
+
 import * as UFS from "./UserLayout/UserFormStyle";
 
 import UserActionBtn from "./UserLayout/UserActionBtn";
 
-export const EditPassword = () => {
+export default function EditPassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
@@ -50,4 +51,4 @@ export const EditPassword = () => {
       </UFS.FormRow>
     </UFS.FormWrapper>
   );
-};
+}

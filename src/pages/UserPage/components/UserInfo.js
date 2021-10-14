@@ -1,8 +1,8 @@
-import { useState } from "react/cjs/react.development";
+import React, { useState } from "react";
 import * as UFS from "./UserLayout/UserFormStyle";
 import UserActionBtn from "./UserLayout/UserActionBtn";
 
-export const UserInfo = () => {
+export default function UserInfo() {
   const [lastName, setLastName] = useState("Yang");
   const [firstName, setFirstName] = useState("Ashi");
   const [nickName, setNickName] = useState("yangyang");
@@ -67,4 +67,4 @@ export const UserInfo = () => {
       </UFS.FormRow>
     </UFS.FormWrapper>
   );
-};
+}
