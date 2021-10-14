@@ -1,27 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_SD } from '../../components/Style/style'
-import IconMark from "../../components/contexts/IconMark"
-import SearchItem from "./components/SearchItem"; 
-import PageChange from "../../components/contexts/PageChange";
+import { MEDIA_QUERY_SD } from "../../components/style/style";
+import IconMark from "../../components/common/IconMark";
+import SearchItem from "./components/SearchItem";
+import PageChange from "../../components/common/PageChange";
 
-const SearchWrapper =styled.div`
+const SearchWrapper = styled.div`
   max-width: 1024px;
   margin: 0 auto;
-`
-
-
+`;
 
 const SearchPage = () => {
   return (
     <div>
-      <IconMark context={"「」的收尋結果"}/>
+      <IconMark context={"「」的收尋結果"} />
       <SearchWrapper>
-        <SearchItem/>
-        <PageChange/>
+        <SearchItem />
+        <PageChange />
       </SearchWrapper>
     </div>
-    )
-}
+  );
+};
 
-export default SearchPage
+export default SearchPage;

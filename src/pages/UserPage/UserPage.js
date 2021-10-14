@@ -6,10 +6,10 @@ import {
   useRouteMatch,
   useLocation,
 } from "react-router-dom";
-import IconMark from "../../components/contexts/IconMark";
+import IconMark from "../../components/common/IconMark";
 import UserInfo from "./components/UserInfo.js";
 import EditPassword from "./components/EditPassword.js";
-import { MEDIA_QUERY_MD } from "../../components/Style/style";
+import { MEDIA_QUERY_MD } from "../../components/style/style";
 
 const Wrapper = styled.div`
   max-width: 1042px;

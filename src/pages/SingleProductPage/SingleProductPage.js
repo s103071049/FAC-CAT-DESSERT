@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Item from "../../components/Item.js";
+import Item from "../../components/common/Item.js";
 import {
   Wrapper,
   Section,
   CartButton,
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
-} from "../../components/Style/style.js";
-import ProductsSectionTiTleContent from "../../components/contexts/ProductsSectionTiTleContent.js";
-import { Counter } from "../../components/Counter";
+} from "../../components/style/style.js";
+import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent.js";
+import { Counter } from "../../components/common/Counter";
 
-import cake from "../HomePage/components/Image/cake.jpg";
-import cake3 from "../HomePage/components/Image/cake3.jpg";
-import cake4 from "../HomePage/components/Image/cake4.jpg";
+import cake from "../../components/img/product/cake.jpg";
+import cake3 from "../../components/img/product/cake3.jpg";
+import cake4 from "../../components/img/product/cake4.jpg";
 
 const SingleProductWrapper = styled.div`
   margin: 50px 20px;
