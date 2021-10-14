@@ -130,10 +130,18 @@ const MenuItem = styled(Link)`
     cursor: pointer;
   }
 `;
-const ImgLink = styled(Link)`
+const ImgLink = styled.div`
   & + & {
     margin-left: 12px;
   }
+  display: flex;
+  align-items: center;
+`;
+const SearchBar = styled.input`
+  border: 1px solid #b4a582;
+  border-radius: 4px;
+  outline: none;
+  ${(props) => props.value === false && "display: none;"}
 `;
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -144,6 +152,10 @@ function Header() {
       document.body.style.overflow = "hidden";
     }
     setHamburgerOpen(!hamburgerOpen);
+  };
+  const [show, searchBarShow] = useState(false);
+  const searchBar = () => {
+    searchBarShow(!show);
   };
   return (
     <div>
@@ -185,16 +197,17 @@ function Header() {
             </List>
           </Wrap>
           <Icon>
-            <ImgLink to="/login">
+            <ImgLink as={Link} to="/login">
               <Img src={user} />
             </ImgLink>
-            <ImgLink to="#">
+            <ImgLink as={Link} to="#">
               <Img src={cart} />
             </ImgLink>
             <ImgLink to="#">
-              <Img src={search} />
+              <Img src={search} onClick={searchBar} />
+              {show && <SearchBar type="text" placeholder="輸入商品名稱" />}
             </ImgLink>
-            <ImgLink to="/faq">
+            <ImgLink as={Link} to="/faq">
               <Img src={faq} />
             </ImgLink>
           </Icon>
