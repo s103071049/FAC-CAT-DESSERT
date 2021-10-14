@@ -17,7 +17,7 @@ import AddDiscountPage from "../../pages/AddDiscountPage";
 import UpdateDiscountPage from "../../pages/UpdateDiscountPage";
 
 import TransactionPage from "../../pages/TransactionPage";
-import singleProductPage from "../../pages/SingleProductPage";
+import SingleProductPage from "../../pages/SingleProductPage";
 import AdminProductsPage from "../../pages/AdminProductsPage";
 import AdminProductsRestorePage from "../../pages/AdminProductsRestorePage";
 import AdminDiscountsPage from "../../pages/AdminDiscountsPage";
@@ -35,30 +35,32 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route path="/products">{/* <ProductsPage /> */}</Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/register">
+            <RegisterPage />
+          </Route>
+          <Route path="/user">
+            <UserPage />
+          </Route>
+          <Route path="/products">
+            <ProductsPage />
+          </Route>
+          <Route path="/product">
+            <SingleProductPage />
+          </Route>
+          <Route path="/search">
+            <SearchPage />
+          </Route>
           <Route path="/about">
             <AboutPage />
           </Route>
           <Route path="/faq">
             <FaqPage />
           </Route>
-          <Route path="/user">
-            <UserPage />
-          </Route>
-          <Route path="/search">
-            <SearchPage />
-          </Route>
-          <Route path="/admin/order/1">
-            <OrderWholeListPage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
           <Route path="/transaction">
             <TransactionPage />
-          </Route>
-          <Route path="/register">
-            <RegisterPage />
           </Route>
           <Route exact path="/admin/discounts">
             <AdminDiscountsPage />
@@ -87,7 +89,6 @@ function App() {
           <Route path="/admin/order/1">
             <OrderWholeListPage />
           </Route>
-          <Route path="product" component={singleProductPage} />
           <Route path="/admin/orders">
             <OrderPage />
           </Route>
