@@ -5,6 +5,7 @@ import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../style/style.js";
 import { useState } from "react";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 const Navbar = styled.div`
   background: #fbf3ea;
   height: 110px;
@@ -41,7 +42,7 @@ const List = styled.div`
     display: none;
   }
 `;
-const Item = styled.ul`
+const Item = styled(Link)`
   text-align: center;
   text-decoration: none;
   color: #9ea3b0;
@@ -117,7 +118,7 @@ const Menu = styled.nav`
   }
 `;
 
-const MenuItem = styled.a`
+const MenuItem = styled(Link)`
   display: none;
   ${MEDIA_QUERY_MD} {
     display: block;
@@ -129,6 +130,19 @@ const MenuItem = styled.a`
     cursor: pointer;
   }
 `;
+const ImgLink = styled.div`
+  & + & {
+    margin-left: 12px;
+  }
+  display: flex;
+  align-items: center;
+`;
+const SearchBar = styled.input`
+  border: 1px solid #b4a582;
+  border-radius: 4px;
+  outline: none;
+  ${(props) => props.value === false && "display: none;"}
+`;
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const toggleHamburger = () => {
@@ -139,35 +153,66 @@ function Header() {
     }
     setHamburgerOpen(!hamburgerOpen);
   };
+  const [show, searchBarShow] = useState(false);
+  const searchBar = () => {
+    searchBarShow(!show);
+  };
   return (
     <div>
-      <Navbar>
-        <Wrap>
-          <Logo>Fat Cat dessert ฅ</Logo>
-          <MenuButton onClick={toggleHamburger}></MenuButton>
-          <Menu hamburgerOpen={hamburgerOpen}>
-            <MenuItem href="#">會員登入</MenuItem>
-            <MenuItem href="#">新品上市</MenuItem>
-            <MenuItem href="#">促銷商品</MenuItem>
-            <MenuItem href="#">商品一覽</MenuItem>
-            <MenuItem href="#">購物車</MenuItem>
-            <MenuItem href="#">會員中心</MenuItem>
-            <MenuItem href="#">FAQ</MenuItem>
-            <MenuItem href="#">關於我們</MenuItem>
-          </Menu>
-          <List>
-            <Item>新品上市</Item>
-            <Item>促銷商品</Item>
-            <Item>商品一覽</Item>
-          </List>
-        </Wrap>
-        <Icon>
-          <Img src={user} />
-          <Img src={cart} />
-          <Img src={search} />
-          <Img src={faq} />
-        </Icon>
-      </Navbar>
+      <Router>
+        <Navbar>
+          <Wrap>
+            <Logo>Fat Cat dessert ฅ</Logo>
+            <MenuButton onClick={toggleHamburger}></MenuButton>
+            <Menu hamburgerOpen={hamburgerOpen}>
+              <MenuItem to="/login" onClick={toggleHamburger}>
+                會員登入
+              </MenuItem>
+              <MenuItem to="#" onClick={toggleHamburger}>
+                新品上市
+              </MenuItem>
+              <MenuItem to="#" onClick={toggleHamburger}>
+                促銷商品
+              </MenuItem>
+              <MenuItem to="/products" onClick={toggleHamburger}>
+                商品一覽
+              </MenuItem>
+              <MenuItem to="#" onClick={toggleHamburger}>
+                購物車
+              </MenuItem>
+              <MenuItem to="/user" onClick={toggleHamburger}>
+                會員中心
+              </MenuItem>
+              <MenuItem to="/faq" onClick={toggleHamburger}>
+                FAQ
+              </MenuItem>
+              <MenuItem to="/about" onClick={toggleHamburger}>
+                關於我們
+              </MenuItem>
+            </Menu>
+            <List>
+              <Item to="#">新品上市</Item>
+              <Item to="#">促銷商品</Item>
+              <Item to="/products">商品一覽</Item>
+            </List>
+          </Wrap>
+          <Icon>
+            <ImgLink as={Link} to="/login">
+              <Img src={user} />
+            </ImgLink>
+            <ImgLink as={Link} to="#">
+              <Img src={cart} />
+            </ImgLink>
+            <ImgLink to="#">
+              <Img src={search} onClick={searchBar} />
+              {show && <SearchBar type="text" placeholder="輸入商品名稱" />}
+            </ImgLink>
+            <ImgLink as={Link} to="/faq">
+              <Img src={faq} />
+            </ImgLink>
+          </Icon>
+        </Navbar>
+      </Router>
     </div>
   );
 }

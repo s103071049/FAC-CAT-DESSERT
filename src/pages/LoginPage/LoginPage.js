@@ -123,7 +123,7 @@ const LoginPage = () => {
           </LoginForm>
           <LoginAnotherInfo>
             <PasswordForget to="#">忘記密碼嗎?</PasswordForget>
-            <RegesterLink to="#">註冊新會員</RegesterLink>
+            <RegesterLink to="/register">註冊新會員</RegesterLink>
           </LoginAnotherInfo>
         </LoginContentWrapper>
       </LoginWrapper>
