@@ -1,36 +1,36 @@
 import React from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_MD,MEDIA_QUERY_SD  } from '../../components/Style/style'
-import PageChange from "../../components/contexts/PageChange";
+import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/style/style";
+import PageChange from "../../components/common/PageChange";
 import { TdContext } from "./components/TdContext";
 import { Link } from "react-router-dom";
-import { thcontexts,tdcontexts } from "./components/contextItem";
+import { thcontexts, tdcontexts } from "./components/contextItem";
 
 const AdminProductsWrapper = styled.div`
-  max-width:1042px;
-  margin:30px auto;
-  padding:0 16px;
-  min-height:73vh;
-`
+  max-width: 1042px;
+  margin: 30px auto;
+  padding: 0 16px;
+  min-height: 73vh;
+`;
 const AdminProductsTitle = styled.h2`
-font-size: 36px;
-margin:0;
-${MEDIA_QUERY_MD}{
-  font-size: 30px;
+  font-size: 36px;
+  margin: 0;
+  ${MEDIA_QUERY_MD} {
+    font-size: 30px;
   }
-${MEDIA_QUERY_SD}{
-  font-size: 24px;
+  ${MEDIA_QUERY_SD} {
+    font-size: 24px;
   }
-`
+`;
 const AdminProductsInfo = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding:10px 0;
-  ${MEDIA_QUERY_MD}{
+  padding: 10px 0;
+  ${MEDIA_QUERY_MD} {
     display: block;
   }
-`
+`;
 const SearchInput = styled.input`
   padding: 8px;
   width: 40%;
@@ -44,17 +44,16 @@ const SearchInput = styled.input`
     color: #917856;
     font-weight: bold;
   }
-  ${MEDIA_QUERY_MD}{
+  ${MEDIA_QUERY_MD} {
     /* margin-bottom: 30px; */
     width: 100%;
   }
-
-`
+`;
 
 const AdminProductsContent = styled.div`
-padding: 15px 0;
-margin-bottom:15px;
-`
+  padding: 15px 0;
+  margin-bottom: 15px;
+`;
 
 const Table = styled.table`
   border-spacing: 1;
@@ -62,33 +61,34 @@ const Table = styled.table`
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
-  font-size:20px;
+  font-size: 20px;
 
-  
-  & td, & th {
-    text-align:center;
+  & td,
+  & th {
+    text-align: center;
   }
   ${MEDIA_QUERY_MD} {
-    display:block;
-    & tr, & td, & th {
-      text-align:start;
+    display: block;
+    & tr,
+    & td,
+    & th {
+      text-align: start;
     }
-    & td{
-      
+    & td {
     }
   }
-`
+`;
 const Thead = styled.thead`
   & tr {
     height: 60px;
     font-size: 24px;
-    color:#917856;
-    font-weight:bold;
+    color: #917856;
+    font-weight: bold;
   }
   ${MEDIA_QUERY_MD} {
-    display:none;
+    display: none;
   }
-`
+`;
 const Tbody = styled.tbody`
   & tr {
     height: 60px;
@@ -98,44 +98,43 @@ const Tbody = styled.tbody`
     border: 0;
   }
   ${MEDIA_QUERY_MD} {
-    display:block;
+    display: block;
     & tr {
-      height:auto;
+      height: auto;
       padding: 8px 0;
     }
   }
-`
-const Th = styled.th`
-`
+`;
+const Th = styled.th``;
 
-const Tr = styled.tr`
-
-`
-
+const Tr = styled.tr``;
 
 const AdminDiscountsRestorePage = () => {
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>還原運費促銷規則</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput name="productSearch" placeholder= "搜尋已刪除運費規則"/>
+        <SearchInput name="productSearch" placeholder="搜尋已刪除運費規則" />
       </AdminProductsInfo>
       <AdminProductsContent>
-      <Table>
+        <Table>
           <Thead>
             <Tr>
-            {thcontexts.map((thcontext,index)=><Th key={index}>{thcontext}</Th>)}
+              {thcontexts.map((thcontext, index) => (
+                <Th key={index}>{thcontext}</Th>
+              ))}
             </Tr>
           </Thead>
           <Tbody>
-
-            {tdcontexts.map((tdcontext,index)=><TdContext tdcontext={tdcontext} key={index}/>)}
+            {tdcontexts.map((tdcontext, index) => (
+              <TdContext tdcontext={tdcontext} key={index} />
+            ))}
           </Tbody>
         </Table>
       </AdminProductsContent>
-      <PageChange/>
+      <PageChange />
     </AdminProductsWrapper>
-    )
-}
+  );
+};
 
-export default AdminDiscountsRestorePage
+export default AdminDiscountsRestorePage;

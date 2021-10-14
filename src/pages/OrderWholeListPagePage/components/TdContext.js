@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
-} from "../../../components/Style/style";
+} from "../../../components/style/style";
 import { Link } from "react-router-dom";
 
 export const TdContext = ({ tdcontext }) => {

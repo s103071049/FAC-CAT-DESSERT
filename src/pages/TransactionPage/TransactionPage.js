@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
-import PageChange from "../../components/contexts/PageChange.js";
+import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/style/style";
+import PageChange from "../../components/common/PageChange.js";
 const Wrapper = styled.div`
   max-width: 1024px;
   min-height: 80vh;

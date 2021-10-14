@@ -44,6 +44,9 @@ function App() {
           <Route path="/user">
             <UserPage />
           </Route>
+          <Route path="/transaction">
+            <TransactionPage />
+          </Route>
           <Route path="/products">
             <ProductsPage />
           </Route>
@@ -58,9 +61,6 @@ function App() {
           </Route>
           <Route path="/faq">
             <FaqPage />
-          </Route>
-          <Route path="/transaction">
-            <TransactionPage />
           </Route>
           <Route exact path="/admin/discounts">
             <AdminDiscountsPage />
@@ -86,11 +86,11 @@ function App() {
           <Route path="/admin/updateProduct">
             <UpdateProductPage />
           </Route>
-          <Route path="/admin/order/1">
-            <OrderWholeListPage />
-          </Route>
           <Route path="/admin/orders">
             <OrderPage />
+          </Route>
+          <Route path="/admin/order/1">
+            <OrderWholeListPage />
           </Route>
         </Switch>
         <Footer />
