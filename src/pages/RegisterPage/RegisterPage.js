@@ -172,7 +172,7 @@ const RegisterPage = () => {
           <RegisterAnotherInfo>
             <IsmemberInfo>
               <IsmemberTitle>我已經有會員帳號了？</IsmemberTitle>
-              <LoginLink to="#">回登入頁面</LoginLink>
+              <LoginLink to="/login">回登入頁面</LoginLink>
             </IsmemberInfo>
             <div style={{ fontSize: "16px" }}>
               註冊表示同意 &nbsp;
