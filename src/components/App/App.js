@@ -10,13 +10,24 @@ import HomePage from "../../pages/HomePage";
 import ProductsPage from "../../pages/ProductsPage";
 import AboutPage from '../../pages/AboutPage';
 import FaqPage from '../../pages/FaqPage';
+import UserPage from '../../pages/UserPage';
 import SearchPage from '../../pages/SearchPage';
+import OrderWholeListPage from '../../pages/OrderWholeListPagePage';
+import LoginPage from '../../pages/LoginPage';
+import RegisterPage from '../../pages/RegisterPage';
 import AddProductPage from '../../pages/AddProductPage';
 import UpdateProductPage from '../../pages/UpdateProductPage';
-import LoginPage from '../../pages/LoginPage/LoginPage';
 import AddDiscountPage from '../../pages/AddDiscountPage';
 import UpdateDiscountPage from '../../pages/UpdateDiscountPage';
+
 import TransactionPage from '../../pages/TransactionPage';
+import singleProductPage from '../../pages/SingleProductPage'
+import AdminProductsPage from '../../pages/AdminProductsPage';
+import AdminProductsRestorePage from '../../pages/AdminProductsRestorePage';
+import AdminDiscountsPage from '../../pages/AdminDiscountsPage';
+import AdminDiscountsRestorePage from '../../pages/AdminDiscountsRestorePage';
+import OrderPage from '../../pages/Admin/OrderPage';
+
 const Root = styled.div`
 `
 
@@ -30,10 +41,7 @@ function App() {
             <HomePage />
           </Route>
           <Route path="/products">
-            <ProductsPage />
-          </Route>
-          <Route path="/product">
-            {/* <ProductPage /> */}
+            {/* <ProductsPage /> */}
           </Route>
           <Route path="/about">
             <AboutPage />
@@ -41,14 +49,33 @@ function App() {
           <Route path="/faq">
             <FaqPage />
           </Route>
+          <Route path="/user">
+            <UserPage />
+          </Route>
           <Route path="/search">
             <SearchPage />
           </Route>
+
+          <Route path="/admin/order/1">
+            <OrderWholeListPage />
+          </Route>
+
           <Route path="/login">
             <LoginPage />
           </Route>
+
           <Route path="/transaction">
             <TransactionPage />
+
+          <Route path="/register">
+            <RegisterPage />
+           </Route>
+          <Route exact path="/admin/discounts">
+            <AdminDiscountsPage />
+          </Route>
+          <Route path="/admin/discounts/restore">
+            <AdminDiscountsRestorePage />
+
           </Route>
           <Route path="/admin/addDiscount">
             <AddDiscountPage />
@@ -56,11 +83,24 @@ function App() {
           <Route path="/admin/updateDiscount">
             <UpdateDiscountPage />
           </Route>
+          <Route exact path="/admin/products">
+            <AdminProductsPage />
+          </Route>
+          <Route path="/admin/products/restore">
+            <AdminProductsRestorePage />
+          </Route>
           <Route path="/admin/addProduct">
             <AddProductPage />
           </Route>
           <Route path="/admin/updateProduct">
             <UpdateProductPage />
+          </Route>
+          <Route path="/admin/order/1">
+            <OrderWholeListPage />
+          </Route>
+          <Route path="product" component={singleProductPage}/>
+          <Route path="/admin/orders">
+            <OrderPage />
           </Route>
         </Switch>
         <Footer />

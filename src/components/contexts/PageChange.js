@@ -17,7 +17,7 @@ const PreviousPageButton = styled.button`
   font-size: 18px;
   border: 2px solid #dac9a6;
   color: #dac9a6;
-  padding: 12px 20px;
+  padding: 6px 10px;
   border-radius: 6%;
   text-align: center;
   cursor: pointer;
