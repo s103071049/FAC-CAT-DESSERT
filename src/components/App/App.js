@@ -23,6 +23,7 @@ import AdminProductsRestorePage from "../../pages/AdminProductsRestorePage";
 import AdminDiscountsPage from "../../pages/AdminDiscountsPage";
 import AdminDiscountsRestorePage from "../../pages/AdminDiscountsRestorePage";
 import OrderPage from "../../pages/Admin/OrderPage";
+import CartPage from "../../pages/CartPage";
 
 const Root = styled.div``;
 
@@ -43,6 +44,9 @@ function App() {
           </Route>
           <Route path="/user">
             <UserPage />
+          </Route>
+          <Route path="/cart">
+            <CartPage />
           </Route>
           <Route path="/transaction">
             <TransactionPage />
