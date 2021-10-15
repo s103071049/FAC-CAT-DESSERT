@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/style/style";
+import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import cameraIcon from "../../components/img/icon/camera.svg";
 
 const desc = `2020新品，日本柚子帶出輕盈微酸的口感。

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MEDIA_QUERY_SD } from "../style/style";
+import { MEDIA_QUERY_SD } from "../Style/style";
 const ProductsSectionTiTleContentContent = styled.h2`
   margin: 0;
   padding-left: 15px;

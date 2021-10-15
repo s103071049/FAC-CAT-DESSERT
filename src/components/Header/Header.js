@@ -3,7 +3,7 @@ import user from "../img/icon/user.svg";
 import cart from "../img/icon/shopping-cart.svg";
 import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
-import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../style/style.js";
+import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
 import { useState } from "react";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 const Navbar = styled.div`

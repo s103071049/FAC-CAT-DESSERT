@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/style/style";
+import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import Popup from "./components/Popup";
 import { TdContext } from "./components/TdContext";
 import { thcontexts, tdcontexts } from "./components/popupItem";

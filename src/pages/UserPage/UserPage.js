@@ -9,7 +9,7 @@ import {
 import IconMark from "../../components/common/IconMark";
 import UserInfo from "./components/UserInfo.js";
 import EditPassword from "./components/EditPassword.js";
-import { MEDIA_QUERY_MD } from "../../components/style/style";
+import { MEDIA_QUERY_MD } from "../../components/Style/style";
 
 const Wrapper = styled.div`
   max-width: 1042px;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { MEDIA_QUERY_SD } from "../../../components/style/style";
+import { MEDIA_QUERY_SD } from "../../../components/Style/style";
 
 const OrderStatusWrapper = styled.div`
   margin-top: 50px;

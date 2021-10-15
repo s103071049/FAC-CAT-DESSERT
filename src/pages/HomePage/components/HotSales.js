@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
-} from "../../../components/style/style.js";
+} from "../../../components/Style/style";
 import cake from "../../../components/img/product/cake.jpg";
 import cake3 from "../../../components/img/product/cake3.jpg";
 import cake4 from "../../../components/img/product/cake4.jpg";

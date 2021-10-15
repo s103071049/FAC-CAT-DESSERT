@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../style/style.js";
+import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
 import instagram from "../img/icon/instagram.svg";
 import youtube from "../img/icon/youtube.svg";
 import facebook from "../img/icon/facebook.svg";

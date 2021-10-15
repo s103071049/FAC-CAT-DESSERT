@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
-} from "../../../components/style/style";
+} from "../../../components/Style/style";
 import PageChange from "../../../components/common/PageChange";
 import ProductsSectionTiTleContent from "../../../components/common/ProductsSectionTiTleContent";
 import squares from "../../../components/img/icon/squares.svg";

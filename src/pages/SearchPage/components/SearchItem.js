@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_SD } from "../../../components/style/style";
+import { MEDIA_QUERY_SD } from "../../../components/Style/style";
 import SearchContextProduct from "./SearchContextProduct";
 import cake1 from "../../../components/img/product/cake.jpg";
 import cake2 from "../../../components/img/product/cake4.jpg";

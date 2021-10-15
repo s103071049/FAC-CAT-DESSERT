@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_SD } from "../../components/style/style";
 import IconMark from "../../components/common/IconMark";
 import SearchItem from "./components/SearchItem";
 import PageChange from "../../components/common/PageChange";

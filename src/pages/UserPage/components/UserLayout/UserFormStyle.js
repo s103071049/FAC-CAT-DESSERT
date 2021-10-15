@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MEDIA_QUERY_SD } from "../../../../components/style/style";
+import { MEDIA_QUERY_SD } from "../../../../components/Style/style";
 
 export const FormWrapper = styled.div`
   margin: 0 auto;
