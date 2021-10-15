@@ -1,11 +1,10 @@
-import { useState } from "react"
 import styled from "styled-components"
 
 import numeric1 from '../../../components/img/icon/numeric1.svg'
 import cake from '../../../components/img/product/cake.jpg'
 
 const Container = styled.div`
-  margin-top:55px;
+  margin-top:50px;
   border: 1px solid #9CA4AA;
   padding:16px 22px;
   font-size:18px;
