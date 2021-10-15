@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import homeIcon from "../../components/img/icon/home.svg";
-import { MEDIA_QUERY_SD } from "../../components/style/style";
+import { MEDIA_QUERY_SD } from "../../components/Style/style";
 
 const AboutWrapper = styled.div`
   max-width: 1042px;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
-} from "../../../components/style/style.js";
+} from "../../../components/Style/style";
 
 import truck from "../../../components/img/icon/truck.svg";
 import vegetables from "../../../components/img/icon/vegetables.svg";

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { MEDIA_QUERY_MD } from "../../../components/style/style";
+import { MEDIA_QUERY_MD } from "../../../components/Style/style";
 
 const CategoryWrapper = styled.ul`
   padding: 0 20px;

@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/style/style";
+import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange";
 import { TdContext } from "./components/TdContext";
-import { Link } from "react-router-dom";
 import { thcontexts, tdcontexts } from "./components/contextItem";
 
 const AdminProductsWrapper = styled.div`

@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {
   MEDIA_QUERY_MD,
-  MEDIA_QUERY_SD,
-} from "../../../components/style/style";
+} from "../../../components/Style/style";
 import { Link } from "react-router-dom";
 
 const ProductWapper = styled.div`

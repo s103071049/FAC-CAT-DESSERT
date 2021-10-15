@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  MEDIA_QUERY_MD,
-  MEDIA_QUERY_SD,
-} from "../../../components/style/style";
+
 
 const LoginFormContextWrapper = styled.div`
   font-size: 18px;

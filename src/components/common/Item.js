@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MEDIA_QUERY_MD, MEDIA_QUERY_SD, CartButton } from "../style/style.js";
+import { MEDIA_QUERY_MD, MEDIA_QUERY_SD, CartButton } from "../Style/style.js";
 
 const Dessert = styled.div`
   display: flex;

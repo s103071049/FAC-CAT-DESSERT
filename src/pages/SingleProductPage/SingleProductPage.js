@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Item from "../../components/common/Item.js";
 import {
@@ -7,7 +7,7 @@ import {
   CartButton,
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
-} from "../../components/style/style.js";
+} from "../../components/Style/style.js";
 import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent.js";
 import { Counter } from "../../components/common/Counter";
 
