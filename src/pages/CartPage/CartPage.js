@@ -3,27 +3,27 @@ import styled from "styled-components"
 import { Wrapper } from "../../components/Style/style"
 import CartContent from './component/CartContent'
 import Shipping from "./component/Shipping"
-import ShoppingCart from './component/ShoppingCart'
+import CartSummary from './component/CartSummary'
 
 const CartWrapper = styled(Wrapper)`
-  max-width: 880px;
   position:relative;
-
-  display:flex;
-  justify-content:space-between;
 `
 
-const ShoppinCartDetail = styled.div``
+
+
+const ShoppinCartDetail = styled.div`
+  max-width:1000px;
+  margin-bottom:100px;
+`
 const CartPage = () => {
   return (
     <>
       <CartWrapper>
-        <ShoppingCart />
+        <CartSummary />
         <ShoppinCartDetail>
           <CartContent/>
           <Shipping/>
         </ShoppinCartDetail>
-        
       </CartWrapper>
     </>
   )
