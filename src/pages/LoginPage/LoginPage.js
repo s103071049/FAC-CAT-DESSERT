@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
+import ErrorMessage from "../../components/common/Errormessage";
 import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent";
 import LoginFormContext from "./components/LoginFormContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { login, getUser } from "../../WEBAPI";
+import { setAuthToken, getAuthToken } from "../../utils";
+import { AuthContexts } from "../../context";
 
 const LoginWrapper = styled.div`
   max-width: 1024px;
@@ -63,7 +67,6 @@ const LoginFormSubmit = styled.button`
 const KeepLogin = styled.div`
   padding-top: 10px;
 `;
-
 const LoginFormContextCheckboxInput = styled.input``;
 const LoginFormContextCheckboxInputlabel = styled.label`
   margin-left: 15px;
@@ -79,6 +82,34 @@ const RegesterLink = styled(PasswordForget)`
   margin-left: 30px;
 `;
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const history = useHistory();
+  const { user, setUser } = useContext(AuthContexts);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login(email, password).then((response) => {
+      if (!response.success) {
+        console.log(response.message);
+        return setErrorMessage(response.message);
+      }
+      setAuthToken(response.token);
+      getUser().then((response) => {
+        if (response.success) {
+          setUser(response.user);
+          return history.push("/");
+        }
+        setAuthToken("");
+      });
+    });
+  };
   return (
     <div>
       <IconMark context={"會員登入"} />
@@ -88,12 +119,14 @@ const LoginPage = () => {
           <LoginContentTitle>歡迎回來</LoginContentTitle>
           <FBButton>快速登入</FBButton>
           <Hr />
-          <LoginForm>
+          <LoginForm onSubmit={handleLogin}>
             <LoginFormContext
               labalfor="email"
               id="email"
               type="email"
               name="email"
+              value={email}
+              handleChange={handleEmailChange}
             >
               電子郵件
             </LoginFormContext>
@@ -102,6 +135,8 @@ const LoginPage = () => {
               id="password"
               type="password"
               name="password"
+              value={password}
+              handleChange={handlePasswordChange}
             >
               密碼
             </LoginFormContext>
@@ -118,6 +153,7 @@ const LoginPage = () => {
                   保持登入
                 </LoginFormContextCheckboxInputlabel>
               </KeepLogin>
+              {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             </TextAlignStartWrapper>
           </LoginForm>
           <LoginAnotherInfo>

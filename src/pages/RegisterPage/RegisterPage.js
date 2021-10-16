@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
+import ErrorMessage from "../../components/common/Errormessage";
 import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent";
 import RegisterFormContext from "./components/RegisterFormContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { getUser, register } from "../../WEBAPI";
+import { setAuthToken, getAuthToken } from "../../utils";
+import { AuthContexts } from "../../context";
 
 const RegisterWrapper = styled.div`
   max-width: 1024px;
@@ -94,6 +98,74 @@ const ServerList = styled(Link)`
 `;
 const Statement = styled(ServerList)``;
 const RegisterPage = () => {
+  const history = useHistory();
+  const { user, setUser } = useContext(AuthContexts);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  // const [birth, setBirth] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
+  };
+  // const handleBirthChange = (e) => {
+  //   setBirth(e.target.value);
+  // };
+  const handleFirstnameChange = (e) => {
+    setFirstname(e.target.value);
+  };
+  const handleLastnameChange = (e) => {
+    setLastname(e.target.value);
+  };
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      return setErrorMessage("密碼不相同");
+    }
+    register(
+      username,
+      password,
+      firstname,
+      lastname,
+      phone,
+      email,
+      address
+    ).then((response) => {
+      if (!response.success) {
+        return setErrorMessage(response.message);
+      }
+      setAuthToken(response.token);
+      getUser().then((response) => {
+        if (response.success) {
+          setUser(response.user);
+          return history.push("/");
+        }
+        setAuthToken("");
+        console.log(response);
+      });
+    });
+  };
   return (
     <div>
       <IconMark context={"註冊新帳號"} />
@@ -104,54 +176,97 @@ const RegisterPage = () => {
           <FBButton>快速註冊</FBButton>
           <Hr />
           <RegisterContentTitle>電子郵件註冊</RegisterContentTitle>
-          <RegisterForm>
+          <RegisterForm onSubmit={handleRegister}>
             <RegisterFormContext
-              labalfor="name"
-              id="name"
+              labalfor="username"
+              id="username"
               type="text"
-              name="name"
+              name="username"
+              value={username}
+              onChange={handleUsernameChange}
             >
-              姓名<span style={{ color: "red" }}>*</span>
+              暱稱
+              {/* <span style={{ color: "red" }}>*</span> */}
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="email"
               id="email"
               type="email"
               name="email"
+              value={email}
+              onChange={handleEmailChange}
             >
-              電子郵件<span style={{ color: "red" }}>*</span>
+              電子郵件
             </RegisterFormContext>
             <RegisterFormContext
-              labalfor="tele"
-              id="tele"
+              labalfor="phone"
+              id="phone"
               type="tel"
-              name="tele"
+              name="phone"
+              value={phone}
+              onChange={handlePhoneChange}
             >
               手機
             </RegisterFormContext>
-            <RegisterFormContext
+            {/* <RegisterFormContext
               labalfor="birth"
               id="birth"
               type="date"
               name="birth"
+              value={birth}
+              onChange={handleBirthChange}
             >
               生日
+            </RegisterFormContext> */}
+            <RegisterFormContext
+              labalfor="firstname"
+              id="firstname"
+              type="text"
+              name="firstname"
+              value={firstname}
+              onChange={handleFirstnameChange}
+            >
+              姓
+            </RegisterFormContext>
+            <RegisterFormContext
+              labalfor="lastname"
+              id="lastname"
+              type="text"
+              name="lastname"
+              value={lastname}
+              onChange={handleLastnameChange}
+            >
+              名
+            </RegisterFormContext>
+            <RegisterFormContext
+              labalfor="address"
+              id="address"
+              type="text"
+              name="address"
+              value={address}
+              onChange={handleAddressChange}
+            >
+              地址
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="password"
               id="password"
               type="password"
               name="password"
+              value={password}
+              onChange={handlePasswordChange}
             >
-              密碼<span style={{ color: "red" }}>*</span>
+              密碼
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="confirmPassword"
               id="confirmPassword"
               type="password"
               name="confirmPassword"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
             >
-              確認密碼<span style={{ color: "red" }}>*</span>
+              確認密碼
             </RegisterFormContext>
             <TextAlignStartWrapper>
               <RegisterFormSubmit>加入會員</RegisterFormSubmit>
@@ -167,6 +282,7 @@ const RegisterPage = () => {
                 </RegisterFormContextCheckboxInputlabel>
               </KeepRegister>
             </TextAlignStartWrapper>
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           </RegisterForm>
           <RegisterAnotherInfo>
             <IsmemberInfo>

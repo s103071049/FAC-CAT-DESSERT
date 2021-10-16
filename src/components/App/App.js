@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { getAuthToken, setAuthToken } from "../../utils";
+import { AuthContexts } from "../../context";
 import Header from "../Header";
 import Footer from "../Footer";
 import HomePage from "../../pages/HomePage";
@@ -23,79 +26,91 @@ import AdminProductsRestorePage from "../../pages/AdminProductsRestorePage";
 import AdminDiscountsPage from "../../pages/AdminDiscountsPage";
 import AdminDiscountsRestorePage from "../../pages/AdminDiscountsRestorePage";
 import OrderPage from "../../pages/Admin/OrderPage";
+import { getUser } from "../../WEBAPI";
 
 const Root = styled.div``;
 
 function App() {
+  const [user, setUser] = useState(null);
+  const token = getAuthToken();
+  useEffect(() => {
+    if (token) {
+      getUser().then((response) => {
+        setUser(response.user);
+      });
+    }
+  }, [token]);
   return (
-    <Root>
-      <Router>
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path="/register">
-            <RegisterPage />
-          </Route>
-          <Route path="/user">
-            <UserPage />
-          </Route>
-          <Route path="/transaction">
-            <TransactionPage />
-          </Route>
-          <Route path="/products">
-            <ProductsPage />
-          </Route>
-          <Route path="/product">
-            <SingleProductPage />
-          </Route>
-          <Route path="/search">
-            <SearchPage />
-          </Route>
-          <Route path="/about">
-            <AboutPage />
-          </Route>
-          <Route path="/faq">
-            <FaqPage />
-          </Route>
-          <Route exact path="/admin/discounts">
-            <AdminDiscountsPage />
-          </Route>
-          <Route path="/admin/discounts/restore">
-            <AdminDiscountsRestorePage />
-          </Route>
-          <Route path="/admin/addDiscount">
-            <AddDiscountPage />
-          </Route>
-          <Route path="/admin/updateDiscount">
-            <UpdateDiscountPage />
-          </Route>
-          <Route exact path="/admin/products">
-            <AdminProductsPage />
-          </Route>
-          <Route path="/admin/products/restore">
-            <AdminProductsRestorePage />
-          </Route>
-          <Route path="/admin/addProduct">
-            <AddProductPage />
-          </Route>
-          <Route path="/admin/updateProduct">
-            <UpdateProductPage />
-          </Route>
-          <Route path="/admin/orders">
-            <OrderPage />
-          </Route>
-          <Route path="/admin/order/1">
-            <OrderWholeListPage />
-          </Route>
-        </Switch>
-        <Footer />
-      </Router>
-    </Root>
+    <AuthContexts.Provider value={{ user, setUser }}>
+      <Root>
+        <Router>
+          <Header />
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/register">
+              <RegisterPage />
+            </Route>
+            <Route path="/user">
+              <UserPage />
+            </Route>
+            <Route path="/transaction">
+              <TransactionPage />
+            </Route>
+            <Route path="/products">
+              <ProductsPage />
+            </Route>
+            <Route path="/product">
+              <SingleProductPage />
+            </Route>
+            <Route path="/search">
+              <SearchPage />
+            </Route>
+            <Route path="/about">
+              <AboutPage />
+            </Route>
+            <Route path="/faq">
+              <FaqPage />
+            </Route>
+            <Route exact path="/admin/discounts">
+              <AdminDiscountsPage />
+            </Route>
+            <Route path="/admin/discounts/restore">
+              <AdminDiscountsRestorePage />
+            </Route>
+            <Route path="/admin/addDiscount">
+              <AddDiscountPage />
+            </Route>
+            <Route path="/admin/updateDiscount">
+              <UpdateDiscountPage />
+            </Route>
+            <Route exact path="/admin/products">
+              <AdminProductsPage />
+            </Route>
+            <Route path="/admin/products/restore">
+              <AdminProductsRestorePage />
+            </Route>
+            <Route path="/admin/addProduct">
+              <AddProductPage />
+            </Route>
+            <Route path="/admin/updateProduct">
+              <UpdateProductPage />
+            </Route>
+            <Route path="/admin/orders">
+              <OrderPage />
+            </Route>
+            <Route path="/admin/order/1">
+              <OrderWholeListPage />
+            </Route>
+          </Switch>
+          <Footer />
+        </Router>
+      </Root>
+    </AuthContexts.Provider>
   );
 }
 
