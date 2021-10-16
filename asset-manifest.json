@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/finalProjectUI/static/css/main.aa724a6e.chunk.css",
-    "main.js": "/finalProjectUI/static/js/main.b4bfd821.chunk.js",
-    "main.js.map": "/finalProjectUI/static/js/main.b4bfd821.chunk.js.map",
-    "runtime-main.js": "/finalProjectUI/static/js/runtime-main.a6574222.js",
-    "runtime-main.js.map": "/finalProjectUI/static/js/runtime-main.a6574222.js.map",
-    "static/js/2.7f45b6ee.chunk.js": "/finalProjectUI/static/js/2.7f45b6ee.chunk.js",
-    "static/js/2.7f45b6ee.chunk.js.map": "/finalProjectUI/static/js/2.7f45b6ee.chunk.js.map",
-    "static/js/3.5f20674e.chunk.js": "/finalProjectUI/static/js/3.5f20674e.chunk.js",
-    "static/js/3.5f20674e.chunk.js.map": "/finalProjectUI/static/js/3.5f20674e.chunk.js.map",
+    "main.js": "/finalProjectUI/static/js/main.f132b0ba.chunk.js",
+    "main.js.map": "/finalProjectUI/static/js/main.f132b0ba.chunk.js.map",
+    "runtime-main.js": "/finalProjectUI/static/js/runtime-main.96a5d7dc.js",
+    "runtime-main.js.map": "/finalProjectUI/static/js/runtime-main.96a5d7dc.js.map",
+    "static/js/2.6ef1bb93.chunk.js": "/finalProjectUI/static/js/2.6ef1bb93.chunk.js",
+    "static/js/2.6ef1bb93.chunk.js.map": "/finalProjectUI/static/js/2.6ef1bb93.chunk.js.map",
+    "static/js/3.66489ac0.chunk.js": "/finalProjectUI/static/js/3.66489ac0.chunk.js",
+    "static/js/3.66489ac0.chunk.js.map": "/finalProjectUI/static/js/3.66489ac0.chunk.js.map",
     "index.html": "/finalProjectUI/index.html",
     "static/css/main.aa724a6e.chunk.css.map": "/finalProjectUI/static/css/main.aa724a6e.chunk.css.map",
-    "static/js/2.7f45b6ee.chunk.js.LICENSE.txt": "/finalProjectUI/static/js/2.7f45b6ee.chunk.js.LICENSE.txt",
+    "static/js/2.6ef1bb93.chunk.js.LICENSE.txt": "/finalProjectUI/static/js/2.6ef1bb93.chunk.js.LICENSE.txt",
     "static/media/banner3.e8d438a2.jpg": "/finalProjectUI/static/media/banner3.e8d438a2.jpg",
     "static/media/cake.3691e49b.jpg": "/finalProjectUI/static/media/cake.3691e49b.jpg",
     "static/media/cake2.bef16be9.jpg": "/finalProjectUI/static/media/cake2.bef16be9.jpg",
@@ -36,9 +36,9 @@
     "static/media/youtube.e57613c9.svg": "/finalProjectUI/static/media/youtube.e57613c9.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a6574222.js",
-    "static/js/2.7f45b6ee.chunk.js",
+    "static/js/runtime-main.96a5d7dc.js",
+    "static/js/2.6ef1bb93.chunk.js",
     "static/css/main.aa724a6e.chunk.css",
-    "static/js/main.b4bfd821.chunk.js"
+    "static/js/main.f132b0ba.chunk.js"
   ]
 }
