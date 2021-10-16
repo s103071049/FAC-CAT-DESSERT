@@ -173,11 +173,28 @@ function Input({ name, value, as, placeholder }) {
   );
 }
 
-function UploadImg({ name, src, desc }) {
+function UploadImg({ name, desc }) {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadImg, setUploadImg] = useState(cameraIcon);
+  const [ImgSrc, setImgSrc] = useState(cameraIcon);
+  const [uploadImg, setUploadImg] = useState(null);
+  const inputFileRef = useRef();
   const fileSelectorHandler = (e) => {
     setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.addEventListener(
+      "load",
+      () => {
+        setImgSrc(reader.result);
+      },
+      false
+    );
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+  const inputFileRefHandler = () => {
+    inputFileRef.current.click();
   };
   const fileUploadHandler = (e) => {
     let formdata = new FormData();
@@ -195,14 +212,19 @@ function UploadImg({ name, src, desc }) {
       .then((result) => {
         if (!result.data.link) {
           alert("尚未上傳圖片");
-          setUploadImg(cameraIcon);
+          setImgSrc(cameraIcon);
           return;
         }
         console.log("result", result);
         console.log("url", result.data.link); // 拿到上傳圖片的 url
         setUploadImg(result.data.link);
+        alert("上傳成功");
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        alert("圖片處理異常，請稍後再試");
+        console.log("error", error);
+        return;
+      });
   };
   return (
     <>
@@ -211,11 +233,17 @@ function UploadImg({ name, src, desc }) {
       </Content>
       <UploadImage>
         <Wrap>
-          <Img url={uploadImg} />
+          <Img url={ImgSrc} onClick={inputFileRefHandler} />
         </Wrap>
         <Upload>
           <Desc>{desc}</Desc>
-          <input type="file" onChange={fileSelectorHandler} />
+          <input
+            style={{ display: "none" }}
+            type="file"
+            ref={inputFileRef}
+            onChange={fileSelectorHandler}
+            accept="image/*"
+          />
           <Button onClick={fileUploadHandler}>上傳圖片</Button>
         </Upload>
       </UploadImage>
@@ -252,11 +280,7 @@ const AddProductPage = () => {
           value={"限量："}
           placeholder={"請輸入產品限定數量"}
         />
-        <UploadImg
-          name={"上傳圖片："}
-          src={cameraIcon}
-          desc={`${imgLoadingDesc}`}
-        />
+        <UploadImg name={"上傳圖片："} desc={`${imgLoadingDesc}`} />
         <Bottom>
           <Submit>提交</Submit>
         </Bottom>
