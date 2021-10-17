@@ -11,6 +11,9 @@ const Container = styled.div`
   border: 1px solid #9CA4AA;
   padding:16px 22px;
   font-size:18px;
+  @media screen and (max-width: 698px) {
+    font-size:16px;
+  }
 `
 const Header = styled.div`
   display:flex;
@@ -99,6 +102,15 @@ const ForCheckboxItem = styled.div`
     margin-top:12px;
   }
 `
+const InlineInput = styled.input`
+  border: none;
+  margin-left: 16px;
+  border-bottom: 1px solid #ccc;
+  font-size:16px;
+  font-style:italic;
+  padding:0 6px;
+`
+
 const FormBtn = styled.button`
   margin-top:20px;
   border:none;
@@ -150,22 +162,8 @@ const PayWarnningContent = () => {
 }
 
 const Shipping = () => {
-  const [selectShippingMethod, setShippingMethod] = useState('blackCat')
-  const [selectPayMethod, setSelectPayMethod] = useState('card')
-  const [shippingNote, setShippingNote] = useState('')
-  const [fullName, setFullName] = useState('楊陽洋')
-  const [phone,setPhone] = useState('0912345678')
-  const [shippingDate, setShippingDate] = useState('2021-10-10')
-  const [address, setAddress] = useState('高雄市岡山區貓貓路三段84巷33號')
-  const [last5Number , setLast5Number] = useState('')
-  const [invoiceMethod, setInvoiceMethod] = useState('withPackage')
-  const [invoiceType, setInvoiceType] = useState('normal')
   const [isSameConsignee, setIsSameConsignee] = useState(true)
-  const [isAgreeDataPolicy, setIsAgreeDataPolicy] = useState(true)
-  const [isAgreeOrderPolicy, setIsAgreeOrderPolicy] = useState(true)
-  const [consignee, setConsignee] = useState(fullName)
-  const [consigneePhone, setConsigneePhone] = useState(phone)
-  const [consigneeAddress, setConsigneeAddress] = useState(address)
+
 
 
   const RenderShippingForm = () => {
@@ -179,7 +177,7 @@ const Shipping = () => {
                 type="radio" 
                 name="shippingMethod" 
                 value="blackCat" 
-                checked={selectShippingMethod === 'blackCat'}
+                checked={true}
                 readOnly
               />
               <Span>黑貓宅配</Span>
@@ -194,9 +192,8 @@ const Shipping = () => {
                 <input 
                   type="radio" 
                   name="payMethod" 
-                  value="card" 
-                  checked={selectPayMethod === 'card'}
-                  onChange={e => setSelectPayMethod(e.target.value)} 
+                  value="card"
+                  checked={true}
                 />
                 <Span><img src={card} alt="credit card" /></Span>
                 <Span>信用卡</Span>
@@ -206,8 +203,6 @@ const Shipping = () => {
                   type="radio" 
                   name="payMethod"
                   value="ATM"
-                  checked={selectPayMethod === 'ATM'}
-                  onChange={e => setSelectPayMethod(e.target.value)} 
                 />
                 <Span><img src={cash} alt="cash" /></Span>
                 <Span>ATM</Span>
@@ -215,7 +210,10 @@ const Shipping = () => {
             </FormContent>
             <SubTitle>備註</SubTitle>
             <FormContent>
-              <Input type="text"  name="shipping_note" value={shippingNote} onChange={e => setShippingNote(e.target.value)}/>
+              <Input 
+                type="text"  
+                name="shipping_note" 
+              />
             </FormContent>
             <SubTitle>結帳須知</SubTitle>
             <FormContent>
@@ -228,24 +226,43 @@ const Shipping = () => {
           <SubTitle>購買人資訊</SubTitle>
              <FormContent>
               <FormInputLabel htmlFor="fullname">姓名</FormInputLabel>
-              <Input type="text"  id="fullname" value={fullName} onChange={e => setFullName(e.target.value)}/>
+              <Input 
+                type="text"  
+                id="fullname"
+                placeholder="user的lastname + firstname"
+              />
             </FormContent>
             <FormContent>
               <FormInputLabel htmlFor="phone">手機</FormInputLabel>
-              <Input type="text"  id="phone" value={phone} onChange={e => setPhone(e.target.value)}/>
+              <Input 
+                type="text"  
+                id="phone" 
+                placeholder="user的phone"
+              />
               <AdviceText>*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</AdviceText>
             </FormContent>
            <FormContent>
               <FormInputLabel htmlFor="address">配送地址</FormInputLabel>
-              <Input type="text"  id="address" value={address} onChange={e => setAddress(e.target.value)}/>
+              <Input 
+                type="text"
+                id="address"
+                placeholder="user的address"
+              />
             </FormContent>
             <FormContent>
               <FormInputLabel htmlFor="shippingDate">配送日期</FormInputLabel>
-              <Input type="date"  id="shippingDate" value={shippingDate} onChange={e => setShippingDate(e.target.value)}/>
+              <Input 
+                type="date"  
+                id="shippingDate" 
+              />
             </FormContent>
             <FormContent>
               <FormInputLabel htmlFor="last5Number">帳號/信用卡 後五碼</FormInputLabel>
-              <Input type="number"  id="last5Number" value={last5Number} onChange={e => setLast5Number(e.target.value)}/>
+              <Input 
+                type="number"  
+                id="last5Number" 
+                placeholder="請輸入信用卡或轉帳帳號的後五碼"
+              />
             </FormContent>
         </FormItemWrapper>
         <FormItemWrapper>
@@ -255,9 +272,8 @@ const Shipping = () => {
                 <input 
                   type="radio" 
                   name="invoice" 
-                  value="withPackage" 
-                  checked={invoiceMethod === 'withPackage'}
-                  onChange={e => setInvoiceMethod(e.target.value)} 
+                  value="withPackage"
+                  checked={true}
                 />
                 <Span>是</Span>
               </FormRadioLabel>
@@ -266,8 +282,6 @@ const Shipping = () => {
                   type="radio" 
                   name="invoice"
                   value="donate"
-                  checked={invoiceMethod === 'donate'}
-                  onChange={e => setInvoiceMethod(e.target.value)} 
                 />
                 <Span>捐贈</Span>
               </FormRadioLabel>
@@ -279,8 +293,7 @@ const Shipping = () => {
                   type="radio" 
                   name="inVoiceType" 
                   value="normal" 
-                  checked={invoiceType === 'normal'}
-                  onChange={e => setInvoiceType(e.target.value)} 
+                  checked={true}
                 />
                 <Span>二聯式</Span>
               </FormRadioLabel>
@@ -289,10 +302,13 @@ const Shipping = () => {
                   type="radio" 
                   name="inVoiceType"
                   value="withCompanyNum"
-                  checked={invoiceType === 'withCompanyNum'}
-                  onChange={e => setInvoiceType(e.target.value)} 
                 />
                 <Span>開立統編</Span>
+                <InlineInput 
+                  type="text"
+                  name="companuNum"
+                  placeholder="請輸入統編"
+                />
               </FormRadioLabel>
               <SubTitle>發票須知</SubTitle>
               <FormContent>
@@ -334,28 +350,34 @@ const Shipping = () => {
                 <FormItemWrapper $isInlineFormItem={true}>
                   <FormContent >
                     <FormInputLabel htmlFor="consignee">收件人姓名</FormInputLabel>
-                    <Input type="text"  id="consignee"  onChange={e => setConsignee(e.target.value)}/>
+                    <Input 
+                      type="text"  
+                      id="consignee"  
+                    />
                   </FormContent>
                   <FormContent>
                     <FormInputLabel htmlFor="consigneePhone">手機</FormInputLabel>
-                    <Input type="text"  id="consigneePhone" onChange={e => setConsigneePhone(e.target.value)}/>
+                    <Input 
+                      type="text"  
+                      id="consigneePhone" 
+                    />
                     <AdviceText>*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</AdviceText>
                   </FormContent>
                 <FormContent>
                     <FormInputLabel htmlFor="consigneeAddress">配送地址</FormInputLabel>
-                    <Input type="text"  id="consigneeAddress" onChange={e => setConsigneeAddress(e.target.value)}/>
+                    <Input 
+                      type="text"  
+                      id="consigneeAddress" 
+                    />
                   </FormContent>
                 </FormItemWrapper>
               )}
-        
-
-
               <SubTitle>收件人資訊預覽</SubTitle>
               <FormContent>
                 <FormNote>
-                  <div>收件人: <span>{consignee}</span></div>
-                  <div>聯絡電話: <span>{consigneePhone}</span></div>
-                  <div>收件地址: <span>{consigneeAddress}</span></div>
+                  <div>收件人: <span>楊陽洋</span></div>
+                  <div>聯絡電話: <span>0912345678</span></div>
+                  <div>收件地址: <span>台中市高雄區台北路001號</span></div>
                 </FormNote>
               </FormContent>
             </FormContent>
@@ -366,9 +388,6 @@ const Shipping = () => {
                 <input 
                   type="checkbox" 
                   name="dataPolicy" 
-                  value={isAgreeDataPolicy}
-                  checked={isAgreeDataPolicy}
-                  onChange={e => setIsAgreeDataPolicy(!isAgreeDataPolicy)} 
                 />
                 <Span>同意會員責任規範及個資聲明與商家會員條款</Span>
               </ForCheckboxItem>
@@ -376,15 +395,12 @@ const Shipping = () => {
                 <input 
                   type="checkbox" 
                   name="orderPolicy"
-                  value={isAgreeOrderPolicy}
-                  checked={isAgreeOrderPolicy}
-                  onChange={e => setIsAgreeOrderPolicy(!isAgreeOrderPolicy)} 
                 />
                 <Span>為保障彼此之權益，賣家在收到您的訂單後仍保有決定是否接受訂單及出貨與否之權利</Span>
               </ForCheckboxItem>
             </FormContent>
         </FormItemWrapper>
-          <FormBtn type="submit">立即結帳</FormBtn>
+        <FormBtn type="submit">立即結帳</FormBtn>
 
       </Form>
     )

@@ -8,7 +8,9 @@ const Container = styled.div`
   border: 1px solid #9CA4AA;
   padding:16px 22px;
   font-size:18px;
-
+  @media screen and (max-width: 698px) {
+    font-size:16px;
+  }
 `
 const Header = styled.div`
   display:flex;
@@ -131,7 +133,7 @@ const Td = styled.td`
       content:attr(data-title);
       display: inline-block;
       width: auto;
-      min-width: 30%;
+      min-width: 40%;
       font-weight: 900;
       padding-right: 1rem;
       text-decoration: underline
