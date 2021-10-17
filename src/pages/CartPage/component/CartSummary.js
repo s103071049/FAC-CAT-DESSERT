@@ -12,6 +12,11 @@ const SummaryCard = styled.div`
   z-index:2;
   padding:16px;
   opacity:0.9;
+
+
+  @media screen and (max-width: 698px) {
+    display:none;
+  }
 `
 
 const GoToTop = styled.div`

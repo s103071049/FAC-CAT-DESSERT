@@ -63,6 +63,37 @@ const Tbody = styled.tbody`
     }
   }
 `
+const Tfoot = styled.tfoot`
+  display:none;
+
+  & tr {
+    height:30px;
+  }
+  & tr :first-child {
+    text-align:right;
+    padding-right:80px;
+  }
+ 
+  & tr:last-child  td:last-child {
+    color:#E33333;
+  }
+
+  @media screen and (max-width: 698px) {
+    display:block;
+    & tr :first-child {
+      text-align:left;
+      padding-right:0;
+      margin-top:20px;
+    }
+    & tr {
+      border-bottom:0;
+    }
+    & td {
+      min-width:150px;
+    }
+  }
+`
+
 const Th = styled.th`
   background:#F0F1F3;
   font-weight:normal;
@@ -72,7 +103,6 @@ const Th = styled.th`
 `
 
 const Tr = styled.tr`
-  height: 60px;
   @media screen and (max-width: 698px) {
     border-bottom:1px solid #ccc;
     &+& {
@@ -147,7 +177,7 @@ const QtyBtn = styled.button`
 `
 
 const ItemQty = styled.div`
-    margin: 0 12px ;
+ margin: 0 12px ;
  @media screen and (max-width: 698px) {
     margin: 0 12px ;
   }
@@ -178,6 +208,26 @@ const fakeCartData = [
     price:850
   }
 ]
+
+const CartTableFoot = () => {
+  return (
+    <>
+      <Tr>
+        <Td colSpan="4">運費</Td>
+        <Td colSpan="2">0</Td>
+      </Tr>
+      <Tr>
+        <Td colSpan="4">總計</Td>
+        <Td colSpan="2">2580</Td>
+      </Tr>
+      <Tr>
+        <Td colSpan="4">應付總額</Td>
+        <Td colSpan="2">NT$2580</Td>
+      </Tr>
+    </>
+  )
+}
+
 const CartTableData = () => {
   return fakeCartData.map(item => {
     return (
@@ -193,7 +243,7 @@ const CartTableData = () => {
         </Td>
         <Td data-title="數量">
           <QtyBtn>-</QtyBtn>
-          <ItemQty >{item.qty}</ItemQty>
+          <ItemQty>{item.qty}</ItemQty>
           <QtyBtn>+</QtyBtn>
         </Td>
         <Td data-title="小計">
@@ -212,8 +262,7 @@ const CartTableHead = () => {
       <Th colSpan="2">商品明細</Th>
       <Th>單價</Th>
       <Th>數量</Th>
-      <Th>小計</Th>
-      <Th></Th>
+      <Th colSpan="2">小計</Th>
     </Tr>
   )
 }
@@ -232,6 +281,9 @@ const CartContent = () => {
           <Tbody>
             <CartTableData/>
           </Tbody>
+          <Tfoot>
+            <CartTableFoot/>
+          </Tfoot>
         </Table>
       </Body>
     </Container>

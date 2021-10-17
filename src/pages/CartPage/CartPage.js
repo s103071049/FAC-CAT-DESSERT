@@ -9,8 +9,6 @@ const CartWrapper = styled(Wrapper)`
   position:relative;
 `
 
-
-
 const ShoppinCartDetail = styled.div`
   max-width:1000px;
   margin-bottom:100px;
