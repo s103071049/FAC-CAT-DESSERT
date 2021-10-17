@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange.js";
-const Wrapper = styled.div`
-  max-width: 1024px;
-  min-height: 80vh;
-  margin: 0 auto;
-  padding: 12px;
-`;
 
-const Title = styled.h2`
-  color: #333;
-`;
+const Wrapper = styled.div`
+  padding-top: 80px;
+  padding-left: 20px;
+`
 
 const Table = styled.table`
   border-collapse: collapse;
@@ -31,7 +26,7 @@ const Tbody = styled.tbody`
     display: block;
   }
 `;
-const Column = styled.th`
+const Column = styled.td`
   border: 1px solid #bdc0ba;
   padding: 12px;
   ${MEDIA_QUERY_MD} {
@@ -43,7 +38,6 @@ const Column = styled.th`
       position: absolute;
       left: 6px;
       width: 45%;
-      white-space: nowrap;
     }
     &:nth-of-type(1):before {
       content: "訂單編號";
@@ -74,17 +68,14 @@ const Column = styled.th`
 `;
 const GrayColumn = styled.th`
   border: none;
-  width: 100%;
   padding: 12px;
   background: #77969a;
-  white-space: nowrap;
   ${MEDIA_QUERY_MD} {
     display: block;
   }
 `;
 const Row = styled.tr`
   margin: 0 auto;
-  white-space: nowrap;
   ${MEDIA_QUERY_MD} {
     display: block;
     margin: 0 0 16px 0;
@@ -99,7 +90,7 @@ const RowHeader = styled(Row)`
   }
 `;
 const Page = styled.div`
-  padding: 12px;
+  margin-top:60px;
 `;
 function Head({ data }) {
   const listItems = data.map((each) => (
@@ -132,20 +123,19 @@ const TransactionPage = () => {
     { id: 7, title: "繳款情形", data: "已繳款" },
   ];
   return (
-    <div>
+    <>
       <Wrapper>
-        <Title>交易紀錄查詢</Title>
         <Table>
           <Head data={data} />
           <Body data={data} id={1} />
           <Body data={data} id={2} />
           <Body data={data} id={3} />
         </Table>
+        <Page>
+          <PageChange></PageChange>
+        </Page>
       </Wrapper>
-      <Page>
-        <PageChange></PageChange>
-      </Page>
-    </div>
+    </>
   );
 };
 export default TransactionPage;
