@@ -199,7 +199,7 @@ function UploadImg({ name, desc }) {
     let formData = new FormData();
     formData.append("image", selectedFile);
     if (!selectedFile) {
-      alert("尚未選取圖片");
+      alert("尚未選取上傳圖片");
     }
     if (selectedFile) {
       imgurApi(formData)
