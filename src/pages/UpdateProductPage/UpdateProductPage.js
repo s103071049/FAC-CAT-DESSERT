@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import cameraIcon from "../../components/img/icon/camera.svg";
@@ -46,6 +46,12 @@ const Content = styled.div`
     align-items: start;
   }
 `;
+const UploadImage = styled(Content)`
+  ${`@media screen and (max-width: 604px)`} {
+    flex-direction: column;
+    align-items: start;
+  }
+`;
 const Column = styled.div`
   font-size: 20px;
   white-space: nowrap;
@@ -76,17 +82,19 @@ const Row = styled.input`
 
 const Img = styled.div`
   width: 100%;
+  min-width: 240px;
   height: 0;
   background: url(${(props) => props.url});
   padding-bottom: 100%;
   overflow: hidden;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
   border-radius: 8px;
   cursor: pointer;
-  &: hover {
+  &:hover {
     filter: brightness(110%);
+  }
 `;
 
 const Button = styled.div`
@@ -142,7 +150,6 @@ const Wrap = styled.div`
   width: 30%;
   max-width: 1200px;
   padding: 0 28px;
-  background: rgb(201, 186, 152, 0.4);
   ${MEDIA_QUERY_MD} {
     width: 240px;
     margin: 0 auto;
@@ -184,21 +191,80 @@ function Input({ name, value, as }) {
   );
 }
 
-function UploadImg({ name, src, desc }) {
+function UploadImg({ name, desc }) {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [ImgSrc, setImgSrc] = useState(cameraIcon);
+  const [uploadImg, setUploadImg] = useState(null);
+  const inputFileRef = useRef();
+  const fileSelectorHandler = (e) => {
+    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.addEventListener(
+      "load",
+      () => {
+        setImgSrc(reader.result);
+      },
+      false
+    );
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+  const inputFileRefHandler = () => {
+    inputFileRef.current.click();
+  };
+  const fileUploadHandler = (e) => {
+    let formdata = new FormData();
+    formdata.append("image", selectedFile);
+    let requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: "Client-ID 623487535f2f5ba",
+      },
+      body: formdata,
+      redirect: "follow",
+    };
+    fetch("https://api.imgur.com/3/image", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (!result.data.link) {
+          alert("尚未上傳圖片");
+          setImgSrc(cameraIcon);
+          return;
+        }
+        console.log("result", result);
+        console.log("url", result.data.link); // 拿到上傳圖片的 url
+        setUploadImg(result.data.link);
+        alert("上傳成功");
+      })
+      .catch((error) => {
+        alert("圖片處理異常，請稍後再試");
+        console.log("error", error);
+        return;
+      });
+  };
   return (
     <>
       <Content>
         <Column>{name}</Column>
       </Content>
-      <Content>
+      <UploadImage>
         <Wrap>
-          <Img url={src} />
+          <Img url={ImgSrc} onClick={inputFileRefHandler} />
         </Wrap>
         <Upload>
           <Desc>{desc}</Desc>
-          <Button>上傳圖片</Button>
+          <input
+            style={{ display: "none" }}
+            type="file"
+            ref={inputFileRef}
+            onChange={fileSelectorHandler}
+            accept="image/*"
+          />
+          <Button onClick={fileUploadHandler}>上傳圖片</Button>
         </Upload>
-      </Content>
+      </UploadImage>
     </>
   );
 }
