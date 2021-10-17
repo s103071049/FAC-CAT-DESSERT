@@ -156,7 +156,6 @@ function Input({ name, value, as, placeholder }) {
     "限量：": "",
   });
   const handleInputChange = (e) => {
-    console.log(e.target.name);
     setAllValues({ ...allValues, [e.target.name]: e.target.value });
   };
   return (
