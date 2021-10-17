@@ -16,7 +16,6 @@ import UpdateProductPage from "../../pages/UpdateProductPage";
 import AddDiscountPage from "../../pages/AddDiscountPage";
 import UpdateDiscountPage from "../../pages/UpdateDiscountPage";
 
-import TransactionPage from "../../pages/TransactionPage";
 import SingleProductPage from "../../pages/SingleProductPage";
 import AdminProductsPage from "../../pages/AdminProductsPage";
 import AdminProductsRestorePage from "../../pages/AdminProductsRestorePage";
@@ -43,9 +42,6 @@ function App() {
           </Route>
           <Route path="/user">
             <UserPage />
-          </Route>
-          <Route path="/transaction">
-            <TransactionPage />
           </Route>
           <Route path="/products">
             <ProductsPage />
