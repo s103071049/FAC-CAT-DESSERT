@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import cameraIcon from "../../components/img/icon/camera.svg";
-
+import { imgurApi } from "../../API/imgurAPI";
 const desc = `2020新品，日本柚子帶出輕盈微酸的口感。
 
 臺灣鐵觀音帶出濃郁茶香
@@ -74,7 +74,7 @@ const Row = styled.input`
   border-radius: 4px;
   font-size: 18px;
   color: #917856;
-  &:: placeholder {
+  &::placeholder {
     color: #917856;
     font-weight: bold;
   }
@@ -99,6 +99,7 @@ const Img = styled.div`
 
 const Button = styled.div`
   background: rgba(201, 186, 152, 2);
+  margin-top: 6px;
   padding: 16px 32px;
   text-align: center;
   color: #917856;
@@ -106,7 +107,7 @@ const Button = styled.div`
   border-radius: 8px;
   justify-self: center;
   display: inline-block;
-  &: hover {
+  &:hover {
     color: white;
     font-weight: bold;
     transition: all 0.5s ease-out;
@@ -127,7 +128,7 @@ const Submit = styled.div`
   border: 1px solid rgba(201, 186, 152, 0.9);
   margin: 0;
   margin-top: 36px;
-  &: hover {
+  &:hover {
     color: white;
     background: rgba(201, 186, 152, 1.5);
     transition: all 0.5s ease;
@@ -149,7 +150,6 @@ const Desc = styled.div`
 const Wrap = styled.div`
   width: 30%;
   max-width: 1200px;
-  padding: 0 28px;
   ${MEDIA_QUERY_MD} {
     width: 240px;
     margin: 0 auto;
@@ -215,34 +215,22 @@ function UploadImg({ name, desc }) {
     inputFileRef.current.click();
   };
   const fileUploadHandler = (e) => {
-    let formdata = new FormData();
-    formdata.append("image", selectedFile);
-    let requestOptions = {
-      method: "POST",
-      headers: {
-        Authorization: "Client-ID 623487535f2f5ba",
-      },
-      body: formdata,
-      redirect: "follow",
-    };
-    fetch("https://api.imgur.com/3/image", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (!result.data.link) {
-          alert("尚未上傳圖片");
-          setImgSrc(cameraIcon);
+    let formData = new FormData();
+    formData.append("image", selectedFile);
+    if (!selectedFile) {
+      alert("尚未選取圖片");
+    }
+    if (selectedFile) {
+      imgurApi(formData)
+        .then((result) => {
+          setUploadImg(result.data.link); // 拿到上傳圖片的 url
+          alert("上傳成功");
+        })
+        .catch((error) => {
+          alert("圖片處理異常，請稍後再試!");
           return;
-        }
-        console.log("result", result);
-        console.log("url", result.data.link); // 拿到上傳圖片的 url
-        setUploadImg(result.data.link);
-        alert("上傳成功");
-      })
-      .catch((error) => {
-        alert("圖片處理異常，請稍後再試");
-        console.log("error", error);
-        return;
-      });
+        });
+    }
   };
   return (
     <>
@@ -281,11 +269,7 @@ const UpdateProductPage = () => {
         <Input name={"商品介紹："} as={"textarea"} value={"商品介紹："} />
         <Input name={"售價："} value={"售價："} />
         <Input name={"限量："} value={"限量："} />
-        <UploadImg
-          name={"上傳圖片："}
-          src={cameraIcon}
-          desc={`${imgLoadingDesc}`}
-        />
+        <UploadImg name={"上傳圖片："} desc={`${imgLoadingDesc}`} />
         <Bottom>
           <Submit>編輯完成</Submit>
         </Bottom>

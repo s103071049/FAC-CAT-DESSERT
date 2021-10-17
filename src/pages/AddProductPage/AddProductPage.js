@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import cameraIcon from "../../components/img/icon/camera.svg";
-
+import { imgurApi } from "../../API/imgurAPI";
 const imgLoadingDesc = `
 從電腦中選取圖檔，
 最佳大小為 600px * 600px`;
@@ -196,34 +196,22 @@ function UploadImg({ name, desc }) {
     inputFileRef.current.click();
   };
   const fileUploadHandler = (e) => {
-    let formdata = new FormData();
-    formdata.append("image", selectedFile);
-    let requestOptions = {
-      method: "POST",
-      headers: {
-        Authorization: "Client-ID 623487535f2f5ba",
-      },
-      body: formdata,
-      redirect: "follow",
-    };
-    fetch("https://api.imgur.com/3/image", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (!result.data.link) {
-          alert("尚未上傳圖片");
-          setImgSrc(cameraIcon);
+    let formData = new FormData();
+    formData.append("image", selectedFile);
+    if (!selectedFile) {
+      alert("尚未選取圖片");
+    }
+    if (selectedFile) {
+      imgurApi(formData)
+        .then((result) => {
+          setUploadImg(result.data.link); // 拿到上傳圖片的 url
+          alert("上傳成功");
+        })
+        .catch((error) => {
+          alert("圖片處理異常，請稍後再試!");
           return;
-        }
-        console.log("result", result);
-        console.log("url", result.data.link); // 拿到上傳圖片的 url
-        setUploadImg(result.data.link);
-        alert("上傳成功");
-      })
-      .catch((error) => {
-        alert("圖片處理異常，請稍後再試");
-        console.log("error", error);
-        return;
-      });
+        });
+    }
   };
   return (
     <>
