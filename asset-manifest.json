@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/finalProjectUI/static/css/main.aa724a6e.chunk.css",
-    "main.js": "/finalProjectUI/static/js/main.7cea46f7.chunk.js",
-    "main.js.map": "/finalProjectUI/static/js/main.7cea46f7.chunk.js.map",
+    "main.js": "/finalProjectUI/static/js/main.e5c6efb0.chunk.js",
+    "main.js.map": "/finalProjectUI/static/js/main.e5c6efb0.chunk.js.map",
     "runtime-main.js": "/finalProjectUI/static/js/runtime-main.96a5d7dc.js",
     "runtime-main.js.map": "/finalProjectUI/static/js/runtime-main.96a5d7dc.js.map",
     "static/js/2.6ef1bb93.chunk.js": "/finalProjectUI/static/js/2.6ef1bb93.chunk.js",
@@ -17,7 +17,7 @@
     "static/media/cake2.bef16be9.jpg": "/finalProjectUI/static/media/cake2.bef16be9.jpg",
     "static/media/cake3.6603d24b.jpg": "/finalProjectUI/static/media/cake3.6603d24b.jpg",
     "static/media/cake4.953571f6.jpg": "/finalProjectUI/static/media/cake4.953571f6.jpg",
-    "static/media/camera.43941999.svg": "/finalProjectUI/static/media/camera.43941999.svg",
+    "static/media/camera.949eaeb5.svg": "/finalProjectUI/static/media/camera.949eaeb5.svg",
     "static/media/facebook.3f2ca5f0.svg": "/finalProjectUI/static/media/facebook.3f2ca5f0.svg",
     "static/media/home.205e5c86.svg": "/finalProjectUI/static/media/home.205e5c86.svg",
     "static/media/instagram.02967a62.svg": "/finalProjectUI/static/media/instagram.02967a62.svg",
@@ -39,6 +39,6 @@
     "static/js/runtime-main.96a5d7dc.js",
     "static/js/2.6ef1bb93.chunk.js",
     "static/css/main.aa724a6e.chunk.css",
-    "static/js/main.7cea46f7.chunk.js"
+    "static/js/main.e5c6efb0.chunk.js"
   ]
 }
