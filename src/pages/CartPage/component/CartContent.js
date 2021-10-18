@@ -1,26 +1,25 @@
-import styled from "styled-components"
-
-import numeric1 from '../../../components/img/icon/numeric1.svg'
-import cake from '../../../components/img/product/cake.jpg'
-import closeCircle from '../../../components/img/icon/close-circle.svg'
+import styled from "styled-components";
+import numeric1 from "../../../components/img/icon/numeric1.svg";
+import cake from "../../../components/img/product/cake.jpg";
+import closeCircle from "../../../components/img/icon/close-circle.svg";
 
 const Container = styled.div`
-  margin-top:50px;
-  border: 1px solid #9CA4AA;
-  padding:16px 22px;
-  font-size:18px;
+  margin-top: 50px;
+  border: 1px solid #9ca4aa;
+  padding: 16px 22px;
+  font-size: 18px;
   @media screen and (max-width: 698px) {
-    font-size:16px;
+    font-size: 16px;
   }
-`
+`;
 const Header = styled.div`
-  display:flex;
-  align-items:center;
-`
+  display: flex;
+  align-items: center;
+`;
 const Title = styled.div`
-  margin-left:12px;
-`
-const Body = styled.div``
+  margin-left: 12px;
+`;
+const Body = styled.div``;
 
 const Table = styled.table`
   border-collapse: collapse;
@@ -33,128 +32,129 @@ const Table = styled.table`
 
   & * {
     position: relative;
-    margin-top:20px;
+    margin-top: 20px;
   }
-  
+
   @media screen and (max-width: 698px) {
-    display:block;
-    & *, & tr, & td, & th {
-      display:block;
+    display: block;
+    & *,
+    & tr,
+    & td,
+    & th {
+      display: block;
     }
 
     & * {
-      margin-top:0;
+      margin-top: 0;
     }
   }
-`
+`;
 const Thead = styled.thead`
   & tr {
-    height: 40px ;
+    height: 40px;
     font-size: 18px;
-    color:#565656;
+    color: #565656;
   }
   @media screen and (max-width: 698px) {
-    display:none;
+    display: none;
   }
-`
+`;
 const Tbody = styled.tbody`
- 
-
   @media screen and (max-width: 698px) {
-     & tr {
-      height:auto;
+    & tr {
+      height: auto;
     }
   }
-`
+`;
 const Tfoot = styled.tfoot`
-  display:none;
+  display: none;
 
   & tr {
-    height:30px;
+    height: 30px;
   }
   & tr :first-child {
-    text-align:right;
-    padding-right:80px;
+    text-align: right;
+    padding-right: 80px;
   }
- 
-  & tr:last-child  td:last-child {
-    color:#E33333;
+
+  & tr:last-child td:last-child {
+    color: #e33333;
   }
 
   @media screen and (max-width: 698px) {
-    display:block;
+    display: block;
     & tr :first-child {
-      text-align:left;
-      padding-right:0;
-      margin-top:20px;
+      text-align: left;
+      padding-right: 0;
+      margin-top: 20px;
     }
     & tr {
-      border-bottom:0;
+      border-bottom: 0;
     }
     & td {
-      min-width:150px;
+      min-width: 150px;
     }
   }
-`
+`;
 
 const Th = styled.th`
-  background:#F0F1F3;
-  font-weight:normal;
-  text-align:left;
-  padding:0 8px;
-
-`
+  background: #f0f1f3;
+  font-weight: normal;
+  text-align: left;
+  padding: 0 8px;
+`;
 
 const Tr = styled.tr`
   @media screen and (max-width: 698px) {
-    border-bottom:1px solid #ccc;
-    &+& {
-      margin-top:20px;
+    border-bottom: 1px solid #ccc;
+    & + & {
+      margin-top: 20px;
     }
   }
-`
+`;
 
 const Td = styled.td`
-  text-align:left;
-  padding:0 8px;
-  min-width:60px;
-  
+  text-align: left;
+  padding: 0 8px;
+  min-width: 60px;
+
   & * {
-    display:inline-block;
+    display: inline-block;
   }
 
-  ${props => props.$active && `
+  ${(props) =>
+    props.$active &&
+    `
     color:#E55555;
     font-weight:bold;
   `}
   @media screen and (max-width: 698px) {
     margin-bottom: 12px;
 
-    &:first-child{
-      text-align:center;
-      margin-bottom:20px;
+    &:first-child {
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     &:not(:first-of-type):before {
-      content:attr(data-title);
+      content: attr(data-title);
       display: inline-block;
       width: auto;
       min-width: 40%;
       font-weight: 900;
       padding-right: 1rem;
-      text-decoration: underline
+      text-decoration: underline;
     }
 
-    &:last-of-type{
-      position:absolute;
-      top:0;
-      right:0;
-      bottom:0;
+    &:last-of-type {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
     }
-   
   }
-`
-const Img =styled.div`
+`;
+const Img = styled.div`
   height: 0;
   width: 100%;
   background: url(${(props) => props.$url});
@@ -169,51 +169,49 @@ const Img =styled.div`
     width: 50%;
     padding-bottom: 50%;
   }
-`
-const CartItemInfo = styled.div`
-`
+`;
+const CartItemInfo = styled.div``;
 const QtyBtn = styled.button`
-  background:#fff;
-  border:none;
-  cursor:pointer;
-  font-size:20px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
 
   @media screen and (max-width: 698px) {
-    padding: 0 ;
+    padding: 0;
   }
-  
-`
+`;
 
 const ItemQty = styled.div`
- margin: 0 12px ;
- @media screen and (max-width: 698px) {
-    margin: 0 12px ;
+  margin: 0 12px;
+  @media screen and (max-width: 698px) {
+    margin: 0 12px;
   }
-`
+`;
 
-const ItemPrice = styled.div``
+const ItemPrice = styled.div``;
 const ItemAction = styled.div`
-  cursor:pointer;
+  cursor: pointer;
   & img {
-    margin-top:0;
+    margin-top: 0;
   }
-`
+`;
 const fakeCartData = [
   {
-    id:1,
-    imgUrl:cake,
-    info:'老媽媽檸檬塔 - 7吋(20cm)',
-    qty:1,
-    price:880
+    id: 1,
+    imgUrl: cake,
+    info: "老媽媽檸檬塔 - 7吋(20cm)",
+    qty: 1,
+    price: 880,
   },
   {
-    id:2,
-    imgUrl:cake,
-    info:'水果戚風(自取限定) - 波本香草6吋',
-    qty:2,
-    price:850
-  }
-]
+    id: 2,
+    imgUrl: cake,
+    info: "水果戚風(自取限定) - 波本香草6吋",
+    qty: 2,
+    price: 850,
+  },
+];
 
 const CartTableFoot = () => {
   return (
@@ -231,15 +229,15 @@ const CartTableFoot = () => {
         <Td colSpan="2">NT$2580</Td>
       </Tr>
     </>
-  )
-}
+  );
+};
 
 const CartTableData = () => {
-  return fakeCartData.map(item => {
+  return fakeCartData.map((item) => {
     return (
       <Tr key={item.id}>
         <Td data-title="">
-          <Img $url={item.imgUrl}/>
+          <Img $url={item.imgUrl} />
         </Td>
         <Td data-title="商品名稱">
           <CartItemInfo>{item.info}</CartItemInfo>
@@ -256,12 +254,14 @@ const CartTableData = () => {
           <ItemPrice>{item.qty * item.price}</ItemPrice>
         </Td>
         <Td data-title="">
-          <ItemAction><img src={closeCircle} alt="delete this item from cart" /></ItemAction>
+          <ItemAction>
+            <img src={closeCircle} alt="delete this item from cart" />
+          </ItemAction>
         </Td>
       </Tr>
-    )
-  })
-}
+    );
+  });
+};
 const CartTableHead = () => {
   return (
     <Tr>
@@ -270,31 +270,32 @@ const CartTableHead = () => {
       <Th>數量</Th>
       <Th colSpan="2">小計</Th>
     </Tr>
-  )
-}
+  );
+};
 const CartContent = () => {
   return (
     <Container>
       <Header>
-        <div><img src={numeric1} alt="shopping cart cotent" /></div>
+        <div>
+          <img src={numeric1} alt="shopping cart cotent" />
+        </div>
         <Title>購物車內容</Title>
       </Header>
       <Body>
         <Table>
           <Thead>
-              <CartTableHead />
+            <CartTableHead />
           </Thead>
           <Tbody>
-            <CartTableData/>
+            <CartTableData />
           </Tbody>
           <Tfoot>
-            <CartTableFoot/>
+            <CartTableFoot />
           </Tfoot>
         </Table>
       </Body>
     </Container>
-  )
-}
+  );
+};
 
-
-export default CartContent
+export default CartContent;
