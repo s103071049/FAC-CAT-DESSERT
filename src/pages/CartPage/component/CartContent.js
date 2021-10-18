@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 import numeric1 from '../../../components/img/icon/numeric1.svg'
 import cake from '../../../components/img/product/cake.jpg'
+import closeCircle from '../../../components/img/icon/close-circle.svg'
 
 const Container = styled.div`
   margin-top:50px;
@@ -129,6 +130,11 @@ const Td = styled.td`
   @media screen and (max-width: 698px) {
     margin-bottom: 12px;
 
+    &:first-child{
+      text-align:center;
+      margin-bottom:20px;
+    }
+
     &:not(:first-of-type):before {
       content:attr(data-title);
       display: inline-block;
@@ -186,13 +192,11 @@ const ItemQty = styled.div`
 `
 
 const ItemPrice = styled.div``
-const ItemActionBtn = styled.button`
-  color:#E33333;
-  border:1px solid #E33333;
-  background:#fff;
+const ItemAction = styled.div`
   cursor:pointer;
-  line-height:1;
-  border-radius:50%;
+  & img {
+    margin-top:0;
+  }
 `
 const fakeCartData = [
   {
@@ -252,7 +256,7 @@ const CartTableData = () => {
           <ItemPrice>{item.qty * item.price}</ItemPrice>
         </Td>
         <Td data-title="">
-          <ItemActionBtn>x</ItemActionBtn>
+          <ItemAction><img src={closeCircle} alt="delete this item from cart" /></ItemAction>
         </Td>
       </Tr>
     )
