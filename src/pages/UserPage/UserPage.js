@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import {
   Switch,
@@ -5,11 +6,14 @@ import {
   Link,
   useRouteMatch,
   useLocation,
+  useHistory,
 } from "react-router-dom";
 import IconMark from "../../components/common/IconMark";
 import UserInfo from "./components/UserInfo.js";
 import EditPassword from "./components/EditPassword.js";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
+import { setAuthToken, removeAuthToken } from "../../utils";
+import { AuthContexts } from "../../context";
 
 const Wrapper = styled.div`
   max-width: 1042px;
@@ -112,10 +116,27 @@ const Main = styled.div`
     padding-top: 40px;
   }
 `;
+const SideBarLogout = styled.div`
+  display: block;
+  color: #808080;
+  padding: 20px;
+  border-bottom: 1px solid #808080;
+  &:hover {
+    color: #d49e6a;
+    cursor: pointer;
+  }
+`;
 const UserPage = () => {
   let location = useLocation();
   let { path, url } = useRouteMatch();
-
+  const { user, setUser } = useContext(AuthContexts);
+  const history = useHistory();
+  // 登出
+  const handleLogout = () => {
+    removeAuthToken();
+    setUser(null);
+    history.push("/");
+  };
   const SideBarItems = ({ toUrl, title }) => {
     let newUrl = url + toUrl;
     return (
@@ -136,7 +157,7 @@ const UserPage = () => {
               <SideBarItems toUrl={""} title="個人資訊" />
               <SideBarItems toUrl={"/editPWD"} title="更改密碼" />
               <SideBarItems toUrl={"/myorders"} title="訂單" />
-              <SideBarItems toUrl={"/logout"} title="登出" />
+              <SideBarLogout onClick={handleLogout}>登出</SideBarLogout>
             </SideBarbody>
           </SideBar>
           <Switch>

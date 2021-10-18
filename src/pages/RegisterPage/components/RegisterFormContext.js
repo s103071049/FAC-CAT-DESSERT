@@ -25,6 +25,7 @@ export default function RegisterFormContext({
   type,
   name,
   value,
+  placeholder,
   onChange,
 }) {
   return (
@@ -37,6 +38,7 @@ export default function RegisterFormContext({
         type={type}
         name={name}
         value={value}
+        placeholder={placeholder}
         onChange={onChange}
       />
     </RegisterFormContextWrapper>

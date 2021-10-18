@@ -1,6 +1,6 @@
 import { getAuthToken } from "./utils";
 const BASE_URL = `https://website-of-bakery.herokuapp.com`;
-
+//登入
 export const login = async (email, password) => {
   const response = await fetch(`${BASE_URL}/login`, {
     method: "POST",
@@ -14,7 +14,7 @@ export const login = async (email, password) => {
   });
   return await response.json();
 };
-
+//token串api拿user
 export const getUser = async () => {
   const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/user`, {
@@ -22,13 +22,9 @@ export const getUser = async () => {
       authorization: `Bearer ${token}`,
     },
   });
-  // if (response.statusCode !== 200) {
-  //   return {};
-  // }
-  console.log(123);
   return await response.json();
 };
-
+//註冊
 export const register = async (
   username,
   password,
@@ -51,6 +47,48 @@ export const register = async (
       phone,
       email,
       address,
+    }),
+  });
+  return await response.json();
+};
+// 更改user
+export const updateUser = async (
+  username,
+  firstname,
+  lastname,
+  phone,
+  address
+) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/user`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      username,
+      firstname,
+      lastname,
+      phone,
+      address,
+    }),
+  });
+  return await response.json();
+};
+// 更改密碼
+export const updatePassword = async (password, newPassword, newPassword2) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/update-password`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      password,
+      newPassword,
+      newPassword2,
     }),
   });
   return await response.json();

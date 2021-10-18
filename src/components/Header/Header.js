@@ -161,11 +161,6 @@ function Header() {
   const searchBar = () => {
     searchBarShow(!show);
   };
-  const handleLogout = () => {
-    setAuthToken("");
-    setUser(null);
-    alert("已登出");
-  };
   return (
     <div>
       <Router>
@@ -212,7 +207,7 @@ function Header() {
               </ImgLink>
             )}
             {user && (
-              <ImgLink onClick={handleLogout}>
+              <ImgLink as={Link} to="/user">
                 <Img src={Loginusericon} />
               </ImgLink>
             )}

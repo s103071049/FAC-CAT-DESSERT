@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
-import ErrorMessage from "../../components/common/Errormessage";
+import EachErrorMessage from "../../components/common/EachErrorMessage";
 import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent";
 import RegisterFormContext from "./components/RegisterFormContext";
 import { Link, useHistory } from "react-router-dom";
@@ -98,6 +98,7 @@ const ServerList = styled(Link)`
 `;
 const Statement = styled(ServerList)``;
 const RegisterPage = () => {
+  const passwordRe = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
   const history = useHistory();
   const { user, setUser } = useContext(AuthContexts);
   const [username, setUsername] = useState("");
@@ -109,8 +110,8 @@ const RegisterPage = () => {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
+  const [error, setError] = useState(Array(8).fill(null));
+  //input change
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
@@ -120,9 +121,6 @@ const RegisterPage = () => {
   const handlePhoneChange = (e) => {
     setPhone(e.target.value);
   };
-  // const handleBirthChange = (e) => {
-  //   setBirth(e.target.value);
-  // };
   const handleFirstnameChange = (e) => {
     setFirstname(e.target.value);
   };
@@ -138,10 +136,74 @@ const RegisterPage = () => {
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
+  //註冊
   const handleRegister = (e) => {
     e.preventDefault();
+    //資料不齊全
+    if (
+      !username ||
+      !email ||
+      !phone ||
+      !lastname ||
+      !firstname ||
+      !address ||
+      !password ||
+      !confirmPassword
+    ) {
+      const newError = JSON.parse(JSON.stringify(error));
+      if (!username) {
+        newError[0] = "*請填寫";
+      } else {
+        newError[0] = null;
+      }
+      if (!email) {
+        newError[1] = "*請填寫";
+      } else {
+        newError[1] = null;
+      }
+      if (!phone) {
+        newError[2] = "*請填寫";
+      } else {
+        newError[2] = null;
+      }
+      if (!lastname) {
+        newError[3] = "*請填寫";
+      } else {
+        newError[3] = null;
+      }
+      if (!firstname) {
+        newError[4] = "*請填寫";
+      } else {
+        newError[4] = null;
+      }
+      if (!address) {
+        newError[5] = "*請填寫";
+      } else {
+        newError[5] = null;
+      }
+      if (!password) {
+        newError[6] = "*請填寫";
+      } else {
+        newError[6] = null;
+      }
+      if (!confirmPassword) {
+        newError[7] = "*請填寫";
+      } else {
+        newError[7] = null;
+      }
+      return setError(newError);
+    }
+    // 密碼強度不足
+    if (!passwordRe.test(password)) {
+      const newError = Array(8).fill(null);
+      newError[6] = "*密碼強度不足";
+      return setError(newError);
+    }
     if (password !== confirmPassword) {
-      return setErrorMessage("密碼不相同");
+      const newError = Array(8).fill(null);
+      newError[6] = "*密碼不相同";
+      console.log(newError);
+      return setError(newError);
     }
     register(
       username,
@@ -153,7 +215,7 @@ const RegisterPage = () => {
       address
     ).then((response) => {
       if (!response.success) {
-        return setErrorMessage(response.message);
+        console.log(response.message);
       }
       setAuthToken(response.token);
       getUser().then((response) => {
@@ -162,7 +224,6 @@ const RegisterPage = () => {
           return history.push("/");
         }
         setAuthToken("");
-        console.log(response);
       });
     });
   };
@@ -186,7 +247,7 @@ const RegisterPage = () => {
               onChange={handleUsernameChange}
             >
               暱稱
-              {/* <span style={{ color: "red" }}>*</span> */}
+              {error[0] && <EachErrorMessage>{error[0]}</EachErrorMessage>}
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="email"
@@ -197,6 +258,7 @@ const RegisterPage = () => {
               onChange={handleEmailChange}
             >
               電子郵件
+              {error[1] && <EachErrorMessage>{error[1]}</EachErrorMessage>}
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="phone"
@@ -207,6 +269,7 @@ const RegisterPage = () => {
               onChange={handlePhoneChange}
             >
               手機
+              {error[2] && <EachErrorMessage>{error[2]}</EachErrorMessage>}
             </RegisterFormContext>
             {/* <RegisterFormContext
               labalfor="birth"
@@ -223,20 +286,20 @@ const RegisterPage = () => {
               id="firstname"
               type="text"
               name="firstname"
-              value={firstname}
-              onChange={handleFirstnameChange}
+              value={lastname}
+              onChange={handleLastnameChange}
             >
-              姓
+              姓{error[3] && <EachErrorMessage>{error[3]}</EachErrorMessage>}
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="lastname"
               id="lastname"
               type="text"
               name="lastname"
-              value={lastname}
-              onChange={handleLastnameChange}
+              value={firstname}
+              onChange={handleFirstnameChange}
             >
-              名
+              名{error[4] && <EachErrorMessage>{error[4]}</EachErrorMessage>}
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="address"
@@ -247,6 +310,7 @@ const RegisterPage = () => {
               onChange={handleAddressChange}
             >
               地址
+              {error[5] && <EachErrorMessage>{error[5]}</EachErrorMessage>}
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="password"
@@ -254,9 +318,11 @@ const RegisterPage = () => {
               type="password"
               name="password"
               value={password}
+              placeholder={"密碼六字以上，須包含字母與數字"}
               onChange={handlePasswordChange}
             >
               密碼
+              {error[6] && <EachErrorMessage>{error[6]}</EachErrorMessage>}
             </RegisterFormContext>
             <RegisterFormContext
               labalfor="confirmPassword"
@@ -267,6 +333,7 @@ const RegisterPage = () => {
               onChange={handleConfirmPasswordChange}
             >
               確認密碼
+              {error[7] && <EachErrorMessage>{error[7]}</EachErrorMessage>}
             </RegisterFormContext>
             <TextAlignStartWrapper>
               <RegisterFormSubmit>加入會員</RegisterFormSubmit>
@@ -282,7 +349,6 @@ const RegisterPage = () => {
                 </RegisterFormContextCheckboxInputlabel>
               </KeepRegister>
             </TextAlignStartWrapper>
-            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           </RegisterForm>
           <RegisterAnotherInfo>
             <IsmemberInfo>

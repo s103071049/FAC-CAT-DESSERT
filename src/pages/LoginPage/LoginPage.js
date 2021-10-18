@@ -93,11 +93,14 @@ const LoginPage = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+  // 登入
   const handleLogin = (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      return setErrorMessage("資料不齊全");
+    }
     login(email, password).then((response) => {
       if (!response.success) {
-        console.log(response.message);
         return setErrorMessage(response.message);
       }
       setAuthToken(response.token);

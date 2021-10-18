@@ -55,9 +55,7 @@ function App() {
             <Route path="/register">
               <RegisterPage />
             </Route>
-            <Route path="/user">
-              <UserPage />
-            </Route>
+            <Route path="/user">{user && <UserPage />}</Route>
             <Route path="/transaction">
               <TransactionPage />
             </Route>
