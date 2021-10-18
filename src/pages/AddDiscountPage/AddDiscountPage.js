@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
+import { createDiscounts, handleSummit } from "../../API/fetchAPI"
 
 const Wrapper = styled.div`
   max-width: 1024px;
@@ -65,14 +66,24 @@ const Submit = styled.div`
   margin-bottom: 18px;
 `;
 
+const Bottom = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 function Input({ name, value, as, placeholder }) {
+
   const [allValues, setAllValues] = useState({
-    "運費門檻：": "",
-    "運費說明：": "",
+    desc: null,
+    price: null,
+    threshold: null,
+    shipment: null
   });
+
   const handleInputChange = (e) => {
     setAllValues({ ...allValues, [e.target.name]: e.target.value });
   };
+
   return (
     <Content>
       <Column>{name}</Column>
@@ -87,29 +98,38 @@ function Input({ name, value, as, placeholder }) {
   );
 }
 
-const Bottom = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
 const AddDiscountPage = () => {
+
   return (
     <div>
       <Wrapper>
         <Title>新增運費規則</Title>
-        <Input
-          name={"運費門檻："}
-          value={"運費門檻："}
-          placeholder={"請輸入運費門檻"}
-        />
-        <Input
-          name={"運費說明："}
-          as={"textarea"}
-          value={"運費說明："}
-          placeholder={"請輸入運費說明"}
-        />
-        <Bottom>
-          <Submit>提交</Submit>
-        </Bottom>
+        <form onSubmit={handleSummit(createDiscounts, allValues)}>
+          <Input
+            name={"運費門檻："}
+            value={allValues.threshold}
+            placeholder={"請輸入運費門檻"}
+          />
+          <Input
+            name={"運費說明："}
+            as={"textarea"}
+            value={allValues.desc}
+            placeholder={"請輸入運費說明"}
+          />
+          <Input
+            name={"運費："}
+            value={allValues.shipment}
+            placeholder={"請輸入運費"}
+          />
+          <Input
+            name={"運費 price："}
+            value={allValues.price}
+            placeholder={"請輸入 price"}
+          />
+          <Bottom>
+            <Submit>提交</Submit>
+          </Bottom>
+        </form>
       </Wrapper>
     </div>
   );
