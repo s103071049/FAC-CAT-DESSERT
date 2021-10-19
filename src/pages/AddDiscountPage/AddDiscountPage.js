@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
-import { createDiscounts, handleSummit } from "../../API/fetchAPI"
+import { APIFunction } from "../../API/fetchAPI"
 
 const Wrapper = styled.div`
   max-width: 1024px;
@@ -47,7 +47,7 @@ const Row = styled.input`
   }
 `;
 
-const Submit = styled.div`
+const Submit = styled.button`
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
@@ -71,25 +71,13 @@ const Bottom = styled.div`
   justify-content: flex-end;
 `;
 
-function Input({ name, value, as, placeholder }) {
-
-  const [allValues, setAllValues] = useState({
-    desc: null,
-    price: null,
-    threshold: null,
-    shipment: null
-  });
-
-  const handleInputChange = (e) => {
-    setAllValues({ ...allValues, [e.target.name]: e.target.value });
-  };
-
+function Input({ columnName, name, as, placeholder, handleInputChange}) {
+   
   return (
     <Content>
-      <Column>{name}</Column>
+      <Column>{columnName}</Column>
       <Row
         name={name}
-        value={allValues[value]}
         as={as}
         onChange={handleInputChange}
         placeholder={placeholder}
@@ -98,33 +86,55 @@ function Input({ name, value, as, placeholder }) {
   );
 }
 
+
 const AddDiscountPage = () => {
+  const [allValues, setAllValues] = useState({});
+  const handleInputChange = (e) => {
+    setAllValues({ ...allValues, [e.target.name]: e.target.value });
+  };
+  const handleSummit = async (event) => {
+    event.preventDefault()
+    const res = await APIFunction({ data: allValues, authorization: localStorage.getItem('token') }, '/createDiscounts')
+    if (res.success) {
+      alert("成功");
+    } else {
+      alert("失敗")
+    }
+  }
 
   return (
     <div>
       <Wrapper>
         <Title>新增運費規則</Title>
-        <form onSubmit={handleSummit(createDiscounts, allValues)}>
+        <form onSubmit={handleSummit}>
           <Input
-            name={"運費門檻："}
-            value={allValues.threshold}
+            columnName={"運費門檻："}
+            name={"threshold"}
+            // value={allValues.threshold}
             placeholder={"請輸入運費門檻"}
+            handleInputChange={handleInputChange}
           />
           <Input
-            name={"運費說明："}
+            columnName={"運費說明："}
+            name={"desc"}
             as={"textarea"}
-            value={allValues.desc}
+            // value={allValues.desc}
             placeholder={"請輸入運費說明"}
+            handleInputChange={handleInputChange}
           />
           <Input
-            name={"運費："}
-            value={allValues.shipment}
+            columnName={"運費："}
+            name={"shipment"}
+            // value={allValues.shipment}
             placeholder={"請輸入運費"}
+            handleInputChange={handleInputChange}
           />
           <Input
-            name={"運費 price："}
-            value={allValues.price}
+            columnName={"運費 price："}
+            name={"price"}
+            // value={allValues.price}
             placeholder={"請輸入 price"}
+            handleInputChange={handleInputChange}
           />
           <Bottom>
             <Submit>提交</Submit>

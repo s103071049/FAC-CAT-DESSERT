@@ -1,23 +1,14 @@
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') })
 
-export async function createDiscounts(data) {
-  return fetch(`${process.env.BACKEND_URL}\createDiscounts`, {
+export async function APIFunction(data, api) {
+  return fetch(`https://website-of-bakery.herokuapp.com${api}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Beaer ${data.authorization}`
+      'Authorization': `Bearer ${data.authorization}`
     },
     body: JSON.stringify(data.data)
   })
     .then(data => data.json())
-}
-
-export const handleSummit = async (APIFunction, data) => (e) => {
-  e.prevenDefault()
-  const res = await APIFunction({ data, authorization: localStorage.getItem('token') })
-  if (res.success) {
-    alert("成功");
-  } else {
-    aler("失敗")
-  }
 }
