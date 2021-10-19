@@ -93,3 +93,8 @@ export const updatePassword = async (password, newPassword, newPassword2) => {
   });
   return await response.json();
 };
+//search products
+export const searchProducts = async (searchKey) => {
+  const response = await fetch(`${BASE_URL}/searchProducts/${searchKey}`);
+  return await response.json();
+};

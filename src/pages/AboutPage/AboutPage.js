@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import homeIcon from "../../components/img/icon/home.svg";
 import { MEDIA_QUERY_SD } from "../../components/Style/style";
+import IconMark from "../../components/common/IconMark";
 
 const AboutWrapper = styled.div`
   max-width: 1042px;
@@ -9,10 +9,7 @@ const AboutWrapper = styled.div`
   padding: 0 16px;
   min-height: 73vh;
 `;
-const IconMark = styled.div`
-  margin-top: 10px;
-  display: flex;
-`;
+
 const Icon = styled.img`
   padding: 0 px;
   width: 15px;
@@ -64,10 +61,7 @@ const AboutPage = () => {
   return (
     <>
       <AboutWrapper>
-        <IconMark>
-          <Icon src={homeIcon} />
-          <Mark>{">"} 關於我們</Mark>
-        </IconMark>
+        <IconMark>關於我們</IconMark>
         <AboutContentWrapper>
           <div>{aboutContent}</div>
           <div>

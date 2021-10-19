@@ -21,7 +21,7 @@ const ProductsBanner = styled.div`
 export default function ProductsPage() {
   return (
     <div>
-      <IconMark context={"所有甜點"} />
+      <IconMark>所有甜點</IconMark>
       <ProductsWrapper>
         <ProductsCategory />
         <ProductsBanner />

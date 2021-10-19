@@ -161,7 +161,7 @@ const SingleProductPage = () => {
     <div>
       <Wrapper>
         <SingleProduct dessert={desserts[0]} key={0} />
-        <ProductsSectionTiTleContent context={"推薦商品"} />
+        <ProductsSectionTiTleContent>推薦商品</ProductsSectionTiTleContent>
         <Section>
           {desserts.map((dessert, i) => (
             <Item dessert={dessert} key={i} />

@@ -79,7 +79,7 @@ const OrderPage = () => {
   return (
     <>
       <Wrapper>
-        <IconMark context={"訂單管理"} />
+        <IconMark>訂單管理</IconMark>
         <Main>
           <OrderStatusFilter
             selectOrderStatus={selectOrderStatus}

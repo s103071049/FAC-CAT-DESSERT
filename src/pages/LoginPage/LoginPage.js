@@ -115,9 +115,9 @@ const LoginPage = () => {
   };
   return (
     <div>
-      <IconMark context={"會員登入"} />
+      <IconMark>會員登入</IconMark>
       <LoginWrapper>
-        <ProductsSectionTiTleContent context={"會員登入"} />
+        <ProductsSectionTiTleContent>會員登入</ProductsSectionTiTleContent>
         <LoginContentWrapper>
           <LoginContentTitle>歡迎回來</LoginContentTitle>
           <FBButton>快速登入</FBButton>
