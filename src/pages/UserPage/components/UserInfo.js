@@ -1,46 +1,114 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import * as UFS from "./UserLayout/UserFormStyle";
 import UserActionBtn from "./UserLayout/UserActionBtn";
+import { AuthContexts } from "../../../context";
+import { updateUser } from "../../../WEBAPI";
+import EachErrorMessage from "../../../components/common/EachErrorMessage";
 
 export default function UserInfo() {
-  const [lastName, setLastName] = useState("Yang");
-  const [firstName, setFirstName] = useState("Ashi");
-  const [nickName, setNickName] = useState("yangyang");
-  const [phone, setPhone] = useState("0912345678");
-  const [address, setAddress] = useState("高雄市岡山區貓貓路三段84巷33號");
+  const { user, setUser } = useContext(AuthContexts);
+  const [lastname, setLastname] = useState(user.lastname);
+  const [firstname, setFirstname] = useState(user.firstname);
+  const [username, setUsername] = useState(user.username);
+  const [phone, setPhone] = useState(user.phone);
+  const [address, setAddress] = useState(user.address);
+  const [error, setError] = useState(Array(5).fill(null));
+  const handleEmpty = (e) => {
+    e.preventDefault();
+    setLastname(user.lastname);
+    setFirstname(user.firstname);
+    setUsername(user.username);
+    setPhone(user.phone);
+    setAddress(user.address);
+  };
+  // 更新user
+  const handleUpdateUser = (e) => {
+    e.preventDefault();
+    //資料不齊全
+    if (!username || !phone || !lastname || !firstname || !address) {
+      const newError = JSON.parse(JSON.stringify(error));
+      if (!lastname) {
+        newError[0] = "*請填寫";
+      } else {
+        newError[0] = null;
+      }
+      if (!firstname) {
+        newError[1] = "*請填寫";
+      } else {
+        newError[1] = null;
+      }
+      if (!username) {
+        newError[2] = "*請填寫";
+      } else {
+        newError[2] = null;
+      }
+      if (!phone) {
+        newError[3] = "*請填寫";
+      } else {
+        newError[3] = null;
+      }
+      if (!address) {
+        newError[4] = "*請填寫";
+      } else {
+        newError[4] = null;
+      }
+      console.log(newError);
+      return setError(newError);
+    }
+    //串api
+    updateUser(username, firstname, lastname, phone, address).then(
+      (response) => {
+        if (!response.success) {
+          console.log(response.message);
+        }
+        setError(Array(5).fill(null));
+        alert("資料更改完成");
+      }
+    );
+  };
   return (
-    <UFS.FormWrapper>
+    <UFS.FormWrapper onSubmit={handleUpdateUser}>
       <UFS.FormRow>
         <UFS.FormItem>
-          <label htmlFor="lastName">姓</label>
+          <label htmlFor="lastName">
+            姓{error[0] && <EachErrorMessage>{error[0]}</EachErrorMessage>}
+          </label>
           <input
-            placeholder={lastName}
+            value={lastname}
             id="lastName"
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => setLastname(e.target.value)}
           />
         </UFS.FormItem>
         <UFS.FormItem>
-          <label htmlFor="firstName">名</label>
+          <label htmlFor="firstName">
+            名{error[1] && <EachErrorMessage>{error[1]}</EachErrorMessage>}
+          </label>
           <input
-            placeholder={firstName}
+            value={firstname}
             id="firstName"
-            onChange={(e) => setFirstName(e.target.value)}
+            onChange={(e) => setFirstname(e.target.value)}
           />
         </UFS.FormItem>
       </UFS.FormRow>
       <UFS.FormRow>
         <UFS.FormItem>
-          <label htmlFor="nickName">暱稱</label>
+          <label htmlFor="nickName">
+            暱稱
+            {error[2] && <EachErrorMessage>{error[2]}</EachErrorMessage>}
+          </label>
           <input
-            placeholder={nickName}
+            value={username}
             id="nickName"
-            onChange={(e) => setNickName(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </UFS.FormItem>
         <UFS.FormItem>
-          <label htmlFor="phone">手機</label>
+          <label htmlFor="phone">
+            手機
+            {error[3] && <EachErrorMessage>{error[3]}</EachErrorMessage>}
+          </label>
           <input
-            placeholder={phone}
+            value={phone}
             id="phone"
             onChange={(e) => setPhone(e.target.value)}
           />
@@ -48,10 +116,13 @@ export default function UserInfo() {
       </UFS.FormRow>
       <UFS.FormRow>
         <UFS.FormItem>
-          <label>地址</label>
+          <label>
+            地址
+            {error[4] && <EachErrorMessage>{error[4]}</EachErrorMessage>}
+          </label>
           <input
             type="text"
-            placeholder={address}
+            value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
         </UFS.FormItem>
@@ -59,11 +130,11 @@ export default function UserInfo() {
       <UFS.FormRow>
         <UFS.FormItem>
           <label>Email</label>
-          <input type="email" value={"123@gmail.com"} disabled="disabled" />
+          <input type="email" value={user.email} disabled="disabled" />
         </UFS.FormItem>
       </UFS.FormRow>
       <UFS.FormRow>
-        <UserActionBtn />
+        <UserActionBtn handleEmpty={handleEmpty} />
       </UFS.FormRow>
     </UFS.FormWrapper>
   );

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-
 const LoginFormContextWrapper = styled.div`
   font-size: 18px;
   & + & {
@@ -25,13 +24,21 @@ export default function LoginFormContext({
   id,
   type,
   name,
+  value,
+  handleChange,
 }) {
   return (
     <LoginFormContextWrapper>
       <LoginFormContextLabel htmlFor={labalfor}>
         {children}
       </LoginFormContextLabel>
-      <LoginFormContextInput id={id} type={type} name={name} />
+      <LoginFormContextInput
+        id={id}
+        type={type}
+        name={name}
+        value={value}
+        onChange={handleChange}
+      />
     </LoginFormContextWrapper>
   );
 }

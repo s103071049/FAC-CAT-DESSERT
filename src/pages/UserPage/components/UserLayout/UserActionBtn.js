@@ -25,6 +25,9 @@ const Button = styled.button`
   }
 
   ${MEDIA_QUERY_SD} {
+    display: block;
+    text-align: center;
+    width: 100%;
     & + & {
       margin: 0;
       margin-top: 20px;
@@ -34,7 +37,7 @@ const Button = styled.button`
 const FormItem = styled.div`
   padding: 0 20px;
   flex-grow: 1;
-  & label {
+  justify-content & label {
     color: #212529;
     font-size: 16px;
     display: block;
@@ -48,10 +51,10 @@ const FormItem = styled.div`
     border-radius: 6px;
   }
 `;
-export default function UserActionBtn() {
+export default function UserActionBtn({ handleEmpty }) {
   return (
     <FormItem>
-      <Button>重新填寫</Button>
+      <Button onClick={handleEmpty}>重新填寫</Button>
       <Button type="submit">確定修改</Button>
     </FormItem>
   );

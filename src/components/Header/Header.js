@@ -1,11 +1,14 @@
 import styled from "styled-components";
-import user from "../img/icon/user.svg";
+import noLoginusericon from "../img/icon/user.svg";
+import Loginusericon from "../img/icon/users-svgrepo-com.svg";
 import cart from "../img/icon/shopping-cart.svg";
 import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContexts } from "../../context";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { setAuthToken } from "../../utils";
 const Navbar = styled.div`
   background: #fbf3ea;
   height: 110px;
@@ -145,6 +148,7 @@ const SearchBar = styled.input`
 `;
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const { user, setUser } = useContext(AuthContexts);
   const toggleHamburger = () => {
     if (hamburgerOpen) {
       document.body.style.overflow = "auto";
@@ -197,9 +201,16 @@ function Header() {
             </List>
           </Wrap>
           <Icon>
-            <ImgLink as={Link} to="/login">
-              <Img src={user} />
-            </ImgLink>
+            {!user && (
+              <ImgLink as={Link} to="/login">
+                <Img src={noLoginusericon} />
+              </ImgLink>
+            )}
+            {user && (
+              <ImgLink as={Link} to="/user">
+                <Img src={Loginusericon} />
+              </ImgLink>
+            )}
             <ImgLink as={Link} to="#">
               <Img src={cart} />
             </ImgLink>
