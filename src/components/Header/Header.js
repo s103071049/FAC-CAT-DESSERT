@@ -4,6 +4,7 @@ import Loginusericon from "../img/icon/users-svgrepo-com.svg";
 import cart from "../img/icon/shopping-cart.svg";
 import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
+import menu from '../img/icon/menu.svg'
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
 import { useState, useContext } from "react";
 import { AuthContexts } from "../../context";
@@ -22,23 +23,40 @@ const Wrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width:100%;
+  ${MEDIA_QUERY_MD} {
+    flex-direction:row;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
 `;
 const Logo = styled.div`
   padding: 12px 0 0 0;
-  font-size: 46px;
+  font-size: 2.5rem;
   color: #9e7a7a;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
   ${MEDIA_QUERY_MD} {
-    font-size: 40px;
+    font-size: 2rem;
     padding: 0;
   }
   ${MEDIA_QUERY_SD} {
-    font-size: 32px;
+    font-size: 1.2rem;
     padding: 0;
   }
 `;
+
+const RwdBtns = styled.div`
+  display:none;
+  ${MEDIA_QUERY_MD} {
+    display:block;
+    position:relative;
+    display:flex;
+  }
+`
+const RwdSearch = styled.div``
+
 const List = styled.div`
   display: flex;
   ${MEDIA_QUERY_MD} {
@@ -79,31 +97,8 @@ const Img = styled.img`
   }
   cursor: pointer;
 `;
-const MenuButton = styled.label`
-  display: none;
-  ${MEDIA_QUERY_MD} {
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    display: block;
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    &::before {
-      content: "";
-      position: absolute;
-      height: 2px;
-      left: 2px;
-      right: 2px;
-      width: 36px;
-      background: #9e7a7a;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      box-shadow: 0 8px 0 #9e7a7a, 0 -8px 0 #9e7a7a;
-    }
-  }
-`;
+
+const MenuBtn=styled.div``
 
 const Menu = styled.nav`
   ${MEDIA_QUERY_MD} {
@@ -140,11 +135,28 @@ const ImgLink = styled.div`
   display: flex;
   align-items: center;
 `;
+const SearchBarWrap = styled.div`
+    width:100%;
+    position:fixed;
+    top:110px;
+    left:0;
+    padding: 6px 20px;
+    background: #fbf3ea;
+    text-align:center;
+    & input {
+      width:100%;
+      padding: 6px 12px;
+    }
+`
+
 const SearchBar = styled.input`
   border: 1px solid #b4a582;
   border-radius: 4px;
   outline: none;
   ${(props) => props.value === false && "display: none;"}
+
+
+
 `;
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -167,7 +179,22 @@ function Header() {
         <Navbar>
           <Wrap>
             <Logo>Fat Cat dessert ฅ</Logo>
-            <MenuButton onClick={toggleHamburger}></MenuButton>
+            
+            <RwdBtns>
+
+              <RwdSearch to="#">
+                <Img src={search} onClick={searchBar}/>
+                {show && (
+                  <SearchBarWrap>
+                    <SearchBar type="text" placeholder="輸入商品名稱" />
+                  </SearchBarWrap>
+                )}
+              </RwdSearch>
+              <MenuBtn onClick={toggleHamburger}>
+                <Img src={menu} />
+              </MenuBtn>
+            </RwdBtns>
+            
             <Menu hamburgerOpen={hamburgerOpen}>
               <MenuItem to="/login" onClick={toggleHamburger}>
                 會員登入
