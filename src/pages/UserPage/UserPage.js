@@ -14,11 +14,11 @@ import EditPassword from "./components/EditPassword.js";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
 import { setAuthToken, removeAuthToken } from "../../utils";
 import { AuthContexts } from "../../context";
+import TransactionPage from "../../pages/TransactionPage";
 
 const Wrapper = styled.div`
   max-width: 1042px;
   margin: 30px auto 60px;
-  padding: 0 16px;
   min-height: 60vh;
   ${MEDIA_QUERY_MD} {
     flex-direction: column;
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 const UserWrapper = styled.div`
   max-width: 1042px;
   margin: 30px auto;
-  padding: 0 16px;
+  padding: 0 8px;
   display: flex;
 
   ${MEDIA_QUERY_MD} {
@@ -42,7 +42,7 @@ const UserWrapper = styled.div`
 `;
 const SideBar = styled.div`
   padding: 12px;
-  width: 250px;
+  min-width: 250px;
 
   ${MEDIA_QUERY_MD} {
     padding: 0;
@@ -56,7 +56,6 @@ const SideBarHeader = styled.div`
   padding: 12px 24px;
   text-align: center;
   color: #424242;
-
   ${MEDIA_QUERY_MD} {
     display: none;
   }
@@ -168,7 +167,9 @@ const UserPage = () => {
               <Route path={`${path}/editPWD`}>
                 <EditPassword />
               </Route>
-              <Route path={`${path}/myorders`}>我的訂單</Route>
+              <Route path={`${path}/myorders`}>
+                <TransactionPage />
+              </Route>
             </Main>
           </Switch>
         </UserWrapper>

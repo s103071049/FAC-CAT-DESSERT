@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import cameraIcon from "../../components/img/icon/camera.svg";
-
+import { imgurApi } from "../../API/imgurAPI";
 const imgLoadingDesc = `
 從電腦中選取圖檔，
 最佳大小為 600px * 600px`;
@@ -24,6 +24,12 @@ const Content = styled.div`
     margin-top: 24px;
   }
   ${`@media screen and (max-width: 400px)`} {
+    flex-direction: column;
+    align-items: start;
+  }
+`;
+const UploadImage = styled(Content)`
+  ${`@media screen and (max-width: 604px)`} {
     flex-direction: column;
     align-items: start;
   }
@@ -58,11 +64,12 @@ const Row = styled.input`
 
 const Img = styled.div`
   width: 100%;
+  min-width: 240px;
   height: 0;
   background: url(${(props) => props.url});
   padding-bottom: 100%;
   overflow: hidden;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
   border-radius: 8px;
@@ -74,6 +81,7 @@ const Img = styled.div`
 
 const Button = styled.div`
   background: rgba(201, 186, 152, 2);
+  margin-top: 6px;
   padding: 16px 32px;
   text-align: center;
   color: #917856;
@@ -124,8 +132,6 @@ const Desc = styled.div`
 const Wrap = styled.div`
   width: 30%;
   max-width: 1200px;
-  padding: 0 28px;
-  background: rgb(201, 186, 152, 0.4);
   ${MEDIA_QUERY_MD} {
     width: 240px;
     margin: 0 auto;
@@ -150,7 +156,6 @@ function Input({ name, value, as, placeholder }) {
     "限量：": "",
   });
   const handleInputChange = (e) => {
-    console.log(e.target.name);
     setAllValues({ ...allValues, [e.target.name]: e.target.value });
   };
   return (
@@ -167,21 +172,68 @@ function Input({ name, value, as, placeholder }) {
   );
 }
 
-function UploadImg({ name, src, desc }) {
+function UploadImg({ name, desc }) {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [ImgSrc, setImgSrc] = useState(cameraIcon);
+  const [uploadImg, setUploadImg] = useState(null);
+  const inputFileRef = useRef();
+  const fileSelectorHandler = (e) => {
+    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.addEventListener(
+      "load",
+      () => {
+        setImgSrc(reader.result);
+      },
+      false
+    );
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+  const inputFileRefHandler = () => {
+    inputFileRef.current.click();
+  };
+  const fileUploadHandler = (e) => {
+    let formData = new FormData();
+    formData.append("image", selectedFile);
+    if (!selectedFile) {
+      alert("尚未選取上傳圖片");
+    }
+    if (selectedFile) {
+      imgurApi(formData)
+        .then((result) => {
+          setUploadImg(result.data.link); // 拿到上傳圖片的 url
+          alert("上傳成功");
+        })
+        .catch((error) => {
+          alert("圖片處理異常，請稍後再試!");
+          return;
+        });
+    }
+  };
   return (
     <>
       <Content>
         <Column>{name}</Column>
       </Content>
-      <Content>
+      <UploadImage>
         <Wrap>
-          <Img url={src} />
+          <Img url={ImgSrc} onClick={inputFileRefHandler} />
         </Wrap>
         <Upload>
           <Desc>{desc}</Desc>
-          <Button>上傳圖片</Button>
+          <input
+            style={{ display: "none" }}
+            type="file"
+            ref={inputFileRef}
+            onChange={fileSelectorHandler}
+            accept="image/*"
+          />
+          <Button onClick={fileUploadHandler}>上傳圖片</Button>
         </Upload>
-      </Content>
+      </UploadImage>
     </>
   );
 }
@@ -215,11 +267,7 @@ const AddProductPage = () => {
           value={"限量："}
           placeholder={"請輸入產品限定數量"}
         />
-        <UploadImg
-          name={"上傳圖片："}
-          src={cameraIcon}
-          desc={`${imgLoadingDesc}`}
-        />
+        <UploadImg name={"上傳圖片："} desc={`${imgLoadingDesc}`} />
         <Bottom>
           <Submit>提交</Submit>
         </Bottom>

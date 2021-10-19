@@ -19,7 +19,6 @@ import UpdateProductPage from "../../pages/UpdateProductPage";
 import AddDiscountPage from "../../pages/AddDiscountPage";
 import UpdateDiscountPage from "../../pages/UpdateDiscountPage";
 
-import TransactionPage from "../../pages/TransactionPage";
 import SingleProductPage from "../../pages/SingleProductPage";
 import AdminProductsPage from "../../pages/AdminProductsPage";
 import AdminProductsRestorePage from "../../pages/AdminProductsRestorePage";
@@ -27,6 +26,7 @@ import AdminDiscountsPage from "../../pages/AdminDiscountsPage";
 import AdminDiscountsRestorePage from "../../pages/AdminDiscountsRestorePage";
 import OrderPage from "../../pages/Admin/OrderPage";
 import { getUser } from "../../WEBAPI";
+import CartPage from "../../pages/CartPage";
 
 const Root = styled.div``;
 

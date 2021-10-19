@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const MEDIA_QUERY_MD = '@media screen and (max-width: 768px)'
 export const MEDIA_QUERY_SD = '@media screen and (max-width: 375px)'
+
 export const Wrapper = styled.div`
   max-width: 1024px;
   min-height: 80vh;
