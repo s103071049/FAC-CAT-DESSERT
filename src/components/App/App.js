@@ -66,7 +66,7 @@ function App() {
             <Route path="/products">
               <ProductsPage />
             </Route>
-            <Route path="/product">
+            <Route path="/product/:id">
               <SingleProductPage />
             </Route>
             <Route path="/search/:context">
