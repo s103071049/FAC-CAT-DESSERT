@@ -51,7 +51,6 @@ const SingleProductImage = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
   border-radius: 8px;
-  /* cursor: pointer; */
 `;
 const SingleProductDescription = styled.div`
   width: 50%;
@@ -137,7 +136,7 @@ const SingleProductPage = () => {
   useEffect(() => {
     getProduct(id).then((response) => {
       if (!response.success) {
-        return history.push("/");
+        return history.goBack();
       }
       setDessert(response.product);
     });
