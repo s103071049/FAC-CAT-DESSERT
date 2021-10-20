@@ -6,7 +6,7 @@ import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
 import menu from '../img/icon/menu.svg'
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContexts } from "../../context";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { setAuthToken } from "../../utils";
@@ -17,6 +17,12 @@ const Navbar = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
+  
+  ${MEDIA_QUERY_MD} {
+    height:70px;  
+    position:fixed;
+    z-index:2;
+  }
 `;
 const Wrap = styled.div`
   display: flex;
@@ -108,7 +114,7 @@ const Menu = styled.nav`
     opacity: 0.9;
     position: absolute;
     left: 0%;
-    top: 110px;
+    top: 70px;
     transition: all 0.3s linear;
     z-index: 2;
     transform: ${(props) =>
@@ -138,7 +144,7 @@ const ImgLink = styled.div`
 const SearchBarWrap = styled.div`
     width:100%;
     position:fixed;
-    top:110px;
+    top:70px;
     left:0;
     padding: 6px 20px;
     background: #fbf3ea;
@@ -161,6 +167,7 @@ const SearchBar = styled.input`
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const { user, setUser } = useContext(AuthContexts);
+
   const toggleHamburger = () => {
     if (hamburgerOpen) {
       document.body.style.overflow = "auto";
@@ -168,13 +175,35 @@ function Header() {
       document.body.style.overflow = "hidden";
     }
     setHamburgerOpen(!hamburgerOpen);
+    setSearchBarShow(false)
   };
-  const [show, searchBarShow] = useState(false);
-  const searchBar = () => {
-    searchBarShow(!show);
+
+  const [searchBarShow, setSearchBarShow] = useState(false);
+  const ref = useRef()
+  const handleSearchBarClick = () => {
+    setHamburgerOpen(false)
+    setSearchBarShow(!searchBarShow);
   };
+
+  useEffect(()=>{
+    const handleBodyClick = (event) => {
+      if(ref.current.contains(event.target)){
+        return
+      }
+      setSearchBarShow(false)
+      setHamburgerOpen(false)
+    }
+
+    document.body.addEventListener('click', handleBodyClick, {capture:true})
+    
+    return () => {
+      document.body.removeEventListener('click', handleBodyClick, {capture:true})
+    }
+  }, [])
+  
+
   return (
-    <div>
+    <div ref={ref}>
       <Router>
         <Navbar>
           <Wrap>
@@ -183,8 +212,8 @@ function Header() {
             <RwdBtns>
 
               <RwdSearch to="#">
-                <Img src={search} onClick={searchBar}/>
-                {show && (
+                <Img src={search} onClick={handleSearchBarClick}/>
+                {searchBarShow && (
                   <SearchBarWrap>
                     <SearchBar type="text" placeholder="輸入商品名稱" />
                   </SearchBarWrap>
@@ -242,8 +271,8 @@ function Header() {
               <Img src={cart} />
             </ImgLink>
             <ImgLink to="#">
-              <Img src={search} onClick={searchBar} />
-              {show && <SearchBar type="text" placeholder="輸入商品名稱" />}
+              <Img src={search} onClick={handleSearchBarClick} />
+              {searchBarShow && <SearchBar type="text" placeholder="輸入商品名稱" />}
             </ImgLink>
             <ImgLink as={Link} to="/faq">
               <Img src={faq} />
