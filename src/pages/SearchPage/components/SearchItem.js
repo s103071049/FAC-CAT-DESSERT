@@ -15,13 +15,13 @@ const SearchContextProducts = styled.div`
   flex-wrap: wrap;
   margin-top: 20px;
 `;
-export default function SearchItem({ searchKey }) {
-  const [productOptions, setProductOptions] = useState("");
-  useLayoutEffect(() => {
-    searchProducts(searchKey).then((response) => {
-      setProductOptions(response.data);
-    });
-  }, [searchKey]);
+export default function SearchItem({ productOptions }) {
+  // const [productOptions, setProductOptions] = useState("");
+  // useLayoutEffect(() => {
+  //   searchProducts(searchKey).then((response) => {
+  //     setProductOptions(response.data);
+  //   });
+  // }, [searchKey]);
 
   return (
     <div style={{ padding: "15px" }}>
