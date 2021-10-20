@@ -60,6 +60,9 @@ function App() {
               <RegisterPage />
             </Route>
             <Route path="/user">{user && <UserPage />}</Route>
+            <Route path="/cart">
+              <CartPage />
+            </Route>
             <Route path="/transaction">
               <TransactionPage />
             </Route>
