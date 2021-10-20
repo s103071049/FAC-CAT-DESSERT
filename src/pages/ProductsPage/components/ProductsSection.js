@@ -28,7 +28,7 @@ function ProductsSectionTiTle({
   }
   return (
     <ProductsSectionTiTleWapper>
-      <ProductsSectionTiTleContent context={"所有甜點"} />
+      <ProductsSectionTiTleContent>所有甜點</ProductsSectionTiTleContent>
       <ProductsSectionTiTleInfo>
         <ProductsSectionTiTleInfoContent>
           共6個商品

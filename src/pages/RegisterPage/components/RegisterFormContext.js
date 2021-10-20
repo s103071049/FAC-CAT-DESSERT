@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-
 const RegisterFormContextWrapper = styled.div`
   font-size: 18px;
   & + & {
@@ -25,13 +24,23 @@ export default function RegisterFormContext({
   id,
   type,
   name,
+  value,
+  placeholder,
+  onChange,
 }) {
   return (
     <RegisterFormContextWrapper>
       <RegisterFormContextLabel htmlFor={labalfor}>
         {children}
       </RegisterFormContextLabel>
-      <RegisterFormContextInput id={id} type={type} name={name} />
+      <RegisterFormContextInput
+        id={id}
+        type={type}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+      />
     </RegisterFormContextWrapper>
   );
 }

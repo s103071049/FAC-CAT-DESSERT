@@ -9,10 +9,10 @@ const ProductsSectionTiTleContentContent = styled.h2`
     margin-bottom: 10px;
   }
 `;
-export default function ProductsSectionTiTleContent({ context }) {
+export default function ProductsSectionTiTleContent({ children }) {
   return (
     <ProductsSectionTiTleContentContent>
-      {context}
+      {children}
     </ProductsSectionTiTleContentContent>
   );
 }

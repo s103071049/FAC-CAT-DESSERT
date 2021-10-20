@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MEDIA_QUERY_SD } from "../../../../components/Style/style";
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.form`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
