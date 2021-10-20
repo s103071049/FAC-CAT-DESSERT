@@ -229,9 +229,9 @@ const RegisterPage = () => {
   };
   return (
     <div>
-      <IconMark context={"註冊新帳號"} />
+      <IconMark>註冊新帳號</IconMark>
       <RegisterWrapper>
-        <ProductsSectionTiTleContent context={"註冊新帳號"} />
+        <ProductsSectionTiTleContent>註冊新帳號</ProductsSectionTiTleContent>
         <RegisterContentWrapper>
           <RegisterContentTitle>加入會員享受輕鬆購物</RegisterContentTitle>
           <FBButton>快速註冊</FBButton>

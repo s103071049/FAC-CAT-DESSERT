@@ -183,7 +183,7 @@ const SingleProductPage = () => {
       {dessert && (
         <Wrapper>
           <SingleProduct dessert={dessert} />
-          <ProductsSectionTiTleContent context={"推薦商品"} />
+          <ProductsSectionTiTleContent>推薦商品</ProductsSectionTiTleContent>
           <Section>
             {dessertss.map((dessert, i) => (
               <Item dessert={dessert} key={i} />

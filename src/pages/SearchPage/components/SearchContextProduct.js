@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  MEDIA_QUERY_MD,
-} from "../../../components/Style/style";
+import { MEDIA_QUERY_MD } from "../../../components/Style/style";
 import { Link } from "react-router-dom";
 
 const ProductWapper = styled.div`
@@ -63,12 +61,12 @@ export default function SearchContextProduct({ productOption }) {
   return (
     <ProductWapper>
       <ProductImageWrapper>
-        <Link to={"#"}>
-          <ProductImage img={productOption.photo} />
+        <Link to={`/product/${productOption.id}`}>
+          <ProductImage img={productOption.img_url} />
         </Link>
       </ProductImageWrapper>
       <ProductName>{productOption.name}</ProductName>
-      <ProductPrice>{productOption.prize}</ProductPrice>
+      <ProductPrice>NT$ {productOption.price}</ProductPrice>
       <ProductButton>加入購物車</ProductButton>
     </ProductWapper>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import homeIcon from "../../components/img/icon/home.svg";
 import { MEDIA_QUERY_SD } from "../../components/Style/style";
+import IconMark from "../../components/common/IconMark";
 
 import FaqItems from "./FaqItems";
 
@@ -10,10 +10,6 @@ const FaqWrapper = styled.div`
   margin: 30px auto;
   padding: 0 16px;
   min-height: 73vh;
-`;
-const IconMark = styled.div`
-  margin-top: 10px;
-  display: flex;
 `;
 const Icon = styled.img`
   padding: 0 px;
@@ -40,10 +36,7 @@ const FaqPage = () => {
   return (
     <>
       <FaqWrapper>
-        <IconMark>
-          <Icon src={homeIcon} />
-          <Mark>{">"} 常見問題</Mark>
-        </IconMark>
+        <IconMark>常見問題</IconMark>
         <FaqContentWrapper>
           <FaqItems />
         </FaqContentWrapper>
