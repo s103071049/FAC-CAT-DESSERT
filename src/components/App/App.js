@@ -29,7 +29,9 @@ import TransactionPage from "../../pages/TransactionPage";
 import { getUser } from "../../WEBAPI";
 import CartPage from "../../pages/CartPage";
 
-const Root = styled.div``;
+const Root = styled.div`
+  padding-top:70px;
+`;
 
 function App() {
   const [user, setUser] = useState(null);

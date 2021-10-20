@@ -16,6 +16,7 @@ import {
   useHistory,
 } from "react-router-dom";
 import { setAuthToken } from "../../utils";
+
 const Navbar = styled.div`
   background: #fbf3ea;
   height: 110px;
@@ -23,10 +24,11 @@ const Navbar = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  
   ${MEDIA_QUERY_MD} {
     height:70px;  
     position:fixed;
+    top:0;
+    left:0;
     z-index:2;
   }
 `;
@@ -42,13 +44,14 @@ const Wrap = styled.div`
     padding: 0 20px;
   }
 `;
-const Logo = styled.div`
+const Logo = styled(Link)`
   padding: 12px 0 0 0;
   font-size: 2.5rem;
   color: #9e7a7a;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
+  text-decoration:none;
   ${MEDIA_QUERY_MD} {
     font-size: 2rem;
     padding: 0;
@@ -215,15 +218,14 @@ function Header() {
     if (searchProduct) {
       history.push(`/search/${searchProduct}`);
       setSearchProduct("");
-      searchBarShow(!searchBarShow);
+      setSearchBarShow(!searchBarShow);
     }
   };
   return (
-    <div ref={ref}>
       <Router>
-        <Navbar>
+        <Navbar ref={ref}>
           <Wrap>
-            <Logo>Fat Cat dessert ฅ</Logo>
+            <Logo to="/">Fat Cat dessert ฅ</Logo>
             
             <RwdBtns>
 
@@ -318,7 +320,6 @@ function Header() {
           </Icon>
         </Navbar>
       </Router>
-    </div>
   );
 }
 
