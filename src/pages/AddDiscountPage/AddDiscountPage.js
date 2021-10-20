@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
-import { APIFunction } from "../../API/fetchAPI"
+import { APIFunction } from "../../API/fetchAPI";
 
 const Wrapper = styled.div`
   max-width: 1024px;
@@ -71,8 +71,7 @@ const Bottom = styled.div`
   justify-content: flex-end;
 `;
 
-function Input({ columnName, name, as, placeholder, handleInputChange}) {
-   
+function Input({ columnName, name, as, placeholder, handleInputChange }) {
   return (
     <Content>
       <Column>{columnName}</Column>
@@ -86,21 +85,23 @@ function Input({ columnName, name, as, placeholder, handleInputChange}) {
   );
 }
 
-
 const AddDiscountPage = () => {
   const [allValues, setAllValues] = useState({});
   const handleInputChange = (e) => {
     setAllValues({ ...allValues, [e.target.name]: e.target.value });
   };
   const handleSummit = async (event) => {
-    event.preventDefault()
-    const res = await APIFunction({ data: allValues, authorization: localStorage.getItem('token') }, '/createDiscounts')
+    event.preventDefault();
+    const res = await APIFunction(
+      { data: allValues, authorization: localStorage.getItem("token") },
+      "/createDiscounts"
+    );
     if (res.success) {
       alert("成功");
     } else {
-      alert("失敗")
+      alert(res.message);
     }
-  }
+  };
 
   return (
     <div>

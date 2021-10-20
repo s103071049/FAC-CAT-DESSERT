@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  MEDIA_QUERY_MD,
-} from "../../../components/Style/style";
+import { MEDIA_QUERY_MD } from "../../../components/Style/style";
 import { Link } from "react-router-dom";
 
 export const TdContext = ({ tdcontext }) => {
@@ -10,7 +8,7 @@ export const TdContext = ({ tdcontext }) => {
     <Tr>
       <Td data-title="id">{tdcontext.id}</Td>
       <Td data-title="免運門檻">
-        <Pricespan>{tdcontext.freeDeliveryPrizce}</Pricespan>
+        <Pricespan>{tdcontext.threshold}</Pricespan>
       </Td>
       <Td data-title="免運說明" $block={true}>
         <TdcontextDesc title={tdcontext.desc}>{tdcontext.desc}</TdcontextDesc>

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange";
 import { TdContext } from "./components/TdContext";
 import { Link } from "react-router-dom";
 import { thcontexts, tdcontexts } from "./components/contextItem";
+import { FindDataAPI } from "../../API/fetchAPI";
+import { useState } from "react";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -127,6 +129,17 @@ const Th = styled.th``;
 const Tr = styled.tr``;
 
 const AdminDiscountsPage = () => {
+  const [discounts, setDiscounts] = useState([]);
+
+  useEffect(() => {
+    FindDataAPI(
+      { authorization: localStorage.getItem("token") },
+      "/findAllDiscounts"
+    ).then((data) => {
+      setDiscounts(data.Discounts);
+    });
+  }, []);
+
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>促銷管理：運費</AdminProductsTitle>
@@ -147,8 +160,8 @@ const AdminDiscountsPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {tdcontexts.map((tdcontext, index) => (
-              <TdContext tdcontext={tdcontext} key={index} />
+            {discounts.map((discount, index) => (
+              <TdContext tdcontext={discount} key={index} />
             ))}
           </Tbody>
         </Table>
