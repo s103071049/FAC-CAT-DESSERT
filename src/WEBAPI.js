@@ -1,5 +1,6 @@
 import { getAuthToken } from "./utils";
 const BASE_URL = `https://website-of-bakery.herokuapp.com`;
+// 會員系統
 //登入
 export const login = async (email, password) => {
   const response = await fetch(`${BASE_URL}/login`, {
@@ -91,5 +92,12 @@ export const updatePassword = async (password, newPassword, newPassword2) => {
       newPassword2,
     }),
   });
+  return await response.json();
+};
+
+// 產品相關api
+// 單向商品
+export const getProduct = async (id) => {
+  const response = await fetch(`${BASE_URL}/findProducts/${id}`);
   return await response.json();
 };
