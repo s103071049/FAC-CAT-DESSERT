@@ -148,7 +148,7 @@ const UserPage = () => {
   return (
     <>
       <Wrapper>
-        <IconMark context={"會員專區"} />
+        <IconMark>會員專區</IconMark>
         <UserWrapper>
           <SideBar>
             <SideBarHeader>我的帳戶</SideBarHeader>

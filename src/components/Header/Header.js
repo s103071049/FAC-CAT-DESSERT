@@ -8,7 +8,13 @@ import menu from '../img/icon/menu.svg'
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
 import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContexts } from "../../context";
-import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { setAuthToken } from "../../utils";
 const Navbar = styled.div`
   background: #fbf3ea;
@@ -166,6 +172,9 @@ const SearchBar = styled.input`
 `;
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [searchProduct, setSearchProduct] = useState("");
+  // const [searchProduct, setSearchProduct]= useState("")
+  const history = useHistory();
   const { user, setUser } = useContext(AuthContexts);
 
   const toggleHamburger = () => {
@@ -202,6 +211,13 @@ function Header() {
   }, [])
   
 
+  const handleEnter = () => {
+    if (searchProduct) {
+      history.push(`/search/${searchProduct}`);
+      setSearchProduct("");
+      searchBarShow(!searchBarShow);
+    }
+  };
   return (
     <div ref={ref}>
       <Router>
@@ -215,7 +231,17 @@ function Header() {
                 <Img src={search} onClick={handleSearchBarClick}/>
                 {searchBarShow && (
                   <SearchBarWrap>
-                    <SearchBar type="text" placeholder="輸入商品名稱" />
+                    <SearchBar
+                      type="text"
+                      placeholder="輸入商品名稱"
+                      value={searchProduct}
+                      onChange={(e) => setSearchProduct(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          handleEnter();
+                        }
+                      }}
+                    />
                   </SearchBarWrap>
                 )}
               </RwdSearch>
@@ -272,7 +298,19 @@ function Header() {
             </ImgLink>
             <ImgLink to="#">
               <Img src={search} onClick={handleSearchBarClick} />
-              {searchBarShow && <SearchBar type="text" placeholder="輸入商品名稱" />}
+              {searchBarShow && (
+                <SearchBar
+                  type="text"
+                  placeholder="輸入商品名稱"
+                  value={searchProduct}
+                  onChange={(e) => setSearchProduct(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      handleEnter();
+                    }
+                  }}
+                />
+              )}
             </ImgLink>
             <ImgLink as={Link} to="/faq">
               <Img src={faq} />

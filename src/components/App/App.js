@@ -33,6 +33,7 @@ const Root = styled.div``;
 
 function App() {
   const [user, setUser] = useState(null);
+  const [searchProduct, setSearchProduct] = useState(null);
   const token = getAuthToken();
   useEffect(() => {
     if (token) {
@@ -42,7 +43,9 @@ function App() {
     }
   }, [token]);
   return (
-    <AuthContexts.Provider value={{ user, setUser }}>
+    <AuthContexts.Provider
+      value={{ user, setUser, searchProduct, setSearchProduct }}
+    >
       <Root>
         <Router>
           <Header />
@@ -63,10 +66,10 @@ function App() {
             <Route path="/products">
               <ProductsPage />
             </Route>
-            <Route path="/product">
+            <Route path="/product/:id">
               <SingleProductPage />
             </Route>
-            <Route path="/search">
+            <Route path="/search/:context">
               <SearchPage />
             </Route>
             <Route path="/about">

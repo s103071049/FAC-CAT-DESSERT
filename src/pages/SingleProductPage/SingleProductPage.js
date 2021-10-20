@@ -9,11 +9,15 @@ import {
   MEDIA_QUERY_SD,
 } from "../../components/Style/style.js";
 import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent.js";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { Counter } from "../../components/common/Counter";
+import { getProduct } from "../../WEBAPI";
 
 import cake from "../../components/img/product/cake.jpg";
 import cake3 from "../../components/img/product/cake3.jpg";
 import cake4 from "../../components/img/product/cake4.jpg";
+import { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
 
 const SingleProductWrapper = styled.div`
   margin: 50px 20px;
@@ -47,11 +51,6 @@ const SingleProductImage = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
   border-radius: 8px;
-  cursor: pointer;
-  &: hover {
-    filter: brightness(110%);
-    width: 100%;
-  }
 `;
 const SingleProductDescription = styled.div`
   width: 50%;
@@ -98,11 +97,19 @@ const SingleProductDescriptionText = styled.div`
     text-align: center;
   }
 `;
+const FlexCenter = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const Limit = styled.p`
+  margin: 0;
+  margin-left: 10px;
+`;
 const SingleProduct = ({ dessert }) => {
   return (
     <SingleProductWrapper>
       <Img>
-        <SingleProductImage imgUrl={dessert.imgUrl} />
+        <SingleProductImage imgUrl={dessert.img_url} />
       </Img>
       <SingleProductDescription>
         <SingleProductInfo>
@@ -112,7 +119,10 @@ const SingleProduct = ({ dessert }) => {
         <SingleProductDescriptionText>
           {dessert.desc}
         </SingleProductDescriptionText>
-        <Counter />
+        <FlexCenter>
+          <Counter />
+          {dessert.limited && <Limit>庫存: {dessert.limited}</Limit>}
+        </FlexCenter>
         <CartButton>加入購物車</CartButton>
       </SingleProductDescription>
     </SingleProductWrapper>
@@ -120,7 +130,18 @@ const SingleProduct = ({ dessert }) => {
 };
 
 const SingleProductPage = () => {
-  const desserts = [
+  const [dessert, setDessert] = useState("");
+  const { id } = useParams();
+  const history = useHistory();
+  useEffect(() => {
+    getProduct(id).then((response) => {
+      if (!response.success) {
+        return history.goBack();
+      }
+      setDessert(response.product);
+    });
+  }, [id, history]);
+  const dessertss = [
     {
       id: 1,
       name: "阿嬤的蘋果派",
@@ -129,9 +150,9 @@ const SingleProductPage = () => {
       desc: `2020新品
 
       日本柚子帶出輕盈微酸的口感，臺灣鐵觀音帶出濃郁茶香
-      
+
       日本100%柚子汁，柚子輕盈甘納許，臺灣鐵觀音甘納許
-      
+
       **甘納許為巧克力加上鮮奶油製成
       `,
     },
@@ -159,15 +180,17 @@ const SingleProductPage = () => {
 
   return (
     <div>
-      <Wrapper>
-        <SingleProduct dessert={desserts[0]} key={0} />
-        <ProductsSectionTiTleContent context={"推薦商品"} />
-        <Section>
-          {desserts.map((dessert, i) => (
-            <Item dessert={dessert} key={i} />
-          ))}
-        </Section>
-      </Wrapper>
+      {dessert && (
+        <Wrapper>
+          <SingleProduct dessert={dessert} />
+          <ProductsSectionTiTleContent>推薦商品</ProductsSectionTiTleContent>
+          <Section>
+            {dessertss.map((dessert, i) => (
+              <Item dessert={dessert} key={i} />
+            ))}
+          </Section>
+        </Wrapper>
+      )}
     </div>
   );
 };
