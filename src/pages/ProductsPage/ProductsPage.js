@@ -6,6 +6,7 @@ import ProductsCategory from "./components/ProductsCategory";
 import ProductsSection from "./components/ProductsSection";
 import productsbanner from "../../components/img/banner/productsbanner.jpg";
 
+
 const ProductsWrapper = styled.div`
   max-width: 1024px;
   margin: 0 auto;

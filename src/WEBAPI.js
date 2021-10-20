@@ -106,3 +106,8 @@ export const searchProducts = async (searchKey) => {
   const response = await fetch(`${BASE_URL}/searchProducts/${searchKey}`);
   return await response.json();
 };
+
+export const getAllProducts = async() => {
+  const response = await fetch(`${BASE_URL}/findAllProducts`)
+  return response.json()
+}
