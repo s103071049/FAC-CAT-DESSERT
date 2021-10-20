@@ -8,9 +8,6 @@ import PageChange from "../../../components/common/PageChange";
 import ProductsSectionTiTleContent from "../../../components/common/ProductsSectionTiTleContent";
 import squares from "../../../components/img/icon/squares.svg";
 import list from "../../../components/img/icon/list.svg";
-import cake1 from "../../../components/img/product/cake.jpg";
-import cake2 from "../../../components/img/product/cake4.jpg";
-import cake3 from "../../../components/img/product/cake3.jpg";
 import { Link, useHistory } from "react-router-dom";
 import {getAllProducts} from '../../../WEBAPI'
 
@@ -254,6 +251,7 @@ const ProductSectionContent = ({products, section}) => {
       </ProductsSectionContentsWrapper>
     )
   }
+  
   return (
     <ProductsSectionListsContentsWrapper>
       {products.map(product => {
