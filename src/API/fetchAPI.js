@@ -1,7 +1,7 @@
 const path = require("path");
 require("dotenv").config();
 
-export async function APIFunction(data, api) {
+export async function PostDataAPI(data, api) {
   return fetch(`https://website-of-bakery.herokuapp.com${api}`, {
     method: "POST",
     headers: {

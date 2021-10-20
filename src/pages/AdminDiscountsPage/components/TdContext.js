@@ -2,8 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD } from "../../../components/Style/style";
 import { Link } from "react-router-dom";
+import { PostDataAPI } from "../../../API/fetchAPI";
 
 export const TdContext = ({ tdcontext }) => {
+  const handleButton = async (e) => {
+    e.preventDefault();
+    tdcontext.is_deleted = true;
+    const res = await PostDataAPI(
+      { data: tdcontext, authorization: localStorage.getItem("token") },
+      "/updateDiscounts"
+    );
+    if (res.success === true) {
+      window.location.reload();
+    } else {
+      console.log(res.message);
+    }
+  };
   return (
     <Tr>
       <Td data-title="id">{tdcontext.id}</Td>
@@ -14,14 +28,18 @@ export const TdContext = ({ tdcontext }) => {
         <TdcontextDesc title={tdcontext.desc}>{tdcontext.desc}</TdcontextDesc>
       </Td>
       <Td data-title="刪除" $none={true}>
-        <ProductTdButton to="#">刪除</ProductTdButton>
+        <ProductTdButton onClick={handleButton}>刪除</ProductTdButton>
       </Td>
       <Td data-title="編輯" $none={true}>
-        <ProductTdButton to="#">編輯</ProductTdButton>
+        <ProductTdLink to={`/admin/updateDiscount/${tdcontext.id}`}>
+          編輯
+        </ProductTdLink>
       </Td>
       <RWDButtonWrapper>
-        <ProductTdButton to="#">刪除</ProductTdButton>
-        <ProductTdButton to="#">編輯</ProductTdButton>
+        <ProductTdButton onClick={handleButton}>刪除</ProductTdButton>
+        <ProductTdLink to={`/admin/updateDiscount/${tdcontext.id}`}>
+          編輯
+        </ProductTdLink>
       </RWDButtonWrapper>
     </Tr>
   );
@@ -36,7 +54,24 @@ const Pricespan = styled.span`
   color: red;
   display: inline;
 `;
-const ProductTdButton = styled(Link)`
+const ProductTdButton = styled.button`
+  text-decoration: none;
+  color: #000;
+  padding: 5px 10px;
+  border: 1px solid #c9ba98;
+  border-radius: 8px;
+  font-size: 20px;
+  &:hover {
+    background: #60373e;
+    color: #fff;
+  }
+  ${MEDIA_QUERY_MD} {
+    & + & {
+      margin-left: 20px;
+    }
+  }
+`;
+const ProductTdLink = styled(Link)`
   text-decoration: none;
   color: #000;
   padding: 5px 10px;

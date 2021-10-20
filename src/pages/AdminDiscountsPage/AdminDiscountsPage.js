@@ -136,7 +136,12 @@ const AdminDiscountsPage = () => {
       { authorization: localStorage.getItem("token") },
       "/findAllDiscounts"
     ).then((data) => {
-      setDiscounts(data.Discounts);
+      const { Discounts } = data;
+      for (let discount of Discounts) {
+        if (discount.is_deleted !== true) {
+          setDiscounts((prev) => [...prev, discount]);
+        }
+      }
     });
   }, []);
 

@@ -71,7 +71,7 @@ function App() {
           <Route path="/admin/addDiscount">
             <AddDiscountPage />
           </Route>
-          <Route path="/admin/updateDiscount">
+          <Route path="/admin/updateDiscount/:id">
             <UpdateDiscountPage />
           </Route>
           <Route exact path="/admin/products">

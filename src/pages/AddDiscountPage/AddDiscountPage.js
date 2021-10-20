@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
-import { APIFunction } from "../../API/fetchAPI";
+import { PostDataAPI } from "../../API/fetchAPI";
 
 const Wrapper = styled.div`
   max-width: 1024px;
@@ -92,7 +92,7 @@ const AddDiscountPage = () => {
   };
   const handleSummit = async (event) => {
     event.preventDefault();
-    const res = await APIFunction(
+    const res = await PostDataAPI(
       { data: allValues, authorization: localStorage.getItem("token") },
       "/createDiscounts"
     );

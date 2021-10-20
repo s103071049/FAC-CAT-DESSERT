@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange";
 import { TdContext } from "./components/TdContext";
 import { thcontexts, tdcontexts } from "./components/contextItem";
+import { FindDataAPI } from "../../API/fetchAPI";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -109,6 +110,22 @@ const Th = styled.th``;
 const Tr = styled.tr``;
 
 const AdminDiscountsRestorePage = () => {
+  const [discounts, setDiscounts] = useState([]);
+
+  useEffect(() => {
+    FindDataAPI(
+      { authorization: localStorage.getItem("token") },
+      "/findAllDiscounts"
+    ).then((data) => {
+      const { Discounts } = data;
+      for (let discount of Discounts) {
+        if (discount.is_deleted === true) {
+          setDiscounts((prev) => [...prev, discount]);
+        }
+      }
+    });
+  }, []);
+
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>還原運費促銷規則</AdminProductsTitle>
@@ -125,7 +142,7 @@ const AdminDiscountsRestorePage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {tdcontexts.map((tdcontext, index) => (
+            {discounts.map((tdcontext, index) => (
               <TdContext tdcontext={tdcontext} key={index} />
             ))}
           </Tbody>
