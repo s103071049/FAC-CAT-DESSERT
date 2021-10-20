@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   MEDIA_QUERY_MD,
@@ -11,7 +11,7 @@ import list from "../../../components/img/icon/list.svg";
 import cake1 from "../../../components/img/product/cake.jpg";
 import cake2 from "../../../components/img/product/cake4.jpg";
 import cake3 from "../../../components/img/product/cake3.jpg";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {getAllProducts} from '../../../WEBAPI'
 
 const ProductsSectionListsContentsWrapper = styled.div``;
@@ -181,7 +181,7 @@ const ProductWapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30%;
+  width: 20%;
   padding: 10px 0;
   margin-bottom: 20px;
   ${MEDIA_QUERY_MD} {
@@ -232,183 +232,84 @@ const ProductButton = styled.button`
   }
 `;
 
-function ProductsSectionTiTle({
-  handletoggleSquares,
-  handletoggleLists,
-  section,
-}) {
-  let IsLists = null;
-  if (section === "lists") {
-    IsLists = "Lists";
+const ProductSectionContent = ({products, section}) => {
+  if(section === 'sqares') {
+    return (
+      <ProductsSectionContentsWrapper>
+        {products.map(product => {
+          return (
+            <ProductWapper key={product.id}>
+              <ProductImageWrapper>
+                <Link to={`/product/${product.id}`}>
+                  <ProductImage img={product.img_url} />
+                </Link>
+              </ProductImageWrapper>
+              <ProductName>{product.name}</ProductName>
+              <ProductPrice>NT$ {product.market_price}</ProductPrice>
+              <ProductButton>加入購物車</ProductButton>
+            </ProductWapper>
+          )
+        })}
+      
+      </ProductsSectionContentsWrapper>
+    )
   }
-  let IsSuares = null;
-  if (section === "sqares") {
-    IsSuares = "sqares";
-  }
-  return (
-    <ProductsSectionTiTleWapper>
-      <ProductsSectionTiTleContent>所有甜點</ProductsSectionTiTleContent>
-      <ProductsSectionTiTleInfo>
-        <ProductsSectionTiTleInfoContent>
-          共6個商品
-        </ProductsSectionTiTleInfoContent>
-        <TitleButtonWrapper>
-          <TitleSquaresButton onClick={handletoggleSquares} $section={IsSuares}>
-            <Icon src={squares} />
-          </TitleSquaresButton>
-          <TitleListsButton onClick={handletoggleLists} $section={IsLists}>
-            <Icon src={list} />
-          </TitleListsButton>
-        </TitleButtonWrapper>
-      </ProductsSectionTiTleInfo>
-    </ProductsSectionTiTleWapper>
-  );
-}
-
-function ProductsSectionSqaresContents() {
-  return (
-    <ProductsSectionContentsWrapper>
-      <ProductWapper>
-        <ProductImageWrapper>
-          <Link to={"#"}>
-            <ProductImage img={cake1} />
-          </Link>
-        </ProductImageWrapper>
-        <ProductName>阿嬤的蘋果派</ProductName>
-        <ProductPrice>NT$ 160</ProductPrice>
-        <ProductButton>加入購物車</ProductButton>
-      </ProductWapper>
-      <ProductWapper>
-        <ProductImageWrapper>
-          <Link to={"#"}>
-            <ProductImage img={cake2} />
-          </Link>
-        </ProductImageWrapper>
-        <ProductName>我的梅果花園</ProductName>
-        <ProductPrice>NT$ 180</ProductPrice>
-        <ProductButton>加入購物車</ProductButton>
-      </ProductWapper>
-      <ProductWapper>
-        <ProductImageWrapper>
-          <Link to={"#"}>
-            <ProductImage img={cake3} />
-          </Link>
-        </ProductImageWrapper>
-        <ProductName>藍莓珠寶盒</ProductName>
-        <ProductPrice>NT$ 100</ProductPrice>
-        <ProductButton>加入購物車</ProductButton>
-      </ProductWapper>
-      <ProductWapper>
-        <ProductImageWrapper>
-          <Link to={"#"}>
-            <ProductImage img={cake1} />
-          </Link>
-        </ProductImageWrapper>
-        <ProductName>阿嬤的蘋果派</ProductName>
-        <ProductPrice>NT$ 160</ProductPrice>
-        <ProductButton>加入購物車</ProductButton>
-      </ProductWapper>
-      <ProductWapper>
-        <ProductImageWrapper>
-          <Link to={"#"}>
-            <ProductImage img={cake2} />
-          </Link>
-        </ProductImageWrapper>
-        <ProductName>我的梅果花園</ProductName>
-        <ProductPrice>NT$ 180</ProductPrice>
-        <ProductButton>加入購物車</ProductButton>
-      </ProductWapper>
-      <ProductWapper>
-        <ProductImageWrapper>
-          <Link to={"#"}>
-            <ProductImage img={cake3} />
-          </Link>
-        </ProductImageWrapper>
-        <ProductName>藍莓珠寶盒</ProductName>
-        <ProductPrice>NT$ 100</ProductPrice>
-        <ProductButton>加入購物車</ProductButton>
-      </ProductWapper>
-    </ProductsSectionContentsWrapper>
-  );
-}
-
-
-function ProductsSectionListsContents() {
   return (
     <ProductsSectionListsContentsWrapper>
-      <ProductsListsWrapper>
-        <div style={{ display: "flex" }}>
-          <ProductListsImageWrapper>
-            <ProductListsImage img={cake1} />
-          </ProductListsImageWrapper>
-          <ProductListsInfo>
-            <ProductListsInfoSection>
-              <div>
-                <ProductListsName>阿嬤的蘋果派</ProductListsName>
-                <ProductListsCaption>
-                  這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~
-                </ProductListsCaption>
-              </div>
-              <ProductListsPrice>NT$ 160</ProductListsPrice>
-              <ProductListsMDButton>加入購物車</ProductListsMDButton>
-            </ProductListsInfoSection>
-          </ProductListsInfo>
-        </div>
-        <ProductListsButtonWrapper>
-          <ProductListsButton>加入購物車</ProductListsButton>
-        </ProductListsButtonWrapper>
-      </ProductsListsWrapper>
-      <ProductsListsWrapper>
-        <div style={{ display: "flex" }}>
-          <ProductListsImageWrapper>
-            <ProductListsImage img={cake2} />
-          </ProductListsImageWrapper>
-          <ProductListsInfo>
-            <ProductListsInfoSection>
-              <div>
-                <ProductListsName>我的梅果花園</ProductListsName>
-                <ProductListsCaption>
-                  這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~
-                </ProductListsCaption>
-              </div>
-              <ProductListsPrice>NT$ 180</ProductListsPrice>
-              <ProductListsMDButton>加入購物車</ProductListsMDButton>
-            </ProductListsInfoSection>
-          </ProductListsInfo>
-        </div>
-        <ProductListsButtonWrapper>
-          <ProductListsButton>加入購物車</ProductListsButton>
-        </ProductListsButtonWrapper>
-      </ProductsListsWrapper>
-      <ProductsListsWrapper>
-        <div style={{ display: "flex" }}>
-          <ProductListsImageWrapper>
-            <ProductListsImage img={cake3} />
-          </ProductListsImageWrapper>
-          <ProductListsInfo>
-            <ProductListsInfoSection>
-              <div>
-                <ProductListsName>藍莓珠寶盒</ProductListsName>
-                <ProductListsCaption>
-                  這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~這是說明喔~
-                </ProductListsCaption>
-              </div>
-              <ProductListsPrice>NT$ 100</ProductListsPrice>
-              <ProductListsMDButton>加入購物車</ProductListsMDButton>
-            </ProductListsInfoSection>
-          </ProductListsInfo>
-        </div>
-        <ProductListsButtonWrapper>
-          <ProductListsButton>加入購物車</ProductListsButton>
-        </ProductListsButtonWrapper>
-      </ProductsListsWrapper>
+      {products.map(product => {
+        return(
+          <ProductsListsWrapper key={product.id}>
+            <div style={{ display: "flex" }}>
+              <ProductListsImageWrapper>
+                <Link to={`/product/${product.id}`} style={{ width: "100%" }}>
+                 <ProductListsImage img={product.img_url} />
+                </Link>
+              </ProductListsImageWrapper>
+              <ProductListsInfo>
+                <ProductListsInfoSection>
+                  <div>
+                    <ProductListsName>{product.name}</ProductListsName>
+                    <ProductListsCaption>
+                      {product.desc}
+                    </ProductListsCaption>
+                  </div>
+                  <ProductListsPrice>NT$ {product.market_price}</ProductListsPrice>
+                  <ProductListsMDButton>加入購物車</ProductListsMDButton>
+                </ProductListsInfoSection>
+              </ProductListsInfo>
+            </div>
+            <ProductListsButtonWrapper>
+              <ProductListsButton>加入購物車</ProductListsButton>
+            </ProductListsButtonWrapper>
+          </ProductsListsWrapper>
+        )
+      })}
+
     </ProductsSectionListsContentsWrapper>
-  );
+  )
 }
+
+
 
 export default function ProductsSection() {
   const [section, setSection] = useState("sqares");
-  
+  const [products, setProducts] = useState([])
+  const history = useHistory();
+
+  useEffect( () =>{
+    const fetchAllproducts = async() => {
+      const result = await getAllProducts()
+      try {
+        if(!result.success){
+          return history.goBack()
+        }
+        setProducts(result.products)
+      } catch(err) {
+        return history.goBack()
+      }
+    }
+    fetchAllproducts()
+  },[history])
 
   const handletoggleSquares = () => {
     setSection("sqares");
@@ -416,6 +317,40 @@ export default function ProductsSection() {
   const handletoggleLists = () => {
     setSection("lists");
   };
+
+  function ProductsSectionTiTle({
+    handletoggleSquares,
+    handletoggleLists,
+    section,
+  }) {
+    let IsLists = null;
+    if (section === "lists") {
+      IsLists = "Lists";
+    }
+    let IsSuares = null;
+    if (section === "sqares") {
+      IsSuares = "sqares";
+    }
+    return (
+      <ProductsSectionTiTleWapper>
+        <ProductsSectionTiTleContent>所有甜點</ProductsSectionTiTleContent>
+        <ProductsSectionTiTleInfo>
+          <ProductsSectionTiTleInfoContent>
+            共{products.length}個商品
+          </ProductsSectionTiTleInfoContent>
+          <TitleButtonWrapper>
+            <TitleSquaresButton onClick={handletoggleSquares} $section={IsSuares}>
+              <Icon src={squares} />
+            </TitleSquaresButton>
+            <TitleListsButton onClick={handletoggleLists} $section={IsLists}>
+              <Icon src={list} />
+            </TitleListsButton>
+          </TitleButtonWrapper>
+        </ProductsSectionTiTleInfo>
+      </ProductsSectionTiTleWapper>
+    );
+  }
+
   return (
     <div>
       <ProductsSectionTiTle
@@ -423,8 +358,8 @@ export default function ProductsSection() {
         handletoggleLists={handletoggleLists}
         section={section}
       />
-      {section === "sqares" && <ProductsSectionSqaresContents />}
-      {section === "lists" && <ProductsSectionListsContents />}
+      
+      {<ProductSectionContent products={products} section={section} />}
       <PageChange />
     </div>
   );
