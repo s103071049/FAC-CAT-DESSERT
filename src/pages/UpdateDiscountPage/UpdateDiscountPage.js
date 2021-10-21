@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { PostDataAPI } from "../../API/fetchAPI";
+import { PostDataAPI, FindDataAPI } from "../../API/fetchAPI";
 
-async function FindDataAPI(data, api) {
-  return fetch(`https://website-of-bakery.herokuapp.com${api}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${data.authorization}`,
-    },
-  }).then((data) => data.json());
-}
+// async function FindDataAPI(data, api) {
+//   return fetch(`https://website-of-bakery.herokuapp.com${api}`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${data.authorization}`,
+//     },
+//   }).then((data) => data.json());
+// }
 
 const Wrapper = styled.div`
   max-width: 1024px;
@@ -82,17 +82,24 @@ function Input({
   as,
   value,
   placeholder,
-  handleInputChange,
+  discount,
+  setDiscount
 }) {
-  [value, setValue] = useState(value);
+  const [val, setVal] = useState({value});
+  const handleInputChange = (setVal, setDiscount, discount) => (event) => {
+    discount[name] = event.target.value;
+    setVal(event.target.value);
+    setDiscount(discount);
+  };
+
   return (
     <Content>
       <Column>{columnName}</Column>
       <Row
         name={name}
         as={as}
-        value={value}
-        onChange={handleInputChange}
+        value={val.value}
+        onChange={handleInputChange(setVal, setDiscount, discount)}
         placeholder={placeholder}
       />
     </Content>
@@ -118,11 +125,6 @@ const UpdateDiscountPage = () => {
     });
   }, []);
 
-  const handleInputChange = (e) => {
-    discount[e.target.name] = e.target.value;
-    setDiscount(discount);
-  };
-
   const handleSummit = async (event) => {
     event.preventDefault();
     const res = await PostDataAPI(
@@ -144,31 +146,35 @@ const UpdateDiscountPage = () => {
           <Input
             columnName={"運費門檻："}
             name={"threshold"}
-            //value={allValues.threshold}
+            value={discount.threshold}
             placeholder={"請輸入運費門檻"}
-            handleInputChange={handleInputChange}
+            discount={discount}
+            setDiscount={setDiscount}
           />
           <Input
             columnName={"運費說明："}
             name={"desc"}
             as={"textarea"}
-            //value={allValues.desc}
+            value={discount.desc}
             placeholder={"請輸入運費說明"}
-            handleInputChange={handleInputChange}
+            discount={discount}
+            setDiscount={setDiscount}
           />
           <Input
             columnName={"運費："}
             name={"shipment"}
-            //value={allValues.shipment}
+            value={discount.shipment}
             placeholder={"請輸入運費"}
-            handleInputChange={handleInputChange}
+            discount={discount}
+            setDiscount={setDiscount}
           />
           <Input
             columnName={"運費 price："}
             name={"price"}
             value={discount.price}
             placeholder={"請輸入 price"}
-            handleInputChange={handleInputChange}
+            discount={discount}
+            setDiscount={setDiscount}
           />
           <Bottom>
             <Submit>提交</Submit>
