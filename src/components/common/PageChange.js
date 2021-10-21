@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import usePagination from "../../hooks/paginationHooks/usePagination";
 const PageChangeWrapper = styled.div`
   margin: 0 auto;
   display: flex;
@@ -29,12 +29,34 @@ const PreviousPageButton = styled.button`
 const NextPageButton = styled(PreviousPageButton)`
   margin-left:5px;
 `
-export default function PageChange(){
+
+export default function PageChange({dataAmount, showDataIndex, setShowDataIndex}){
+  const {  
+    currentPageNum,
+    handleClickDecrementBtn,
+    handleClickIncrementBtn,
+    eachPageAmount
+  } = usePagination(dataAmount, showDataIndex, setShowDataIndex)
+
+  const isFinalData = (showDataIndex + eachPageAmount)< dataAmount 
+  const isExactlyAmount = dataAmount === eachPageAmount
   return(
     <PageChangeWrapper>
-      <PreviousPageButton>{"<"}</PreviousPageButton>
-      <NowPage>1</NowPage>
-      <NextPageButton>{">"}</NextPageButton>
+      {currentPageNum > 1 && (
+          <PreviousPageButton onClick={handleClickDecrementBtn}>
+            {"<"}
+          </PreviousPageButton>
+      )}
+      
+      {isExactlyAmount? '' : <NowPage>{currentPageNum}</NowPage>}
+      
+
+      {isFinalData && (
+        <NextPageButton onClick={handleClickIncrementBtn}>
+            {">"}
+        </NextPageButton>
+      )}
+    
     </PageChangeWrapper>
   )
 }

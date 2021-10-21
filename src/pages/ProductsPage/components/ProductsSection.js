@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   MEDIA_QUERY_MD,
@@ -8,10 +7,9 @@ import PageChange from "../../../components/common/PageChange";
 import ProductsSectionTiTleContent from "../../../components/common/ProductsSectionTiTleContent";
 import squares from "../../../components/img/icon/squares.svg";
 import list from "../../../components/img/icon/list.svg";
-import { Link, useHistory } from "react-router-dom";
-import {getAllProducts} from '../../../WEBAPI'
+import { Link } from "react-router-dom";
 import useFindProducts from "../../../hooks/productHooks/useFindProducts";
-
+import usePagination from "../../../hooks/paginationHooks/usePagination";
 
 const ProductsSectionContentsWrapper = styled.div`
   margin-bottom:40px;
@@ -303,10 +301,13 @@ export default function ProductsSection() {
     handletoggleLists,
     handletoggleSquares,
     section,
+    showDataIndex,
+    setShowDataIndex,
+    dataAmount
   } = useFindProducts()
 
 
-
+  
   function ProductsSectionTiTle({
     handletoggleSquares,
     handletoggleLists,
@@ -351,7 +352,7 @@ export default function ProductsSection() {
         products={products} 
         section={section} 
       />
-      <PageChange />
+      <PageChange dataAmount={dataAmount.current} showDataIndex={showDataIndex} setShowDataIndex={setShowDataIndex}/>
     </div>
   );
 }
