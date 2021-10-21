@@ -10,8 +10,37 @@ import squares from "../../../components/img/icon/squares.svg";
 import list from "../../../components/img/icon/list.svg";
 import { Link, useHistory } from "react-router-dom";
 import {getAllProducts} from '../../../WEBAPI'
+import useFindProducts from "../../../hooks/productHooks/useFindProducts";
 
-const ProductsSectionListsContentsWrapper = styled.div``;
+
+const ProductsSectionContentsWrapper = styled.div`
+  margin-bottom:40px;
+  
+  ${props=> props.$section === 'sqares' && `
+      display: flex;
+      padding: 0 10px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    `
+  }
+
+`;
+
+const ProductWapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 23%;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  ${MEDIA_QUERY_MD} {
+    width: 47%;
+  }
+  @media screen and (max-width: 460px) {
+    width: 98%;
+  }
+`;
+
 const ProductsListsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -20,6 +49,10 @@ const ProductsListsWrapper = styled.div`
   @media screen and (max-width: 550px) {
     display: block;
   }
+`;
+
+const ProductImageWrapper = styled.div`
+  width: 100%;
 `;
 const ProductListsImageWrapper = styled.div`
   display: flex;
@@ -168,29 +201,6 @@ const Icon = styled.img`
   fill: red;
 `;
 
-const ProductsSectionContentsWrapper = styled.div`
-  display: flex;
-  padding: 0 10px;
-  justify-content: space-between;
-  flex-wrap: wrap;
-`;
-const ProductWapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 20%;
-  padding: 10px 0;
-  margin-bottom: 20px;
-  ${MEDIA_QUERY_MD} {
-    width: 47%;
-  }
-  @media screen and (max-width: 460px) {
-    width: 98%;
-  }
-`;
-const ProductImageWrapper = styled.div`
-  width: 100%;
-`;
 const ProductImage = styled.div`
   background-image: url(${(props) => props.img});
   width: 100%;
@@ -229,92 +239,73 @@ const ProductButton = styled.button`
   }
 `;
 
-const ProductSectionContent = ({products, section}) => {
+const RenderCotentItemsSection = ({products, section}) => {
   if(section === 'sqares') {
-    return (
-      <ProductsSectionContentsWrapper>
-        {products.map(product => {
-          return (
-            <ProductWapper key={product.id}>
-              <ProductImageWrapper>
-                <Link to={`/product/${product.id}`}>
-                  <ProductImage img={product.img_url} />
-                </Link>
-              </ProductImageWrapper>
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>NT$ {product.market_price}</ProductPrice>
-              <ProductButton>加入購物車</ProductButton>
-            </ProductWapper>
-          )
-        })}
-      
-      </ProductsSectionContentsWrapper>
-    )
+    return products.map(product => {
+      return (
+        <ProductWapper key={product.id}>
+          <ProductImageWrapper>
+            <Link to={`/product/${product.id}`}>
+              <ProductImage img={product.img_url} />
+            </Link>
+          </ProductImageWrapper>
+          <ProductName>{product.name}</ProductName>
+          <ProductPrice>NT$ {product.price}</ProductPrice>
+          <ProductButton>加入購物車</ProductButton>
+        </ProductWapper>
+      )
+    })
   }
-  
-  return (
-    <ProductsSectionListsContentsWrapper>
-      {products.map(product => {
-        return(
-          <ProductsListsWrapper key={product.id}>
-            <div style={{ display: "flex" }}>
-              <ProductListsImageWrapper>
-                <Link to={`/product/${product.id}`} style={{ width: "100%" }}>
-                 <ProductListsImage img={product.img_url} />
-                </Link>
-              </ProductListsImageWrapper>
-              <ProductListsInfo>
-                <ProductListsInfoSection>
-                  <div>
-                    <ProductListsName>{product.name}</ProductListsName>
-                    <ProductListsCaption>
-                      {product.desc}
-                    </ProductListsCaption>
-                  </div>
-                  <ProductListsPrice>NT$ {product.market_price}</ProductListsPrice>
-                  <ProductListsMDButton>加入購物車</ProductListsMDButton>
-                </ProductListsInfoSection>
-              </ProductListsInfo>
-            </div>
-            <ProductListsButtonWrapper>
-              <ProductListsButton>加入購物車</ProductListsButton>
-            </ProductListsButtonWrapper>
-          </ProductsListsWrapper>
-        )
-      })}
+  return products.map(product => {
+    return(
+      <ProductsListsWrapper key={product.id}>
+        <div style={{ display: "flex" }}>
+          <ProductListsImageWrapper>
+            <Link to={`/product/${product.id}`} style={{ width: "100%" }}>
+              <ProductListsImage img={product.img_url} />
+            </Link>
+          </ProductListsImageWrapper>
+          <ProductListsInfo>
+            <ProductListsInfoSection>
+              <div>
+                <ProductListsName>{product.name}</ProductListsName>
+                <ProductListsCaption>
+                  {product.desc}
+                </ProductListsCaption>
+              </div>
+              <ProductListsPrice>NT$ {product.price}</ProductListsPrice>
+              <ProductListsMDButton>加入購物車</ProductListsMDButton>
+            </ProductListsInfoSection>
+          </ProductListsInfo>
+        </div>
+        <ProductListsButtonWrapper>
+          <ProductListsButton>加入購物車</ProductListsButton>
+        </ProductListsButtonWrapper>
+      </ProductsListsWrapper>
+    )
+  })
+}
 
-    </ProductsSectionListsContentsWrapper>
+const RenderContentSection = ({products, section}) => {
+  return (
+    <ProductsSectionContentsWrapper $section={section}>
+      <RenderCotentItemsSection products={products} section={section} />
+    </ProductsSectionContentsWrapper>
   )
 }
 
 
 
 export default function ProductsSection() {
-  const [section, setSection] = useState("sqares");
-  const [products, setProducts] = useState([])
-  const history = useHistory();
 
-  useEffect( () =>{
-    const fetchAllproducts = async() => {
-      const result = await getAllProducts()
-      try {
-        if(!result.success){
-          return history.goBack()
-        }
-        setProducts(result.products)
-      } catch(err) {
-        return history.goBack()
-      }
-    }
-    fetchAllproducts()
-  },[history])
+  const {
+    products,
+    handletoggleLists,
+    handletoggleSquares,
+    section,
+  } = useFindProducts()
 
-  const handletoggleSquares = () => {
-    setSection("sqares");
-  };
-  const handletoggleLists = () => {
-    setSection("lists");
-  };
+
 
   function ProductsSectionTiTle({
     handletoggleSquares,
@@ -356,8 +347,10 @@ export default function ProductsSection() {
         handletoggleLists={handletoggleLists}
         section={section}
       />
-      
-      {<ProductSectionContent products={products} section={section} />}
+      <RenderContentSection 
+        products={products} 
+        section={section} 
+      />
       <PageChange />
     </div>
   );
