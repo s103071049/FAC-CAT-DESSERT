@@ -106,3 +106,16 @@ export const searchProducts = async (searchKey) => {
   const response = await fetch(`${BASE_URL}/searchProducts/${searchKey}`);
   return await response.json();
 };
+
+// order
+// 抓取所有order
+
+export const getAllOrder = async () => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/getAllOrder`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
