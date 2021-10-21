@@ -20,7 +20,7 @@ const ErrorMessage = styled.p`
   }
 `;
 
-export default function EditPassword() {
+export default function EditPassword({ setLoading }) {
   const { user, setUser } = useContext(AuthContexts);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -37,6 +37,7 @@ export default function EditPassword() {
   //更新密碼
   const handleUpdatePassword = (e) => {
     e.preventDefault();
+    setLoading(true);
     //資料不齊全
     if (!oldPassword || !newPassword || !newPassword2) {
       return setErrorMessage("資料不齊全");
@@ -54,6 +55,7 @@ export default function EditPassword() {
       setErrorMessage("");
       alert("密碼更改完成");
     });
+    setLoading(false);
   };
   return (
     <div>

@@ -7,7 +7,7 @@ import RegisterFormContext from "./components/RegisterFormContext";
 import { Link, useHistory } from "react-router-dom";
 import { getUser, register } from "../../WEBAPI";
 import { setAuthToken, getAuthToken } from "../../utils";
-import { AuthContexts } from "../../context";
+import { AuthContexts, AuthLoadingContext } from "../../context";
 
 const RegisterWrapper = styled.div`
   max-width: 1024px;
@@ -101,6 +101,7 @@ const RegisterPage = () => {
   const passwordRe = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
   const history = useHistory();
   const { user, setUser } = useContext(AuthContexts);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -139,6 +140,7 @@ const RegisterPage = () => {
   //註冊
   const handleRegister = (e) => {
     e.preventDefault();
+    setLoading(true);
     //資料不齊全
     if (
       !username ||
@@ -226,6 +228,7 @@ const RegisterPage = () => {
         setAuthToken("");
       });
     });
+    setLoading(false);
   };
   return (
     <div>

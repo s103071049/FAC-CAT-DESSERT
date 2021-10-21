@@ -7,7 +7,7 @@ import LoginFormContext from "./components/LoginFormContext";
 import { Link, useHistory } from "react-router-dom";
 import { login, getUser } from "../../WEBAPI";
 import { setAuthToken, getAuthToken } from "../../utils";
-import { AuthContexts } from "../../context";
+import { AuthContexts, AuthLoadingContext } from "../../context";
 
 const LoginWrapper = styled.div`
   max-width: 1024px;
@@ -87,6 +87,7 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
   const { user, setUser } = useContext(AuthContexts);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -96,6 +97,7 @@ const LoginPage = () => {
   // 登入
   const handleLogin = (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!email || !password) {
       return setErrorMessage("資料不齊全");
     }
@@ -111,6 +113,7 @@ const LoginPage = () => {
         }
         setAuthToken("");
       });
+      setLoading(false);
     });
   };
   return (
