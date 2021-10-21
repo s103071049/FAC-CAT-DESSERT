@@ -53,14 +53,15 @@ export default function UserInfo({ setLoading }) {
       } else {
         newError[4] = null;
       }
-      console.log(newError);
-      return setError(newError);
+      setError(newError);
+      return setLoading(false);
     }
     //串api
     updateUser(username, firstname, lastname, phone, address).then(
       (response) => {
         if (!response.success) {
           console.log(response.message);
+          return setLoading(false);
         }
         setError(Array(5).fill(null));
         alert("資料更改完成");

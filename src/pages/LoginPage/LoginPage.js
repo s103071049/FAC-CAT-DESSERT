@@ -99,17 +99,20 @@ const LoginPage = () => {
     e.preventDefault();
     setLoading(true);
     if (!email || !password) {
-      return setErrorMessage("資料不齊全");
+      setErrorMessage("資料不齊全");
+      return setLoading(false);
     }
     login(email, password).then((response) => {
       if (!response.success) {
-        return setErrorMessage(response.message);
+        setErrorMessage(response.message);
+        return setLoading(false);
       }
       setAuthToken(response.token);
       getUser().then((response) => {
         if (response.success) {
           setUser(response.user);
-          return history.push("/");
+          history.push("/");
+          return setLoading(false);
         }
         setAuthToken("");
       });

@@ -193,19 +193,22 @@ const RegisterPage = () => {
       } else {
         newError[7] = null;
       }
-      return setError(newError);
+      setError(newError);
+      return setLoading(false);
     }
     // 密碼強度不足
     if (!passwordRe.test(password)) {
       const newError = Array(8).fill(null);
       newError[6] = "*密碼強度不足";
-      return setError(newError);
+      setError(newError);
+      return setLoading(false);
     }
     if (password !== confirmPassword) {
       const newError = Array(8).fill(null);
       newError[6] = "*密碼不相同";
       console.log(newError);
-      return setError(newError);
+      setError(newError);
+      return setLoading(false);
     }
     register(
       username,
@@ -218,12 +221,14 @@ const RegisterPage = () => {
     ).then((response) => {
       if (!response.success) {
         console.log(response.message);
+        return setLoading(false);
       }
       setAuthToken(response.token);
       getUser().then((response) => {
         if (response.success) {
           setUser(response.user);
-          return history.push("/");
+          history.push("/");
+          return setLoading(false);
         }
         setAuthToken("");
       });
