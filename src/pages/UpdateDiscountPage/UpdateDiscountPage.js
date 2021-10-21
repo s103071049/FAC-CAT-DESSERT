@@ -57,7 +57,7 @@ const Row = styled.input`
   }
 `;
 
-const Submit = styled.div`
+const Submit = styled.button`
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
@@ -83,22 +83,24 @@ function Input({
   value,
   placeholder,
   discount,
-  setDiscount
+  setDiscount,
 }) {
-  const [val, setVal] = useState({value});
+  const [val, setVal] = useState();
+  useEffect(() => {
+    setVal(value);
+  }, [value]);
   const handleInputChange = (setVal, setDiscount, discount) => (event) => {
     discount[name] = event.target.value;
     setVal(event.target.value);
     setDiscount(discount);
   };
-
   return (
     <Content>
       <Column>{columnName}</Column>
       <Row
         name={name}
         as={as}
-        value={val.value}
+        value={val}
         onChange={handleInputChange(setVal, setDiscount, discount)}
         placeholder={placeholder}
       />
@@ -133,6 +135,7 @@ const UpdateDiscountPage = () => {
     );
     if (res.success) {
       alert("成功");
+      window.history.back(-1);
     } else {
       alert(res.message);
     }
