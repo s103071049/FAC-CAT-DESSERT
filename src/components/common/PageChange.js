@@ -39,7 +39,7 @@ export default function PageChange({dataAmount, showDataIndex, setShowDataIndex}
   } = usePagination(dataAmount, showDataIndex, setShowDataIndex)
 
   const isFinalData = (showDataIndex + eachPageAmount)< dataAmount 
-  const isExactlyAmount = dataAmount === eachPageAmount
+  const isAmountLessPageAmount = dataAmount <= eachPageAmount
   return(
     <PageChangeWrapper>
       {currentPageNum > 1 && (
@@ -48,7 +48,7 @@ export default function PageChange({dataAmount, showDataIndex, setShowDataIndex}
           </PreviousPageButton>
       )}
       
-      {isExactlyAmount? '' : <NowPage>{currentPageNum}</NowPage>}
+      {isAmountLessPageAmount? '' : <NowPage>{currentPageNum}</NowPage>}
       
 
       {isFinalData && (

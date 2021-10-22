@@ -287,6 +287,9 @@ const RenderContentSection = ({products, section}) => {
   return (
     <ProductsSectionContentsWrapper $section={section}>
       <RenderCotentItemsSection products={products} section={section} />
+      <ProductWapper />
+      <ProductWapper />
+
     </ProductsSectionContentsWrapper>
   )
 }
@@ -321,10 +324,10 @@ export default function ProductsSection({selectedCategory}) {
     }
     return (
       <ProductsSectionTiTleWapper>
-        <ProductsSectionTiTleContent>所有甜點</ProductsSectionTiTleContent>
+        <ProductsSectionTiTleContent>{selectedCategory}</ProductsSectionTiTleContent>
         <ProductsSectionTiTleInfo>
           <ProductsSectionTiTleInfoContent>
-            共{products.length}個商品
+            共{dataAmount.current}個商品
           </ProductsSectionTiTleInfoContent>
           <TitleButtonWrapper>
             <TitleSquaresButton onClick={handletoggleSquares} $section={IsSuares}>
