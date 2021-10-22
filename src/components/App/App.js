@@ -16,18 +16,17 @@ import LoginPage from "../../pages/LoginPage";
 import RegisterPage from "../../pages/RegisterPage";
 import AddProductPage from "../../pages/AddProductPage";
 import UpdateProductPage from "../../pages/UpdateProductPage";
-import AddDiscountPage from "../../pages/AddDiscountPage";
-import UpdateDiscountPage from "../../pages/UpdateDiscountPage";
 
 import SingleProductPage from "../../pages/SingleProductPage";
 import AdminProductsPage from "../../pages/AdminProductsPage";
 import AdminProductsRestorePage from "../../pages/AdminProductsRestorePage";
-import AdminDiscountsPage from "../../pages/AdminDiscountsPage";
-import AdminDiscountsRestorePage from "../../pages/AdminDiscountsRestorePage";
+import { DiscountEditPage, DiscountsPage } from "../../pages/discountPages";
+
 import OrderPage from "../../pages/Admin/OrderPage";
 import TransactionPage from "../../pages/TransactionPage";
 import { getUser } from "../../WEBAPI";
 import CartPage from "../../pages/CartPage";
+import ProtectedRoutes from "../routes/ProtectedRoutes";
 
 const Root = styled.div``;
 
@@ -81,18 +80,18 @@ function App() {
             <Route path="/faq">
               <FaqPage />
             </Route>
-            <Route exact path="/admin/discounts">
-              <AdminDiscountsPage />
-            </Route>
-            <Route path="/admin/discounts/restore">
-              <AdminDiscountsRestorePage />
-            </Route>
-            <Route path="/admin/addDiscount">
-              <AddDiscountPage />
-            </Route>
-            <Route path="/admin/updateDiscount/:id">
-              <UpdateDiscountPage />
-            </Route>
+            <ProtectedRoutes exact path="/admin/discounts">
+              <DiscountsPage isRestore={false} />
+            </ProtectedRoutes>
+            <ProtectedRoutes path="/admin/discounts/restore">
+              <DiscountsPage isRestore={true} />
+            </ProtectedRoutes>
+            <ProtectedRoutes path="/admin/addDiscount">
+              <DiscountEditPage />
+            </ProtectedRoutes>
+            <ProtectedRoutes path="/admin/updateDiscount/:id">
+              <DiscountEditPage />
+            </ProtectedRoutes>
             <Route exact path="/admin/products">
               <AdminProductsPage />
             </Route>

@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_MD } from "../../../components/Style/style";
+import { MEDIA_QUERY_MD } from "../../components/Style/style";
 import { Link } from "react-router-dom";
-import { PostDataAPI } from "../../../API/fetchAPI";
+import { PostDataAPI } from "../../API/fetchAPI";
+import { getAuthToken } from "../../utils";
 
-export const TdContext = ({ tdcontext }) => {
+export const TdContext = ({ tdcontext, isRestore }) => {
+  const buttonText = isRestore ? "還原" : "刪除";
   const handleButton = async (e) => {
     e.preventDefault();
-    tdcontext.is_deleted = true;
+    tdcontext.is_deleted = !isRestore;
     const res = await PostDataAPI(
-      { data: tdcontext, authorization: localStorage.getItem("token") },
+      { data: tdcontext, authorization: getAuthToken() },
       "/updateDiscounts"
     );
     if (res.success === true) {
@@ -27,8 +29,8 @@ export const TdContext = ({ tdcontext }) => {
       <Td data-title="免運說明" $block={true}>
         <TdcontextDesc title={tdcontext.desc}>{tdcontext.desc}</TdcontextDesc>
       </Td>
-      <Td data-title="刪除" $none={true}>
-        <ProductTdButton onClick={handleButton}>刪除</ProductTdButton>
+      <Td data-title={buttonText} $none={true}>
+        <ProductTdButton onClick={handleButton}>{buttonText}</ProductTdButton>
       </Td>
       <Td data-title="編輯" $none={true}>
         <ProductTdLink to={`/admin/updateDiscount/${tdcontext.id}`}>
@@ -36,7 +38,7 @@ export const TdContext = ({ tdcontext }) => {
         </ProductTdLink>
       </Td>
       <RWDButtonWrapper>
-        <ProductTdButton onClick={handleButton}>刪除</ProductTdButton>
+        <ProductTdButton onClick={handleButton}>${buttonText}</ProductTdButton>
         <ProductTdLink to={`/admin/updateDiscount/${tdcontext.id}`}>
           編輯
         </ProductTdLink>
@@ -128,3 +130,5 @@ const RWDButtonWrapper = styled.td`
     justify-content: center;
   }
 `;
+
+export const thcontexts = ["id", "運費門檻", "免運說明", "還原", "編輯"];
