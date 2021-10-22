@@ -4,8 +4,9 @@ import Loginusericon from "../img/icon/users-svgrepo-com.svg";
 import cart from "../img/icon/shopping-cart.svg";
 import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
+import menu from '../img/icon/menu.svg'
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContexts } from "../../context";
 import {
   HashRouter as Router,
@@ -15,6 +16,7 @@ import {
   useHistory,
 } from "react-router-dom";
 import { setAuthToken } from "../../utils";
+
 const Navbar = styled.div`
   background: #fbf3ea;
   height: 110px;
@@ -22,29 +24,54 @@ const Navbar = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
+  ${MEDIA_QUERY_MD} {
+    height:70px;  
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:2;
+  }
 `;
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width:100%;
+  ${MEDIA_QUERY_MD} {
+    flex-direction:row;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
 `;
-const Logo = styled.div`
+const Logo = styled(Link)`
   padding: 12px 0 0 0;
-  font-size: 46px;
+  font-size: 2.5rem;
   color: #9e7a7a;
   font-weight: bold;
   cursor: pointer;
   text-align: center;
+  text-decoration:none;
   ${MEDIA_QUERY_MD} {
-    font-size: 40px;
+    font-size: 2rem;
     padding: 0;
   }
   ${MEDIA_QUERY_SD} {
-    font-size: 32px;
+    font-size: 1.2rem;
     padding: 0;
   }
 `;
+
+const RwdBtns = styled.div`
+  display:none;
+  ${MEDIA_QUERY_MD} {
+    display:block;
+    position:relative;
+    display:flex;
+  }
+`
+const RwdSearch = styled.div``
+
 const List = styled.div`
   display: flex;
   ${MEDIA_QUERY_MD} {
@@ -85,31 +112,8 @@ const Img = styled.img`
   }
   cursor: pointer;
 `;
-const MenuButton = styled.label`
-  display: none;
-  ${MEDIA_QUERY_MD} {
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    display: block;
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    &::before {
-      content: "";
-      position: absolute;
-      height: 2px;
-      left: 2px;
-      right: 2px;
-      width: 36px;
-      background: #9e7a7a;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      box-shadow: 0 8px 0 #9e7a7a, 0 -8px 0 #9e7a7a;
-    }
-  }
-`;
+
+const MenuBtn=styled.div``
 
 const Menu = styled.nav`
   ${MEDIA_QUERY_MD} {
@@ -119,7 +123,7 @@ const Menu = styled.nav`
     opacity: 0.9;
     position: absolute;
     left: 0%;
-    top: 110px;
+    top: 70px;
     transition: all 0.3s linear;
     z-index: 2;
     transform: ${(props) =>
@@ -146,11 +150,28 @@ const ImgLink = styled.div`
   display: flex;
   align-items: center;
 `;
+const SearchBarWrap = styled.div`
+    width:100%;
+    position:fixed;
+    top:70px;
+    left:0;
+    padding: 6px 20px;
+    background: #fbf3ea;
+    text-align:center;
+    & input {
+      width:100%;
+      padding: 6px 12px;
+    }
+`
+
 const SearchBar = styled.input`
   border: 1px solid #b4a582;
   border-radius: 4px;
   outline: none;
   ${(props) => props.value === false && "display: none;"}
+
+
+
 `;
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -158,6 +179,7 @@ function Header() {
   // const [searchProduct, setSearchProduct]= useState("")
   const history = useHistory();
   const { user, setUser } = useContext(AuthContexts);
+
   const toggleHamburger = () => {
     if (hamburgerOpen) {
       document.body.style.overflow = "auto";
@@ -165,25 +187,71 @@ function Header() {
       document.body.style.overflow = "hidden";
     }
     setHamburgerOpen(!hamburgerOpen);
+    setSearchBarShow(false)
   };
-  const [show, searchBarShow] = useState(false);
-  const searchBar = () => {
-    searchBarShow(!show);
+
+  const [searchBarShow, setSearchBarShow] = useState(false);
+  const ref = useRef()
+  const handleSearchBarClick = () => {
+    setHamburgerOpen(false)
+    setSearchBarShow(!searchBarShow);
   };
+
+  useEffect(()=>{
+    const handleBodyClick = (event) => {
+      if(ref.current.contains(event.target)){
+        return
+      }
+      setSearchBarShow(false)
+      setHamburgerOpen(false)
+    }
+
+    document.body.addEventListener('click', handleBodyClick, {capture:true})
+    
+    return () => {
+      document.body.removeEventListener('click', handleBodyClick, {capture:true})
+    }
+  }, [])
+  
+
   const handleEnter = () => {
     if (searchProduct) {
       history.push(`/search/${searchProduct}`);
       setSearchProduct("");
-      searchBarShow(!show);
+      setSearchBarShow(!searchBarShow);
     }
   };
   return (
-    <div>
       <Router>
-        <Navbar>
+        <Navbar ref={ref}>
           <Wrap>
-            <Logo>Fat Cat dessert ฅ</Logo>
-            <MenuButton onClick={toggleHamburger}></MenuButton>
+            <Logo to="/">Fat Cat dessert ฅ</Logo>
+            
+            <RwdBtns>
+
+              <RwdSearch to="#">
+                <Img src={search} onClick={handleSearchBarClick}/>
+                {searchBarShow && (
+                  <SearchBarWrap>
+                    <SearchBar
+                      type="text"
+                      placeholder="輸入商品名稱"
+                      value={searchProduct}
+                      onChange={(e) => setSearchProduct(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          handleEnter();
+                        }
+                      }}
+                    />
+                  </SearchBarWrap>
+                )}
+              </RwdSearch>
+              <MenuBtn onClick={toggleHamburger}>
+                <Img src={menu} />
+              </MenuBtn>
+            </RwdBtns>
+            
             <Menu hamburgerOpen={hamburgerOpen}>
               <MenuItem to="/login" onClick={toggleHamburger}>
                 會員登入
@@ -231,8 +299,8 @@ function Header() {
               <Img src={cart} />
             </ImgLink>
             <ImgLink to="#">
-              <Img src={search} onClick={searchBar} />
-              {show && (
+              <Img src={search} onClick={handleSearchBarClick} />
+              {searchBarShow && (
                 <SearchBar
                   type="text"
                   placeholder="輸入商品名稱"
@@ -252,7 +320,6 @@ function Header() {
           </Icon>
         </Navbar>
       </Router>
-    </div>
   );
 }
 

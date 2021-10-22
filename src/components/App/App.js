@@ -29,6 +29,12 @@ import CartPage from "../../pages/CartPage";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 
 const Root = styled.div``;
+import { MEDIA_QUERY_MD } from "../Style/style";
+const Root = styled.div`
+  ${MEDIA_QUERY_MD} {
+    padding-top: 70px;
+  }
+`;
 
 function App() {
   const [user, setUser] = useState(null);
