@@ -5,7 +5,7 @@ import { AuthContexts } from "../../../context";
 import { updateUser } from "../../../WEBAPI";
 import EachErrorMessage from "../../../components/common/EachErrorMessage";
 
-export default function UserInfo() {
+export default function UserInfo({ setLoading }) {
   const { user, setUser } = useContext(AuthContexts);
   const [lastname, setLastname] = useState(user.lastname);
   const [firstname, setFirstname] = useState(user.firstname);
@@ -24,6 +24,7 @@ export default function UserInfo() {
   // 更新user
   const handleUpdateUser = (e) => {
     e.preventDefault();
+    setLoading(true);
     //資料不齊全
     if (!username || !phone || !lastname || !firstname || !address) {
       const newError = JSON.parse(JSON.stringify(error));
@@ -52,19 +53,21 @@ export default function UserInfo() {
       } else {
         newError[4] = null;
       }
-      console.log(newError);
-      return setError(newError);
+      setError(newError);
+      return setLoading(false);
     }
     //串api
     updateUser(username, firstname, lastname, phone, address).then(
       (response) => {
         if (!response.success) {
           console.log(response.message);
+          return setLoading(false);
         }
         setError(Array(5).fill(null));
         alert("資料更改完成");
       }
     );
+    setLoading(false);
   };
   return (
     <UFS.FormWrapper onSubmit={handleUpdateUser}>
