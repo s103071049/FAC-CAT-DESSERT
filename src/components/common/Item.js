@@ -54,7 +54,7 @@ function Item({ dessert }) {
   return (
     <Dessert>
       <Img>
-        <DessertImg imgUrl={dessert.imgUrl} />
+        <DessertImg imgUrl={dessert.img_url} />
       </Img>
       <DessertName>{dessert.name}</DessertName>
       <DessertPrice>NT${dessert.price}</DessertPrice>

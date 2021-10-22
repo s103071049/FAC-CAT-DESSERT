@@ -11,11 +11,7 @@ import {
 import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent.js";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { Counter } from "../../components/common/Counter";
-import { getProduct } from "../../WEBAPI";
-
-import cake from "../../components/img/product/cake.jpg";
-import cake3 from "../../components/img/product/cake3.jpg";
-import cake4 from "../../components/img/product/cake4.jpg";
+import { getProduct, getAllProduct } from "../../WEBAPI";
 import { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 
@@ -121,17 +117,28 @@ const SingleProduct = ({ dessert }) => {
         </SingleProductDescriptionText>
         <FlexCenter>
           <Counter />
-          {dessert.limited && <Limit>庫存: {dessert.limited}</Limit>}
         </FlexCenter>
         <CartButton>加入購物車</CartButton>
       </SingleProductDescription>
     </SingleProductWrapper>
   );
 };
-
+function randomArr(allProducts, totalRecommends) {
+  let arr = [];
+  for (let i = 0; i < allProducts; i++) {
+    arr.push(i);
+  }
+  arr.sort(() => {
+    return Math.random() - 0.5;
+  });
+  arr.length = totalRecommends;
+  return arr;
+}
 const SingleProductPage = () => {
+  const totalRecommends = 2;
   const [dessert, setDessert] = useState("");
   const { id } = useParams();
+  let randomResult = [];
   const history = useHistory();
   useEffect(() => {
     getProduct(id).then((response) => {
@@ -141,43 +148,25 @@ const SingleProductPage = () => {
       setDessert(response.product);
     });
   }, [id, history]);
-  const dessertss = [
-    {
-      id: 1,
-      name: "阿嬤的蘋果派",
-      price: "160",
-      imgUrl: cake,
-      desc: `2020新品
-
-      日本柚子帶出輕盈微酸的口感，臺灣鐵觀音帶出濃郁茶香
-
-      日本100%柚子汁，柚子輕盈甘納許，臺灣鐵觀音甘納許
-
-      **甘納許為巧克力加上鮮奶油製成
-      `,
-    },
-    {
-      id: 2,
-      name: "我的梅果花園",
-      price: "180",
-      imgUrl: cake3,
-    },
-    {
-      id: 3,
-      name: "青春橘子派",
-      price: "260",
-      imgUrl: cake4,
-    },
-    {
-      id: 4,
-      name: "青春橘子派",
-      price: "260",
-      imgUrl: cake,
-    },
-  ];
-
-  const numbers = ["2", "3", "4", "5", "6", "7"];
-
+  const [recommends, setRecommend] = useState([]);
+  useEffect(() => {
+    getAllProduct()
+      .then((response) => {
+        if (!response.success) {
+          return alert("QQ 推薦商品處理異常，非常抱歉!");
+        }
+        let data = response.products.filter((each) => each.id !== id);
+        return data;
+      })
+      .then((data) => {
+        let randArr = randomArr(data.length, totalRecommends);
+        for (let i = 0; i < randArr.length; i++) {
+          let key = randArr[i];
+          randomResult.push(data[key]);
+        }
+        setRecommend(randomResult); // loading + link
+      });
+  }, []);
   return (
     <div>
       {dessert && (
@@ -185,7 +174,7 @@ const SingleProductPage = () => {
           <SingleProduct dessert={dessert} />
           <ProductsSectionTiTleContent>推薦商品</ProductsSectionTiTleContent>
           <Section>
-            {dessertss.map((dessert, i) => (
+            {recommends.map((dessert, i) => (
               <Item dessert={dessert} key={i} />
             ))}
           </Section>
