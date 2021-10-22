@@ -293,8 +293,7 @@ const RenderContentSection = ({products, section}) => {
 
 
 
-export default function ProductsSection() {
-
+export default function ProductsSection({selectedCategory}) {
   const {
     products,
     handletoggleLists,
@@ -303,7 +302,7 @@ export default function ProductsSection() {
     showDataIndex,
     setShowDataIndex,
     dataAmount
-  } = useFindProducts()
+  } = useFindProducts(selectedCategory)
 
 
   

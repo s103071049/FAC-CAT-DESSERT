@@ -3,7 +3,7 @@ import { getAllProducts } from "../../WEBAPI";
 import { useHistory } from "react-router-dom";
 import usePagination from "../paginationHooks/usePagination";
 
-const useFindProducts = () => {
+const useFindProducts = (selectedCategory) => {
   const {eachPageAmount} = usePagination()
   const [products, setProducts] = useState([])
   const [section, setSection] = useState("sqares");
@@ -20,15 +20,22 @@ const useFindProducts = () => {
         if(!result.success){
           return history.goBack()
         }
-        dataAmount.current = result.products.length
-        const showDataArr = result.products.slice(showDataIndex, showDataIndex+eachPageAmount)
+        let getSelectedProducts = result.products
+        
+        if(selectedCategory !== '全部品項') {
+          getSelectedProducts = getSelectedProducts.filter(product => product.category === selectedCategory)
+        }
+
+        dataAmount.current = getSelectedProducts.length
+        const showDataArr = getSelectedProducts.slice(showDataIndex, showDataIndex+eachPageAmount)
+        
         setProducts(showDataArr)
       } catch(err) {
         return history.goBack()
       }
     }
     fetchAllproducts()
-  }, [history, showDataIndex, eachPageAmount])
+  }, [history, showDataIndex, eachPageAmount,selectedCategory ])
   
 
  
