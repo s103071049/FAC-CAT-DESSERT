@@ -28,8 +28,12 @@ import OrderPage from "../../pages/Admin/OrderPage";
 import TransactionPage from "../../pages/TransactionPage";
 import { getUser } from "../../WEBAPI";
 import CartPage from "../../pages/CartPage";
-
-const Root = styled.div``;
+import {MEDIA_QUERY_MD} from '../Style/style'
+const Root = styled.div`
+  ${MEDIA_QUERY_MD} {
+    padding-top:70px;
+  }
+`;
 
 function App() {
   const [user, setUser] = useState(null);
