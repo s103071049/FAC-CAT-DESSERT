@@ -9,7 +9,6 @@ import squares from "../../../components/img/icon/squares.svg";
 import list from "../../../components/img/icon/list.svg";
 import { Link } from "react-router-dom";
 import useFindProducts from "../../../hooks/productHooks/useFindProducts";
-import usePagination from "../../../hooks/paginationHooks/usePagination";
 
 const ProductsSectionContentsWrapper = styled.div`
   margin-bottom:40px;
