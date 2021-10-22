@@ -16,6 +16,7 @@ const Column = styled.div`
   font-weight: bold;
   padding: 8px;
   white-space: nowrap;
+  min-width: 120px;
 `;
 
 const Row = styled.input`
