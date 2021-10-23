@@ -96,9 +96,14 @@ export const updatePassword = async (password, newPassword, newPassword2) => {
 };
 
 // 產品相關api
-// 單向商品
+// 單項商品
 export const getProduct = async (id) => {
   const response = await fetch(`${BASE_URL}/findProducts/${id}`);
+  return await response.json();
+};
+// 多項商品
+export const getAllProduct = async () => {
+  const response = await fetch(`${BASE_URL}/findAllProducts`);
   return await response.json();
 };
 //search products
