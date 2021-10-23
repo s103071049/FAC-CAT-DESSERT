@@ -6,7 +6,7 @@ import { AuthLoadingContext } from '../../context'
 
 const useFindProducts = (selectedCategory) => {
   const {eachPageAmount} = usePagination()
-  const {loading, setLoading} = useContext(AuthLoadingContext)
+  const {setLoading} = useContext(AuthLoadingContext)
   const [products, setProducts] = useState([])
   const [section, setSection] = useState("sqares");
   const [showDataIndex, setShowDataIndex] = useState(0)
