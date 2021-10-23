@@ -107,7 +107,7 @@ const OrderContentPendingTr = ({ order, index }) => {
     <Tr>
       <Td style={{ paddingLeft: "15px" }}>{index + 1}</Td>
       <Td>
-        <OrderNumber to={`/admin/orders/${order.id}`}>{order.id}</OrderNumber>
+        <OrderNumber to={`/admin/order/${order.id}`}>{order.id}</OrderNumber>
       </Td>
       <Td>{order.createdAt}</Td>
     </Tr>
@@ -118,7 +118,7 @@ const OrderContentSolvedTr = ({ order, index }) => {
     <Tr>
       <Td style={{ paddingLeft: "15px" }}>{index + 1}</Td>
       <Td>
-        <OrderNumber to={`/admin/orders/${order.id}`}>{order.id}</OrderNumber>
+        <OrderNumber to={`/admin/order/${order.id}`}>{order.id}</OrderNumber>
       </Td>
       <Td>{order.createdAt}</Td>
       <Td>{order.accepted_at ? order.accepted_at : "-"}</Td>
