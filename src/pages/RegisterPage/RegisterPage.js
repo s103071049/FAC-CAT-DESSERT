@@ -7,7 +7,7 @@ import RegisterFormContext from "./components/RegisterFormContext";
 import { Link, useHistory } from "react-router-dom";
 import { getUser, register } from "../../WEBAPI";
 import { setAuthToken, getAuthToken } from "../../utils";
-import { AuthContexts } from "../../context";
+import { AuthContexts, AuthLoadingContext } from "../../context";
 
 const RegisterWrapper = styled.div`
   max-width: 1024px;
@@ -101,6 +101,7 @@ const RegisterPage = () => {
   const passwordRe = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
   const history = useHistory();
   const { user, setUser } = useContext(AuthContexts);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -139,6 +140,7 @@ const RegisterPage = () => {
   //註冊
   const handleRegister = (e) => {
     e.preventDefault();
+    setLoading(true);
     //資料不齊全
     if (
       !username ||
@@ -191,19 +193,22 @@ const RegisterPage = () => {
       } else {
         newError[7] = null;
       }
-      return setError(newError);
+      setError(newError);
+      return setLoading(false);
     }
     // 密碼強度不足
     if (!passwordRe.test(password)) {
       const newError = Array(8).fill(null);
       newError[6] = "*密碼強度不足";
-      return setError(newError);
+      setError(newError);
+      return setLoading(false);
     }
     if (password !== confirmPassword) {
       const newError = Array(8).fill(null);
       newError[6] = "*密碼不相同";
       console.log(newError);
-      return setError(newError);
+      setError(newError);
+      return setLoading(false);
     }
     register(
       username,
@@ -216,16 +221,19 @@ const RegisterPage = () => {
     ).then((response) => {
       if (!response.success) {
         console.log(response.message);
+        return setLoading(false);
       }
       setAuthToken(response.token);
       getUser().then((response) => {
         if (response.success) {
           setUser(response.user);
-          return history.push("/");
+          history.push("/");
+          return setLoading(false);
         }
         setAuthToken("");
       });
     });
+    setLoading(false);
   };
   return (
     <div>

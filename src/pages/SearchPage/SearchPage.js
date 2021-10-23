@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
 import SearchItem from "./components/SearchItem";
 import PageChange from "../../components/common/PageChange";
 import { useParams } from "react-router";
 import { searchProducts } from "../../WEBAPI";
+import { AuthLoadingContext } from "../../context";
 
 const SearchWrapper = styled.div`
   max-width: 1024px;
@@ -19,10 +20,13 @@ const Span = styled.span`
 const SearchPage = () => {
   const { context } = useParams();
   const [productOptions, setProductOptions] = useState("");
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   useEffect(() => {
+    setLoading(true);
     searchProducts(context).then((response) => {
       setProductOptions(response.data);
     });
+    setLoading(false);
   }, [context]);
   return (
     <div>

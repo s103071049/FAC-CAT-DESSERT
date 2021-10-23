@@ -20,7 +20,7 @@ const ErrorMessage = styled.p`
   }
 `;
 
-export default function EditPassword() {
+export default function EditPassword({ setLoading }) {
   const { user, setUser } = useContext(AuthContexts);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -37,23 +37,29 @@ export default function EditPassword() {
   //更新密碼
   const handleUpdatePassword = (e) => {
     e.preventDefault();
+    setLoading(true);
     //資料不齊全
     if (!oldPassword || !newPassword || !newPassword2) {
-      return setErrorMessage("資料不齊全");
+      setErrorMessage("資料不齊全");
+      return setLoading(false);
     }
     if (newPassword !== newPassword2) {
-      return setErrorMessage("密碼不相同");
+      setErrorMessage("密碼不相同");
+      return setLoading(false);
     }
     if (!passwordRe.test(newPassword)) {
-      return setErrorMessage("密碼強度不足");
+      setErrorMessage("密碼強度不足");
+      return setLoading(false);
     }
     updatePassword(oldPassword, newPassword, newPassword2).then((response) => {
       if (!response.success) {
-        return setErrorMessage(response.message);
+        setErrorMessage(response.message);
+        return setLoading(false);
       }
       setErrorMessage("");
       alert("密碼更改完成");
     });
+    setLoading(false);
   };
   return (
     <div>
