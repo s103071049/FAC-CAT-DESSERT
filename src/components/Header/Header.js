@@ -10,12 +10,9 @@ import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContexts } from "../../context";
 import {
   HashRouter as Router,
-  Switch,
-  Route,
   Link,
   useHistory,
 } from "react-router-dom";
-import { setAuthToken } from "../../utils";
 
 const Navbar = styled.div`
   background: #fbf3ea;
@@ -170,16 +167,15 @@ const SearchBar = styled.input`
   outline: none;
   ${(props) => props.value === false && "display: none;"}
 
-
-
 `;
+
 function Header() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [searchProduct, setSearchProduct] = useState("");
-  // const [searchProduct, setSearchProduct]= useState("")
-  const history = useHistory();
-  const { user, setUser } = useContext(AuthContexts);
+  const [adminViewOpen, setAdminViewOpen] = useState(false)
 
+  const history = useHistory();
+  const { user, isAdmin } = useContext(AuthContexts);
   const toggleHamburger = () => {
     if (hamburgerOpen) {
       document.body.style.overflow = "auto";
@@ -189,7 +185,6 @@ function Header() {
     setHamburgerOpen(!hamburgerOpen);
     setSearchBarShow(false)
   };
-
   const [searchBarShow, setSearchBarShow] = useState(false);
   const ref = useRef()
   const handleSearchBarClick = () => {
@@ -213,6 +208,9 @@ function Header() {
     }
   }, [])
   
+  const handleAdminViewClick = () => {
+    setAdminViewOpen(!adminViewOpen)
+  }
 
   const handleEnter = () => {
     if (searchProduct) {
@@ -221,6 +219,29 @@ function Header() {
       setSearchBarShow(!searchBarShow);
     }
   };
+
+  const RenderAdminItem = () => {
+    return (
+      <>
+        {adminViewOpen ? (
+          <Item 
+            to="/" 
+            onClick={handleAdminViewClick}
+          > 
+            訪問前台
+          </Item>
+          ) : (
+          <Item 
+            to="/admin/orders" 
+            onClick={handleAdminViewClick}
+          >
+            訪問後台
+          </Item>)
+        }
+      </>
+    ) 
+  }
+
   return (
       <Router>
         <Navbar ref={ref}>
@@ -282,6 +303,7 @@ function Header() {
               <Item to="#">新品上市</Item>
               <Item to="#">促銷商品</Item>
               <Item to="/products">商品一覽</Item>
+              {isAdmin && <RenderAdminItem />}
             </List>
           </Wrap>
           <Icon>
