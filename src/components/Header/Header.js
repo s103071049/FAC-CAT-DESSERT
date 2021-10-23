@@ -6,13 +6,12 @@ import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
 import menu from '../img/icon/menu.svg'
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
-import { useState, useContext, useEffect, useRef } from "react";
-import { AuthContexts } from "../../context";
 import {
   HashRouter as Router,
   Link,
-  useHistory,
 } from "react-router-dom";
+
+import useHeader from "./useHeader";
 
 const Navbar = styled.div`
   background: #fbf3ea;
@@ -170,55 +169,24 @@ const SearchBar = styled.input`
 `;
 
 function Header() {
-  const [hamburgerOpen, setHamburgerOpen] = useState(false);
-  const [searchProduct, setSearchProduct] = useState("");
-  const [adminViewOpen, setAdminViewOpen] = useState(false)
+  const {
+    hamburgerOpen,
+    searchProduct,
+    setSearchProduct,
+    adminViewOpen,
+    searchBarShow,
+    user,
+    isAdmin,
+    toggleHamburger,
+    handleSearchBarClick,
+    handleAdminViewClick,
+    handleEnter,
+    ref
+  } = useHeader()
 
-  const history = useHistory();
-  const { user, isAdmin } = useContext(AuthContexts);
-  const toggleHamburger = () => {
-    if (hamburgerOpen) {
-      document.body.style.overflow = "auto";
-    } else {
-      document.body.style.overflow = "hidden";
-    }
-    setHamburgerOpen(!hamburgerOpen);
-    setSearchBarShow(false)
-  };
-  const [searchBarShow, setSearchBarShow] = useState(false);
-  const ref = useRef()
-  const handleSearchBarClick = () => {
-    setHamburgerOpen(false)
-    setSearchBarShow(!searchBarShow);
-  };
 
-  useEffect(()=>{
-    const handleBodyClick = (event) => {
-      if(ref.current.contains(event.target)){
-        return
-      }
-      setSearchBarShow(false)
-      setHamburgerOpen(false)
-    }
 
-    document.body.addEventListener('click', handleBodyClick, {capture:true})
-    
-    return () => {
-      document.body.removeEventListener('click', handleBodyClick, {capture:true})
-    }
-  }, [])
-  
-  const handleAdminViewClick = () => {
-    setAdminViewOpen(!adminViewOpen)
-  }
 
-  const handleEnter = () => {
-    if (searchProduct) {
-      history.push(`/search/${searchProduct}`);
-      setSearchProduct("");
-      setSearchBarShow(!searchBarShow);
-    }
-  };
 
   const RenderAdminItem = () => {
     return (
@@ -249,7 +217,6 @@ function Header() {
             <Logo to="/">Fat Cat dessert ฅ</Logo>
             
             <RwdBtns>
-
               <RwdSearch to="#">
                 <Img src={search} onClick={handleSearchBarClick}/>
                 {searchBarShow && (
