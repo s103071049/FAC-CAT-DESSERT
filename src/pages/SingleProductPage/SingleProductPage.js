@@ -12,8 +12,8 @@ import ProductsSectionTiTleContent from "../../components/common/ProductsSection
 import { Link, useParams, useHistory } from "react-router-dom";
 import { Counter } from "../../components/common/Counter";
 import { getProduct, getAllProduct } from "../../WEBAPI";
-import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useState, useEffect, useContext, useDebugValue } from "react";
+import { AuthLoadingContext } from "../../context";
 
 const SingleProductWrapper = styled.div`
   margin: 50px 20px;
@@ -137,24 +137,32 @@ function randomArr(allProducts, totalRecommends) {
 const SingleProductPage = () => {
   const totalRecommends = 2;
   const [dessert, setDessert] = useState("");
+  const [recommends, setRecommend] = useState([]);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   const { id } = useParams();
-  let randomResult = [];
+
   const history = useHistory();
   useEffect(() => {
+    setLoading(true);
     getProduct(id).then((response) => {
       if (!response.success) {
+        setLoading(false);
         return history.goBack();
       }
+      setLoading(false);
       setDessert(response.product);
     });
-  }, [id, history]);
-  const [recommends, setRecommend] = useState([]);
+  }, [id, history, setLoading]);
   useEffect(() => {
+    setLoading(true);
+    let randomResult = [];
     getAllProduct()
       .then((response) => {
         if (!response.success) {
+          setLoading(false);
           return alert("QQ 推薦商品處理異常，非常抱歉!");
         }
+        setLoading(false);
         let data = response.products.filter((each) => each.id !== id);
         return data;
       })
@@ -164,9 +172,9 @@ const SingleProductPage = () => {
           let key = randArr[i];
           randomResult.push(data[key]);
         }
-        setRecommend(randomResult); // loading + link
+        setRecommend(randomResult);
       });
-  }, []);
+  }, [id, setLoading]);
   return (
     <div>
       {dessert && (

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD, CartButton } from "../Style/style.js";
-
+import { Link } from "react-router-dom";
 const Dessert = styled.div`
   display: flex;
   width: 20%;
@@ -53,9 +53,9 @@ const Img = styled.div``;
 function Item({ dessert }) {
   return (
     <Dessert>
-      <Img>
+      <Link to={`/product/${dessert.id}`}>
         <DessertImg imgUrl={dessert.img_url} />
-      </Img>
+      </Link>
       <DessertName>{dessert.name}</DessertName>
       <DessertPrice>NT${dessert.price}</DessertPrice>
       <CartButton>加入購物車</CartButton>

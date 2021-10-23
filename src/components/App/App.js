@@ -29,10 +29,10 @@ import OrderPage from "../../pages/Admin/OrderPage";
 import TransactionPage from "../../pages/TransactionPage";
 import { getUser } from "../../WEBAPI";
 import CartPage from "../../pages/CartPage";
-import {MEDIA_QUERY_MD} from '../Style/style'
+import { MEDIA_QUERY_MD } from "../Style/style";
 const Root = styled.div`
   ${MEDIA_QUERY_MD} {
-    padding-top:70px;
+    padding-top: 70px;
   }
 `;
 
@@ -46,17 +46,18 @@ function App() {
     if (token) {
       getUser().then((response) => {
         setUser(response.user);
+        setLoading(false);
       });
     }
-    setLoading(false);
   }, [token]);
+
   return (
     <AuthContexts.Provider
       value={{ user, setUser, searchProduct, setSearchProduct }}
     >
+      {loading && <Loading />}
       <AuthLoadingContext.Provider value={{ loading, setLoading }}>
         <Root>
-          {loading && <Loading />}
           <Router>
             <Header />
             <Switch>
