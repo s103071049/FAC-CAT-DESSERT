@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const OrderSection = styled.section`
   margin-top: 90px;
@@ -120,8 +121,14 @@ const OrderContentSolvedTr = ({ order, index }) => {
         <OrderNumber to={`/admin/orders/${order.id}`}>{order.id}</OrderNumber>
       </Td>
       <Td>{order.createdAt}</Td>
-      <Td>{order.accepted_at}</Td>
-      <Td>已處理</Td>
+      <Td>{order.accepted_at ? order.accepted_at : "-"}</Td>
+      <Td>
+        {order.is_accepted && "接受"}
+        {order.is_accepted === false && "拒單"}
+        {order.is_accepted === null && (
+          <span style={{ color: "red" }}>未處理</span>
+        )}
+      </Td>
     </Tr>
   );
 };
@@ -148,25 +155,21 @@ export default function OrderStatusSection({ orders, selectOrderStatus }) {
         </Thead>
         <Tbody>
           {selectOrderStatus === "pending" &&
-            orders
-              .filter((orders) => !orders.is_accepted)
-              .map((order, index) => (
-                <OrderContentPendingTr
-                  order={order}
-                  key={order.id}
-                  index={index}
-                />
-              ))}
+            orders.map((order, index) => (
+              <OrderContentPendingTr
+                order={order}
+                key={order.id}
+                index={index}
+              />
+            ))}
           {selectOrderStatus === "solved" &&
-            orders
-              .filter((orders) => orders.is_accepted)
-              .map((order, index) => (
-                <OrderContentSolvedTr
-                  order={order}
-                  key={order.id}
-                  index={index}
-                />
-              ))}
+            orders.map((order, index) => (
+              <OrderContentSolvedTr
+                order={order}
+                key={order.id}
+                index={index}
+              />
+            ))}
           {selectOrderStatus === "all" &&
             orders.map((order, index) => (
               <OrderContentSolvedTr
