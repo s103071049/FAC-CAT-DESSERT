@@ -1,10 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { getAllProducts } from "../../WEBAPI";
 import { useHistory } from "react-router-dom";
 import usePagination from "../paginationHooks/usePagination";
+import { AuthLoadingContext } from '../../context'
 
 const useFindProducts = (selectedCategory) => {
   const {eachPageAmount} = usePagination()
+  const {loading, setLoading} = useContext(AuthLoadingContext)
   const [products, setProducts] = useState([])
   const [section, setSection] = useState("sqares");
   const [showDataIndex, setShowDataIndex] = useState(0)
@@ -13,6 +15,7 @@ const useFindProducts = (selectedCategory) => {
   const history = useHistory();
 
   useEffect(()=> {
+    setLoading(true)
     const fetchAllproducts = async() => {
       const result = await getAllProducts()
 
@@ -28,14 +31,14 @@ const useFindProducts = (selectedCategory) => {
 
         dataAmount.current = getSelectedProducts.length
         const showDataArr = getSelectedProducts.slice(showDataIndex, showDataIndex+eachPageAmount)
-        
+        setLoading(false)
         setProducts(showDataArr)
       } catch(err) {
         return history.goBack()
       }
     }
     fetchAllproducts()
-  }, [history, showDataIndex, eachPageAmount,selectedCategory ])
+  }, [history, showDataIndex, eachPageAmount,selectedCategory, setLoading])
   
 
  

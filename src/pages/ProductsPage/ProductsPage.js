@@ -1,4 +1,3 @@
-import {useState} from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
 // import { Link } from "react-router-dom"
