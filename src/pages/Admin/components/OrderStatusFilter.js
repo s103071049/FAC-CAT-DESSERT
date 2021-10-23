@@ -42,15 +42,15 @@ const OrderFilterBtn = styled.button`
 `;
 const ordersStatus = [
   {
-    status: 1,
+    status: "pending",
     title: "待處理訂單",
   },
   {
-    status: 2,
+    status: "solved",
     title: "已處理訂單",
   },
   {
-    status: 3,
+    status: "all",
     title: "全部訂單",
   },
 ];
@@ -60,12 +60,11 @@ export default function OrderStatusFilter({
   handleOrderFilterClick,
 }) {
   const RenderOrderStatusBtn = () => {
-    return ordersStatus.map((orderStatus) => {
-      const { status, title } = orderStatus;
+    return ordersStatus.map(({ status, title }) => {
       return (
         <OrderFilterBtn
           className={status === selectOrderStatus ? "active" : ""}
-          key={orderStatus.status}
+          key={status}
           onClick={() => {
             handleOrderFilterClick(status);
           }}

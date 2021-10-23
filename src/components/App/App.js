@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import styled from "styled-components";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { getAuthToken, setAuthToken } from "../../utils";
@@ -29,12 +29,15 @@ import OrderPage from "../../pages/Admin/OrderPage";
 import TransactionPage from "../../pages/TransactionPage";
 import { getUser } from "../../WEBAPI";
 import CartPage from "../../pages/CartPage";
+
+import Push from "../common/Push";
 import { MEDIA_QUERY_MD } from "../Style/style";
 const Root = styled.div`
   ${MEDIA_QUERY_MD} {
     padding-top: 70px;
   }
 `;
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -46,9 +49,9 @@ function App() {
     if (token) {
       getUser().then((response) => {
         setUser(response.user);
-        setLoading(false);
       });
     }
+    setLoading(false);
   }, [token]);
 
   return (
@@ -65,12 +68,17 @@ function App() {
                 <HomePage />
               </Route>
               <Route path="/login">
+                {token && <Push />}
                 <LoginPage />
               </Route>
               <Route path="/register">
+                {token && <Push />}
                 <RegisterPage />
               </Route>
-              <Route path="/user">{user && <UserPage />}</Route>
+              <Route path="/user">
+                {!token && <Push />}
+                {user && <UserPage />}
+              </Route>
               <Route path="/cart">
                 <CartPage />
               </Route>
@@ -117,7 +125,8 @@ function App() {
                 <UpdateProductPage />
               </Route>
               <Route path="/admin/orders">
-                <OrderPage />
+                {!token && <Push />}
+                {user && <OrderPage />}
               </Route>
               <Route path="/admin/order/1">
                 <OrderWholeListPage />
