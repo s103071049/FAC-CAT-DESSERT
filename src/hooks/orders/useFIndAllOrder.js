@@ -25,11 +25,10 @@ const useFindAllOrder = () => {
     }
     getAllOrder().then((response) => {
       setFackOrders(response.data);
+      setLoading(false);
     });
-    setLoading(false);
   }, [history, user.authority]);
   useEffect(() => {
-    setLoading(true);
     if (selectOrderStatus === "pending") {
       setCurrentOrders(
         fackOrders.filter((fackOrders) => fackOrders.is_accepted === null)
@@ -43,7 +42,6 @@ const useFindAllOrder = () => {
     if (selectOrderStatus === "all") {
       setCurrentOrders(fackOrders);
     }
-    setLoading(false);
     const interval = setInterval(() => {
       window.location.reload();
     }, 600000);

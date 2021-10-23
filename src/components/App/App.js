@@ -38,20 +38,19 @@ const Root = styled.div`
   }
 `;
 
-
 function App() {
   const [user, setUser] = useState(null);
   const [searchProduct, setSearchProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const token = getAuthToken();
   useEffect(() => {
-    setLoading(true);
     if (token) {
+      setLoading(true);
       getUser().then((response) => {
         setUser(response.user);
+        setLoading(false);
       });
     }
-    setLoading(false);
   }, [token]);
 
   return (
