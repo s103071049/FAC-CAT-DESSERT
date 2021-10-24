@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import styled from "styled-components";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
-import { getAuthToken, setAuthToken } from "../../utils";
+import { getAuthToken } from "../../utils";
 import { AuthContexts, AuthLoadingContext } from "../../context";
 import Loading from "../common/Loading";
 import Header from "../Header";
@@ -50,7 +50,6 @@ function App() {
       getUser().then((response) => {
         setUser(response.user);
         setLoading(false);
-        
       });
     }
   }, [token]);
