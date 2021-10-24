@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   max-width: 1042px;
   margin: 30px auto;
   padding: 0 16px;
+  min-height: 73vh;
 `;
 const Main = styled.main`
   margin-bottom: 60px;

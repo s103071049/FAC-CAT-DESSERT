@@ -38,7 +38,6 @@ const Root = styled.div`
   }
 `;
 
-
 function App() {
   const [user, setUser] = useState(null);
   const [searchProduct, setSearchProduct] = useState(null);

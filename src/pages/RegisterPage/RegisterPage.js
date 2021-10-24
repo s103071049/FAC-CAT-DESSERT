@@ -231,9 +231,9 @@ const RegisterPage = () => {
           return setLoading(false);
         }
         setAuthToken("");
+        setLoading(false);
       });
     });
-    setLoading(false);
   };
   return (
     <div>
