@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  MEDIA_QUERY_MD,
-} from "../../../components/Style/style";
+import { MEDIA_QUERY_MD } from "../../../components/Style/style";
 import { Link } from "react-router-dom";
 
-export const TdContext = ({ tdcontext }) => {
+export const TdContext = ({ tdcontext, index }) => {
   return (
     <Tr>
-      <Td data-title="商品id">{tdcontext.id}</Td>
+      <Td data-title="id">{index + 1}</Td>
       <Td data-title="商品名稱">{tdcontext.name}</Td>
       <Td data-title="價格">
         <Pricespan>{tdcontext.price}</Pricespan>

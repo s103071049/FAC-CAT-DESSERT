@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import Popup from "./components/Popup";
 import { TdContext } from "./components/TdContext";
-import { thcontexts, tdcontexts } from "./components/popupItem";
-// import { Link } from "react-router-dom"
+import { tdcontexts } from "./components/popupItem";
+import useOneOrder from "../../hooks/orders/useOneOrder";
 
 const OrderPopupWrapper = styled.div`
   margin: 0 auto;
@@ -131,45 +131,81 @@ const RejectButton = styled(AcceptButton)`
     color: #fff;
   }
 `;
-
+const BackButton = styled(RejectButton)`
+  padding: 5px 15px;
+`;
+const thcontexts = ["id", "商品名稱", "價格", "數量", "備註", "小計"];
 export default function OrderWholeListPage() {
-  const [popup, setPopup] = useState(false);
-  const handleOpenPopup = () => {
-    setPopup(true);
-  };
-  const handleClosePopup = () => {
-    setPopup(false);
-  };
+  const {
+    id,
+    user,
+    setUser,
+    popup,
+    setPopup,
+    order,
+    setOrder,
+    orderState,
+    setOrderState,
+    history,
+    loading,
+    setLoading,
+    handleUpdateOrder,
+    handleACceptPopup,
+    handleRejectPopup,
+    handleClosePopup,
+    handleBack,
+  } = useOneOrder();
   return (
-    <OrderPopupWrapper>
-      <OrderPopupContext>訂單編號 : 123456789AB</OrderPopupContext>
-      <OrderPopupContext>訂單時間 : 2021-09-20-15-34</OrderPopupContext>
-      <OrderPopupContext>訂單狀態 : unhandling</OrderPopupContext>
-      <OrderSection>
-        <Table>
-          <Thead>
-            <Tr>
-              {thcontexts.map((thcontext, index) => (
-                <Th key={index}>{thcontext}</Th>
-              ))}
-            </Tr>
-          </Thead>
-          <Tbody>
-            {tdcontexts.map((tdcontext, index) => (
-              <TdContext tdcontext={tdcontext} key={index} />
-            ))}
-          </Tbody>
-        </Table>
-      </OrderSection>
-      <OrderTotal>
-        <TotalSpan>總計</TotalSpan>700
-      </OrderTotal>
-      <OrderRejectConfirm>
-        <AcceptButton onClick={handleOpenPopup}>Accept</AcceptButton>
-        <RejectButton onClick={handleOpenPopup}>Reject</RejectButton>
-      </OrderRejectConfirm>
-      {popup && <Mark />}
-      {popup && <Popup handleClosePopup={handleClosePopup} />}
-    </OrderPopupWrapper>
+    <>
+      {order && (
+        <OrderPopupWrapper>
+          <OrderPopupContext>訂單編號 : {id}</OrderPopupContext>
+          <OrderPopupContext>訂單時間 : {order.createdAt}</OrderPopupContext>
+          <OrderPopupContext>
+            訂單狀態 : {order.is_accepted === null && "未處理"}
+            {order.is_accepted === false && "拒單"}
+            {order.is_accepted === true && "Accepted"}
+          </OrderPopupContext>
+          <OrderSection>
+            <Table>
+              <Thead>
+                <Tr>
+                  {thcontexts.map((thcontext, index) => (
+                    <Th key={index}>{thcontext}</Th>
+                  ))}
+                </Tr>
+              </Thead>
+              <Tbody>
+                {tdcontexts.map((tdcontext, index) => (
+                  <TdContext tdcontext={tdcontext} key={index} index={index} />
+                ))}
+              </Tbody>
+            </Table>
+          </OrderSection>
+          <OrderTotal>
+            <TotalSpan>總計</TotalSpan>
+            {order.price}
+          </OrderTotal>
+          {order.is_accepted === null && (
+            <OrderRejectConfirm>
+              <AcceptButton onClick={handleACceptPopup}>Accept</AcceptButton>
+              <RejectButton onClick={handleRejectPopup}>Reject</RejectButton>
+            </OrderRejectConfirm>
+          )}
+          {order.is_accepted !== null && (
+            <OrderRejectConfirm>
+              <BackButton onClick={handleBack}>返回</BackButton>
+            </OrderRejectConfirm>
+          )}
+          {popup && <Mark />}
+          {popup && (
+            <Popup
+              handleClosePopup={handleClosePopup}
+              handleUpdateOrder={handleUpdateOrder}
+            />
+          )}
+        </OrderPopupWrapper>
+      )}
+    </>
   );
 }

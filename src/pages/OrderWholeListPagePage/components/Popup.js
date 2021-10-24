@@ -42,12 +42,12 @@ const CancelButton = styled(YesButton)`
   }
 `;
 
-export default function Popup({ handleClosePopup }) {
+export default function Popup({ handleClosePopup, handleUpdateOrder }) {
   return (
     <PopupWrapper>
       <PopupTitle>是否確定？</PopupTitle>
       <div>
-        <YesButton onClick={handleClosePopup}>是</YesButton>
+        <YesButton onClick={handleUpdateOrder}>是</YesButton>
         <CancelButton onClick={handleClosePopup}>取消</CancelButton>
       </div>
     </PopupWrapper>

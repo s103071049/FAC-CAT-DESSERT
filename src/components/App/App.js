@@ -38,20 +38,19 @@ const Root = styled.div`
   }
 `;
 
-
 function App() {
   const [user, setUser] = useState(null);
   const [searchProduct, setSearchProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const token = getAuthToken();
   useEffect(() => {
-    setLoading(true);
     if (token) {
+      setLoading(true);
       getUser().then((response) => {
         setUser(response.user);
+        setLoading(false);
       });
     }
-    setLoading(false);
   }, [token]);
 
   return (
@@ -128,8 +127,9 @@ function App() {
                 {!token && <Push />}
                 {user && <OrderPage />}
               </Route>
-              <Route path="/admin/order/1">
-                <OrderWholeListPage />
+              <Route path="/admin/order/:id">
+                {!token && <Push />}
+                {user && <OrderWholeListPage />}
               </Route>
             </Switch>
             <Footer />
