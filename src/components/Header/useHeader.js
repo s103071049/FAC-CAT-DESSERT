@@ -45,6 +45,7 @@ const useHeader = () => {
   
   const handleAdminViewClick = () => {
     setAdminViewOpen(!adminViewOpen)
+    toggleHamburger()
   }
 
   const handleEnter = () => {

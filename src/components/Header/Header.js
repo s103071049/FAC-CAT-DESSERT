@@ -234,6 +234,72 @@ function Header() {
     }
   }
 
+  const RenderRWDItems = () => {
+    return(
+      <>
+        {!user && <MenuItem to="/login" onClick={toggleHamburger}>
+          會員登入
+        </MenuItem> }
+        <MenuItem to="/faq" onClick={toggleHamburger}>
+          FAQ
+        </MenuItem>
+        <MenuItem to="/about" onClick={toggleHamburger}>
+          關於我們
+        </MenuItem>
+        <MenuItem to="#" onClick={toggleHamburger}>
+          新品上市
+        </MenuItem>
+        <MenuItem to="#" onClick={toggleHamburger}>
+          促銷商品
+        </MenuItem>
+        <MenuItem to="/products" onClick={toggleHamburger}>
+          商品一覽
+        </MenuItem>
+        <MenuItem to="#" onClick={toggleHamburger}>
+          購物車
+        </MenuItem>
+      </>
+    )
+  }
+  const RenderRWDMenu = () => {
+    if(user && user.authority === 1) {
+      return (
+        <Menu hamburgerOpen={hamburgerOpen}>
+            {adminViewOpen ? (
+                <>
+                  <MenuItem to="/admin/products" onClick={toggleHamburger}>
+                    商品管理
+                  </MenuItem>
+                  <MenuItem to="/admin/discounts" onClick={toggleHamburger}>
+                    促銷管理
+                  </MenuItem>
+                  <MenuItem to="/admin/orders" onClick={toggleHamburger}>
+                    訂單管理
+                  </MenuItem>
+                  <MenuItem to="/user" onClick={toggleHamburger}>
+                    會員中心
+                  </MenuItem>
+                  <MenuItem to="/" onClick={handleAdminViewClick}>
+                    訪問前台
+                  </MenuItem>
+                </>
+              ):(
+                <>
+                  <RenderRWDItems />
+                  <MenuItem to="/admin/orders" onClick={handleAdminViewClick}>
+                    訪問後台
+                  </MenuItem>
+                </>
+              )
+            }
+        </Menu>
+      )
+    } else {
+      return (
+       <RenderRWDItems />
+      )
+    }
+  }
   return (
       <Router>
         <Navbar ref={ref}>
@@ -262,33 +328,7 @@ function Header() {
                 <Img src={menu} />
               </MenuBtn>
             </RwdBtns>
-            
-            <Menu hamburgerOpen={hamburgerOpen}>
-              <MenuItem to="/login" onClick={toggleHamburger}>
-                會員登入
-              </MenuItem>
-              <MenuItem to="#" onClick={toggleHamburger}>
-                新品上市
-              </MenuItem>
-              <MenuItem to="#" onClick={toggleHamburger}>
-                促銷商品
-              </MenuItem>
-              <MenuItem to="/products" onClick={toggleHamburger}>
-                商品一覽
-              </MenuItem>
-              <MenuItem to="#" onClick={toggleHamburger}>
-                購物車
-              </MenuItem>
-              <MenuItem to="/user" onClick={toggleHamburger}>
-                會員中心
-              </MenuItem>
-              <MenuItem to="/faq" onClick={toggleHamburger}>
-                FAQ
-              </MenuItem>
-              <MenuItem to="/about" onClick={toggleHamburger}>
-                關於我們
-              </MenuItem>
-            </Menu>
+            <RenderRWDMenu />
             <RenderMenuItems />
           </Wrap>
           <Icon>
