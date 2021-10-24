@@ -304,9 +304,9 @@ export default function ProductsSection({selectedCategory}) {
     section,
     showDataIndex,
     setShowDataIndex,
-    dataAmount
+    dataAmount,
+    loading,
   } = useFindProducts(selectedCategory)
-
 
   
   function ProductsSectionTiTle({
@@ -343,6 +343,8 @@ export default function ProductsSection({selectedCategory}) {
   }
 
   return (
+    <>
+    {console.log('product section',loading)}
     <div>
       <ProductsSectionTiTle
         handletoggleSquares={handletoggleSquares}
@@ -355,5 +357,6 @@ export default function ProductsSection({selectedCategory}) {
       />
       <PageChange dataAmount={dataAmount.current} showDataIndex={showDataIndex} setShowDataIndex={setShowDataIndex}/>
     </div>
+    </>
   );
 }

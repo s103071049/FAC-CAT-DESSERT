@@ -5,6 +5,8 @@ import ProductsCategory from "./components/ProductsCategory";
 import ProductsSection from "./components/ProductsSection";
 import productsbanner from "../../components/img/banner/productsbanner.jpg";
 import useCategory from "../../hooks/productHooks/useCategory";
+import Loading from "../../components/common/Loading";
+import useFindProducts from "../../hooks/productHooks/useFindProducts";
 
 const ProductsWrapper = styled.div`
   max-width: 1024px;
@@ -24,10 +26,11 @@ const categories = ['全部品項','餅乾','蛋糕','巧克力','手工飲料']
 export default function ProductsPage() {
   const {
     selectedCategory,
-    handleCategoryClick
+    handleCategoryClick,
   } = useCategory()
 
   return (
+    <>
     <div>
       <IconMark>{selectedCategory}</IconMark>
       <ProductsWrapper>
@@ -40,5 +43,6 @@ export default function ProductsPage() {
         <ProductsSection selectedCategory={selectedCategory}/>
       </ProductsWrapper>
     </div>
+    </>
   );
 }

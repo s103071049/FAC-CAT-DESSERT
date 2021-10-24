@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext, useLayoutEffect } from "react";
 import { getAllProducts } from "../../WEBAPI";
 import { useHistory } from "react-router-dom";
 import usePagination from "../paginationHooks/usePagination";
@@ -6,19 +6,23 @@ import { AuthLoadingContext } from '../../context'
 
 const useFindProducts = (selectedCategory) => {
   const {eachPageAmount} = usePagination()
-  const {setLoading} = useContext(AuthLoadingContext)
+  const {loading, setLoading} = useContext(AuthLoadingContext)
   const [products, setProducts] = useState([])
   const [section, setSection] = useState("sqares");
   const [showDataIndex, setShowDataIndex] = useState(0)
 
   const dataAmount = useRef(null)
   const history = useHistory();
-
+  
+  
+console.log( 'useFindProudct',loading)
   useEffect(()=> {
     setLoading(true)
-    const fetchAllproducts = async() => {
-      const result = await getAllProducts()
+    console.log( 'before fetch',loading)
 
+    const fetchAllproducts = async() => {
+      setLoading(true)
+      const result = await getAllProducts()
       try {
         if(!result.success){
           return history.goBack()
@@ -31,13 +35,18 @@ const useFindProducts = (selectedCategory) => {
 
         dataAmount.current = getSelectedProducts.length
         const showDataArr = getSelectedProducts.slice(showDataIndex, showDataIndex+eachPageAmount)
-        setLoading(false)
+
         setProducts(showDataArr)
+        setLoading(false)
+
+
       } catch(err) {
         return history.goBack()
       }
     }
+
     fetchAllproducts()
+
   }, [history, showDataIndex, eachPageAmount,selectedCategory, setLoading])
   
 
@@ -60,7 +69,9 @@ const useFindProducts = (selectedCategory) => {
     setSection,
     showDataIndex,
     setShowDataIndex,
-    dataAmount
+    dataAmount,
+    loading,
+    setLoading
   }
 }
 
