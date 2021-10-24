@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
+import { MEDIA_QUERY_SD } from "../Style/style";
 
 const Loadingwrapper = styled.div`
   position: fixed;
