@@ -57,7 +57,6 @@ const Logo = styled(Link)`
     padding: 0;
   }
 `;
-
 const RwdBtns = styled.div`
   display:none;
   ${MEDIA_QUERY_MD} {
@@ -183,10 +182,6 @@ function Header() {
     ref
   } = useHeader()
 
-
-
-
-
   const RenderAdminItem = () => {
     return (
       <>
@@ -208,13 +203,42 @@ function Header() {
       </>
     ) 
   }
+  const VistorItems = () => {
+    return (
+      <>
+        <Item to="#">新品上市</Item>
+        <Item to="#">促銷商品</Item>
+        <Item to="/products">商品一覽</Item>
+      </>
+    )
+  }
+  const RenderMenuItems = () => {
+    if(user && user.authority === 1) {
+      return (
+        <List>
+            {adminViewOpen ? (
+                <>
+                <Item to="/admin/products">商品管理</Item>
+                <Item to="/admin/discounts">促銷管理</Item>
+                <Item to="/admin/orders">訂單管理</Item>
+                </>
+              ):<VistorItems/>
+            }
+            <RenderAdminItem />
+        </List>
+      )
+    }else{
+      return (
+       <VistorItems/>
+      )
+    }
+  }
 
   return (
       <Router>
         <Navbar ref={ref}>
           <Wrap>
             <Logo to="/">Fat Cat dessert ฅ</Logo>
-            
             <RwdBtns>
               <RwdSearch to="#">
                 <Img src={search} onClick={handleSearchBarClick}/>
@@ -265,21 +289,7 @@ function Header() {
                 關於我們
               </MenuItem>
             </Menu>
-            { user && user.authority === 1 ? (
-                <List>
-                    <Item to="#">商品管理</Item>
-                    <Item to="#">促銷管理</Item>
-                    <Item to="/products">訂單管理</Item>
-                    <RenderAdminItem />
-                </List>
-              ):(
-                <List>
-                  <Item to="#">新品上市</Item>
-                  <Item to="#">促銷商品</Item>
-                  <Item to="/products">商品一覽</Item>
-                </List>
-              )
-            }
+            <RenderMenuItems />
           </Wrap>
           <Icon>
             {!user && (
