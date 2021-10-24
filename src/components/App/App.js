@@ -40,22 +40,19 @@ function App() {
   const [user, setUser] = useState(null);
   const [searchProduct, setSearchProduct] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false)
   const token = getAuthToken();
   useEffect(() => {
-    setIsAdmin(false)
-    setLoading(true);
     if (token) {
+      setLoading(true);
       getUser().then((response) => {
         setUser(response.user);
-        setIsAdmin(response.user.authority === 1)
+        setLoading(false);
       });
     }
-    setLoading(false);
   }, [token]);
   return (
     <AuthContexts.Provider
-      value={{ user, setUser, searchProduct, setSearchProduct, isAdmin }}
+      value={{ user, setUser, searchProduct, setSearchProduct }}
     >
       <AuthLoadingContext.Provider value={{ loading, setLoading }}>
         <Root>

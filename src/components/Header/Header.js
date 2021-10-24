@@ -176,7 +176,6 @@ function Header() {
     adminViewOpen,
     searchBarShow,
     user,
-    isAdmin,
     toggleHamburger,
     handleSearchBarClick,
     handleAdminViewClick,
@@ -266,12 +265,21 @@ function Header() {
                 關於我們
               </MenuItem>
             </Menu>
-            <List>
-              <Item to="#">新品上市</Item>
-              <Item to="#">促銷商品</Item>
-              <Item to="/products">商品一覽</Item>
-              {isAdmin && <RenderAdminItem />}
-            </List>
+            { user && user.authority === 1 ? (
+                <List>
+                    <Item to="#">商品管理</Item>
+                    <Item to="#">促銷管理</Item>
+                    <Item to="/products">訂單管理</Item>
+                    <RenderAdminItem />
+                </List>
+              ):(
+                <List>
+                  <Item to="#">新品上市</Item>
+                  <Item to="#">促銷商品</Item>
+                  <Item to="/products">商品一覽</Item>
+                </List>
+              )
+            }
           </Wrap>
           <Icon>
             {!user && (

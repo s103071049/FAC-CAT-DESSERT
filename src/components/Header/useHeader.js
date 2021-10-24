@@ -10,7 +10,7 @@ const useHeader = () => {
   const [adminViewOpen, setAdminViewOpen] = useState(false)
 
   const history = useHistory();
-  const { user, isAdmin } = useContext(AuthContexts);
+  const { user } = useContext(AuthContexts);
   const toggleHamburger = () => {
     if (hamburgerOpen) {
       document.body.style.overflow = "auto";
@@ -62,7 +62,6 @@ const useHeader = () => {
     adminViewOpen,
     searchBarShow,
     user,
-    isAdmin,
     toggleHamburger,
     handleSearchBarClick,
     handleAdminViewClick,
