@@ -45,13 +45,14 @@ function App() {
   const [loading, setLoading] = useState(false);
   const token = getAuthToken();
   useEffect(() => {
-    setLoading(true);
     if (token) {
+      setLoading(true);
       getUser().then((response) => {
         setUser(response.user);
+        setLoading(false);
+        
       });
     }
-    setLoading(false);
   }, [token]);
 
   return (

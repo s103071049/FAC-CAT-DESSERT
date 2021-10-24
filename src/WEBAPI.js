@@ -112,9 +112,14 @@ export const searchProducts = async (searchKey) => {
   return await response.json();
 };
 
+export const getAllProducts = async() => {
+  const response = await fetch(`${BASE_URL}/findAllProducts`)
+  return response.json()
+}
+
+
 // order
 // 抓取所有order
-
 export const getAllOrder = async () => {
   const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/getAllOrder`, {
