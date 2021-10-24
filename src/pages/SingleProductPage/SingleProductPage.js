@@ -11,10 +11,9 @@ import {
 import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent.js";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { Counter } from "../../components/common/Counter";
-import { getProduct, getAllProduct } from "../../WEBAPI";
-import { useState, useEffect, useContext, useDebugValue } from "react";
-import { AuthLoadingContext } from "../../context";
-
+import { getProduct, getAllProducts, addCartItem } from "../../WEBAPI";
+import { useState, useEffect, useContext } from "react";
+import { AuthContexts, AuthLoadingContext } from "../../context";
 const SingleProductWrapper = styled.div`
   margin: 50px 20px;
   display: flex;
@@ -97,11 +96,35 @@ const FlexCenter = styled.div`
   display: flex;
   align-items: center;
 `;
-const Limit = styled.p`
-  margin: 0;
-  margin-left: 10px;
-`;
-const SingleProduct = ({ dessert }) => {
+
+const SingleProduct = ({ dessert, setLoading }) => {
+  const [count, setCount] = useState(1);
+  const { user, setUser } = useContext(AuthContexts);
+  const handleIncrement = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+
+  const handleDecrement = () => {
+    if (count === 0) {
+      return;
+    }
+    setCount((prevCount) => prevCount - 1);
+  };
+  const handleAddProducts = (e) => {
+    if (!user) {
+      return alert("請登入再進行購買");
+    }
+    setLoading(true);
+    addCartItem(dessert.id, count).then((response) => {
+      console.log(response);
+      if (!response.success) {
+        setLoading(false);
+        return alert("系統異常中，正迅速修復!");
+      }
+      setLoading(false);
+      alert(`添加 ${count} 個 ${dessert.name} 到購物車!`);
+    });
+  };
   return (
     <SingleProductWrapper>
       <Img>
@@ -116,9 +139,13 @@ const SingleProduct = ({ dessert }) => {
           {dessert.desc}
         </SingleProductDescriptionText>
         <FlexCenter>
-          <Counter />
+          <Counter
+            count={count}
+            handleIncrement={handleIncrement}
+            handleDecrement={handleDecrement}
+          />
         </FlexCenter>
-        <CartButton>加入購物車</CartButton>
+        <CartButton onClick={handleAddProducts}>加入購物車</CartButton>
       </SingleProductDescription>
     </SingleProductWrapper>
   );
@@ -156,7 +183,7 @@ const SingleProductPage = () => {
   useEffect(() => {
     setLoading(true);
     let randomResult = [];
-    getAllProduct()
+    getAllProducts()
       .then((response) => {
         if (!response.success) {
           setLoading(false);
@@ -179,7 +206,7 @@ const SingleProductPage = () => {
     <div>
       {dessert && (
         <Wrapper>
-          <SingleProduct dessert={dessert} />
+          <SingleProduct dessert={dessert} setLoading={setLoading} />
           <ProductsSectionTiTleContent>推薦商品</ProductsSectionTiTleContent>
           <Section>
             {recommends.map((dessert, i) => (

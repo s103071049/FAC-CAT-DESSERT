@@ -95,28 +95,22 @@ export const updatePassword = async (password, newPassword, newPassword2) => {
   return await response.json();
 };
 
-// 產品相關api
+// product
 // 單項商品
 export const getProduct = async (id) => {
   const response = await fetch(`${BASE_URL}/findProducts/${id}`);
   return await response.json();
 };
 // 多項商品
-export const getAllProduct = async () => {
+export const getAllProducts = async () => {
   const response = await fetch(`${BASE_URL}/findAllProducts`);
-  return await response.json();
+  return response.json();
 };
 //search products
 export const searchProducts = async (searchKey) => {
   const response = await fetch(`${BASE_URL}/searchProducts/${searchKey}`);
   return await response.json();
 };
-
-export const getAllProducts = async() => {
-  const response = await fetch(`${BASE_URL}/findAllProducts`)
-  return response.json()
-}
-
 
 // order
 // 抓取所有order
@@ -125,6 +119,36 @@ export const getAllOrder = async () => {
   const response = await fetch(`${BASE_URL}/getAllOrder`, {
     headers: {
       authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
+
+//  cart
+// add Cart item
+export const addCartItem = async (productId, quantity) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/addCartItem`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      productId,
+      quantity,
+    }),
+  });
+  return await response.json();
+};
+// getAll Cart items
+export const getAllCartItems = async () => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/getAllCartItems`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
     },
   });
   return await response.json();

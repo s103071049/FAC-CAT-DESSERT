@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD, CartButton } from "../Style/style.js";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContexts, AuthLoadingContext } from "../../context";
+import { addCartItem } from "../../WEBAPI";
 const Dessert = styled.div`
   display: flex;
   width: 20%;
@@ -49,8 +52,25 @@ const DessertPrice = styled.div`
   color: #a96360;
   margin-bottom: 8px;
 `;
-const Img = styled.div``;
 function Item({ dessert }) {
+  const { user, setUser } = useContext(AuthContexts);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
+  let count = 1;
+  const handleAddProducts = (e) => {
+    if (!user) {
+      return alert("請登入再進行購買");
+    }
+    setLoading(true);
+    addCartItem(dessert.id, count).then((response) => {
+      console.log(response);
+      if (!response.success) {
+        setLoading(false);
+        return alert("系統異常中，正迅速修復!");
+      }
+      setLoading(false);
+      alert(`添加 ${count} 個 ${dessert.name} 到購物車!`);
+    });
+  };
   return (
     <Dessert>
       <Link to={`/product/${dessert.id}`}>
@@ -58,7 +78,7 @@ function Item({ dessert }) {
       </Link>
       <DessertName>{dessert.name}</DessertName>
       <DessertPrice>NT${dessert.price}</DessertPrice>
-      <CartButton>加入購物車</CartButton>
+      <CartButton onClick={handleAddProducts}>加入購物車</CartButton>
     </Dessert>
   );
 }

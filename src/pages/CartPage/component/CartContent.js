@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import numeric1 from "../../../components/img/icon/numeric1.svg";
-import cake from "../../../components/img/product/cake.jpg";
 import closeCircle from "../../../components/img/icon/close-circle.svg";
-
+import { getAllCartItems } from "../../../WEBAPI";
+import { AuthContexts, AuthLoadingContext } from "../../../context";
+import { useEffect, useState, useContext } from "react";
 const Container = styled.div`
   margin-top: 50px;
   border: 1px solid #9ca4aa;
@@ -196,22 +197,6 @@ const ItemAction = styled.div`
     margin-top: 0;
   }
 `;
-const fakeCartData = [
-  {
-    id: 1,
-    imgUrl: cake,
-    info: "老媽媽檸檬塔 - 7吋(20cm)",
-    qty: 1,
-    price: 880,
-  },
-  {
-    id: 2,
-    imgUrl: cake,
-    info: "水果戚風(自取限定) - 波本香草6吋",
-    qty: 2,
-    price: 850,
-  },
-];
 
 const CartTableFoot = () => {
   return (
@@ -232,26 +217,26 @@ const CartTableFoot = () => {
   );
 };
 
-const CartTableData = () => {
-  return fakeCartData.map((item) => {
+const CartTableData = ({ data }) => {
+  return data.map((item) => {
     return (
       <Tr key={item.id}>
         <Td data-title="">
-          <Img $url={item.imgUrl} />
+          <Img $url={item["Product.img_url"]} />
         </Td>
         <Td data-title="商品名稱">
-          <CartItemInfo>{item.info}</CartItemInfo>
+          <CartItemInfo>{item["Product.name"]}</CartItemInfo>
         </Td>
         <Td data-title="商品單價">
-          <ItemPrice>{item.price}</ItemPrice>
+          <ItemPrice>{item["Product.price"]}</ItemPrice>
         </Td>
         <Td data-title="數量">
           <QtyBtn>-</QtyBtn>
-          <ItemQty>{item.qty}</ItemQty>
+          <ItemQty>{item.product_quantity}</ItemQty>
           <QtyBtn>+</QtyBtn>
         </Td>
         <Td data-title="小計">
-          <ItemPrice>{item.qty * item.price}</ItemPrice>
+          <ItemPrice>{item.product_quantity * item["Product.price"]}</ItemPrice>
         </Td>
         <Td data-title="">
           <ItemAction>
@@ -273,6 +258,20 @@ const CartTableHead = () => {
   );
 };
 const CartContent = () => {
+  const [data, setData] = useState([]);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
+  useEffect(() => {
+    setLoading(true);
+    getAllCartItems().then((response) => {
+      if (!response.success) {
+        setLoading(false);
+        return alert("系統異常，非常抱歉");
+      }
+      setLoading(false);
+      setData(response.message);
+    });
+  }, [setLoading]);
+  console.log(data);
   return (
     <Container>
       <Header>
@@ -287,7 +286,7 @@ const CartContent = () => {
             <CartTableHead />
           </Thead>
           <Tbody>
-            <CartTableData />
+            <CartTableData data={data} />
           </Tbody>
           <Tfoot>
             <CartTableFoot />
