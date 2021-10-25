@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import arrowUp from "../../../components/img/icon/arrowUp.svg";
-import { getAllCartItems } from "../../../WEBAPI";
+import { getAllCartItems, findAllDiscount } from "../../../WEBAPI";
 import { AuthContexts, AuthLoadingContext } from "../../../context";
 const SummaryCard = styled.div`
   background: #f9f9f9;
@@ -57,30 +57,50 @@ const CartDetail = ({ items }) => {
   });
 };
 // 這邊還沒串 api
-const CartPreCheckout = () => {
+const CartPreCheckout = ({ items, shipments }) => {
+  let price = 0;
+  let shipment;
+  items.map((item) => {
+    return (price += item.product_quantity * item["Product.price"]);
+  });
+  let rules = shipments
+    .filter((item) => {
+      return item.is_deleted !== true;
+    })
+    .sort((a, b) => {
+      return a.threshold - b.threshold;
+    });
+  for (let i = 0; i < rules.length; i++) {
+    if (price < rules[i].threshold) {
+      shipment = rules[i].shipment;
+      break;
+    } else {
+      shipment = 0;
+    }
+  }
   return (
     <>
       <Item>
         <div>商品小計</div>
-        <div>2580</div>
+        <div>${price}</div>
       </Item>
       <Item>
         <div>運費</div>
-        <div>0</div>
+        <div>${shipment}</div>
       </Item>
       <Item>
         <div>應付總額</div>
         <Total>
-          NT$<span>2580</span>
+          NT$<span>{shipment + price}</span>
         </Total>
       </Item>
     </>
   );
 };
 // 沒有登入到不了購物車這頁
-const CartSummary = () => {
+const CartSummary = ({ data, setData, discountRules, setDiscountRules }) => {
   const [show, switchShow] = useState(false);
-  const [data, setData] = useState([]);
+
   const { loading, setLoading } = useContext(AuthLoadingContext);
   useEffect(() => {
     const listener = () => {
@@ -91,16 +111,35 @@ const CartSummary = () => {
     return () => document.removeEventListener("scroll", listener);
   }, [show]);
   useEffect(() => {
-    setLoading(true);
-    getAllCartItems().then((response) => {
-      if (!response.success) {
-        setLoading(false);
-        return alert("系統異常，非常抱歉");
-      }
+    const fetchData = async () => {
+      setLoading(true);
+      const [AllCartItems, DiscountRules] = await Promise.all([
+        fetchAllCartItems(),
+        fetchDiscountsRules(),
+      ]);
       setLoading(false);
-      setData(response.message);
+      setDiscountRules(DiscountRules);
+      setData(AllCartItems);
+    };
+    fetchData();
+  }, [setLoading, setData]);
+  const fetchAllCartItems = () => {
+    return getAllCartItems().then((response) => {
+      if (!response.success) {
+        return alert("系統載入異常，非常抱歉");
+      }
+      return response.message;
     });
-  }, [setLoading]);
+  };
+  const fetchDiscountsRules = () => {
+    return findAllDiscount().then((response) => {
+      if (!response.success) {
+        return alert("系統運費處理異常，非常抱歉");
+      }
+      return response.Discounts;
+    });
+  };
+
   return (
     <SummaryCard>
       {show ? (
@@ -113,7 +152,9 @@ const CartSummary = () => {
       <Title>購物車內容</Title>
       <CartDetail items={data} />
       <Title>結帳金額</Title>
-      <CartPreCheckout />
+      {discountRules && (
+        <CartPreCheckout items={data} shipments={discountRules} />
+      )}
     </SummaryCard>
   );
 };

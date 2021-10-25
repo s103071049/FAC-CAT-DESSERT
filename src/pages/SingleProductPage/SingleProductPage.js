@@ -103,7 +103,6 @@ const SingleProduct = ({ dessert, setLoading }) => {
   const handleIncrement = () => {
     setCount((prevCount) => prevCount + 1);
   };
-
   const handleDecrement = () => {
     if (count === 0) {
       return;

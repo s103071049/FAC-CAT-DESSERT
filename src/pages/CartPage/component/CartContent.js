@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import numeric1 from "../../../components/img/icon/numeric1.svg";
 import closeCircle from "../../../components/img/icon/close-circle.svg";
-import { getAllCartItems } from "../../../WEBAPI";
+import {
+  getAllCartItems,
+  deleteCartItem,
+  updateCartItem,
+} from "../../../WEBAPI";
 import { AuthContexts, AuthLoadingContext } from "../../../context";
 import { useEffect, useState, useContext } from "react";
+
 const Container = styled.div`
   margin-top: 50px;
   border: 1px solid #9ca4aa;
@@ -198,7 +203,7 @@ const ItemAction = styled.div`
   }
 `;
 
-const CartTableFoot = () => {
+const CartTableFoot = ({ data, setLoading, setData }) => {
   return (
     <>
       <Tr>
@@ -217,8 +222,42 @@ const CartTableFoot = () => {
   );
 };
 
-const CartTableData = ({ data }) => {
+const CartTableData = ({ data, setData }) => {
+  const { setLoading } = useContext(AuthLoadingContext);
   return data.map((item) => {
+    const handleDecreaseProduct = async () => {
+      let quantity = item.product_quantity - 1;
+      await updateCartItem(item.ProductId, quantity).then((response) => {
+        if (!response.success) {
+          return alert("更新商品數量處理異常，系統修復中");
+        }
+        return alert(`更新 ${item["Product.name"]} 購買數量 ${quantity}`);
+      });
+      await getAllCartItems().then((response) => {
+        if (!response.success) {
+          setLoading(false);
+          return alert("系統異常，非常抱歉");
+        }
+        setLoading(false);
+        setData(response.message);
+      });
+    };
+    const handleButtonDelete = async () => {
+      await deleteCartItem(item.ProductId).then((response) => {
+        if (!response.success) {
+          return alert("刪除品項處理異常，系統修復中");
+        }
+        return alert(`刪除成功`);
+      });
+      await getAllCartItems().then((response) => {
+        if (!response.success) {
+          setLoading(false);
+          return alert("系統異常，非常抱歉");
+        }
+        setLoading(false);
+        setData(response.message);
+      });
+    };
     return (
       <Tr key={item.id}>
         <Td data-title="">
@@ -231,7 +270,7 @@ const CartTableData = ({ data }) => {
           <ItemPrice>{item["Product.price"]}</ItemPrice>
         </Td>
         <Td data-title="數量">
-          <QtyBtn>-</QtyBtn>
+          <QtyBtn onClick={handleDecreaseProduct}>-</QtyBtn>
           <ItemQty>{item.product_quantity}</ItemQty>
           <QtyBtn>+</QtyBtn>
         </Td>
@@ -239,7 +278,7 @@ const CartTableData = ({ data }) => {
           <ItemPrice>{item.product_quantity * item["Product.price"]}</ItemPrice>
         </Td>
         <Td data-title="">
-          <ItemAction>
+          <ItemAction onClick={handleButtonDelete}>
             <img src={closeCircle} alt="delete this item from cart" />
           </ItemAction>
         </Td>
@@ -257,21 +296,14 @@ const CartTableHead = () => {
     </Tr>
   );
 };
-const CartContent = () => {
-  const [data, setData] = useState([]);
-  const { loading, setLoading } = useContext(AuthLoadingContext);
-  useEffect(() => {
-    setLoading(true);
-    getAllCartItems().then((response) => {
-      if (!response.success) {
-        setLoading(false);
-        return alert("系統異常，非常抱歉");
-      }
-      setLoading(false);
-      setData(response.message);
-    });
-  }, [setLoading]);
-  console.log(data);
+
+const CartContent = ({
+  data,
+  setData,
+  discountRules,
+  setDiscountRules,
+  handleButtonDelete,
+}) => {
   return (
     <Container>
       <Header>
@@ -286,10 +318,13 @@ const CartContent = () => {
             <CartTableHead />
           </Thead>
           <Tbody>
-            <CartTableData data={data} />
+            <CartTableData data={data} setData={setData} />
           </Tbody>
           <Tfoot>
-            <CartTableFoot />
+            <CartTableFoot
+              discountRules={discountRules}
+              setDiscountRules={setDiscountRules}
+            />
           </Tfoot>
         </Table>
       </Body>

@@ -153,3 +153,43 @@ export const getAllCartItems = async () => {
   });
   return await response.json();
 };
+// delete Cart item
+export const deleteCartItem = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/deleteCartItem/${id}`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+  });
+  return await response.json();
+};
+// update Cart item
+export const updateCartItem = async (id, quantity) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/updateCartItem/${id}`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      quantity,
+    }),
+  });
+  return await response.json();
+};
+// discounts
+// findAll
+export const findAllDiscount = async () => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/findAllDiscounts`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+  });
+  return await response.json();
+};
