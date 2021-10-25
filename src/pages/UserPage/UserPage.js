@@ -13,7 +13,7 @@ import UserInfo from "./components/UserInfo.js";
 import EditPassword from "./components/EditPassword.js";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
 import { setAuthToken, removeAuthToken } from "../../utils";
-import { AuthContexts } from "../../context";
+import { AuthContexts, AuthLoadingContext } from "../../context";
 import TransactionPage from "../../pages/TransactionPage";
 
 const Wrapper = styled.div`
@@ -129,6 +129,7 @@ const UserPage = () => {
   let location = useLocation();
   let { path, url } = useRouteMatch();
   const { user, setUser } = useContext(AuthContexts);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   const history = useHistory();
   // 登出
   const handleLogout = () => {
@@ -162,10 +163,10 @@ const UserPage = () => {
           <Switch>
             <Main>
               <Route exact path={path}>
-                <UserInfo />
+                <UserInfo setLoading={setLoading} />
               </Route>
               <Route path={`${path}/editPWD`}>
-                <EditPassword />
+                <EditPassword setLoading={setLoading} />
               </Route>
               <Route path={`${path}/myorders`}>
                 <TransactionPage />

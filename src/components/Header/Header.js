@@ -6,16 +6,12 @@ import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
 import menu from '../img/icon/menu.svg'
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
-import { useState, useContext, useEffect, useRef } from "react";
-import { AuthContexts } from "../../context";
 import {
   HashRouter as Router,
-  Switch,
-  Route,
   Link,
-  useHistory,
 } from "react-router-dom";
-import { setAuthToken } from "../../utils";
+
+import useHeader from "./useHeader";
 
 const Navbar = styled.div`
   background: #fbf3ea;
@@ -170,57 +166,49 @@ const SearchBar = styled.input`
   outline: none;
   ${(props) => props.value === false && "display: none;"}
 
-
-
 `;
+
 function Header() {
-  const [hamburgerOpen, setHamburgerOpen] = useState(false);
-  const [searchProduct, setSearchProduct] = useState("");
-  // const [searchProduct, setSearchProduct]= useState("")
-  const history = useHistory();
-  const { user, setUser } = useContext(AuthContexts);
+  const {
+    hamburgerOpen,
+    searchProduct,
+    setSearchProduct,
+    adminViewOpen,
+    searchBarShow,
+    user,
+    toggleHamburger,
+    handleSearchBarClick,
+    handleAdminViewClick,
+    handleEnter,
+    ref
+  } = useHeader()
 
-  const toggleHamburger = () => {
-    if (hamburgerOpen) {
-      document.body.style.overflow = "auto";
-    } else {
-      document.body.style.overflow = "hidden";
-    }
-    setHamburgerOpen(!hamburgerOpen);
-    setSearchBarShow(false)
-  };
 
-  const [searchBarShow, setSearchBarShow] = useState(false);
-  const ref = useRef()
-  const handleSearchBarClick = () => {
-    setHamburgerOpen(false)
-    setSearchBarShow(!searchBarShow);
-  };
 
-  useEffect(()=>{
-    const handleBodyClick = (event) => {
-      if(ref.current.contains(event.target)){
-        return
-      }
-      setSearchBarShow(false)
-      setHamburgerOpen(false)
-    }
 
-    document.body.addEventListener('click', handleBodyClick, {capture:true})
-    
-    return () => {
-      document.body.removeEventListener('click', handleBodyClick, {capture:true})
-    }
-  }, [])
-  
 
-  const handleEnter = () => {
-    if (searchProduct) {
-      history.push(`/search/${searchProduct}`);
-      setSearchProduct("");
-      setSearchBarShow(!searchBarShow);
-    }
-  };
+  const RenderAdminItem = () => {
+    return (
+      <>
+        {adminViewOpen ? (
+          <Item 
+            to="/" 
+            onClick={handleAdminViewClick}
+          > 
+            訪問前台
+          </Item>
+          ) : (
+          <Item 
+            to="/admin/orders" 
+            onClick={handleAdminViewClick}
+          >
+            訪問後台
+          </Item>)
+        }
+      </>
+    ) 
+  }
+
   return (
       <Router>
         <Navbar ref={ref}>
@@ -228,7 +216,6 @@ function Header() {
             <Logo to="/">Fat Cat dessert ฅ</Logo>
             
             <RwdBtns>
-
               <RwdSearch to="#">
                 <Img src={search} onClick={handleSearchBarClick}/>
                 {searchBarShow && (
@@ -278,11 +265,21 @@ function Header() {
                 關於我們
               </MenuItem>
             </Menu>
-            <List>
-              <Item to="#">新品上市</Item>
-              <Item to="#">促銷商品</Item>
-              <Item to="/products">商品一覽</Item>
-            </List>
+            { user && user.authority === 1 ? (
+                <List>
+                    <Item to="#">商品管理</Item>
+                    <Item to="#">促銷管理</Item>
+                    <Item to="/products">訂單管理</Item>
+                    <RenderAdminItem />
+                </List>
+              ):(
+                <List>
+                  <Item to="#">新品上市</Item>
+                  <Item to="#">促銷商品</Item>
+                  <Item to="/products">商品一覽</Item>
+                </List>
+              )
+            }
           </Wrap>
           <Icon>
             {!user && (

@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
 import PageChange from "../../components/common/PageChange";
+import { getAllOrder } from "../../WEBAPI";
 import OrderStatusFilter from "./components/OrderStatusFilter";
 import OrderStatusSection from "./components/OrderStatusSection";
+import { AuthContexts } from "../../context";
+import useFindAllOrder from "../../hooks/orders/useFIndAllOrder";
 
 const Wrapper = styled.div`
   max-width: 1042px;
   margin: 30px auto;
   padding: 0 16px;
+  min-height: 73vh;
 `;
 const Main = styled.main`
   margin-bottom: 60px;
@@ -16,83 +20,45 @@ const Main = styled.main`
 // 0-unhandled,1-rejected(系統拒單), 2-reject(人工拒單), 3-accepted
 const fakeOrders = [
   {
-    order_id: "123456789AB",
+    id: "123456789AB",
     created_at: "2021-09-20-15:34",
     accepted_at: null,
-    is_accepted: 0,
+    is_accepted: false,
   },
   {
-    order_id: "987654321CD",
+    id: "987654321CD",
     created_at: "2021-09-21-15:14",
     accepted_at: "2021-09-21-15:24",
-    is_accepted: 1,
-  },
-  {
-    order_id: "888878888AA",
-    created_at: "2021-09-20-15:34",
-    accepted_at: "2021-09-20-15:44",
-    is_accepted: 2,
-  },
-  {
-    order_id: "888wefew8AA",
-    created_at: "2021-09-28-15:34",
-    accepted_at: "2021-09-28-16:10",
-    is_accepted: 3,
-  },
-  {
-    order_id: "668wefew8AA",
-    created_at: "2021-09-28-15:34",
-    accepted_at: "2021-09-28-16:10",
-    is_accepted: 3,
+    is_accepted: true,
   },
 ];
 
 const OrderPage = () => {
-  const [currentOrders, setCurrentOrders] = useState(fakeOrders);
-  const [selectOrderStatus, setSelectOrderStatus] = useState(1);
-
-  const handleOrderFilterClick = (selectedStatus) => {
-    setSelectOrderStatus(selectedStatus);
-  };
-
-  useEffect(() => {
-    if (selectOrderStatus === 1) {
-      setCurrentOrders(fakeOrders.filter((order) => order.is_accepted === 0));
-    }
-    if (selectOrderStatus === 2)
-      return setCurrentOrders(
-        fakeOrders.filter((order) => order.is_accepted !== 0)
-      );
-    if (selectOrderStatus === 3) return setCurrentOrders(fakeOrders);
-    if (selectOrderStatus === 4)
-      return setCurrentOrders(
-        fakeOrders.filter((order) => order.is_accepted === 3)
-      );
-    if (selectOrderStatus === 5)
-      return setCurrentOrders(
-        fakeOrders.filter(
-          (order) => order.is_accepted === 1 || order.is_accepted === 2
-        )
-      );
-  }, [selectOrderStatus]);
+  const {
+    user,
+    setUser,
+    currentOrders,
+    setCurrentOrders,
+    selectOrderStatus,
+    setSelectOrderStatus,
+    handleOrderFilterClick,
+  } = useFindAllOrder();
 
   return (
-    <>
-      <Wrapper>
-        <IconMark>訂單管理</IconMark>
-        <Main>
-          <OrderStatusFilter
-            selectOrderStatus={selectOrderStatus}
-            handleOrderFilterClick={handleOrderFilterClick}
-          />
-          <OrderStatusSection
-            orders={currentOrders}
-            selectOrderStatus={selectOrderStatus}
-          />
-        </Main>
-        <PageChange />
-      </Wrapper>
-    </>
+    <Wrapper>
+      <IconMark>訂單管理</IconMark>
+      <Main>
+        <OrderStatusFilter
+          selectOrderStatus={selectOrderStatus}
+          handleOrderFilterClick={handleOrderFilterClick}
+        />
+        <OrderStatusSection
+          orders={currentOrders}
+          selectOrderStatus={selectOrderStatus}
+        />
+      </Main>
+      <PageChange />
+    </Wrapper>
   );
 };
 
