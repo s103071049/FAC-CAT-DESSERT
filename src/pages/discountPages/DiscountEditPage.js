@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { PostDataAPI, FindDataAPI } from "../../API/fetchAPI";
 import InputItem from "./inputItem.js";
 import useDiscount from "../../hooks/discountHooks/useDiscount";
 import { getAuthToken } from "../../utils";
+import { AuthContexts, AuthLoadingContext } from "../../context";
 
 const Bottom = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ const DiscountEditPage = () => {
     changeDiscount,
     handleChange,
   } = useDiscount();
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   const { id } = useParams();
   const api = id ? "/updateDiscounts" : "/createDiscounts";
 
@@ -73,6 +75,7 @@ const DiscountEditPage = () => {
 
   const handleSummit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const data = id
       ? {
           id,
@@ -98,8 +101,10 @@ const DiscountEditPage = () => {
     if (res.success) {
       alert("成功");
       window.history.back(-1);
+      return setLoading(false);
     } else {
       alert(res.message);
+      return setLoading(false);
     }
   };
 

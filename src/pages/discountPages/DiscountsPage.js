@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange";
@@ -8,6 +8,7 @@ import { FindDataAPI } from "../../API/fetchAPI";
 import { useState } from "react";
 import { getAuthToken } from "../../utils";
 import { useLocation } from "react-router";
+import { AuthContexts, AuthLoadingContext } from "../../context";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -131,6 +132,7 @@ const Tr = styled.tr``;
 
 const DiscountsPage = (isRestore) => {
   const [discounts, setDiscounts] = useState([]);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   let location = useLocation();
 
   const text = isRestore.isRestore
@@ -150,7 +152,7 @@ const DiscountsPage = (isRestore) => {
         setDiscounts(newDiscounts);
       }
     );
-  }, [location.pathname]);
+  }, [loading, location.pathname]);
 
   if (isRestore.isRestore) {
     return (
