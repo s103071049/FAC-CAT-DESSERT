@@ -205,11 +205,11 @@ function Header() {
   }
   const VistorItems = () => {
     return (
-      <>
+      <List>
         <Item to="#">新品上市</Item>
         <Item to="#">促銷商品</Item>
         <Item to="/products">商品一覽</Item>
-      </>
+      </List>
     )
   }
   const RenderMenuItems = () => {
@@ -237,9 +237,12 @@ function Header() {
   const RenderRWDItems = () => {
     return(
       <>
-        {!user && <MenuItem to="/login" onClick={toggleHamburger}>
-          會員登入
-        </MenuItem> }
+        {user ?  (<MenuItem to="/user" onClick={toggleHamburger}>
+            會員中心
+          </MenuItem>):(<MenuItem to="/login" onClick={toggleHamburger}>
+            會員登入
+          </MenuItem>) 
+        }
         <MenuItem to="/faq" onClick={toggleHamburger}>
           FAQ
         </MenuItem>
@@ -258,6 +261,7 @@ function Header() {
         <MenuItem to="#" onClick={toggleHamburger}>
           購物車
         </MenuItem>
+        
       </>
     )
   }
@@ -267,6 +271,9 @@ function Header() {
         <Menu hamburgerOpen={hamburgerOpen}>
             {adminViewOpen ? (
                 <>
+                  <MenuItem to="/user" onClick={toggleHamburger}>
+                    會員中心
+                  </MenuItem>
                   <MenuItem to="/admin/products" onClick={toggleHamburger}>
                     商品管理
                   </MenuItem>
@@ -275,9 +282,6 @@ function Header() {
                   </MenuItem>
                   <MenuItem to="/admin/orders" onClick={toggleHamburger}>
                     訂單管理
-                  </MenuItem>
-                  <MenuItem to="/user" onClick={toggleHamburger}>
-                    會員中心
                   </MenuItem>
                   <MenuItem to="/" onClick={handleAdminViewClick}>
                     訪問前台
@@ -296,7 +300,9 @@ function Header() {
       )
     } else {
       return (
-       <RenderRWDItems />
+        <Menu hamburgerOpen={hamburgerOpen}>
+          <RenderRWDItems />
+        </Menu>
       )
     }
   }
