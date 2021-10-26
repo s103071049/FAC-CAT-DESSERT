@@ -15,10 +15,8 @@ const useFindProducts = (selectedCategory) => {
   const history = useHistory();
   
   
-console.log( 'useFindProudct',loading)
   useEffect(()=> {
     setLoading(true)
-    console.log( 'before fetch',loading)
 
     const fetchAllproducts = async() => {
       setLoading(true)
