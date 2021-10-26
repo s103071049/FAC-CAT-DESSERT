@@ -118,18 +118,15 @@ export const getAllProducts = async() => {
 }
 
 export const createProduct = async(name, desc, img_url, price, category) => {
-  
-    const data = {
-      name,
-      desc,
-      price: +price,
-      market_price: +price,
-      limited:999,
-      category,
-      img_url,
-    }
-
-  
+  const data = {
+    name,
+    desc,
+    price: +price,
+    market_price: +price,
+    limited:999,
+    category,
+    img_url,
+  }
   const token = getAuthToken()
   const response = await fetch(`${BASE_URL}/createProducts`,{
     method:'POST',
@@ -138,11 +135,8 @@ export const createProduct = async(name, desc, img_url, price, category) => {
       authorization: `Bearer ${token}`,
     },
     body:JSON.stringify(data),
-    redirect: 'follow',
-    referrer:""
   })
   return await response.json();
-
 }
 
 // order
