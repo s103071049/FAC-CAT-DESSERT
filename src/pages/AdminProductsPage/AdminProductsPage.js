@@ -123,7 +123,14 @@ const Th = styled.th``;
 const Tr = styled.tr``;
 
 const AdminProductsPage = () => {
-  const {thcontexts, tdcontexts} = useAdminProduct()
+  const {
+    thcontexts, 
+    tdcontexts,
+    dataAmount,
+    showDataIndex, 
+    setShowDataIndex,
+    handleDeleteBtnClick
+   } = useAdminProduct()
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>商品管理</AdminProductsTitle>
@@ -145,12 +152,17 @@ const AdminProductsPage = () => {
           </Thead>
           <Tbody>
             {tdcontexts.map((tdcontext, index) => (
-              <TdContext tdcontext={tdcontext} index={index} key={index} />
+              <TdContext 
+                tdcontext={tdcontext} 
+                index={index} 
+                key={index} 
+                handleDeleteBtnClick={handleDeleteBtnClick}
+              />
             ))}
           </Tbody>
         </Table>
       </AdminProductsContent>
-      <PageChange />
+      <PageChange dataAmount={dataAmount.current} showDataIndex={showDataIndex} setShowDataIndex={setShowDataIndex}/>
     </AdminProductsWrapper>
   );
 };

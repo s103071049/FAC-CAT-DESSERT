@@ -162,6 +162,16 @@ export const createProduct = async(name, desc, img_url, price, category) => {
   return await response.json();
 }
 
+export const deleteProduct = async(id) => {
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/deleteProducts/${id}`, {
+     headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+  return response.json()
+}
+
 // order
 // 抓取所有order
 export const getAllOrder = async () => {

@@ -1,6 +1,7 @@
-import { useEffect, useState, useContext } from "react";
-import { getAllProducts } from "../../WEBAPI";
+import { useEffect, useState, useContext, useRef } from "react";
+import { getAllProducts, deleteProduct } from "../../WEBAPI";
 import { AuthLoadingContext } from '../../context'
+import usePagination from "../paginationHooks/usePagination";
 
 const useAdminProduct = () => {
   const thcontexts = [
@@ -12,21 +13,27 @@ const useAdminProduct = () => {
     "刪除",
     "編輯",
   ];
+  const dataAmount = useRef(null)
+
+  const {eachPageAmount} = usePagination()
+  const [showDataIndex, setShowDataIndex] = useState(0)
 
   const [tdcontexts, setTdcontexts] = useState([])
-  const {loading, setLoading} = useContext(AuthLoadingContext)
+  const {setLoading} = useContext(AuthLoadingContext)
 
   useEffect(() => {
     const fetchProducts = async() => {
       setLoading(true)
-
       const result = await getAllProducts()
       try {
         if(!result.success) {
-          console.log(result)
+         return  console.log(result)
         }
-        console.log(result.products)
-        setTdcontexts(result.products)
+        let getProducts = result.products
+        dataAmount.current = getProducts.length
+        const showDataArr = getProducts.slice(showDataIndex, showDataIndex+ eachPageAmount).filter(product => !product.is_deleted)
+
+        setTdcontexts(showDataArr)
         setLoading(false)
 
       } catch (err) {
@@ -34,26 +41,38 @@ const useAdminProduct = () => {
       }
     }
     fetchProducts()
-  },[setLoading])
+  },[setLoading, eachPageAmount, showDataIndex])
 
-  //const tdcontexts = [
-  //  {
-  //    id: 1,
-  //    name: "柚香鐵觀音",
-  //    photo: cake2,
-  //    price: "NT$220",
-  //    limit: "null",
-  //  },
-  //  {
-  //    id: 2,
-  //    name: "珠寶盒藍梅塔",
-  //    photo: cake3,
-  //    price: "NT$105",
-  //    limit: "80",
-  //  },
-  //];
+  const handleDeleteBtnClick = async(id) => {
+    const result = await deleteProduct(id)
+    setLoading(true)
+    
+    try {
+      if(!result.message){
+        return console.log(result)
+      }
+      const fetchNewProducts = await getAllProducts()
+      let getProducts = fetchNewProducts.products
+      dataAmount.current = getProducts.length
 
-  return {thcontexts, tdcontexts}
+      const showDataArr = getProducts.slice(showDataIndex, showDataIndex+ eachPageAmount).filter(product => !product.is_deleted)
+
+      setTdcontexts(showDataArr)
+      setLoading(false)
+
+    }catch(err) {
+      console.log(err)
+    }
+  }
+
+  return {
+    thcontexts, 
+    tdcontexts,
+    dataAmount,
+    showDataIndex, 
+    setShowDataIndex,
+    handleDeleteBtnClick
+  }
 
 }
 
