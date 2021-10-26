@@ -182,7 +182,6 @@ const AddProductPage = () => {
     desc,
     price,
     category,
-    img_url,
     currentDBimage
   } = useUpdateProduct()
 

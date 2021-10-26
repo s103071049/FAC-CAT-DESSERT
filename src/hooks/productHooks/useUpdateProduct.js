@@ -1,10 +1,10 @@
 import { useReducer } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import cameraIcon from "../../components/img/icon/camera.svg";
 import { imgurApi } from "../../API/imgurAPI";
 import {useState, useRef} from 'react'
-import { getProduct } from "../../WEBAPI";
+import { updateProducts, getProduct } from "../../WEBAPI";
 import { useEffect } from "react/cjs/react.development";
 
 const initFormState = {
@@ -21,6 +21,7 @@ const useAddProducts = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [ImgSrc, setImgSrc] = useState(cameraIcon);
   const history = useHistory();
+  const { id } = useParams();
   
   const [formValue, setFormValue] = useReducer((currentValues, newValues)=>({...currentValues, ...newValues}), initFormState)
 
@@ -29,22 +30,21 @@ const useAddProducts = () => {
 
   useEffect(()=>{
     const fetchProduct = async () => {
-     const result = await getProduct('95680cbe-8b11-43fa-9af7-cb1493fd1485')
+     const result = await getProduct(id)
      try {
        if(!result.success){
          console.log(result)
          return history.goBack()
        }
-       console.log(result.product)
        setFormValue(result.product)
-        currentDBimage.current = result.product.img_url
+       currentDBimage.current = result.product.img_url
      } catch(err) {
        console.log(err)
-        return history.goBack()
+      return history.goBack()
      }
     }
     fetchProduct()
-  },[history])
+  },[history,id])
 
   const {
     name,
@@ -54,23 +54,28 @@ const useAddProducts = () => {
     img_url
   } = formValue
   
-  const handleSubmmit = (e) => {
+  const handleSubmmit = async (e) => {
+
     e.preventDefault()
     if(
       !name ||
       !desc ||
       !price ||
       !category||
-      !img_url
+      !img_url||
+      !id
     ){
       return alert('請輸入完整資料')
     }
-    console.log(name, desc, img_url, price,category)
-    //createProduct(name, desc, img_url, price,category)
-    //  .then(result => {
-    //    console.log(result)
-    //  })
-    //  .catch(err => console.log(err))
+    const result = await updateProducts(name, desc, img_url, price,category, id)
+    try {
+      if(!result.success) {
+        return history.goBack()
+      }
+      history.push("/admin/products")
+    } catch(err) {
+      return history.goBack()
+    }
   }
 
   

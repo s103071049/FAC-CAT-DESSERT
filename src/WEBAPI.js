@@ -117,6 +117,29 @@ export const getAllProducts = async() => {
   return response.json()
 }
 
+export const updateProducts = async(name, desc, img_url, price,category, id) => {
+  const data = {
+    name,
+    desc,
+    price: +price,
+    market_price: +price,
+    limited:999,
+    category,
+    img_url,
+    id,
+  }
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/updateProducts`,{
+    method:'POST',
+    headers:{
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body:JSON.stringify(data),
+  })
+  return await response.json();
+}
+
 export const createProduct = async(name, desc, img_url, price, category) => {
   const data = {
     name,
