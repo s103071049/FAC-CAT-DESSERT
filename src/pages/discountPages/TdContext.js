@@ -1,29 +1,50 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  MEDIA_QUERY_MD,
-} from "../../../components/Style/style";
+import { MEDIA_QUERY_MD } from "../../components/Style/style";
 import { Link } from "react-router-dom";
+import { PostDataAPI } from "../../API/fetchAPI";
+import { getAuthToken } from "../../utils";
 
-export const TdContext = ({ tdcontext }) => {
+export const TdContext = ({ tdcontext, isRestore }) => {
+  const buttonText = isRestore ? "還原" : "刪除";
+  const handleButton = async (e) => {
+    e.preventDefault();
+    tdcontext.is_deleted = !isRestore;
+    const res = await PostDataAPI(
+      { data: tdcontext, authorization: getAuthToken() },
+      "/updateDiscounts"
+    );
+    if (res.success === true) {
+      window.location.reload();
+    } else {
+      console.log(res.message);
+    }
+  };
   return (
     <Tr>
       <Td data-title="id">{tdcontext.id}</Td>
       <Td data-title="免運門檻">
-        <Pricespan>{tdcontext.freeDeliveryPrizce}</Pricespan>
+        <Pricespan>{tdcontext.threshold}</Pricespan>
       </Td>
       <Td data-title="免運說明" $block={true}>
         <TdcontextDesc title={tdcontext.desc}>{tdcontext.desc}</TdcontextDesc>
       </Td>
-      <Td $none={true}>
-        <ProductTdButton to="#">還原</ProductTdButton>
+      <Td data-title="運費">
+        <Pricespan>{tdcontext.shipment}</Pricespan>
       </Td>
-      <Td $none={true}>
-        <ProductTdButton to="#">編輯</ProductTdButton>
+      <Td data-title={buttonText} $none={true}>
+        <ProductTdButton onClick={handleButton}>{buttonText}</ProductTdButton>
+      </Td>
+      <Td data-title="編輯" $none={true}>
+        <ProductTdLink to={`/admin/updateDiscount/${tdcontext.id}`}>
+          編輯
+        </ProductTdLink>
       </Td>
       <RWDButtonWrapper>
-        <ProductTdButton to="#">還原</ProductTdButton>
-        <ProductTdButton to="#">編輯</ProductTdButton>
+        <ProductTdButton onClick={handleButton}>${buttonText}</ProductTdButton>
+        <ProductTdLink to={`/admin/updateDiscount/${tdcontext.id}`}>
+          編輯
+        </ProductTdLink>
       </RWDButtonWrapper>
     </Tr>
   );
@@ -38,7 +59,24 @@ const Pricespan = styled.span`
   color: red;
   display: inline;
 `;
-const ProductTdButton = styled(Link)`
+const ProductTdButton = styled.button`
+  text-decoration: none;
+  color: #000;
+  padding: 5px 10px;
+  border: 1px solid #c9ba98;
+  border-radius: 8px;
+  font-size: 20px;
+  &:hover {
+    background: #60373e;
+    color: #fff;
+  }
+  ${MEDIA_QUERY_MD} {
+    & + & {
+      margin-left: 20px;
+    }
+  }
+`;
+const ProductTdLink = styled(Link)`
   text-decoration: none;
   color: #000;
   padding: 5px 10px;
@@ -95,3 +133,12 @@ const RWDButtonWrapper = styled.td`
     justify-content: center;
   }
 `;
+
+export const thcontexts = [
+  "id",
+  "運費門檻",
+  "免運說明",
+  "運費",
+  "設定",
+  "編輯",
+];
