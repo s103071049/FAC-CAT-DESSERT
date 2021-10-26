@@ -1,6 +1,11 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import styled from "styled-components";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { getAuthToken } from "../../utils";
 import { AuthContexts, AuthLoadingContext } from "../../context";
 import Loading from "../common/Loading";
@@ -29,7 +34,6 @@ import { getUser } from "../../WEBAPI";
 import CartPage from "../../pages/CartPage";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 
-import Push from "../common/Push";
 import { MEDIA_QUERY_MD } from "../Style/style";
 const Root = styled.div`
   ${MEDIA_QUERY_MD} {
@@ -38,19 +42,19 @@ const Root = styled.div`
 `;
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(AuthContexts.user);
   const [searchProduct, setSearchProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const token = getAuthToken();
   useEffect(() => {
-    if (token) {
+    if (token && !user) {
       setLoading(true);
       getUser().then((response) => {
         setUser(response.user);
         setLoading(false);
       });
     }
-  }, [token]);
+  }, [token, user]);
 
   return (
     <AuthContexts.Provider
@@ -66,15 +70,15 @@ function App() {
                 <HomePage />
               </Route>
               <Route path="/login">
-                {token && <Push />}
+                {token && <Redirect push to="/" />}
                 <LoginPage />
               </Route>
               <Route path="/register">
-                {token && <Push />}
+                {token && <Redirect push to="/" />}
                 <RegisterPage />
               </Route>
               <Route path="/user">
-                {!token && <Push />}
+                {!token && <Redirect push to="/" />}
                 {user && <UserPage />}
               </Route>
               <Route path="/cart">
@@ -123,11 +127,12 @@ function App() {
                 <UpdateProductPage />
               </Route>
               <Route path="/admin/orders">
-                {!token && <Push />}
+                {!token && <Redirect push to="/" />}
                 {user && <OrderPage />}
               </Route>
-              <Route path="/admin/order/1">
-                <OrderWholeListPage />
+              <Route path="/admin/order/:id">
+                {!token && <Redirect push to="/" />}
+                {user && <OrderWholeListPage />}
               </Route>
             </Switch>
             <Footer />
