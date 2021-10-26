@@ -1,9 +1,10 @@
+const token = '545df9f9245e9bd51e37439c89377e9606514a67'
 export const imgurApi = (formData) => {
   const url = "https://api.imgur.com/3/image";
   let requestOptions = {
     method: "POST",
     headers: {
-      Authorization: "Client-ID 623487535f2f5ba",
+      "Authorization": 'Bearer ' + token, 
     },
     body: formData,
     redirect: "follow",

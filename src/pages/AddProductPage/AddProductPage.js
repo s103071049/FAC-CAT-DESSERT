@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import EachErrorMessage from '../../components/common/EachErrorMessage'
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 
 import useAddProducts from "../../hooks/productHooks/useAddProduct";
@@ -187,7 +186,6 @@ const AddProductPage = () => {
     name,
     desc,
     price,
-    limited,
     category
   } = useAddProducts()
 
@@ -243,58 +241,42 @@ const AddProductPage = () => {
       </Content>
     )
   }
-    
-  function Input({ name, value, as, placeholder }) {
-    return (
-      <Content>
-        <Column>{name}</Column>
-        <Row
-          name={name}
-          value={value}
-          as={as}
-          onChange={handleInputChange}
-          placeholder={placeholder}
-        />
-      </Content>
-    );
-  }
 
   return (
     <div>
       <Wrapper>
         <Title>新增商品：</Title>
         <Form onSubmit={handleSubmmit}>
-               <Content>
-        <Column>商品名稱</Column>
-        <Row
-          name="name"
-          value={name}
-          onChange={handleInputChange}
-          placeholder={"請輸入產品介紹"}
-        />
-      </Content>
-          {error.name && (<EachErrorMessage>{error.name}</EachErrorMessage>)}
-          <Input
-            name="desc"
-            as={"textarea"}
-            value={desc}
-            placeholder={"請輸入產品介紹"}
-          />
-           {error.desc && (<EachErrorMessage>{error.desc}</EachErrorMessage>)}
-          <Input
-            name="price"
-            value={price}
-            placeholder={"請輸入產品售價"}
-          />
-          {error.price && (<EachErrorMessage>{error.price}</EachErrorMessage>)}
-          <Input
-            name="limited"
-            value={limited}
-            placeholder={"請輸入產品限定數量"}
-          />
-          {error.limited && (<EachErrorMessage>{error.limited}</EachErrorMessage>)}
+          <Content>
+            <Column>商品名稱</Column>
+            <Row
+              name="name"
+              value={name}
+              onChange={handleInputChange}
+              placeholder={"請輸入產品名稱"}
+            />
+          </Content>
+           <Content>
+            <Column>商品描述</Column>
+            <Row
+              name="desc"
+              value={desc}
+              as={"textarea"}
+              onChange={handleInputChange}
+              placeholder={"請輸入產品介紹"}
+            />
+          </Content>
+          <Content>
+            <Column>商品售價</Column>
+            <Row
+              name="price"
+              value={price}
+              onChange={handleInputChange}
+              placeholder={"請輸入產品售價"}
+            />
+          </Content>
+         
           <InputsRadio/>
-           {error.category && (<EachErrorMessage>{error.category}</EachErrorMessage>)}
          
           <UploadImg name="imgUrl" desc={`${imgLoadingDesc}`} />
           <Bottom>

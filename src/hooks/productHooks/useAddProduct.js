@@ -4,19 +4,11 @@ import { imgurApi } from "../../API/imgurAPI";
 import {useState, useRef} from 'react'
 import formReducer from "./formReducer";
 
-const initFormErrorState = {
-  name:null,
-  desc:null,
-  price:null,
-  limited:null,
-  category:null
-}
 
 const initFormState = {
   name:"",
   desc:"",
   price:"",
-  limited:"",
   category:""
 }
 
@@ -25,7 +17,6 @@ const useAddProducts = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [ImgSrc, setImgSrc] = useState(cameraIcon);
   const [uploadImg, setUploadImg] = useState(null);
-  const [error, setError] = useReducer((state, action)=> ({...state, ...action}), initFormErrorState)
   
   const [formValue, setFormValue] = useReducer(formReducer, initFormState)
 
@@ -33,7 +24,6 @@ const useAddProducts = () => {
     name,
     desc,
     price,
-    limited,
     category
   } = formValue
   
@@ -43,17 +33,11 @@ const useAddProducts = () => {
       !name ||
       !desc ||
       !price ||
-      !limited ||
       !category
     ){
-      setError({
-        name:name ? null: '*請填寫',
-        desc:desc ? null: '*請填寫',
-        price:price ? null: '*請填寫' ,
-        limited:limited ? null: '*請填寫',
-        category:category? null: '*請選擇'
-      })
+      return alert('請輸入完整資料')
     }
+    console.log(uploadImg)
   }
 
   const inputFileRef = useRef();
@@ -88,15 +72,18 @@ const useAddProducts = () => {
     let formData = new FormData();
     formData.append("image", selectedFile);
     if (!selectedFile) {
-      alert("尚未選取上傳圖片");
+     return alert("尚未選取上傳圖片");
     }
     if (selectedFile) {
-      imgurApi(formData)
+      console.log(formData.get('image'))
+      imgurApi(formData.get('image'))
         .then((result) => {
           setUploadImg(result.data.link); // 拿到上傳圖片的 url
           alert("上傳成功");
+          console.log(result)
         })
         .catch((error) => {
+          console.log(error)
           alert("圖片處理異常，請稍後再試!");
           return;
         });
@@ -114,12 +101,10 @@ const useAddProducts = () => {
     inputFileRefHandler,
     fileUploadHandler,
     handleInputChange,
-    error,
     handleSubmmit,
     name,
     desc,
     price,
-    limited,
     category
   }
 }
