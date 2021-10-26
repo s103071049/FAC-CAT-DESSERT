@@ -117,22 +117,29 @@ export const getAllProducts = async() => {
   return response.json()
 }
 
-export const createProduct = async(name, desc, img_url, price, market_price, limited, category) => {
-  const token = getAuthToken()
-  const response = await fetch(`${BASE_URL}/createProducts`,{
-    headers:{
-      "content-type": "application/json",
-      authorization: `Bearer ${token}`,
-    },
-    body:JSON.stringify({
+export const createProduct = async(name, desc, img_url, price, category) => {
+  
+    const data = {
       name,
       desc,
+      price: +price,
+      market_price: +price,
+      limited:999,
+      category,
       img_url,
-      price,
-      market_price,
-      limited,
-      category
-    })
+    }
+
+  
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/createProducts`,{
+    method:'POST',
+    headers:{
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body:JSON.stringify(data),
+    redirect: 'follow',
+    referrer:""
   })
   return await response.json();
 

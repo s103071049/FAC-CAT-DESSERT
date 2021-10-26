@@ -3,13 +3,14 @@ import cameraIcon from "../../components/img/icon/camera.svg";
 import { imgurApi } from "../../API/imgurAPI";
 import {useState, useRef} from 'react'
 import formReducer from "./formReducer";
-
+import { createProduct } from "../../WEBAPI";
 
 const initFormState = {
   name:"",
   desc:"",
   price:"",
-  category:""
+  category:"",
+  img_url:""
 }
 
 const useAddProducts = () => {
@@ -24,7 +25,8 @@ const useAddProducts = () => {
     name,
     desc,
     price,
-    category
+    category,
+    img_url
   } = formValue
   
   const handleSubmmit = (e) => {
@@ -33,11 +35,17 @@ const useAddProducts = () => {
       !name ||
       !desc ||
       !price ||
-      !category
+      !category||
+      !img_url
     ){
       return alert('請輸入完整資料')
     }
-    console.log(uploadImg)
+  
+    createProduct(name, desc, img_url, price,category)
+      .then(result => {
+        console.log(result)
+      })
+      .catch(err => console.log(err))
   }
 
   const inputFileRef = useRef();
@@ -75,12 +83,15 @@ const useAddProducts = () => {
      return alert("尚未選取上傳圖片");
     }
     if (selectedFile) {
-      console.log(formData.get('image'))
-      imgurApi(formData.get('image'))
+      imgurApi(formData)
         .then((result) => {
           setUploadImg(result.data.link); // 拿到上傳圖片的 url
           alert("上傳成功");
-          console.log(result)
+          setFormValue({
+            type: "HANDLE_INPUT_VALUE",
+            title: "img_url",
+            payload: result.data.link
+          })
         })
         .catch((error) => {
           console.log(error)
@@ -105,7 +116,8 @@ const useAddProducts = () => {
     name,
     desc,
     price,
-    category
+    category,
+    img_url
   }
 }
 

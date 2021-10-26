@@ -186,11 +186,11 @@ const AddProductPage = () => {
     name,
     desc,
     price,
-    category
+    category,
+    img_url
   } = useAddProducts()
 
   function UploadImg({ name, desc }) {
-    
     return (
       <>
         <Content>
@@ -208,6 +208,7 @@ const AddProductPage = () => {
               ref={inputFileRef}
               onChange={fileSelectorHandler}
               accept="image/*"
+              name={img_url}
             />
             <Button onClick={fileUploadHandler}>上傳圖片</Button>
           </Upload>
