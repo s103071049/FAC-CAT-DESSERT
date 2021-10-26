@@ -122,6 +122,18 @@ function App() {
                 {!token && <Redirect push to="/" />}
                 {user && <OrderWholeListPage />}
               </Route>
+              <ProtectedRoutes exact path="/admin/discounts">
+                <DiscountsPage isRestore={false} />
+              </ProtectedRoutes>
+              <ProtectedRoutes path="/admin/discounts/restore">
+                <DiscountsPage isRestore={true} />
+              </ProtectedRoutes>
+              <ProtectedRoutes path="/admin/addDiscount">
+                <DiscountEditPage />
+              </ProtectedRoutes>
+              <ProtectedRoutes path="/admin/updateDiscount/:id">
+                <DiscountEditPage />
+              </ProtectedRoutes>
             </Switch>
             <Footer />
           </Router>
