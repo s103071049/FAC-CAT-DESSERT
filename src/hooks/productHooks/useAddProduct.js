@@ -29,6 +29,8 @@ const useAddProducts = () => {
   
   const handleSubmmit = (e) => {
     e.preventDefault()
+        console.log(name, desc, img_url, price,category)
+
     if(
       !name ||
       !desc ||
@@ -38,12 +40,11 @@ const useAddProducts = () => {
     ){
       return alert('請輸入完整資料')
     }
-    console.log(name, desc, img_url, price,category)
-    //createProduct(name, desc, img_url, price,category)
-    //  .then(result => {
-    //    console.log(result)
-    //  })
-    //  .catch(err => console.log(err))
+    createProduct(name, desc, img_url, price,category)
+      .then(result => {
+        console.log(result)
+      })
+      .catch(err => console.log(err))
   }
 
   const inputFileRef = useRef();
@@ -82,11 +83,7 @@ const useAddProducts = () => {
         .then((result) => {
           alert("上傳成功");
           // 拿到上傳圖片的 url
-          setFormValue({
-            type: "HANDLE_INPUT_VALUE",
-            title: "img_url",
-            payload: result.data.link
-          })
+          setFormValue({img_url:result.data.link})
         })
         .catch((error) => {
           console.log(error)
