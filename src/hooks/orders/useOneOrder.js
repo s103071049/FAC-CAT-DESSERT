@@ -1,27 +1,46 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { getOneOrder, acceptOrder, deleteOrder } from "../../WEBAPI";
+import { useContext, useEffect, useState, useLayoutEffect } from "react";
+import { useParams, useHistory, Redirect } from "react-router-dom";
+import {
+  getOneOrder,
+  acceptOrder,
+  deleteOrder,
+  getTractions,
+} from "../../WEBAPI";
 import { AuthLoadingContext, AuthContexts } from "../../context";
 
 export default function useOneOrder() {
   const { user, setUser } = useContext(AuthContexts);
   const [popup, setPopup] = useState(false);
   const [order, setOrder] = useState(null);
+  const [transations, setTransations] = useState(null);
   const [orderState, setOrderState] = useState(null);
   const history = useHistory();
   const { loading, setLoading } = useContext(AuthLoadingContext);
   const { id } = useParams();
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLoading(true);
     if (user.authority !== 1) {
       history.push("/");
       return setLoading(false);
     }
     getOneOrder(id).then((response) => {
+      if (!response.success) {
+        history.push("/admin/orders");
+        return setLoading(false);
+      }
       setOrder(response.data);
-      setLoading(false);
     });
   }, [setLoading, id, history, user.authority]);
+  useEffect(() => {
+    getTractions(id).then((response) => {
+      if (response.success === false) {
+        history.push("/admin/orders");
+        return setLoading(false);
+      }
+      setTransations(response);
+      setLoading(false);
+    });
+  }, [id, setLoading, history]);
   const handleUpdateOrder = () => {
     setLoading(true);
     if (orderState) {
@@ -60,6 +79,7 @@ export default function useOneOrder() {
     setPopup,
     order,
     setOrder,
+    transations,
     orderState,
     setOrderState,
     history,

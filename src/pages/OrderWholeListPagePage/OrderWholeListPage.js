@@ -144,9 +144,9 @@ export default function OrderWholeListPage() {
     setPopup,
     order,
     setOrder,
+    transations,
     orderState,
     setOrderState,
-    history,
     loading,
     setLoading,
     handleUpdateOrder,
@@ -157,7 +157,7 @@ export default function OrderWholeListPage() {
   } = useOneOrder();
   return (
     <>
-      {order && (
+      {order && transations && (
         <OrderPopupWrapper>
           <OrderPopupContext>訂單編號 : {id}</OrderPopupContext>
           <OrderPopupContext>訂單時間 : {order.createdAt}</OrderPopupContext>
@@ -176,8 +176,8 @@ export default function OrderWholeListPage() {
                 </Tr>
               </Thead>
               <Tbody>
-                {tdcontexts.map((tdcontext, index) => (
-                  <TdContext tdcontext={tdcontext} key={index} index={index} />
+                {transations.map((transation, index) => (
+                  <TdContext tdcontext={transation} key={index} index={index} />
                 ))}
               </Tbody>
             </Table>

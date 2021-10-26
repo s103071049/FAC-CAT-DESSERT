@@ -4,18 +4,19 @@ import { MEDIA_QUERY_MD } from "../../../components/Style/style";
 import { Link } from "react-router-dom";
 
 export const TdContext = ({ tdcontext, index }) => {
+  const { Product } = tdcontext;
   return (
     <Tr>
       <Td data-title="id">{index + 1}</Td>
-      <Td data-title="商品名稱">{tdcontext.name}</Td>
+      <Td data-title="商品名稱">{Product.name}</Td>
       <Td data-title="價格">
-        <Pricespan>{tdcontext.price}</Pricespan>
+        <Pricespan>{Product.price}</Pricespan>
       </Td>
-      <Td data-title="數量">{tdcontext.number}</Td>
+      <Td data-title="數量">{tdcontext.quantity}</Td>
       <Td data-title="備註">
         <TdcontextDesc title={tdcontext.note}>{tdcontext.note}</TdcontextDesc>
       </Td>
-      <Td data-title="小計">{tdcontext.total}</Td>
+      <Td data-title="小計">{tdcontext.quantity * Product.price}</Td>
     </Tr>
   );
 };

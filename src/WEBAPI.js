@@ -152,3 +152,14 @@ export const deleteOrder = async (id) => {
   });
   return await response.json();
 };
+
+//transaction
+export const getTractions = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/getTransactions/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
