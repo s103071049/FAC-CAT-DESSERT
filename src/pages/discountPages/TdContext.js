@@ -29,6 +29,9 @@ export const TdContext = ({ tdcontext, isRestore }) => {
       <Td data-title="免運說明" $block={true}>
         <TdcontextDesc title={tdcontext.desc}>{tdcontext.desc}</TdcontextDesc>
       </Td>
+      <Td data-title="運費">
+        <Pricespan>{tdcontext.shipment}</Pricespan>
+      </Td>
       <Td data-title={buttonText} $none={true}>
         <ProductTdButton onClick={handleButton}>{buttonText}</ProductTdButton>
       </Td>
@@ -131,4 +134,11 @@ const RWDButtonWrapper = styled.td`
   }
 `;
 
-export const thcontexts = ["id", "運費門檻", "免運說明", "還原", "編輯"];
+export const thcontexts = [
+  "id",
+  "運費門檻",
+  "免運說明",
+  "運費",
+  "設定",
+  "編輯",
+];

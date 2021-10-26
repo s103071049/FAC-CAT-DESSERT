@@ -133,9 +133,19 @@ const DiscountsPage = (isRestore) => {
   const [discounts, setDiscounts] = useState([]);
   let location = useLocation();
 
-  const text = isRestore.isRestore
-    ? { title: "還原運費促銷規則", plhder: "搜尋已刪除運費規則" }
-    : { title: "促銷管理：運費", plhder: "搜尋運費規則" };
+  const restoreData = isRestore.isRestore
+    ? {
+        title: "還原運費促銷規則",
+        plhder: "搜尋已刪除運費規則",
+        returnUrl: "/admin/discounts",
+        returnName: "返回促銷管理",
+      }
+    : {
+        title: "促銷管理：運費",
+        plhder: "搜尋運費規則",
+        returnUrl: "/admin/discounts/restore",
+        returnName: "還原刪除規則",
+      };
 
   useEffect(() => {
     FindDataAPI({ authorization: getAuthToken() }, "/findAllDiscounts").then(
@@ -152,77 +162,43 @@ const DiscountsPage = (isRestore) => {
     );
   }, [location.pathname]);
 
-  if (isRestore.isRestore) {
-    return (
-      <AdminProductsWrapper>
-        <AdminProductsTitle>{text.title}</AdminProductsTitle>
-        <AdminProductsInfo>
-          <SearchInput name="productSearch" placeholder={text.plhder} />
-        </AdminProductsInfo>
-        <AdminProductsContent>
-          <Table>
-            <Thead>
-              <Tr>
-                {thcontexts.map((thcontext, index) => (
-                  <Th key={index}>{thcontext}</Th>
-                ))}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {discounts.map((discount, index) => {
-                return (
-                  <TdContext
-                    tdcontext={discount}
-                    isRestore={true}
-                    key={index}
-                  />
-                );
-              })}
-            </Tbody>
-          </Table>
-        </AdminProductsContent>
-        <PageChange />
-      </AdminProductsWrapper>
-    );
-  } else {
-    return (
-      <AdminProductsWrapper>
-        <AdminProductsTitle>{text.title}</AdminProductsTitle>
-        <AdminProductsInfo>
-          <SearchInput name="productSearch" placeholder="搜尋運費規則" />
-          <div>
-            <TitleButton to="/admin/discounts/restore">
-              還原刪除規則
-            </TitleButton>
-            <TitleButton to="/admin/addDiscount">新增規則</TitleButton>
-          </div>
-        </AdminProductsInfo>
-        <AdminProductsContent>
-          <Table>
-            <Thead>
-              <Tr>
-                {thcontexts.map((thcontext, index) => (
-                  <Th key={index}>{thcontext}</Th>
-                ))}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {discounts.map((discount, index) => {
-                return (
-                  <TdContext
-                    tdcontext={discount}
-                    isRestore={false}
-                    key={index}
-                  />
-                );
-              })}
-            </Tbody>
-          </Table>
-        </AdminProductsContent>
-        <PageChange />
-      </AdminProductsWrapper>
-    );
-  }
+  return (
+    <AdminProductsWrapper>
+      <AdminProductsTitle>{restoreData.title}</AdminProductsTitle>
+      <AdminProductsInfo>
+        <SearchInput name="productSearch" placeholder={restoreData.plhder} />
+        <div>
+          <TitleButton to={restoreData.returnUrl}>
+            {restoreData.returnName}
+          </TitleButton>
+          <TitleButton to="/admin/addDiscount">新增規則</TitleButton>
+        </div>
+      </AdminProductsInfo>
+      <AdminProductsContent>
+        <Table>
+          <Thead>
+            <Tr>
+              {thcontexts.map((thcontext, index) => (
+                <Th key={index}>{thcontext}</Th>
+              ))}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {discounts.map((discount, index) => {
+              return (
+                <TdContext
+                  tdcontext={discount}
+                  isRestore={isRestore.isRestore}
+                  key={index}
+                />
+              );
+            })}
+          </Tbody>
+        </Table>
+      </AdminProductsContent>
+      <PageChange />
+    </AdminProductsWrapper>
+  );
 };
 
 export default DiscountsPage;
