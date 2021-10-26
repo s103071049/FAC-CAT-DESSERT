@@ -2,7 +2,6 @@ import { useReducer } from "react";
 import cameraIcon from "../../components/img/icon/camera.svg";
 import { imgurApi } from "../../API/imgurAPI";
 import {useState, useRef} from 'react'
-import formReducer from "./formReducer";
 import { createProduct } from "../../WEBAPI";
 
 const initFormState = {
@@ -17,9 +16,8 @@ const useAddProducts = () => {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [ImgSrc, setImgSrc] = useState(cameraIcon);
-  const [uploadImg, setUploadImg] = useState(null);
   
-  const [formValue, setFormValue] = useReducer(formReducer, initFormState)
+  const [formValue, setFormValue] = useReducer((currentValues, newValues)=>({...currentValues, ...newValues}), initFormState)
 
   const {
     name,
@@ -40,22 +38,19 @@ const useAddProducts = () => {
     ){
       return alert('請輸入完整資料')
     }
-  
-    createProduct(name, desc, img_url, price,category)
-      .then(result => {
-        console.log(result)
-      })
-      .catch(err => console.log(err))
+    console.log(name, desc, img_url, price,category)
+    //createProduct(name, desc, img_url, price,category)
+    //  .then(result => {
+    //    console.log(result)
+    //  })
+    //  .catch(err => console.log(err))
   }
 
   const inputFileRef = useRef();
   
   const handleInputChange = (e) => {
-    setFormValue({
-      type: "HANDLE_INPUT_VALUE",
-      title: e.target.name,
-      payload: e.target.value
-    })
+    const {name, value} = e.target
+    setFormValue({[name]:value})
   };
 
   const fileSelectorHandler = (e) => {
@@ -85,8 +80,8 @@ const useAddProducts = () => {
     if (selectedFile) {
       imgurApi(formData)
         .then((result) => {
-          setUploadImg(result.data.link); // 拿到上傳圖片的 url
           alert("上傳成功");
+          // 拿到上傳圖片的 url
           setFormValue({
             type: "HANDLE_INPUT_VALUE",
             title: "img_url",
@@ -106,7 +101,6 @@ const useAddProducts = () => {
     setSelectedFile,
     ImgSrc, 
     setImgSrc,
-    setUploadImg,
     inputFileRef,
     fileSelectorHandler,
     inputFileRefHandler,

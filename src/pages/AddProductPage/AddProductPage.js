@@ -171,17 +171,12 @@ const Bottom = styled.div`
 
 const AddProductPage = () => {
   const {
-    selectedFile,
-    setSelectedFile,
     ImgSrc, 
-    setImgSrc,
-    setUploadImg,
     inputFileRef,
     fileSelectorHandler,
     inputFileRefHandler,
     fileUploadHandler,
     handleInputChange,
-    error,
     handleSubmmit,
     name,
     desc,

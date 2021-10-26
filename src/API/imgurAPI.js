@@ -4,7 +4,7 @@ export const imgurApi = (formData) => {
   let requestOptions = {
     method: "POST",
     headers: {
-      "Authorization": 'Client-ID 0beec1d0b7cadff',
+      "Authorization": `Bearer 545df9f9245e9bd51e37439c89377e9606514a67`,
     },
     body: formData,
     redirect: "follow",
