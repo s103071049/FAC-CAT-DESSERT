@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/finalProjectUI/static/css/main.aa724a6e.chunk.css",
-    "main.js": "/finalProjectUI/static/js/main.aa3545f6.chunk.js",
-    "main.js.map": "/finalProjectUI/static/js/main.aa3545f6.chunk.js.map",
-    "runtime-main.js": "/finalProjectUI/static/js/runtime-main.96a5d7dc.js",
-    "runtime-main.js.map": "/finalProjectUI/static/js/runtime-main.96a5d7dc.js.map",
-    "static/js/2.bf3a2e81.chunk.js": "/finalProjectUI/static/js/2.bf3a2e81.chunk.js",
-    "static/js/2.bf3a2e81.chunk.js.map": "/finalProjectUI/static/js/2.bf3a2e81.chunk.js.map",
-    "static/js/3.66489ac0.chunk.js": "/finalProjectUI/static/js/3.66489ac0.chunk.js",
-    "static/js/3.66489ac0.chunk.js.map": "/finalProjectUI/static/js/3.66489ac0.chunk.js.map",
+    "main.js": "/finalProjectUI/static/js/main.3e17aca8.chunk.js",
+    "main.js.map": "/finalProjectUI/static/js/main.3e17aca8.chunk.js.map",
+    "runtime-main.js": "/finalProjectUI/static/js/runtime-main.4b08a675.js",
+    "runtime-main.js.map": "/finalProjectUI/static/js/runtime-main.4b08a675.js.map",
+    "static/js/2.2513eb18.chunk.js": "/finalProjectUI/static/js/2.2513eb18.chunk.js",
+    "static/js/2.2513eb18.chunk.js.map": "/finalProjectUI/static/js/2.2513eb18.chunk.js.map",
+    "static/js/3.b9112b0c.chunk.js": "/finalProjectUI/static/js/3.b9112b0c.chunk.js",
+    "static/js/3.b9112b0c.chunk.js.map": "/finalProjectUI/static/js/3.b9112b0c.chunk.js.map",
     "index.html": "/finalProjectUI/index.html",
     "static/css/main.aa724a6e.chunk.css.map": "/finalProjectUI/static/css/main.aa724a6e.chunk.css.map",
-    "static/js/2.bf3a2e81.chunk.js.LICENSE.txt": "/finalProjectUI/static/js/2.bf3a2e81.chunk.js.LICENSE.txt",
+    "static/js/2.2513eb18.chunk.js.LICENSE.txt": "/finalProjectUI/static/js/2.2513eb18.chunk.js.LICENSE.txt",
     "static/media/arrowUp.32f62e1a.svg": "/finalProjectUI/static/media/arrowUp.32f62e1a.svg",
     "static/media/banner3.e8d438a2.jpg": "/finalProjectUI/static/media/banner3.e8d438a2.jpg",
     "static/media/cake.3691e49b.jpg": "/finalProjectUI/static/media/cake.3691e49b.jpg",
@@ -26,6 +26,7 @@
     "static/media/home.205e5c86.svg": "/finalProjectUI/static/media/home.205e5c86.svg",
     "static/media/instagram.02967a62.svg": "/finalProjectUI/static/media/instagram.02967a62.svg",
     "static/media/list.b91688f1.svg": "/finalProjectUI/static/media/list.b91688f1.svg",
+    "static/media/menu.6f5171fd.svg": "/finalProjectUI/static/media/menu.6f5171fd.svg",
     "static/media/numeric1.6293ac0f.svg": "/finalProjectUI/static/media/numeric1.6293ac0f.svg",
     "static/media/numeric2.3f5e122a.svg": "/finalProjectUI/static/media/numeric2.3f5e122a.svg",
     "static/media/orangePie.ae333fb4.jpg": "/finalProjectUI/static/media/orangePie.ae333fb4.jpg",
@@ -38,13 +39,14 @@
     "static/media/squares.d4ea94d0.svg": "/finalProjectUI/static/media/squares.d4ea94d0.svg",
     "static/media/truck.6d58ddba.svg": "/finalProjectUI/static/media/truck.6d58ddba.svg",
     "static/media/user.2300e7cb.svg": "/finalProjectUI/static/media/user.2300e7cb.svg",
+    "static/media/users-svgrepo-com.4812941f.svg": "/finalProjectUI/static/media/users-svgrepo-com.4812941f.svg",
     "static/media/vegetables.301845a2.svg": "/finalProjectUI/static/media/vegetables.301845a2.svg",
     "static/media/youtube.e57613c9.svg": "/finalProjectUI/static/media/youtube.e57613c9.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.96a5d7dc.js",
-    "static/js/2.bf3a2e81.chunk.js",
+    "static/js/runtime-main.4b08a675.js",
+    "static/js/2.2513eb18.chunk.js",
     "static/css/main.aa724a6e.chunk.css",
-    "static/js/main.aa3545f6.chunk.js"
+    "static/js/main.3e17aca8.chunk.js"
   ]
 }
