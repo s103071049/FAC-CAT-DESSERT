@@ -3,9 +3,7 @@ import { Wrapper } from "../../components/Style/style";
 import CartContent from "./component/CartContent";
 import Shipping from "./component/Shipping";
 import CartSummary from "./component/CartSummary";
-import { useEffect, useState, useContext } from "react";
-import { getAllCartItems, deleteCartItem, updateCartItem } from "../../WEBAPI";
-import { AuthContexts, AuthLoadingContext } from "../../context";
+import useCartApi from "../../hooks/carts/useCartApi";
 const CartWrapper = styled(Wrapper)`
   position: relative;
 `;
@@ -14,32 +12,30 @@ const ShoppinCartDetail = styled.div`
   max-width: 1000px;
   margin-bottom: 100px;
 `;
+
 const CartPage = () => {
-  const [data, setData] = useState([]);
-  const { loading, setLoading } = useContext(AuthLoadingContext);
-  //const [discountRules, setDiscountRules] = useState(null);
-  useEffect(() => {
-    getAllCartItems().then((response) => {
-      if (!response.success) {
-        setLoading(false);
-        return alert("系統異常，非常抱歉");
-      }
-      setLoading(false);
-      console.log(response.message);
-      setData(response.message);
-    });
-  }, [setData]);
+  const {
+    data,
+    setData,
+    discountRules,
+    handleButtonDelete,
+    handleDecreaseProduct,
+    handleIncreaseProduct,
+  } = useCartApi();
 
   return (
     <>
       <CartWrapper>
-        {/* <CartSummary
-            data={data}
-            handleButtonDelete={handleButtonDelete}
-            setData={setData}
-          /> */}
+        <CartSummary data={data} discountRules={discountRules} />
         <ShoppinCartDetail>
-          <CartContent data={data} setData={setData} />
+          <CartContent
+            data={data}
+            setData={setData}
+            discountRules={discountRules}
+            handleButtonDelete={handleButtonDelete}
+            handleDecreaseProduct={handleDecreaseProduct}
+            handleIncreaseProduct={handleIncreaseProduct}
+          />
           <Shipping />
         </ShoppinCartDetail>
       </CartWrapper>

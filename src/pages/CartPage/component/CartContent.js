@@ -1,14 +1,7 @@
 import styled from "styled-components";
 import numeric1 from "../../../components/img/icon/numeric1.svg";
 import closeCircle from "../../../components/img/icon/close-circle.svg";
-import {
-  getAllCartItems,
-  deleteCartItem,
-  updateCartItem,
-} from "../../../WEBAPI";
-import { AuthContexts, AuthLoadingContext } from "../../../context";
-import { useEffect, useState, useContext } from "react";
-
+import CartPreCheckout from "./CartPreCheckout";
 const Container = styled.div`
   margin-top: 50px;
   border: 1px solid #9ca4aa;
@@ -69,36 +62,6 @@ const Tbody = styled.tbody`
   @media screen and (max-width: 698px) {
     & tr {
       height: auto;
-    }
-  }
-`;
-const Tfoot = styled.tfoot`
-  display: none;
-
-  & tr {
-    height: 30px;
-  }
-  & tr :first-child {
-    text-align: right;
-    padding-right: 80px;
-  }
-
-  & tr:last-child td:last-child {
-    color: #e33333;
-  }
-
-  @media screen and (max-width: 698px) {
-    display: block;
-    & tr :first-child {
-      text-align: left;
-      padding-right: 0;
-      margin-top: 20px;
-    }
-    & tr {
-      border-bottom: 0;
-    }
-    & td {
-      min-width: 150px;
     }
   }
 `;
@@ -203,106 +166,12 @@ const ItemAction = styled.div`
   }
 `;
 
-const CartTableFoot = ({ data, setLoading, setData }) => {
-  return (
-    <>
-      <Tr>
-        <Td colSpan="4">運費</Td>
-        <Td colSpan="2">0</Td>
-      </Tr>
-      <Tr>
-        <Td colSpan="4">總計</Td>
-        <Td colSpan="2">2580</Td>
-      </Tr>
-      <Tr>
-        <Td colSpan="4">應付總額</Td>
-        <Td colSpan="2">NT$2580</Td>
-      </Tr>
-    </>
-  );
-};
-
-const CartTableData = ({ data, setData }) => {
-  const { setLoading } = useContext(AuthLoadingContext);
-  return data.map((item) => {
-    const handleDecreaseProduct = async () => {
-      let quantity = item.product_quantity - 1;
-      await updateCartItem(item.ProductId, quantity).then((response) => {
-        if (!response.success) {
-          return alert("更新商品數量處理異常，系統修復中");
-        }
-        return alert(`更新 ${item["Product.name"]} 購買數量 ${quantity}`);
-      });
-      await getAllCartItems().then((response) => {
-        if (!response.success) {
-          setLoading(false);
-          return alert("系統異常，非常抱歉");
-        }
-        setLoading(false);
-        setData(response.message);
-      });
-    };
-    const handleButtonDelete = async () => {
-      await deleteCartItem(item.ProductId).then((response) => {
-        if (!response.success) {
-          return alert("刪除品項處理異常，系統修復中");
-        }
-        return alert(`刪除成功`);
-      });
-      await getAllCartItems().then((response) => {
-        if (!response.success) {
-          setLoading(false);
-          return alert("系統異常，非常抱歉");
-        }
-        setLoading(false);
-        setData(response.message);
-      });
-    };
-    return (
-      <Tr key={item.id}>
-        <Td data-title="">
-          <Img $url={item["Product.img_url"]} />
-        </Td>
-        <Td data-title="商品名稱">
-          <CartItemInfo>{item["Product.name"]}</CartItemInfo>
-        </Td>
-        <Td data-title="商品單價">
-          <ItemPrice>{item["Product.price"]}</ItemPrice>
-        </Td>
-        <Td data-title="數量">
-          <QtyBtn onClick={handleDecreaseProduct}>-</QtyBtn>
-          <ItemQty>{item.product_quantity}</ItemQty>
-          <QtyBtn>+</QtyBtn>
-        </Td>
-        <Td data-title="小計">
-          <ItemPrice>{item.product_quantity * item["Product.price"]}</ItemPrice>
-        </Td>
-        <Td data-title="">
-          <ItemAction onClick={handleButtonDelete}>
-            <img src={closeCircle} alt="delete this item from cart" />
-          </ItemAction>
-        </Td>
-      </Tr>
-    );
-  });
-};
-const CartTableHead = () => {
-  return (
-    <Tr>
-      <Th colSpan="2">商品明細</Th>
-      <Th>單價</Th>
-      <Th>數量</Th>
-      <Th colSpan="2">小計</Th>
-    </Tr>
-  );
-};
-
 const CartContent = ({
   data,
-  setData,
   discountRules,
-  setDiscountRules,
   handleButtonDelete,
+  handleDecreaseProduct,
+  handleIncreaseProduct,
 }) => {
   return (
     <Container>
@@ -315,18 +184,65 @@ const CartContent = ({
       <Body>
         <Table>
           <Thead>
-            <CartTableHead />
+            <Tr>
+              <Th colSpan="2">商品明細</Th>
+              <Th>單價</Th>
+              <Th>數量</Th>
+              <Th colSpan="2">小計</Th>
+            </Tr>
           </Thead>
           <Tbody>
-            <CartTableData data={data} setData={setData} />
+            {data.map((item) => {
+              return (
+                <Tr key={item.id}>
+                  <Td data-title="">
+                    <Img $url={item["Product.img_url"]} />
+                  </Td>
+                  <Td data-title="商品名稱">
+                    <CartItemInfo>{item["Product.name"]}</CartItemInfo>
+                  </Td>
+                  <Td data-title="商品單價">
+                    <ItemPrice>{item["Product.price"]}</ItemPrice>
+                  </Td>
+                  <Td data-title="數量">
+                    <QtyBtn
+                      onClick={() => {
+                        handleDecreaseProduct(item);
+                      }}
+                    >
+                      -
+                    </QtyBtn>
+                    <ItemQty>{item.product_quantity}</ItemQty>
+                    <QtyBtn
+                      onClick={() => {
+                        handleIncreaseProduct(item);
+                      }}
+                    >
+                      +
+                    </QtyBtn>
+                  </Td>
+                  <Td data-title="小計">
+                    <ItemPrice>
+                      {item.product_quantity * item["Product.price"]}
+                    </ItemPrice>
+                  </Td>
+                  <Td data-title="">
+                    <ItemAction
+                      onClick={() => {
+                        handleButtonDelete(item);
+                      }}
+                    >
+                      <img src={closeCircle} alt="delete this item from cart" />
+                    </ItemAction>
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
-          <Tfoot>
-            <CartTableFoot
-              discountRules={discountRules}
-              setDiscountRules={setDiscountRules}
-            />
-          </Tfoot>
         </Table>
+        {discountRules && (
+          <CartPreCheckout items={data} shipments={discountRules} />
+        )}
       </Body>
     </Container>
   );

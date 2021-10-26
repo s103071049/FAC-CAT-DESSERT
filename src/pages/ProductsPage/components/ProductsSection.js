@@ -11,16 +11,16 @@ import { Link } from "react-router-dom";
 import useFindProducts from "../../../hooks/productHooks/useFindProducts";
 
 const ProductsSectionContentsWrapper = styled.div`
-  margin-bottom:40px;
-  
-  ${props=> props.$section === 'sqares' && `
+  margin-bottom: 40px;
+
+  ${(props) =>
+    props.$section === "sqares" &&
+    `
       display: flex;
       padding: 0 10px;
       justify-content: space-between;
       flex-wrap: wrap;
-    `
-  }
-
+    `}
 `;
 
 const ProductWapper = styled.div`
@@ -236,9 +236,9 @@ const ProductButton = styled.button`
   }
 `;
 
-const RenderCotentItemsSection = ({products, section}) => {
-  if(section === 'sqares') {
-    return products.map(product => {
+const RenderCotentItemsSection = ({ products, section }) => {
+  if (section === "sqares") {
+    return products.map((product) => {
       return (
         <ProductWapper key={product.id}>
           <ProductImageWrapper>
@@ -250,11 +250,11 @@ const RenderCotentItemsSection = ({products, section}) => {
           <ProductPrice>NT$ {product.price}</ProductPrice>
           <ProductButton>加入購物車</ProductButton>
         </ProductWapper>
-      )
-    })
+      );
+    });
   }
-  return products.map(product => {
-    return(
+  return products.map((product) => {
+    return (
       <ProductsListsWrapper key={product.id}>
         <div style={{ display: "flex" }}>
           <ProductListsImageWrapper>
@@ -266,9 +266,7 @@ const RenderCotentItemsSection = ({products, section}) => {
             <ProductListsInfoSection>
               <div>
                 <ProductListsName>{product.name}</ProductListsName>
-                <ProductListsCaption>
-                  {product.desc}
-                </ProductListsCaption>
+                <ProductListsCaption>{product.desc}</ProductListsCaption>
               </div>
               <ProductListsPrice>NT$ {product.price}</ProductListsPrice>
               <ProductListsMDButton>加入購物車</ProductListsMDButton>
@@ -279,24 +277,21 @@ const RenderCotentItemsSection = ({products, section}) => {
           <ProductListsButton>加入購物車</ProductListsButton>
         </ProductListsButtonWrapper>
       </ProductsListsWrapper>
-    )
-  })
-}
+    );
+  });
+};
 
-const RenderContentSection = ({products, section}) => {
+const RenderContentSection = ({ products, section }) => {
   return (
     <ProductsSectionContentsWrapper $section={section}>
       <RenderCotentItemsSection products={products} section={section} />
       <ProductWapper />
       <ProductWapper />
-
     </ProductsSectionContentsWrapper>
-  )
-}
+  );
+};
 
-
-
-export default function ProductsSection({selectedCategory}) {
+export default function ProductsSection({ selectedCategory }) {
   const {
     products,
     handletoggleLists,
@@ -306,9 +301,8 @@ export default function ProductsSection({selectedCategory}) {
     setShowDataIndex,
     dataAmount,
     loading,
-  } = useFindProducts(selectedCategory)
+  } = useFindProducts(selectedCategory);
 
-  
   function ProductsSectionTiTle({
     handletoggleSquares,
     handletoggleLists,
@@ -324,13 +318,18 @@ export default function ProductsSection({selectedCategory}) {
     }
     return (
       <ProductsSectionTiTleWapper>
-        <ProductsSectionTiTleContent>{selectedCategory}</ProductsSectionTiTleContent>
+        <ProductsSectionTiTleContent>
+          {selectedCategory}
+        </ProductsSectionTiTleContent>
         <ProductsSectionTiTleInfo>
           <ProductsSectionTiTleInfoContent>
             共{dataAmount.current}個商品
           </ProductsSectionTiTleInfoContent>
           <TitleButtonWrapper>
-            <TitleSquaresButton onClick={handletoggleSquares} $section={IsSuares}>
+            <TitleSquaresButton
+              onClick={handletoggleSquares}
+              $section={IsSuares}
+            >
               <Icon src={squares} />
             </TitleSquaresButton>
             <TitleListsButton onClick={handletoggleLists} $section={IsLists}>
@@ -344,19 +343,20 @@ export default function ProductsSection({selectedCategory}) {
 
   return (
     <>
-    {console.log('product section',loading)}
-    <div>
-      <ProductsSectionTiTle
-        handletoggleSquares={handletoggleSquares}
-        handletoggleLists={handletoggleLists}
-        section={section}
-      />
-      <RenderContentSection 
-        products={products} 
-        section={section} 
-      />
-      <PageChange dataAmount={dataAmount.current} showDataIndex={showDataIndex} setShowDataIndex={setShowDataIndex}/>
-    </div>
+      {console.log("product section", loading)}
+      <div>
+        <ProductsSectionTiTle
+          handletoggleSquares={handletoggleSquares}
+          handletoggleLists={handletoggleLists}
+          section={section}
+        />
+        <RenderContentSection products={products} section={section} />
+        <PageChange
+          dataAmount={dataAmount.current}
+          showDataIndex={showDataIndex}
+          setShowDataIndex={setShowDataIndex}
+        />
+      </div>
     </>
   );
 }
