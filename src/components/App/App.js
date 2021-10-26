@@ -132,7 +132,7 @@ function App() {
                 {user && <OrderPage />}
               </Route>
               <Route path="/admin/order/:id">
-                {!token && <Push />}
+                {!token && <Redirect push to="/" />}
                 {user && <OrderWholeListPage />}
               </Route>
             </Switch>
