@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext, useRef, useCallback } from "react";
 import { getAllProducts, deleteProduct } from "../../WEBAPI";
 import { AuthLoadingContext } from '../../context'
 import usePagination from "../paginationHooks/usePagination";
@@ -20,9 +20,9 @@ const useAdminProduct = () => {
 
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
-
-  useEffect(() => {
-    const fetchProducts = async() => {
+  
+  const fetchProducts = useCallback(()=> {
+      const fetchingProduct = async() => {
       setLoading(true)
       const result = await getAllProducts()
       try {
@@ -40,8 +40,12 @@ const useAdminProduct = () => {
         console.log(err)
       }
     }
+    fetchingProduct()
+  },[eachPageAmount, setLoading, showDataIndex])
+
+  useEffect(() => {
     fetchProducts()
-  },[setLoading, eachPageAmount, showDataIndex])
+  },[fetchProducts])
 
   const handleDeleteBtnClick = async(id) => {
     const result = await deleteProduct(id)
@@ -51,15 +55,7 @@ const useAdminProduct = () => {
       if(!result.message){
         return console.log(result)
       }
-      const fetchNewProducts = await getAllProducts()
-      let getProducts = fetchNewProducts.products.filter(product => !product.is_deleted)
-      dataAmount.current = getProducts.length
-
-      const showDataArr = getProducts.slice(showDataIndex, showDataIndex+ eachPageAmount)
-
-      setTdcontexts(showDataArr)
-      setLoading(false)
-
+      fetchProducts()
     }catch(err) {
       console.log(err)
     }

@@ -40,7 +40,6 @@ export default function PageChange({dataAmount, showDataIndex, setShowDataIndex}
 
   const isFinalData = (showDataIndex + eachPageAmount)< dataAmount 
   const isAmountLessPageAmount = dataAmount <= eachPageAmount
-  console.log(isAmountLessPageAmount)
 
   return(
     <PageChangeWrapper>
