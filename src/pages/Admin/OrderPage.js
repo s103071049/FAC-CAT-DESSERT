@@ -7,6 +7,7 @@ import OrderStatusFilter from "./components/OrderStatusFilter";
 import OrderStatusSection from "./components/OrderStatusSection";
 import { AuthContexts } from "../../context";
 import useFindAllOrder from "../../hooks/orders/useFIndAllOrder";
+import useHeader from "../../components/Header/useHeader";
 
 const Wrapper = styled.div`
   max-width: 1042px;
@@ -42,6 +43,7 @@ const OrderPage = () => {
     setSelectOrderStatus,
     handleOrderFilterClick,
   } = useFindAllOrder();
+
 
   return (
     <Wrapper>

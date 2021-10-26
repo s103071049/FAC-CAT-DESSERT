@@ -205,11 +205,11 @@ function Header() {
   }
   const VistorItems = () => {
     return (
-      <List>
+      <>
         <Item to="#">新品上市</Item>
         <Item to="#">促銷商品</Item>
         <Item to="/products">商品一覽</Item>
-      </List>
+      </>
     )
   }
   const RenderMenuItems = () => {
@@ -229,7 +229,9 @@ function Header() {
       )
     }else{
       return (
-       <VistorItems/>
+        <List>
+          <VistorItems/>
+        </List>
       )
     }
   }
