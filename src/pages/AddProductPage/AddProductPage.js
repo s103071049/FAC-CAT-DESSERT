@@ -1,8 +1,9 @@
-import React, { useState, useRef } from "react";
 import styled from "styled-components";
+import EachErrorMessage from '../../components/common/EachErrorMessage'
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
-import cameraIcon from "../../components/img/icon/camera.svg";
-import { imgurApi } from "../../API/imgurAPI";
+
+import useAddProducts from "../../hooks/productHooks/useAddProduct";
+
 const imgLoadingDesc = `
 從電腦中選取圖檔，
 最佳大小為 600px * 600px`;
@@ -14,6 +15,9 @@ const Wrapper = styled.div`
   padding: 12px;
 `;
 
+const Form = styled.form`
+`
+
 const Title = styled.h2`
   color: #333;
 `;
@@ -21,7 +25,7 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   & + & {
-    margin-top: 24px;
+    margin-top: 30px;
   }
   ${`@media screen and (max-width: 400px)`} {
     flex-direction: column;
@@ -45,7 +49,19 @@ const Column = styled.div`
     flex-basis: 0;
   }
 `;
-
+const RadioWrapper = styled.div`
+  padding: 8px;
+  width: 100%;
+  font-size: 18px;
+  color: #917856;
+  font-weight: bold;
+  & label {
+      margin-right:16px;
+  }
+  & span {
+    padding-left:8px;
+  }
+`
 const Row = styled.input`
   padding: 8px;
   width: 100%;
@@ -99,13 +115,13 @@ const Button = styled.div`
     white-space: nowrap;
   }
 `;
-const Submit = styled.div`
+const Submit = styled.button`
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
   color: #917856;
   font-weight: bold;
-  padding: 16px;
+  padding: 8px 16px;
   background: white;
   border: 1px solid rgba(201, 186, 152, 0.9);
   margin: 0;
@@ -148,129 +164,143 @@ const Upload = styled.div`
     margin: 0 auto;
   }
 `;
-function Input({ name, value, as, placeholder }) {
-  const [allValues, setAllValues] = useState({
-    "商品名：": "",
-    "商品介紹：": "",
-    "售價：": "",
-    "限量：": "",
-  });
-  const handleInputChange = (e) => {
-    setAllValues({ ...allValues, [e.target.name]: e.target.value });
-  };
-  return (
-    <Content>
-      <Column>{name}</Column>
-      <Row
-        name={name}
-        value={allValues[value]}
-        as={as}
-        onChange={handleInputChange}
-        placeholder={placeholder}
-      />
-    </Content>
-  );
-}
-
-function UploadImg({ name, desc }) {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [ImgSrc, setImgSrc] = useState(cameraIcon);
-  const [uploadImg, setUploadImg] = useState(null);
-  const inputFileRef = useRef();
-  const fileSelectorHandler = (e) => {
-    setSelectedFile(e.target.files[0]);
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      () => {
-        setImgSrc(reader.result);
-      },
-      false
-    );
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-  const inputFileRefHandler = () => {
-    inputFileRef.current.click();
-  };
-  const fileUploadHandler = (e) => {
-    let formData = new FormData();
-    formData.append("image", selectedFile);
-    if (!selectedFile) {
-      alert("尚未選取上傳圖片");
-    }
-    if (selectedFile) {
-      imgurApi(formData)
-        .then((result) => {
-          setUploadImg(result.data.link); // 拿到上傳圖片的 url
-          alert("上傳成功");
-        })
-        .catch((error) => {
-          alert("圖片處理異常，請稍後再試!");
-          return;
-        });
-    }
-  };
-  return (
-    <>
-      <Content>
-        <Column>{name}</Column>
-      </Content>
-      <UploadImage>
-        <Wrap>
-          <Img url={ImgSrc} onClick={inputFileRefHandler} />
-        </Wrap>
-        <Upload>
-          <Desc>{desc}</Desc>
-          <input
-            style={{ display: "none" }}
-            type="file"
-            ref={inputFileRef}
-            onChange={fileSelectorHandler}
-            accept="image/*"
-          />
-          <Button onClick={fileUploadHandler}>上傳圖片</Button>
-        </Upload>
-      </UploadImage>
-    </>
-  );
-}
 const Bottom = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+
 const AddProductPage = () => {
+  const {
+    selectedFile,
+    setSelectedFile,
+    ImgSrc, 
+    setImgSrc,
+    setUploadImg,
+    inputFileRef,
+    fileSelectorHandler,
+    inputFileRefHandler,
+    fileUploadHandler,
+    handleInputChange,
+    error,
+    handleSubmmit,
+    name,
+    desc,
+    price,
+    limited,
+    category
+  } = useAddProducts()
+
+  function UploadImg({ name, desc }) {
+    
+    return (
+      <>
+        <Content>
+          <Column>{name}</Column>
+        </Content>
+        <UploadImage>
+          <Wrap>
+            <Img url={ImgSrc} onClick={inputFileRefHandler} />
+          </Wrap>
+          <Upload>
+            <Desc>{desc}</Desc>
+            <input
+              style={{ display: "none" }}
+              type="file"
+              ref={inputFileRef}
+              onChange={fileSelectorHandler}
+              accept="image/*"
+            />
+            <Button onClick={fileUploadHandler}>上傳圖片</Button>
+          </Upload>
+        </UploadImage>
+      </>
+    );
+  }
+
+  const InputsRadio = () => {
+    const categories = ['餅乾', '蛋糕', '巧克力', '手工飲料']
+    return (
+      <Content>
+        <Column>商品類型：</Column>
+        <RadioWrapper>
+          {categories.map(item => {
+            return (
+              <label key={item}>
+                <input
+                  type="radio"
+                  name="category"
+                  value={item}
+                  onChange={handleInputChange}
+                  checked={category === item}
+                  />
+                <span>{item}</span>
+              </label>
+            )
+          })}
+        </RadioWrapper>
+       
+      </Content>
+    )
+  }
+    
+  function Input({ name, value, as, placeholder }) {
+    return (
+      <Content>
+        <Column>{name}</Column>
+        <Row
+          name={name}
+          value={value}
+          as={as}
+          onChange={handleInputChange}
+          placeholder={placeholder}
+        />
+      </Content>
+    );
+  }
+
   return (
     <div>
       <Wrapper>
         <Title>新增商品：</Title>
-        <Input
-          name={"商品名："}
-          value={"商品名："}
-          placeholder={"請輸入商品名稱"}
-        />
-        <Input
-          name={"商品介紹："}
-          as={"textarea"}
-          value={"商品介紹："}
+        <Form onSubmit={handleSubmmit}>
+               <Content>
+        <Column>商品名稱</Column>
+        <Row
+          name="name"
+          value={name}
+          onChange={handleInputChange}
           placeholder={"請輸入產品介紹"}
         />
-        <Input
-          name={"售價："}
-          value={"售價："}
-          placeholder={"請輸入產品售價"}
-        />
-        <Input
-          name={"限量："}
-          value={"限量："}
-          placeholder={"請輸入產品限定數量"}
-        />
-        <UploadImg name={"上傳圖片："} desc={`${imgLoadingDesc}`} />
-        <Bottom>
-          <Submit>提交</Submit>
-        </Bottom>
+      </Content>
+          {error.name && (<EachErrorMessage>{error.name}</EachErrorMessage>)}
+          <Input
+            name="desc"
+            as={"textarea"}
+            value={desc}
+            placeholder={"請輸入產品介紹"}
+          />
+           {error.desc && (<EachErrorMessage>{error.desc}</EachErrorMessage>)}
+          <Input
+            name="price"
+            value={price}
+            placeholder={"請輸入產品售價"}
+          />
+          {error.price && (<EachErrorMessage>{error.price}</EachErrorMessage>)}
+          <Input
+            name="limited"
+            value={limited}
+            placeholder={"請輸入產品限定數量"}
+          />
+          {error.limited && (<EachErrorMessage>{error.limited}</EachErrorMessage>)}
+          <InputsRadio/>
+           {error.category && (<EachErrorMessage>{error.category}</EachErrorMessage>)}
+         
+          <UploadImg name="imgUrl" desc={`${imgLoadingDesc}`} />
+          <Bottom>
+            <Submit>提交</Submit>
+          </Bottom>
+        </Form>
       </Wrapper>
     </div>
   );

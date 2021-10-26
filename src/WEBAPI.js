@@ -117,6 +117,26 @@ export const getAllProducts = async() => {
   return response.json()
 }
 
+export const createProduct = async(name, desc, img_url, price, market_price, limited, category) => {
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/createProducts`,{
+    headers:{
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body:JSON.stringify({
+      name,
+      desc,
+      img_url,
+      price,
+      market_price,
+      limited,
+      category
+    })
+  })
+  return await response.json();
+
+}
 
 // order
 // 抓取所有order
