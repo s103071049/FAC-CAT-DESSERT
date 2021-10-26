@@ -18,8 +18,14 @@ const useCartApi = () => {
         fetchDiscountsRules(),
       ]);
       setLoading(false);
-      setDiscountRules(DiscountRules);
-      setData(AllCartItems);
+      setDiscountRules(
+        DiscountRules.filter((rule) => rule.is_deleted === false).sort(
+          (a, b) => {
+            return a.threshold - b.threshold;
+          }
+        )
+      );
+      setData(AllCartItems.filter((item) => item.product_quantity > 0));
     };
     fetchData();
   }, [setLoading, setData]);
@@ -38,11 +44,12 @@ const useCartApi = () => {
     return response.Discounts;
   };
   const handleButtonDelete = async (item) => {
+    setData(data.filter((product) => product.id !== item.id));
     await deleteCartItem(item.ProductId).then((response) => {
       if (!response.success) {
         return alert("刪除品項處理異常，系統修復中");
       }
-      return alert(`刪除成功`);
+      return;
     });
     await getAllCartItems().then((response) => {
       if (!response.success) {
@@ -50,34 +57,28 @@ const useCartApi = () => {
         return alert("系統異常，非常抱歉");
       }
       setLoading(false);
-      setData(response.message);
+      return;
     });
   };
   const handleDecreaseProduct = async (item) => {
     let quantity = item.product_quantity - 1;
-    await updateCartItem(item.ProductId, quantity).then((response) => {
-      if (!response.success) {
-        return alert("更新商品數量處理異常，系統修復中");
-      }
-      return alert(`更新 ${item["Product.name"]} 購買數量 ${quantity}`);
-    });
-    await getAllCartItems().then((response) => {
-      if (!response.success) {
-        setLoading(false);
-        return alert("系統異常，非常抱歉");
-      }
-      setLoading(false);
-      setData(response.message);
-    });
-  };
-  const handleIncreaseProduct = async (item) => {
-    let quantity = item.product_quantity + 1;
+    if (quantity <= 0) return;
+    setData(
+      data
+        .filter((product) => product.product_quantity > 0)
+        .map((product) => {
+          if (product.id !== item.id) return product;
+          return {
+            ...product,
+            product_quantity: quantity,
+          };
+        })
+    );
     await updateCartItem(item.ProductId, quantity).then((response) => {
       if (!response.success) {
         return alert("更新商品數量處理異常，系統修復中");
       }
       return;
-      // return alert(`更新 ${item["Product.name"]} 購買數量 ${quantity}`);
     });
     await getAllCartItems().then((response) => {
       if (!response.success) {
@@ -85,7 +86,33 @@ const useCartApi = () => {
         return alert("系統異常，非常抱歉");
       }
       setLoading(false);
-      setData(response.message);
+      return;
+    });
+  };
+  const handleIncreaseProduct = async (item) => {
+    let quantity = item.product_quantity + 1;
+    setData(
+      data.map((product) => {
+        if (product.id !== item.id) return product;
+        return {
+          ...product,
+          product_quantity: quantity,
+        };
+      })
+    );
+    await updateCartItem(item.ProductId, quantity).then((response) => {
+      if (!response.success) {
+        return alert("更新商品數量處理異常，系統修復中");
+      }
+      return;
+    });
+    await getAllCartItems().then((response) => {
+      if (!response.success) {
+        setLoading(false);
+        return alert("系統異常，非常抱歉");
+      }
+      setLoading(false);
+      return;
     });
   };
   return {

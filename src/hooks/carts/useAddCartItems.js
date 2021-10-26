@@ -1,12 +1,16 @@
-import { useState } from "react";
-const useAddOneProduct = () => {
+import { addCartItem } from "../../WEBAPI";
+import { AuthContexts, AuthLoadingContext } from "../../context";
+import { useContext } from "react";
+
+const useAddCartItems = (dessert, count) => {
+  const { user } = useContext(AuthContexts);
+  const { setLoading } = useContext(AuthLoadingContext);
   const handleAddProducts = (e) => {
     if (!user) {
       return alert("請登入再進行購買");
     }
     setLoading(true);
     addCartItem(dessert.id, count).then((response) => {
-      console.log(response);
       if (!response.success) {
         setLoading(false);
         return alert("系統異常中，正迅速修復!");
@@ -15,6 +19,8 @@ const useAddOneProduct = () => {
       alert(`添加 ${count} 個 ${dessert.name} 到購物車!`);
     });
   };
-  return {};
+  return {
+    handleAddProducts,
+  };
 };
-export default useAddOneProduct;
+export default useAddCartItems;
