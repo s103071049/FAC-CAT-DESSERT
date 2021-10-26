@@ -15,6 +15,7 @@ import { MEDIA_QUERY_MD } from "../../components/Style/style";
 import { setAuthToken, removeAuthToken } from "../../utils";
 import { AuthContexts, AuthLoadingContext } from "../../context";
 import TransactionPage from "../../pages/TransactionPage";
+import useUser from "../../hooks/user/useUser";
 
 const Wrapper = styled.div`
   max-width: 1042px;
@@ -126,17 +127,16 @@ const SideBarLogout = styled.div`
   }
 `;
 const UserPage = () => {
-  let location = useLocation();
-  let { path, url } = useRouteMatch();
-  const { user, setUser } = useContext(AuthContexts);
-  const { loading, setLoading } = useContext(AuthLoadingContext);
-  const history = useHistory();
-  // 登出
-  const handleLogout = () => {
-    removeAuthToken();
-    setUser(null);
-    history.push("/");
-  };
+  const {
+    location,
+    path,
+    url,
+    user,
+    setUser,
+    loading,
+    setLoading,
+    handleLogout,
+  } = useUser();
   const SideBarItems = ({ toUrl, title }) => {
     let newUrl = url + toUrl;
     return (
