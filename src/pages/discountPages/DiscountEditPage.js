@@ -1,11 +1,11 @@
 import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { PostDataAPI, FindDataAPI } from "../../API/fetchAPI";
+import { FindDataAPI } from "../../API/fetchAPI";
 import InputItem from "./inputItem.js";
-import useDiscount from "../../hooks/discountHooks/useDiscount";
+import useEditDiscount from "../../hooks/discountHooks/useEditDiscount";
 import { getAuthToken } from "../../utils";
-import { AuthContexts, AuthLoadingContext } from "../../context";
+import { AuthLoadingContext } from "../../context";
 
 const Bottom = styled.div`
   display: flex;
@@ -43,6 +43,8 @@ const Submit = styled.button`
 `;
 
 const DiscountEditPage = () => {
+  const { loading, setLoading } = useContext(AuthLoadingContext);
+  const { id } = useParams();
   const {
     threshold,
     shipment,
@@ -56,63 +58,30 @@ const DiscountEditPage = () => {
 
     changeDiscount,
     handleChange,
-  } = useDiscount();
-  const { loading, setLoading } = useContext(AuthLoadingContext);
-  const { id } = useParams();
-  const api = id ? "/updateDiscounts" : "/createDiscounts";
+    handleSubmit,
+  } = useEditDiscount(id);
 
   useEffect(() => {
     if (id) {
-      FindDataAPI(
-        { authorization: getAuthToken() },
-        `/findDiscounts/${id}`
-      ).then((data) => {
-        const { Discount } = data;
-        changeDiscount(Discount);
-      });
+      setLoading(true);
+      FindDataAPI({ authorization: getAuthToken() }, `/findDiscounts/${id}`)
+        .then((data) => {
+          const { Discount } = data;
+          changeDiscount(Discount);
+          return setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          return setLoading(false);
+        });
     }
   }, []);
-
-  const handleSummit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-    const data = id
-      ? {
-          id,
-          threshold,
-          shipment,
-          price,
-          desc,
-        }
-      : {
-          threshold,
-          shipment,
-          price,
-          desc,
-        };
-
-    const res = await PostDataAPI(
-      {
-        data,
-        authorization: getAuthToken(),
-      },
-      api
-    );
-    if (res.success) {
-      alert("成功");
-      window.history.back(-1);
-      return setLoading(false);
-    } else {
-      alert(res.message);
-      return setLoading(false);
-    }
-  };
 
   return (
     <div>
       <Wrapper>
         <Title>編輯運費規則</Title>
-        <form onSubmit={handleSummit}>
+        <form onSubmit={handleSubmit}>
           <InputItem
             columnName={"運費門檻："}
             name={"threshold"}
