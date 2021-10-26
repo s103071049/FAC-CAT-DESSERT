@@ -129,3 +129,42 @@ export const getAllOrder = async () => {
   });
   return await response.json();
 };
+// 抓取單項order
+export const getOneOrder = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/getOneOrder/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
+export const acceptOrder = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/acceptOrder/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
+export const deleteOrder = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/deleteOrder/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
+
+//transaction
+export const getTractions = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/getTransactions/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};

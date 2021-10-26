@@ -127,8 +127,9 @@ function App() {
                 {!token && <Push />}
                 {user && <OrderPage />}
               </Route>
-              <Route path="/admin/order/1">
-                <OrderWholeListPage />
+              <Route path="/admin/order/:id">
+                {!token && <Push />}
+                {user && <OrderWholeListPage />}
               </Route>
             </Switch>
             <Footer />
