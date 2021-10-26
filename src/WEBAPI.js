@@ -95,21 +95,26 @@ export const updatePassword = async (password, newPassword, newPassword2) => {
   return await response.json();
 };
 
-// product
+// 產品相關api
 // 單項商品
 export const getProduct = async (id) => {
   const response = await fetch(`${BASE_URL}/findProducts/${id}`);
   return await response.json();
 };
 // 多項商品
-export const getAllProducts = async () => {
+export const getAllProduct = async () => {
   const response = await fetch(`${BASE_URL}/findAllProducts`);
-  return response.json();
+  return await response.json();
 };
 //search products
 export const searchProducts = async (searchKey) => {
   const response = await fetch(`${BASE_URL}/searchProducts/${searchKey}`);
   return await response.json();
+};
+
+export const getAllProducts = async () => {
+  const response = await fetch(`${BASE_URL}/findAllProducts`);
+  return response.json();
 };
 
 // order
@@ -123,9 +128,46 @@ export const getAllOrder = async () => {
   });
   return await response.json();
 };
+// 抓取單項order
+export const getOneOrder = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/getOneOrder/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
+export const acceptOrder = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/acceptOrder/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
+export const deleteOrder = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/deleteOrder/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
 
-//  cart
-// add Cart item
+//transaction
+export const getTractions = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/getTransactions/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
+// cart
 export const addCartItem = async (productId, quantity) => {
   const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/addCartItem`, {

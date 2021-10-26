@@ -19,8 +19,6 @@ const useFindProducts = (selectedCategory) => {
 
   const dataAmount = useRef(null);
   const history = useHistory();
-
-  console.log("useFindProudct", loading);
   useEffect(() => {
     setLoading(true);
     console.log("before fetch", loading);
