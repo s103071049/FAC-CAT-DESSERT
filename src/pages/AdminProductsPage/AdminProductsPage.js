@@ -4,7 +4,8 @@ import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange";
 import { TdContext } from "./components/TdContext";
 import { Link } from "react-router-dom";
-import { thcontexts, tdcontexts } from "./components/contextItem";
+import useAdminProduct from "../../hooks/productHooks/useAdminProducts";
+//import { thcontexts, tdcontexts } from "./components/contextItem";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -122,6 +123,7 @@ const Th = styled.th``;
 const Tr = styled.tr``;
 
 const AdminProductsPage = () => {
+  const {thcontexts, tdcontexts} = useAdminProduct()
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>商品管理</AdminProductsTitle>
@@ -143,7 +145,7 @@ const AdminProductsPage = () => {
           </Thead>
           <Tbody>
             {tdcontexts.map((tdcontext, index) => (
-              <TdContext tdcontext={tdcontext} key={index} />
+              <TdContext tdcontext={tdcontext} index={index} key={index} />
             ))}
           </Tbody>
         </Table>

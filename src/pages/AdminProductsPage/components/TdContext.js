@@ -5,21 +5,21 @@ import {
 } from "../../../components/Style/style";
 import { Link } from "react-router-dom";
 
-export const TdContext = ({ tdcontext }) => {
+export const TdContext = ({ tdcontext, index }) => {
+  const {id, name, img_url, price} = tdcontext
   return (
     <Tr>
-      <Td data-title="id">{tdcontext.id}</Td>
-      <Td data-title="商品名">{tdcontext.name}</Td>
+      <Td data-title="id">{index+1}</Td>
+      <Td data-title="商品名">{name}</Td>
       <Td data-title="商品介紹">
-        <ProductTdButton to="#">詳細資訊</ProductTdButton>
+        <ProductTdButton to={`/admin/updateProduct/${id}`}>詳細資訊</ProductTdButton>
       </Td>
       <Td data-title="商品圖" $photo={true}>
-        <Phote img={tdcontext.photo} />
+        <Phote img={img_url} />
       </Td>
       <Td data-title="價格">
-        <Pricespan>{tdcontext.price}</Pricespan>
+        <Pricespan>{price}</Pricespan>
       </Td>
-      <Td data-title="限量">{tdcontext.limit}</Td>
       <Td data-title="刪除">
         <ProductTdButton to="#">刪除</ProductTdButton>
       </Td>
