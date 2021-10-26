@@ -29,9 +29,9 @@ const useAdminProduct = () => {
         if(!result.success) {
          return  console.log(result)
         }
-        let getProducts = result.products
+        let getProducts = result.products.filter(product => !product.is_deleted)
         dataAmount.current = getProducts.length
-        const showDataArr = getProducts.slice(showDataIndex, showDataIndex+ eachPageAmount).filter(product => !product.is_deleted)
+        const showDataArr = getProducts.slice(showDataIndex, showDataIndex+ eachPageAmount)
 
         setTdcontexts(showDataArr)
         setLoading(false)
@@ -52,10 +52,10 @@ const useAdminProduct = () => {
         return console.log(result)
       }
       const fetchNewProducts = await getAllProducts()
-      let getProducts = fetchNewProducts.products
+      let getProducts = fetchNewProducts.products.filter(product => !product.is_deleted)
       dataAmount.current = getProducts.length
 
-      const showDataArr = getProducts.slice(showDataIndex, showDataIndex+ eachPageAmount).filter(product => !product.is_deleted)
+      const showDataArr = getProducts.slice(showDataIndex, showDataIndex+ eachPageAmount)
 
       setTdcontexts(showDataArr)
       setLoading(false)
