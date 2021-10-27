@@ -344,7 +344,6 @@ export default function ProductsSection({selectedCategory}) {
 
   return (
     <>
-    {console.log('product section',loading)}
     <div>
       <ProductsSectionTiTle
         handletoggleSquares={handletoggleSquares}

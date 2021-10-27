@@ -3,9 +3,11 @@ import { useHistory } from "react-router";
 import { AuthContexts } from "../../context";
 import OrderStatusFilter from "../../pages/Admin/components/OrderStatusFilter";
 import { getAllOrder } from "../../WEBAPI";
+import { AuthLoadingContext } from "../../context";
 
 const useFindAllOrder = () => {
   const { user, setUser } = useContext(AuthContexts);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   const [fackOrders, setFackOrders] = useState([]);
   const [currentOrders, setCurrentOrders] = useState([]);
   const [time, setTime] = useState(false);
@@ -16,11 +18,14 @@ const useFindAllOrder = () => {
     setSelectOrderStatus(selectedStatus);
   };
   useLayoutEffect(() => {
+    setLoading(true);
     if (user.authority !== 1) {
-      return history.push("/");
+      history.push("/");
+      return setLoading(false);
     }
     getAllOrder().then((response) => {
       setFackOrders(response.data);
+      setLoading(false);
     });
   }, [history, user.authority]);
   useEffect(() => {

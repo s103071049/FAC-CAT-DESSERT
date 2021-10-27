@@ -2,12 +2,14 @@ import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContexts } from "../../context";
 import {
   useHistory,
+  useLocation
 } from "react-router-dom";
 
 const useHeader = () => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [searchProduct, setSearchProduct] = useState("");
   const [adminViewOpen, setAdminViewOpen] = useState(false)
+  let location = useLocation()
 
   const history = useHistory();
   const { user } = useContext(AuthContexts);
@@ -26,6 +28,14 @@ const useHeader = () => {
     setHamburgerOpen(false)
     setSearchBarShow(!searchBarShow);
   };
+
+
+  useEffect(()=>{
+    const regex = new RegExp('/admin')
+    if(regex.test(location.pathname)){
+      setAdminViewOpen(true)
+    }
+  },[location])
 
   useEffect(()=>{
     const handleBodyClick = (event) => {
@@ -67,7 +77,8 @@ const useHeader = () => {
     handleSearchBarClick,
     handleAdminViewClick,
     handleEnter,
-    ref
+    ref,
+    setAdminViewOpen
   }
 }
 
