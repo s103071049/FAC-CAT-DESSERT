@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   HashRouter as Router,
@@ -68,9 +68,6 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <HomePage />
-              </Route>
-              <Route path='/test'>
-                <Test/>
               </Route>
               <Route path="/login">
                 {token && <Redirect push to="/" />}
