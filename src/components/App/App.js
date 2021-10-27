@@ -34,13 +34,6 @@ import { getUser } from "../../WEBAPI";
 import CartPage from "../../pages/CartPage";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 
-<<<<<<< HEAD
-import Test from '../common/PopModal'
-
-
-import Push from "../common/Push";
-=======
->>>>>>> main
 import { MEDIA_QUERY_MD } from "../Style/style";
 const Root = styled.div`
   ${MEDIA_QUERY_MD} {
