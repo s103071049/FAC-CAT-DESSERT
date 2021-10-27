@@ -1,7 +1,9 @@
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
-
-import useUpdateProduct from "../../hooks/productHooks/useUpdateProduct";
+import cameraIcon from "../../components/img/icon/camera.svg";
+import { imgurApi } from "../../API/imgurAPI";
+import useUpdateProduct from '../../hooks/productHooks/useUpdateProduct'
 
 const imgLoadingDesc = `
 從電腦中選取圖檔，
@@ -14,9 +16,6 @@ const Wrapper = styled.div`
   padding: 12px;
 `;
 
-const Form = styled.form`
-`
-
 const Title = styled.h2`
   color: #333;
 `;
@@ -24,7 +23,7 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   & + & {
-    margin-top: 30px;
+    margin-top: 24px;
   }
   ${`@media screen and (max-width: 400px)`} {
     flex-direction: column;
@@ -78,11 +77,11 @@ const Row = styled.input`
 `;
 
 const Img = styled.div`
-  width: 70%;
+  width: 100%;
   min-width: 240px;
   height: 0;
   background: url(${(props) => props.url});
-  padding-bottom: 70%;
+  padding-bottom: 100%;
   overflow: hidden;
   background-size: contain;
   background-repeat: no-repeat;
@@ -114,13 +113,13 @@ const Button = styled.div`
     white-space: nowrap;
   }
 `;
-const Submit = styled.button`
+const Submit = styled.div`
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
   color: #917856;
   font-weight: bold;
-  padding: 8px 16px;
+  padding: 16px;
   background: white;
   border: 1px solid rgba(201, 186, 152, 0.9);
   margin: 0;
@@ -168,81 +167,110 @@ const Bottom = styled.div`
   justify-content: flex-end;
 `;
 
-
-const AddProductPage = () => {
-  const {
-    ImgSrc, 
-    inputFileRef,
-    fileSelectorHandler,
-    inputFileRefHandler,
-    fileUploadHandler,
-    handleInputChange,
-    handleSubmmit,
-    name,
-    desc,
-    price,
-    category,
-    currentDBimage
-  } = useUpdateProduct()
-
-  function UploadImg({ name, desc }) {
-    return (
-      <>
-        <Content>
-          <Column>上傳新圖片</Column>
-        </Content>
-        <UploadImage>
-          <Wrap>
-            <Img url={ImgSrc} onClick={inputFileRefHandler} />
-          </Wrap>
-          <Upload>
-            <Desc>{desc}</Desc>
-            <input
-              style={{ display: "none" }}
-              type="file"
-              ref={inputFileRef}
-              onChange={fileSelectorHandler}
-              accept="image/*"
-              name={name}
-            />
-            <Button onClick={fileUploadHandler}>上傳圖片</Button>
-          </Upload>
-        </UploadImage>
-      </>
+function UploadImg({ name, desc }) {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [ImgSrc, setImgSrc] = useState(cameraIcon);
+  const [uploadImg, setUploadImg] = useState(null);
+  const inputFileRef = useRef();
+  const fileSelectorHandler = (e) => {
+    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.addEventListener(
+      "load",
+      () => {
+        setImgSrc(reader.result);
+      },
+      false
     );
-  }
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+  const inputFileRefHandler = () => {
+    inputFileRef.current.click();
+  };
+  const fileUploadHandler = (e) => {
+    let formData = new FormData();
+    formData.append("image", selectedFile);
+    if (!selectedFile) {
+      alert("尚未選取圖片");
+    }
+    if (selectedFile) {
+      imgurApi(formData)
+        .then((result) => {
+          setUploadImg(result.data.link); // 拿到上傳圖片的 url
+          alert("上傳成功");
+        })
+        .catch((error) => {
+          alert("圖片處理異常，請稍後再試!");
+          return;
+        });
+    }
+  };
+  return (
+    <>
+      <Content>
+        <Column>{name}</Column>
+      </Content>
+      <UploadImage>
+        <Wrap>
+          <Img url={ImgSrc} onClick={inputFileRefHandler} />
+        </Wrap>
+        <Upload>
+          <Desc>{desc}</Desc>
+          <input
+            style={{ display: "none" }}
+            type="file"
+            ref={inputFileRef}
+            onChange={fileSelectorHandler}
+            accept="image/*"
+          />
+          <Button onClick={fileUploadHandler}>上傳圖片</Button>
+        </Upload>
+      </UploadImage>
+    </>
+  );
+}
 
+
+const UpdateProductPage = () => {
+  const {
+    allValues,
+    setAllValues,
+    handleInputChange
+  } = useUpdateProduct()
+ 
   const InputsRadio = () => {
     const categories = ['餅乾', '蛋糕', '巧克力', '手工飲料']
-    return (
-      <Content>
-        <Column>商品類型：</Column>
-        <RadioWrapper>
-          {categories.map(item => {
-            return (
-              <label key={item}>
-                <input
-                  type="radio"
-                  name="category"
-                  value={item}
-                  onChange={handleInputChange}
-                  checked={category === item}
-                  />
-                <span>{item}</span>
-              </label>
-            )
-          })}
-        </RadioWrapper>
-       
-      </Content>
-    )
+      return (
+        <Content>
+          <Column>商品類型：</Column>
+          <RadioWrapper>
+            {categories.map(item => {
+              return (
+                <label key={item}>
+                  <input
+                    type="radio"
+                    name="category"
+                    value={item}
+                    onChange={handleInputChange}
+                    checked={category === item}
+                    />
+                  <span>{item}</span>
+                </label>
+              )
+            })}
+          </RadioWrapper>
+          
+        </Content>
+      )
   }
-
+  
   return (
     <div>
       <Wrapper>
-        <Title>新增商品：</Title>
-        <Form onSubmit={handleSubmmit}>
+        <Title>編輯商品：id = 1 柚香鐵觀音</Title>
           <Content>
             <Column>商品名稱</Column>
             <Row
@@ -273,20 +301,14 @@ const AddProductPage = () => {
           </Content>
          
           <InputsRadio/>
-          <Content>
-            <Column>目前照片</Column>
-              <Wrap>
-                <Img url={currentDBimage.current}/>
-              </Wrap>
-          </Content>
-          <UploadImg name="img_url" desc={`${imgLoadingDesc}`} />
-          <Bottom>
-            <Submit>提交</Submit>
-          </Bottom>
-        </Form>
+         
+          <UploadImg name="imgUrl" desc={`${imgLoadingDesc}`} />
+        <Bottom>
+          <Submit>編輯完成</Submit>
+        </Bottom>
       </Wrapper>
     </div>
   );
 };
 
-export default AddProductPage;
+export default UpdateProductPage;
