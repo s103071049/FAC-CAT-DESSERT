@@ -29,7 +29,6 @@ const ModalBox = styled.div`
     bottom: 0;
     left: 0;
     z-index: 9999;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,6 +41,8 @@ const ModalWrapper = styled.div`
     padding: 20px;
     box-sizing: border-box;
     width:100%;
+    max-width:800px;
+
 `
 
 const ModalTItle = styled.div`
@@ -54,6 +55,7 @@ const ModalInfoContent = styled.div`
   width:100%;
   ${MEDIA_QUERY_MD} {
     flex-direction: column;
+    align-items:center;
   }
 `
 

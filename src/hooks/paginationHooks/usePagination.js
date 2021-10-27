@@ -19,6 +19,7 @@ const usePagination = (dataAmount, showDataIndex, setShowDataIndex) => {
 
   return {
     currentPageNum,
+    setCurrentPageNum,
     handleClickDecrementBtn,
     handleClickIncrementBtn,
     eachPageAmount

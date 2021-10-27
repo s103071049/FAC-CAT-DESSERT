@@ -129,12 +129,26 @@ const AdminProductsPage = () => {
     showDataIndex, 
     setShowDataIndex,
     handleDeleteBtnClick,
+    search,
+    setSearch,
+    handleChange,
+    fetchSearchProduct,
+    fetchProducts
    } = useAdminProduct()
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>商品管理</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput name="productSearch" placeholder="搜尋商品" />
+        <SearchInput 
+          name="productSearch" 
+          placeholder="搜尋商品" 
+          onChange={handleChange(setSearch)}
+          onKeyPress={(e) => {
+            if (e.key === "Enter"){
+              search?  fetchSearchProduct(search) :fetchProducts()
+            }
+          }}
+        />
         <div>
           <TitleButton to="/admin/products/restore">還原刪除商品</TitleButton>
           <TitleButton to="/admin/addProduct">新增商品</TitleButton>

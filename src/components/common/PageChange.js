@@ -41,12 +41,11 @@ export default function PageChange({
     handleClickIncrementBtn,
     eachPageAmount,
   } = usePagination(dataAmount, showDataIndex, setShowDataIndex);
-
   const isFinalData = showDataIndex + eachPageAmount < dataAmount;
   const isAmountLessPageAmount = dataAmount <= eachPageAmount;
   return (
     <PageChangeWrapper>
-      {currentPageNum > 1 && (
+      {currentPageNum > 1 && isFinalData && (
         <PreviousPageButton onClick={handleClickDecrementBtn}>
           {"<"}
         </PreviousPageButton>
