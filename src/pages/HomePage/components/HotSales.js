@@ -3,10 +3,8 @@ import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
 } from "../../../components/Style/style";
-import cake from "../../../components/img/product/cake.jpg";
-import cake3 from "../../../components/img/product/cake3.jpg";
-import cake4 from "../../../components/img/product/cake4.jpg";
-import orangePie from "../../../components/img/product/orangePie.jpg";
+import useFindHotProducts from "../../../hooks/productHooks/useFindHotProducts";
+import useFindRecommendProducts from "../../../hooks/productHooks/useFindRecommendProducts";
 
 const Section = styled.div`
   display: flex;
@@ -112,24 +110,38 @@ function Sales({ url, name, price }) {
   );
 }
 function HotSales() {
+  const hotProducts = useFindHotProducts(4);
+  const recommendProducts = useFindRecommendProducts(4);
   return (
     <div>
       <Category>
         <Advertisement enTitle={"Recommended Goods"} chTitle={"主廚推薦"} />
         <Section>
-          <Sales url={cake} name={"阿嬤的蘋果派"} price={"NT$ 160"} />
-          <Sales url={cake4} name={"我的梅果花園"} price={"NT$ 180"} />
-          <Sales url={orangePie} name={"青春橘子派"} price={"NT$ 260"} />
-          <Sales url={cake3} name={"藍莓珠寶盒"} price={"NT$ 100"} />
+          {recommendProducts.map((product, index) => {
+            return (
+              <Sales
+                url={product.img_url}
+                name={product.name}
+                price={product.price}
+                key={index}
+              />
+            );
+          })}
         </Section>
       </Category>
       <Category>
         <Advertisement enTitle={"Hot Sales"} chTitle={"熱銷甜點"} />
         <Section>
-          <Sales url={cake} name={"阿嬤的蘋果派"} price={"NT$ 160"} />
-          <Sales url={cake4} name={"我的梅果花園"} price={"NT$ 180"} />
-          <Sales url={orangePie} name={"青春橘子派"} price={"NT$ 260"} />
-          <Sales url={cake3} name={"藍莓珠寶盒"} price={"NT$ 100"} />
+          {hotProducts.map((hotProduct, index) => {
+            return (
+              <Sales
+                url={hotProduct.Product.img_url}
+                name={hotProduct.Product.name}
+                price={hotProduct.Product.price}
+                key={index}
+              />
+            );
+          })}
         </Section>
       </Category>
     </div>
