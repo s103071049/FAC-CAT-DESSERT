@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const CounterWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 12px;
-`
+`;
 
 const CounterButton = styled.button`
   width: 40px;
@@ -22,7 +22,7 @@ const CounterButton = styled.button`
   &:hover {
     background-color: #e5e5e5;
   }
-`
+`;
 
 const CounterContainer = styled.div`
   width: 41px;
@@ -31,21 +31,9 @@ const CounterContainer = styled.div`
   font-size: 20px;
   text-align: center;
   line-height: 37px;
-`
+`;
 
-export function Counter() {
-  const [count, setCount] = useState(1);
-  const handleIncrement = () => {
-    setCount(prevCount => prevCount + 1);
-  };
-
-  const handleDecrement = () => {
-    if(count === 0){
-      return;  
-    }
-    setCount(prevCount => prevCount - 1);
-  };
-
+export function Counter({ count, handleIncrement, handleDecrement }) {
   return (
     <CounterWrapper>
       <CounterButton onClick={handleDecrement}>-</CounterButton>
@@ -53,4 +41,4 @@ export function Counter() {
       <CounterButton onClick={handleIncrement}>+</CounterButton>
     </CounterWrapper>
   );
-};
+}

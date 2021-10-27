@@ -102,7 +102,7 @@ export const getProduct = async (id) => {
   return await response.json();
 };
 // 多項商品
-export const getAllProduct = async () => {
+export const getAllProducts = async () => {
   const response = await fetch(`${BASE_URL}/findAllProducts`);
   return await response.json();
 };
@@ -111,12 +111,6 @@ export const searchProducts = async (searchKey) => {
   const response = await fetch(`${BASE_URL}/searchProducts/${searchKey}`);
   return await response.json();
 };
-
-export const getAllProducts = async() => {
-  const response = await fetch(`${BASE_URL}/findAllProducts`)
-  return response.json()
-}
-
 
 // order
 // 抓取所有order
@@ -164,6 +158,75 @@ export const getTractions = async (id) => {
   const response = await fetch(`${BASE_URL}/getTransactions/${id}`, {
     headers: {
       authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};
+
+// cart
+export const addCartItem = async (productId, quantity) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/addCartItem`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      productId,
+      quantity,
+    }),
+  });
+  return await response.json();
+};
+// getAll Cart items
+export const getAllCartItems = async () => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/getAllCartItems`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+  });
+  return await response.json();
+};
+// delete Cart item
+export const deleteCartItem = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/deleteCartItem/${id}`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+  });
+  return await response.json();
+};
+// update Cart item
+export const updateCartItem = async (id, quantity) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/updateCartItem/${id}`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      quantity,
+    }),
+  });
+  return await response.json();
+};
+// discounts
+// findAll
+export const findAllDiscount = async () => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/findAllDiscounts`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
     },
   });
   return await response.json();
