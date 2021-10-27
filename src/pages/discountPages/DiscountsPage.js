@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange";
@@ -8,6 +8,8 @@ import { FindDataAPI } from "../../API/fetchAPI";
 import { useState } from "react";
 import { getAuthToken } from "../../utils";
 import { useLocation } from "react-router";
+import { AuthContexts, AuthLoadingContext } from "../../context";
+import useDiscount from "../../hooks/discountHooks/useDiscount";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -130,7 +132,19 @@ const Th = styled.th``;
 const Tr = styled.tr``;
 
 const DiscountsPage = (isRestore) => {
-  const [discounts, setDiscounts] = useState([]);
+  const {
+    discounts,
+    search,
+    showDataIndex,
+    dataAmount,
+
+    fetchDiscounts,
+    setSearch,
+    searchDiscounts,
+    handleChange,
+    setShowDataIndex,
+  } = useDiscount(isRestore);
+  const { loading, setLoading } = useContext(AuthLoadingContext);
   let location = useLocation();
 
   const restoreData = isRestore.isRestore
@@ -148,25 +162,23 @@ const DiscountsPage = (isRestore) => {
       };
 
   useEffect(() => {
-    FindDataAPI({ authorization: getAuthToken() }, "/findAllDiscounts").then(
-      (data) => {
-        const { Discounts } = data;
-        const newDiscounts = [];
-        Discounts.forEach((discount) => {
-          if (discount.is_deleted === isRestore.isRestore) {
-            newDiscounts.push(discount);
-          }
-        });
-        setDiscounts(newDiscounts);
-      }
-    );
-  }, [location.pathname]);
+    fetchDiscounts();
+  }, [location.pathname, showDataIndex]);
 
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>{restoreData.title}</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput name="productSearch" placeholder={restoreData.plhder} />
+        <SearchInput
+          name="productSearch"
+          placeholder={restoreData.plhder}
+          onChange={handleChange(setSearch)}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              searchDiscounts(search);
+            }
+          }}
+        />
         <div>
           <TitleButton to={restoreData.returnUrl}>
             {restoreData.returnName}
@@ -196,7 +208,11 @@ const DiscountsPage = (isRestore) => {
           </Tbody>
         </Table>
       </AdminProductsContent>
-      <PageChange />
+      <PageChange
+        dataAmount={dataAmount.current}
+        showDataIndex={showDataIndex}
+        setShowDataIndex={setShowDataIndex}
+      />
     </AdminProductsWrapper>
   );
 };
