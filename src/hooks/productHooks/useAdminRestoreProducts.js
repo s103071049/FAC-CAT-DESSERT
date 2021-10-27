@@ -8,8 +8,8 @@ import useDebounce from "../carts/useDebounce";
 
 const useAdminRestoreProduct = () => {
   const thcontexts = [
-    "id",
-    "商品名",
+    " ",
+    "商品名稱",
     "商品介紹",
     "商品圖",
     "價格",

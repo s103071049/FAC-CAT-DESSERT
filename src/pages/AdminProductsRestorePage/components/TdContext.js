@@ -9,8 +9,8 @@ export const TdContext = ({ tdcontext, index, handleRestoreBtnClick }) => {
   const {id, name, img_url, price, desc} = tdcontext
   return (
     <Tr>
-      <Td data-title="id">{index+1}</Td>
-      <Td data-title="商品名">{name}</Td>
+      <Td data-title=" ">{index+1}</Td>
+      <Td data-title="商品名稱">{name}</Td>
       <Td data-title="商品介紹">
         <PopModal desc={desc} img_url={img_url} btnTitle={"詳細資訊"} title={name}/>
       </Td>
@@ -31,7 +31,13 @@ export const TdContext = ({ tdcontext, index, handleRestoreBtnClick }) => {
     </Tr>
   );
 };
-const Tr = styled.tr``;
+const Tr = styled.tr`
+  ${MEDIA_QUERY_MD} {
+    &:first-child td:first-child{
+      margin-left:-22%;
+    }
+  }
+`;
 const Photo = styled.div`
   background-image: url(${(props) => props.$img});
   width: 80%;
@@ -96,5 +102,6 @@ justify-content:center;
       font-weight: 900;
       padding-right: 1rem;
     }
+
   }
 `;
