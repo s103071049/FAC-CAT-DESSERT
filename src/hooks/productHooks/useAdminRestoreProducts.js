@@ -30,21 +30,19 @@ const useAdminRestoreProduct = () => {
         if(!result.success) {
           setTdcontexts([])
           setLoading(false)
-          return console.log(result.success)
-          //return  history.goBack()
+          return  history.goBack()
         }
         let getDeletedProducts = result.products.filter(product => product.is_deleted)
         if(getDeletedProducts.length === 0) setTdcontexts([])
         setTdcontexts(getDeletedProducts)
         setLoading(false)
       } catch(err) {
-        console.log(err)
-        //return history.goBack()
+        return history.goBack()
       }
     }
       fetchingDeletedProduct()
 
-  },[setLoading])
+  },[setLoading, history])
 
   useEffect(() => {
     fetchDeletedProduct()
@@ -61,13 +59,12 @@ const useAdminRestoreProduct = () => {
     try {
       if(!result.message){
         setLoading(false)
-
-        return console.log(result)
+        return  history.goBack()
       }
       fetchDeletedProduct()
     }catch(err) {
       setLoading(false)
-      console.log(err)
+      return  history.goBack()
     }
   }
 
