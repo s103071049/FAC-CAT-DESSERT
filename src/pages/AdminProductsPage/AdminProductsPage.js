@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useCallback, useEffect, useLayoutEffect,useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import { TdContext } from "./components/TdContext";
 import { Link } from "react-router-dom";
 import useAdminProduct from "../../hooks/productHooks/useAdminProducts";
+import PageBtn from "../../components/common/PageBtn";
+
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -71,6 +73,7 @@ const Table = styled.table`
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
+  min-height:680px;
   font-size: 20px;
 
   & td,
@@ -130,6 +133,51 @@ const AdminProductsPage = () => {
     handleChange,
     fetchingSearchProduct
    } = useAdminProduct()
+   const pageSize =4
+   const [pageDetail, setPageDetail] = useState({
+      indexList:[],//當前渲染的頁面數據
+      totalData:tdcontexts,
+      current: 1, //當前頁碼
+      pageSize:pageSize, //每頁顯示的條數
+      goValue:0,  //要去的條數index
+      totalPage:0//總頁數
+   })
+  //const setPage = (num) => {
+  //  console.log(num)
+  //    setPageDetail(prevState => {
+  //      return {
+  //        ...prevState,
+  //        indexList:tdcontexts.slice(num,num+pageDetail.pageSize)
+  //      }
+  //  })
+  //}
+
+  const setPage = useCallback((num)=>{
+
+    setPageDetail(prevState => {
+          return {
+            ...prevState,
+            indexList:tdcontexts.slice(num,num+pageDetail.pageSize)
+          }
+    })
+
+  },[pageDetail.pageSize,tdcontexts])
+
+  const pageNext = useCallback((num) => {
+      setPage(num)
+  }, [setPage])
+  
+  useEffect(()=>{
+    setPageDetail(prevState=>{
+      return {
+        ...prevState,
+        indexList:tdcontexts.slice(0,pageDetail.pageSize),
+        totalPage:Math.ceil( tdcontexts.length/prevState.pageSize)
+      }
+    })
+  }, [tdcontexts,pageDetail.pageSize])
+
+
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>商品管理</AdminProductsTitle>
@@ -159,7 +207,7 @@ const AdminProductsPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {tdcontexts.map((tdcontext, index) => (
+            {pageDetail.indexList.map((tdcontext, index) => (
               <TdContext 
                 tdcontext={tdcontext} 
                 index={index} 
@@ -169,6 +217,7 @@ const AdminProductsPage = () => {
             ))}
           </Tbody>
         </Table>
+        <PageBtn pageNext={pageNext} pageDetail={pageDetail}/>
       </AdminProductsContent>
     </AdminProductsWrapper>
   );

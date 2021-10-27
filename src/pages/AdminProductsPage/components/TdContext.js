@@ -45,6 +45,7 @@ const Photo = styled.div`
   padding-bottom: 80%;
   background-size: cover;
   background-position: center center;
+  margin: 0 auto;
   ${MEDIA_QUERY_MD} {
     display: block;
     width: 50%;
@@ -84,13 +85,14 @@ const Td = styled.td`
   & + & {
     margin-top: 10px;
   }
-  ${(props) =>
-    props.$photo &&
-    `
-width:100%;
-display:inline-flex;
-justify-content:center;
-`}
+
+  ${(props) =>props.$photo &&`
+    width:20%;
+    display:table-cell;
+    justify-content:center;`
+    
+  }
+
   ${MEDIA_QUERY_MD} {
     padding-left: 10%;
     margin-bottom: 12px;
@@ -103,5 +105,15 @@ justify-content:center;
       font-weight: 900;
       padding-right: 1rem;
     }
+    ${(props) =>props.$photo &&`
+      width:100%;
+      display:table-cell;
+      justify-content:center;`
+      
+    }
+    &[data-title="商品介紹"] div {
+      display:inline-block;
+    }
   }
 `;
+
