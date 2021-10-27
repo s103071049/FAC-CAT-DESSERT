@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import numeric1 from "../../../components/img/icon/numeric1.svg";
-import cake from "../../../components/img/product/cake.jpg";
 import closeCircle from "../../../components/img/icon/close-circle.svg";
-
+import CartPreCheckout from "./CartPreCheckout";
 const Container = styled.div`
   margin-top: 50px;
   border: 1px solid #9ca4aa;
@@ -29,12 +28,10 @@ const Table = styled.table`
   width: 100%;
   margin: 26px auto;
   position: relative;
-
   & * {
     position: relative;
     margin-top: 20px;
   }
-
   @media screen and (max-width: 698px) {
     display: block;
     & *,
@@ -43,7 +40,6 @@ const Table = styled.table`
     & th {
       display: block;
     }
-
     & * {
       margin-top: 0;
     }
@@ -63,36 +59,6 @@ const Tbody = styled.tbody`
   @media screen and (max-width: 698px) {
     & tr {
       height: auto;
-    }
-  }
-`;
-const Tfoot = styled.tfoot`
-  display: none;
-
-  & tr {
-    height: 30px;
-  }
-  & tr :first-child {
-    text-align: right;
-    padding-right: 80px;
-  }
-
-  & tr:last-child td:last-child {
-    color: #e33333;
-  }
-
-  @media screen and (max-width: 698px) {
-    display: block;
-    & tr :first-child {
-      text-align: left;
-      padding-right: 0;
-      margin-top: 20px;
-    }
-    & tr {
-      border-bottom: 0;
-    }
-    & td {
-      min-width: 150px;
     }
   }
 `;
@@ -117,11 +83,9 @@ const Td = styled.td`
   text-align: left;
   padding: 0 8px;
   min-width: 60px;
-
   & * {
     display: inline-block;
   }
-
   ${(props) =>
     props.$active &&
     `
@@ -130,12 +94,10 @@ const Td = styled.td`
   `}
   @media screen and (max-width: 698px) {
     margin-bottom: 12px;
-
     &:first-child {
       text-align: center;
       margin-bottom: 20px;
     }
-
     &:not(:first-of-type):before {
       content: attr(data-title);
       display: inline-block;
@@ -145,7 +107,6 @@ const Td = styled.td`
       padding-right: 1rem;
       text-decoration: underline;
     }
-
     &:last-of-type {
       position: absolute;
       top: 0;
@@ -164,7 +125,6 @@ const Img = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
   cursor: pointer;
-
   @media screen and (max-width: 698px) {
     width: 50%;
     padding-bottom: 50%;
@@ -176,7 +136,6 @@ const QtyBtn = styled.button`
   border: none;
   cursor: pointer;
   font-size: 20px;
-
   @media screen and (max-width: 698px) {
     padding: 0;
   }
@@ -196,83 +155,14 @@ const ItemAction = styled.div`
     margin-top: 0;
   }
 `;
-const fakeCartData = [
-  {
-    id: 1,
-    imgUrl: cake,
-    info: "老媽媽檸檬塔 - 7吋(20cm)",
-    qty: 1,
-    price: 880,
-  },
-  {
-    id: 2,
-    imgUrl: cake,
-    info: "水果戚風(自取限定) - 波本香草6吋",
-    qty: 2,
-    price: 850,
-  },
-];
 
-const CartTableFoot = () => {
-  return (
-    <>
-      <Tr>
-        <Td colSpan="4">運費</Td>
-        <Td colSpan="2">0</Td>
-      </Tr>
-      <Tr>
-        <Td colSpan="4">總計</Td>
-        <Td colSpan="2">2580</Td>
-      </Tr>
-      <Tr>
-        <Td colSpan="4">應付總額</Td>
-        <Td colSpan="2">NT$2580</Td>
-      </Tr>
-    </>
-  );
-};
-
-const CartTableData = () => {
-  return fakeCartData.map((item) => {
-    return (
-      <Tr key={item.id}>
-        <Td data-title="">
-          <Img $url={item.imgUrl} />
-        </Td>
-        <Td data-title="商品名稱">
-          <CartItemInfo>{item.info}</CartItemInfo>
-        </Td>
-        <Td data-title="商品單價">
-          <ItemPrice>{item.price}</ItemPrice>
-        </Td>
-        <Td data-title="數量">
-          <QtyBtn>-</QtyBtn>
-          <ItemQty>{item.qty}</ItemQty>
-          <QtyBtn>+</QtyBtn>
-        </Td>
-        <Td data-title="小計">
-          <ItemPrice>{item.qty * item.price}</ItemPrice>
-        </Td>
-        <Td data-title="">
-          <ItemAction>
-            <img src={closeCircle} alt="delete this item from cart" />
-          </ItemAction>
-        </Td>
-      </Tr>
-    );
-  });
-};
-const CartTableHead = () => {
-  return (
-    <Tr>
-      <Th colSpan="2">商品明細</Th>
-      <Th>單價</Th>
-      <Th>數量</Th>
-      <Th colSpan="2">小計</Th>
-    </Tr>
-  );
-};
-const CartContent = () => {
+const CartContent = ({
+  data,
+  discountRules,
+  handleButtonDelete,
+  handleDecreaseProduct,
+  handleIncreaseProduct,
+}) => {
   return (
     <Container>
       <Header>
@@ -284,15 +174,65 @@ const CartContent = () => {
       <Body>
         <Table>
           <Thead>
-            <CartTableHead />
+            <Tr>
+              <Th colSpan="2">商品明細</Th>
+              <Th>單價</Th>
+              <Th>數量</Th>
+              <Th colSpan="2">小計</Th>
+            </Tr>
           </Thead>
           <Tbody>
-            <CartTableData />
+            {data.map((item) => {
+              return (
+                <Tr key={item.id}>
+                  <Td data-title="">
+                    <Img $url={item["Product.img_url"]} />
+                  </Td>
+                  <Td data-title="商品名稱">
+                    <CartItemInfo>{item["Product.name"]}</CartItemInfo>
+                  </Td>
+                  <Td data-title="商品單價">
+                    <ItemPrice>{item["Product.price"]}</ItemPrice>
+                  </Td>
+                  <Td data-title="數量">
+                    <QtyBtn
+                      onClick={() => {
+                        handleDecreaseProduct(item);
+                      }}
+                    >
+                      -
+                    </QtyBtn>
+                    <ItemQty>{item.product_quantity}</ItemQty>
+                    <QtyBtn
+                      onClick={() => {
+                        handleIncreaseProduct(item);
+                      }}
+                    >
+                      +
+                    </QtyBtn>
+                  </Td>
+                  <Td data-title="小計">
+                    <ItemPrice>
+                      {item.product_quantity * item["Product.price"]}
+                    </ItemPrice>
+                  </Td>
+                  <Td data-title="">
+                    <ItemAction
+                      onClick={() => {
+                        handleButtonDelete(item);
+                      }}
+                    >
+                      <img src={closeCircle} alt="delete this item from cart" />
+                    </ItemAction>
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
-          <Tfoot>
-            <CartTableFoot />
-          </Tfoot>
         </Table>
+        {discountRules && (
+          <CartPreCheckout items={data} shipments={discountRules} />
+        )}
       </Body>
     </Container>
   );
