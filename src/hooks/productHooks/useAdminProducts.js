@@ -17,7 +17,6 @@ const useAdminProduct = () => {
 
   const {eachPageAmount} = usePagination()
   const [showDataIndex, setShowDataIndex] = useState(0)
-
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
   
@@ -67,7 +66,7 @@ const useAdminProduct = () => {
     dataAmount,
     showDataIndex, 
     setShowDataIndex,
-    handleDeleteBtnClick
+    handleDeleteBtnClick,
   }
 
 }

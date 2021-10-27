@@ -4,18 +4,19 @@ import {
   MEDIA_QUERY_MD,
 } from "../../../components/Style/style";
 import { Link } from "react-router-dom";
-
+import PopModal from '../../../components/common/PopModal'
 export const TdContext = ({ tdcontext, index, handleDeleteBtnClick}) => {
-  const {id, name, img_url, price} = tdcontext
+ 
+  const {id, name, img_url, price, desc} = tdcontext
   return (
     <Tr>
       <Td data-title="id">{index+1}</Td>
       <Td data-title="商品名">{name}</Td>
       <Td data-title="商品介紹">
-        <ProductTdButton to={`/admin/updateProduct/${id}`}>詳細資訊</ProductTdButton>
+        <PopModal desc={desc} img_url={img_url} btnTitle={"詳細資訊"} title={name}/>
       </Td>
       <Td data-title="商品圖" $photo={true}>
-        <Phote img={img_url} />
+        <Photo img={img_url} />
       </Td>
       <Td data-title="價格">
         <Pricespan>{price}</Pricespan>
@@ -24,13 +25,13 @@ export const TdContext = ({ tdcontext, index, handleDeleteBtnClick}) => {
         <ActionBtn onClick={() => handleDeleteBtnClick(id)}>刪除</ActionBtn>
       </Td>
       <Td data-title="編輯">
-        <ActionBtn to="#">編輯</ActionBtn>
+        <ProductTdButton to={`/admin/updateProduct/${id}`}>編輯</ProductTdButton>
       </Td>
     </Tr>
   );
 };
 const Tr = styled.tr``;
-const Phote = styled.div`
+const Photo = styled.div`
   background-image: url(${(props) => props.img});
   width: 80%;
   padding-bottom: 80%;

@@ -30,6 +30,9 @@ import TransactionPage from "../../pages/TransactionPage";
 import { getUser } from "../../WEBAPI";
 import CartPage from "../../pages/CartPage";
 
+import Test from '../common/PopModal'
+
+
 import Push from "../common/Push";
 import { MEDIA_QUERY_MD } from "../Style/style";
 const Root = styled.div`
@@ -66,6 +69,9 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <HomePage />
+              </Route>
+              <Route path='/test'>
+                <Test/>
               </Route>
               <Route path="/login">
                 {token && <Push />}

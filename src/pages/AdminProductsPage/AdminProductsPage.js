@@ -129,7 +129,7 @@ const AdminProductsPage = () => {
     dataAmount,
     showDataIndex, 
     setShowDataIndex,
-    handleDeleteBtnClick
+    handleDeleteBtnClick,
    } = useAdminProduct()
   return (
     <AdminProductsWrapper>
