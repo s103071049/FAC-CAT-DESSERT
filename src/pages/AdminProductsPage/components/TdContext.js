@@ -25,7 +25,9 @@ export const TdContext = ({ tdcontext, index, handleDeleteBtnClick}) => {
         <ActionBtn onClick={() => handleDeleteBtnClick(id)}>刪除</ActionBtn>
       </Td>
       <Td data-title="編輯">
-        <ProductTdButton to={`/admin/updateProduct/${id}`}>編輯</ProductTdButton>
+        <ActionBtn>
+          <Link to={`/admin/updateProduct/${id}`}>編輯</Link>
+        </ActionBtn>
       </Td>
     </Tr>
   );
@@ -61,23 +63,16 @@ const ActionBtn = styled.button`
    ${MEDIA_QUERY_MD} {
     display: inline-block;
   }
+
+  & a {
+    text-decoration:none;
+    color: #000;
+    &:hover{
+      color: #fff;
+    }
+  }
 `
 
-const ProductTdButton = styled(Link)`
-  text-decoration: none;
-  color: #000;
-  padding: 5px 10px;
-  border: 1px solid #c9ba98;
-  border-radius: 8px;
-  font-size: 20px;
-  &:hover {
-    background: #60373e;
-    color: #fff;
-  }
-  ${MEDIA_QUERY_MD} {
-    display: inline-block;
-  }
-`;
 const Td = styled.td`
   margin-bottom: 10px;
   & + & {

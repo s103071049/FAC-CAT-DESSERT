@@ -5,7 +5,6 @@ import PageChange from "../../components/common/PageChange";
 import { TdContext } from "./components/TdContext";
 import { Link } from "react-router-dom";
 import useAdminProduct from "../../hooks/productHooks/useAdminProducts";
-//import { thcontexts, tdcontexts } from "./components/contextItem";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
