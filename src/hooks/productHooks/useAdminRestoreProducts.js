@@ -1,9 +1,8 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useState, useEffect } from "react";
 import { useHistory,} from "react-router-dom";
 
 import { getAllProducts, searchProducts, updateProducts } from "../../WEBAPI";
 import { AuthLoadingContext } from '../../context'
-import { useEffect } from "react/cjs/react.development";
 import useDebounce from "../carts/useDebounce";
 
 const useAdminRestoreProduct = () => {

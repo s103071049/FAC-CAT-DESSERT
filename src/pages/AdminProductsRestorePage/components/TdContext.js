@@ -33,7 +33,7 @@ export const TdContext = ({ tdcontext, index, handleRestoreBtnClick }) => {
 };
 const Tr = styled.tr`
   ${MEDIA_QUERY_MD} {
-    &:first-child td:first-child{
+    & td:first-child{
       margin-left:-22%;
     }
   }

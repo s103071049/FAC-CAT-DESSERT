@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
-import PageChange from "../../components/common/PageChange";
 import { TdContext } from "./components/TdContext";
 import { Link } from "react-router-dom";
 import useAdminProduct from "../../hooks/productHooks/useAdminProducts";
@@ -126,11 +125,10 @@ const AdminProductsPage = () => {
     thcontexts, 
     tdcontexts,
     handleDeleteBtnClick,
+    fetchProducts,
     search,
-    setSearch,
     handleChange,
-    fetchSearchProduct,
-    fetchProducts
+    fetchingSearchProduct
    } = useAdminProduct()
   return (
     <AdminProductsWrapper>
@@ -139,10 +137,10 @@ const AdminProductsPage = () => {
         <SearchInput 
           name="productSearch" 
           placeholder="搜尋商品" 
-          onChange={handleChange(setSearch)}
+          onChange={handleChange}
           onKeyPress={(e) => {
-            if (e.key === "Enter"){
-              search?  fetchSearchProduct(search) :fetchProducts()
+            if(e.key === 'Enter') {
+              search? fetchingSearchProduct(search):fetchProducts()
             }
           }}
         />
