@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
+import useAdminRestoreProduct from "../../hooks/productHooks/useAdminRestoreProducts";
 import { TdContext } from "./components/TdContext";
-import { thcontexts, tdcontexts } from "./components/contextItem";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -102,6 +101,11 @@ const Th = styled.th``;
 const Tr = styled.tr``;
 
 const AdminProductsRestorePage = () => {
+  const {
+    thcontexts,
+    tdcontexts,
+    handleRestoreBtnClick
+  } = useAdminRestoreProduct()
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>重上架已刪除商品</AdminProductsTitle>
@@ -112,14 +116,19 @@ const AdminProductsRestorePage = () => {
         <Table>
           <Thead>
             <Tr>
-              {thcontexts.map((thcontext, index) => (
+              {thcontexts.map((thcontext,index) => (
                 <Th key={index}>{thcontext}</Th>
               ))}
             </Tr>
           </Thead>
           <Tbody>
             {tdcontexts.map((tdcontext, index) => (
-              <TdContext tdcontext={tdcontext} key={index} />
+              <TdContext 
+                tdcontext={tdcontext} 
+                key={index} 
+                index={index}
+                handleRestoreBtnClick={handleRestoreBtnClick}
+              />
             ))}
           </Tbody>
         </Table>

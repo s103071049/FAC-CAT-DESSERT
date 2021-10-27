@@ -113,7 +113,8 @@ export const searchProducts = async (searchKey) => {
 };
 
 
-export const updateProducts = async(name, desc, img_url, price,category, id) => {
+export const updateProducts = async(name, desc, img_url, price,category, id, is_deleted = false) => {
+  console.log(is_deleted)
   const data = {
     name,
     desc,
@@ -123,6 +124,7 @@ export const updateProducts = async(name, desc, img_url, price,category, id) => 
     category,
     img_url,
     id,
+    is_deleted 
   }
   const token = getAuthToken()
   const response = await fetch(`${BASE_URL}/updateProducts`,{
