@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useRef, useCallback } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { useHistory,} from "react-router-dom";
 
 import { getAllProducts,searchProducts, deleteProduct } from "../../WEBAPI";
