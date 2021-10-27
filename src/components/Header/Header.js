@@ -342,9 +342,11 @@ function Header() {
               <Img src={Loginusericon} />
             </ImgLink>
           )}
-          <ImgLink as={Link} to="/cart">
-            <Img src={cart} />
-          </ImgLink>
+          {user && (
+            <ImgLink as={Link} to="/cart">
+              <Img src={cart} />
+            </ImgLink>
+          )}
           <ImgLink to="#">
             <Img src={search} onClick={handleSearchBarClick} />
             {searchBarShow && (

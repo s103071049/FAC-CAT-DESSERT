@@ -6,10 +6,12 @@ import {
   deleteCartItem,
 } from "../../WEBAPI";
 import { AuthLoadingContext } from "../../context";
+import useDebounce from "./useDebounce";
 const useCartApi = () => {
   const [data, setData] = useState([]);
-  const { setLoading } = useContext(AuthLoadingContext);
+  const debounce = useDebounce();
   const [discountRules, setDiscountRules] = useState(null);
+  const { setLoading } = useContext(AuthLoadingContext);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -74,20 +76,22 @@ const useCartApi = () => {
           };
         })
     );
-    await updateCartItem(item.ProductId, quantity).then((response) => {
-      if (!response.success) {
-        return alert("更新商品數量處理異常，系統修復中");
-      }
-      return;
-    });
-    await getAllCartItems().then((response) => {
-      if (!response.success) {
+    debounce(async () => {
+      await updateCartItem(item.ProductId, quantity).then((response) => {
+        if (!response.success) {
+          return alert("更新商品數量處理異常，系統修復中");
+        }
+        return;
+      });
+      await getAllCartItems().then((response) => {
+        if (!response.success) {
+          setLoading(false);
+          return alert("系統異常，非常抱歉");
+        }
         setLoading(false);
-        return alert("系統異常，非常抱歉");
-      }
-      setLoading(false);
-      return;
-    });
+        return;
+      });
+    }, 1000);
   };
   const handleIncreaseProduct = async (item) => {
     let quantity = item.product_quantity + 1;
@@ -100,21 +104,24 @@ const useCartApi = () => {
         };
       })
     );
-    await updateCartItem(item.ProductId, quantity).then((response) => {
-      if (!response.success) {
-        return alert("更新商品數量處理異常，系統修復中");
-      }
-      return;
-    });
-    await getAllCartItems().then((response) => {
-      if (!response.success) {
+    debounce(async () => {
+      await updateCartItem(item.ProductId, quantity).then((response) => {
+        if (!response.success) {
+          return alert("更新商品數量處理異常，系統修復中");
+        }
+        return;
+      });
+      await getAllCartItems().then((response) => {
+        if (!response.success) {
+          setLoading(false);
+          return alert("系統異常，非常抱歉");
+        }
         setLoading(false);
-        return alert("系統異常，非常抱歉");
-      }
-      setLoading(false);
-      return;
-    });
+        return;
+      });
+    }, 1000);
   };
+
   return {
     data,
     setData,
