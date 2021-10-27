@@ -3,6 +3,7 @@ import cameraIcon from "../../components/img/icon/camera.svg";
 import { imgurApi } from "../../API/imgurAPI";
 import {useState, useRef} from 'react'
 import { createProduct } from "../../WEBAPI";
+import {useHistory} from "react-router-dom"
 
 const initFormState = {
   name:"",
@@ -16,7 +17,7 @@ const useAddProducts = () => {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [ImgSrc, setImgSrc] = useState(cameraIcon);
-  
+  let history = useHistory();
   const [formValue, setFormValue] = useReducer((currentValues, newValues)=>({...currentValues, ...newValues}), initFormState)
 
   const {
@@ -27,7 +28,7 @@ const useAddProducts = () => {
     img_url
   } = formValue
   
-  const handleSubmmit = (e) => {
+  const handleSubmmit = async(e) => {
     e.preventDefault()
     if(
       !name ||
@@ -38,12 +39,16 @@ const useAddProducts = () => {
     ){
       return alert('請輸入完整資料')
     }
-    console.log(name, desc, img_url, price,category)
-    //createProduct(name, desc, img_url, price,category)
-    //  .then(result => {
-    //    console.log(result)
-    //  })
-    //  .catch(err => console.log(err))
+    const result = await createProduct(name, desc, img_url, price,category)
+
+    try{
+      if(!result.success) {
+        return history.push("/admin/products")
+      }
+      history.push("/admin/products")
+    }catch(err){
+     history.push("/admin/products")
+    }
   }
 
   const inputFileRef = useRef();

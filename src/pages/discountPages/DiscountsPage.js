@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange";
-import { TdContext } from "./components/TdContext";
-import { thcontexts, tdcontexts } from "./components/contextItem";
+import { TdContext, thcontexts } from "./TdContext";
+import { Link } from "react-router-dom";
+import { FindDataAPI } from "../../API/fetchAPI";
+import { useState } from "react";
+import { getAuthToken } from "../../utils";
+import { useLocation } from "react-router";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -44,11 +48,28 @@ const SearchInput = styled.input`
     font-weight: bold;
   }
   ${MEDIA_QUERY_MD} {
-    /* margin-bottom: 30px; */
+    margin-bottom: 30px;
     width: 100%;
   }
 `;
-
+const TitleButton = styled(Link)`
+  text-decoration: none;
+  font-size: 20px;
+  color: #000;
+  padding: 5px 10px;
+  border: 1px solid #c9ba98;
+  border-radius: 8px;
+  & + & {
+    margin-left: 10px;
+  }
+  &:hover {
+    background: #60373e;
+    color: #fff;
+  }
+  ${MEDIA_QUERY_SD} {
+    font-size: 20px;
+  }
+`;
 const AdminProductsContent = styled.div`
   padding: 15px 0;
   margin-bottom: 15px;
@@ -108,12 +129,50 @@ const Th = styled.th``;
 
 const Tr = styled.tr``;
 
-const AdminDiscountsRestorePage = () => {
+const DiscountsPage = (isRestore) => {
+  const [discounts, setDiscounts] = useState([]);
+  let location = useLocation();
+
+  const restoreData = isRestore.isRestore
+    ? {
+        title: "還原運費促銷規則",
+        plhder: "搜尋已刪除運費規則",
+        returnUrl: "/admin/discounts",
+        returnName: "返回促銷管理",
+      }
+    : {
+        title: "促銷管理：運費",
+        plhder: "搜尋運費規則",
+        returnUrl: "/admin/discounts/restore",
+        returnName: "還原刪除規則",
+      };
+
+  useEffect(() => {
+    FindDataAPI({ authorization: getAuthToken() }, "/findAllDiscounts").then(
+      (data) => {
+        const { Discounts } = data;
+        const newDiscounts = [];
+        Discounts.forEach((discount) => {
+          if (discount.is_deleted === isRestore.isRestore) {
+            newDiscounts.push(discount);
+          }
+        });
+        setDiscounts(newDiscounts);
+      }
+    );
+  }, [location.pathname]);
+
   return (
     <AdminProductsWrapper>
-      <AdminProductsTitle>還原運費促銷規則</AdminProductsTitle>
+      <AdminProductsTitle>{restoreData.title}</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput name="productSearch" placeholder="搜尋已刪除運費規則" />
+        <SearchInput name="productSearch" placeholder={restoreData.plhder} />
+        <div>
+          <TitleButton to={restoreData.returnUrl}>
+            {restoreData.returnName}
+          </TitleButton>
+          <TitleButton to="/admin/addDiscount">新增規則</TitleButton>
+        </div>
       </AdminProductsInfo>
       <AdminProductsContent>
         <Table>
@@ -125,9 +184,15 @@ const AdminDiscountsRestorePage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {tdcontexts.map((tdcontext, index) => (
-              <TdContext tdcontext={tdcontext} key={index} />
-            ))}
+            {discounts.map((discount, index) => {
+              return (
+                <TdContext
+                  tdcontext={discount}
+                  isRestore={isRestore.isRestore}
+                  key={index}
+                />
+              );
+            })}
           </Tbody>
         </Table>
       </AdminProductsContent>
@@ -136,4 +201,4 @@ const AdminDiscountsRestorePage = () => {
   );
 };
 
-export default AdminDiscountsRestorePage;
+export default DiscountsPage;

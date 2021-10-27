@@ -4,15 +4,15 @@ const PageChangeWrapper = styled.div`
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  align-items:center;
-  text-align:center;
-`
+  align-items: center;
+  text-align: center;
+`;
 const NowPage = styled.div`
   font-size: 24px;
-  font-weight:bold;
-  width:50px;
-  margin-left:5px;
-`
+  font-weight: bold;
+  width: 50px;
+  margin-left: 5px;
+`;
 const PreviousPageButton = styled.button`
   font-size: 18px;
   border: 2px solid #dac9a6;
@@ -25,39 +25,43 @@ const PreviousPageButton = styled.button`
   &:hover {
     background: #60373e;
   }
-`
+`;
 const NextPageButton = styled(PreviousPageButton)`
-  margin-left:5px;
-`
+  margin-left: 5px;
+`;
 
-export default function PageChange({dataAmount, showDataIndex, setShowDataIndex}){
-  const {  
+export default function PageChange({
+  dataAmount,
+  showDataIndex,
+  setShowDataIndex,
+}) {
+  const {
     currentPageNum,
     handleClickDecrementBtn,
     handleClickIncrementBtn,
-    eachPageAmount
-  } = usePagination(dataAmount, showDataIndex, setShowDataIndex)
+    eachPageAmount,
+  } = usePagination(dataAmount, showDataIndex, setShowDataIndex);
 
+<<<<<<< HEAD
   const isFinalData = (showDataIndex + eachPageAmount)< dataAmount 
   const isAmountLessPageAmount = dataAmount <= eachPageAmount
 
   return(
+=======
+  const isFinalData = showDataIndex + eachPageAmount < dataAmount;
+  const isAmountLessPageAmount = dataAmount <= eachPageAmount;
+  return (
+>>>>>>> main
     <PageChangeWrapper>
       {currentPageNum > 1 && (
-          <PreviousPageButton onClick={handleClickDecrementBtn}>
-            {"<"}
-          </PreviousPageButton>
+        <PreviousPageButton onClick={handleClickDecrementBtn}>
+          {"<"}
+        </PreviousPageButton>
       )}
-      
-      {isAmountLessPageAmount? '' : <NowPage>{currentPageNum}</NowPage>}
-      
-
+      {isAmountLessPageAmount ? "" : <NowPage>{currentPageNum}</NowPage>}
       {isFinalData && (
-        <NextPageButton onClick={handleClickIncrementBtn}>
-            {">"}
-        </NextPageButton>
+        <NextPageButton onClick={handleClickIncrementBtn}>{">"}</NextPageButton>
       )}
-    
     </PageChangeWrapper>
-  )
+  );
 }

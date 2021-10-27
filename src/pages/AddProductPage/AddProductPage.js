@@ -182,7 +182,6 @@ const AddProductPage = () => {
     desc,
     price,
     category,
-    img_url
   } = useAddProducts()
 
   function UploadImg({ name, desc }) {
@@ -203,7 +202,7 @@ const AddProductPage = () => {
               ref={inputFileRef}
               onChange={fileSelectorHandler}
               accept="image/*"
-              name={img_url}
+              name={name}
             />
             <Button onClick={fileUploadHandler}>上傳圖片</Button>
           </Upload>
@@ -274,7 +273,7 @@ const AddProductPage = () => {
          
           <InputsRadio/>
          
-          <UploadImg name="imgUrl" desc={`${imgLoadingDesc}`} />
+          <UploadImg name="img_url" desc={`${imgLoadingDesc}`} />
           <Bottom>
             <Submit>提交</Submit>
           </Bottom>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD, CartButton } from "../Style/style.js";
 import { Link } from "react-router-dom";
+import useAddCartItems from "../../hooks/carts/useAddCartItems";
 const Dessert = styled.div`
   display: flex;
   width: 20%;
@@ -49,8 +50,8 @@ const DessertPrice = styled.div`
   color: #a96360;
   margin-bottom: 8px;
 `;
-const Img = styled.div``;
 function Item({ dessert }) {
+  const { handleAddProducts } = useAddCartItems(dessert, 1);
   return (
     <Dessert>
       <Link to={`/product/${dessert.id}`}>
@@ -58,7 +59,7 @@ function Item({ dessert }) {
       </Link>
       <DessertName>{dessert.name}</DessertName>
       <DessertPrice>NT${dessert.price}</DessertPrice>
-      <CartButton>加入購物車</CartButton>
+      <CartButton onClick={handleAddProducts}>加入購物車</CartButton>
     </Dessert>
   );
 }
