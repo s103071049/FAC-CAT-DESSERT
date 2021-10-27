@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { MEDIA_QUERY_MD } from '../Style/style';
+import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from '../Style/style';
 
 // modal button
 const ModalContainer = styled.div``
@@ -20,6 +20,7 @@ const ModalBtn = styled.button`
     display: inline-block;
   }
 `
+
 // modal 內容 css
 const ModalBox = styled.div`
     position: fixed;
@@ -28,18 +29,19 @@ const ModalBox = styled.div`
     bottom: 0;
     left: 0;
     z-index: 9999;
-    /* background-color: rgba(0, 0, 0, 0.8); */
+
     display: flex;
     justify-content: center;
     align-items: center;
+
 `
 
 const ModalWrapper = styled.div`
     position: relative;
-    min-width: 300px;
     background-color: white;
-    padding: 40px;
-    box-sizing: border-box;    
+    padding: 20px;
+    box-sizing: border-box;
+    width:100%;
 `
 
 const ModalTItle = styled.div`
@@ -50,8 +52,10 @@ const ModalInfoContent = styled.div`
   margin-top:40px;  
   display:flex;
   width:100%;
+  ${MEDIA_QUERY_MD} {
+    flex-direction: column;
+  }
 `
-
 
 const ModalImgWrap = styled.div`
   min-width:200px;
@@ -64,16 +68,23 @@ const Photo = styled.div`
   background-position: center center;
   ${MEDIA_QUERY_MD} {
     display: block;
-    width: 50%;
-    padding-bottom: 50%;
+    width: 100%;
+    padding-bottom: 100%;
+  }
+  ${MEDIA_QUERY_SD} {
+    width:70%;
+    padding-bottom: 70%;
   }
 `
 
-
 const ModalDesc = styled.div`
-    font-size: 16px;
-    padding:0 20px;
-    align-self:center;
+  font-size: 16px;
+  padding:0 10px;
+  align-self:center;
+  word-break: break-word;
+  ${MEDIA_QUERY_MD} {
+    margin-top:20px;
+  }
 `
 
 const ModalFooter = styled.div`
@@ -96,16 +107,6 @@ const ModalActionBtn = styled.button`
   }
     cursor: pointer;
 `
-
-//.modal-confirm {
-//    left: 40px;
-//}
-
-//.modal-cancel {
-//    right: 40px;
-//}
-
-
 
 
 const PopModal = ({desc, img_url, btnTitle, title}) => {
@@ -130,7 +131,7 @@ const PopModal = ({desc, img_url, btnTitle, title}) => {
   const Modal = ({opacity,visible,titleClass, title,width, height, img_url, contentClass, content, footerClass, onOk, okClass, conFirmText, onCancel, cancelClass, cancelText}) => {
     return visible ? (
       <ModalBox style={{backgroundColor:`rgba(0, 0, 0, ${opacity})`}}>
-        <ModalWrapper style={{width:width,height:height}}>
+        <ModalWrapper style={{width:width}}>
             <ModalTItle>{title}</ModalTItle>
             <ModalInfoContent>
               <ModalImgWrap> <Photo $img={img_url}/></ModalImgWrap>
@@ -165,8 +166,7 @@ const PopModal = ({desc, img_url, btnTitle, title}) => {
     <ModalContainer>
       <ModalBtn onClick={openModal}>{btnTitle}</ModalBtn>
       <Modal 
-        width={'600px'}
-        height={'400px'}
+        width={'80%'}
         visible={modalDetail.visible}
         title={title} 
         content={desc}
