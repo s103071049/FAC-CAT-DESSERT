@@ -4,12 +4,9 @@ import Loginusericon from "../img/icon/users-svgrepo-com.svg";
 import cart from "../img/icon/shopping-cart.svg";
 import search from "../img/icon/search.svg";
 import faq from "../img/icon/question.svg";
-import menu from '../img/icon/menu.svg'
+import menu from "../img/icon/menu.svg";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
-import {
-  HashRouter as Router,
-  Link,
-} from "react-router-dom";
+import { HashRouter as Router, Link } from "react-router-dom";
 
 import useHeader from "./useHeader";
 
@@ -21,11 +18,11 @@ const Navbar = styled.div`
   justify-content: center;
   position: relative;
   ${MEDIA_QUERY_MD} {
-    height:70px;  
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:2;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
   }
 `;
 const Wrap = styled.div`
@@ -33,9 +30,9 @@ const Wrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width:100%;
+  width: 100%;
   ${MEDIA_QUERY_MD} {
-    flex-direction:row;
+    flex-direction: row;
     justify-content: space-between;
     padding: 0 20px;
   }
@@ -47,7 +44,7 @@ const Logo = styled(Link)`
   font-weight: bold;
   cursor: pointer;
   text-align: center;
-  text-decoration:none;
+  text-decoration: none;
   ${MEDIA_QUERY_MD} {
     font-size: 2rem;
     padding: 0;
@@ -58,14 +55,14 @@ const Logo = styled(Link)`
   }
 `;
 const RwdBtns = styled.div`
-  display:none;
+  display: none;
   ${MEDIA_QUERY_MD} {
-    display:block;
-    position:relative;
-    display:flex;
+    display: block;
+    position: relative;
+    display: flex;
   }
-`
-const RwdSearch = styled.div``
+`;
+const RwdSearch = styled.div``;
 
 const List = styled.div`
   display: flex;
@@ -108,7 +105,7 @@ const Img = styled.img`
   cursor: pointer;
 `;
 
-const MenuBtn=styled.div``
+const MenuBtn = styled.div``;
 
 const Menu = styled.nav`
   ${MEDIA_QUERY_MD} {
@@ -146,25 +143,24 @@ const ImgLink = styled.div`
   align-items: center;
 `;
 const SearchBarWrap = styled.div`
-    width:100%;
-    position:fixed;
-    top:70px;
-    left:0;
-    padding: 6px 20px;
-    background: #fbf3ea;
-    text-align:center;
-    & input {
-      width:100%;
-      padding: 6px 12px;
-    }
-`
+  width: 100%;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  padding: 6px 20px;
+  background: #fbf3ea;
+  text-align: center;
+  & input {
+    width: 100%;
+    padding: 6px 12px;
+  }
+`;
 
 const SearchBar = styled.input`
   border: 1px solid #b4a582;
   border-radius: 4px;
   outline: none;
   ${(props) => props.value === false && "display: none;"}
-
 `;
 
 function Header() {
@@ -179,30 +175,24 @@ function Header() {
     handleSearchBarClick,
     handleAdminViewClick,
     handleEnter,
-    ref
-  } = useHeader()
+    ref,
+  } = useHeader();
 
   const RenderAdminItem = () => {
     return (
       <>
         {adminViewOpen ? (
-          <Item 
-            to="/" 
-            onClick={handleAdminViewClick}
-          > 
+          <Item to="/" onClick={handleAdminViewClick}>
             訪問前台
           </Item>
-          ) : (
-          <Item 
-            to="/admin/orders" 
-            onClick={handleAdminViewClick}
-          >
+        ) : (
+          <Item to="/admin/orders" onClick={handleAdminViewClick}>
             訪問後台
-          </Item>)
-        }
+          </Item>
+        )}
       </>
-    ) 
-  }
+    );
+  };
   const VistorItems = () => {
     return (
       <>
@@ -210,41 +200,45 @@ function Header() {
         <Item to="#">促銷商品</Item>
         <Item to="/products">商品一覽</Item>
       </>
-    )
-  }
+    );
+  };
   const RenderMenuItems = () => {
-    if(user && user.authority === 1) {
+    if (user && user.authority === 1) {
       return (
         <List>
-            {adminViewOpen ? (
-                <>
-                <Item to="/admin/products">商品管理</Item>
-                <Item to="/admin/discounts">促銷管理</Item>
-                <Item to="/admin/orders">訂單管理</Item>
-                </>
-              ):<VistorItems/>
-            }
-            <RenderAdminItem />
+          {adminViewOpen ? (
+            <>
+              <Item to="/admin/products">商品管理</Item>
+              <Item to="/admin/discounts">促銷管理</Item>
+              <Item to="/admin/orders">訂單管理</Item>
+            </>
+          ) : (
+            <VistorItems />
+          )}
+          <RenderAdminItem />
         </List>
-      )
-    }else{
+      );
+    } else {
       return (
         <List>
-          <VistorItems/>
+          <VistorItems />
         </List>
-      )
+      );
     }
-  }
+  };
 
   const RenderRWDItems = () => {
-    return(
+    return (
       <>
-        {user ?  (<MenuItem to="/user" onClick={toggleHamburger}>
+        {user ? (
+          <MenuItem to="/user" onClick={toggleHamburger}>
             會員中心
-          </MenuItem>):(<MenuItem to="/login" onClick={toggleHamburger}>
+          </MenuItem>
+        ) : (
+          <MenuItem to="/login" onClick={toggleHamburger}>
             會員登入
-          </MenuItem>) 
-        }
+          </MenuItem>
+        )}
         <MenuItem to="/faq" onClick={toggleHamburger}>
           FAQ
         </MenuItem>
@@ -260,121 +254,119 @@ function Header() {
         <MenuItem to="/products" onClick={toggleHamburger}>
           商品一覽
         </MenuItem>
-        <MenuItem to="#" onClick={toggleHamburger}>
+        <MenuItem to="/cart" onClick={toggleHamburger}>
           購物車
         </MenuItem>
-        
       </>
-    )
-  }
+    );
+  };
   const RenderRWDMenu = () => {
-    if(user && user.authority === 1) {
+    if (user && user.authority === 1) {
       return (
         <Menu hamburgerOpen={hamburgerOpen}>
-            {adminViewOpen ? (
-                <>
-                  <MenuItem to="/user" onClick={toggleHamburger}>
-                    會員中心
-                  </MenuItem>
-                  <MenuItem to="/admin/products" onClick={toggleHamburger}>
-                    商品管理
-                  </MenuItem>
-                  <MenuItem to="/admin/discounts" onClick={toggleHamburger}>
-                    促銷管理
-                  </MenuItem>
-                  <MenuItem to="/admin/orders" onClick={toggleHamburger}>
-                    訂單管理
-                  </MenuItem>
-                  <MenuItem to="/" onClick={handleAdminViewClick}>
-                    訪問前台
-                  </MenuItem>
-                </>
-              ):(
-                <>
-                  <RenderRWDItems />
-                  <MenuItem to="/admin/orders" onClick={handleAdminViewClick}>
-                    訪問後台
-                  </MenuItem>
-                </>
-              )
-            }
+          {adminViewOpen ? (
+            <>
+              <MenuItem to="/user" onClick={toggleHamburger}>
+                會員中心
+              </MenuItem>
+              <MenuItem to="/admin/products" onClick={toggleHamburger}>
+                商品管理
+              </MenuItem>
+              <MenuItem to="/admin/discounts" onClick={toggleHamburger}>
+                促銷管理
+              </MenuItem>
+              <MenuItem to="/admin/orders" onClick={toggleHamburger}>
+                訂單管理
+              </MenuItem>
+              <MenuItem to="/" onClick={handleAdminViewClick}>
+                訪問前台
+              </MenuItem>
+            </>
+          ) : (
+            <>
+              <RenderRWDItems />
+              <MenuItem to="/admin/orders" onClick={handleAdminViewClick}>
+                訪問後台
+              </MenuItem>
+            </>
+          )}
         </Menu>
-      )
+      );
     } else {
       return (
         <Menu hamburgerOpen={hamburgerOpen}>
           <RenderRWDItems />
         </Menu>
-      )
+      );
     }
-  }
+  };
   return (
-      <Router>
-        <Navbar ref={ref}>
-          <Wrap>
-            <Logo to="/">Fat Cat dessert ฅ</Logo>
-            <RwdBtns>
-              <RwdSearch to="#">
-                <Img src={search} onClick={handleSearchBarClick}/>
-                {searchBarShow && (
-                  <SearchBarWrap>
-                    <SearchBar
-                      type="text"
-                      placeholder="輸入商品名稱"
-                      value={searchProduct}
-                      onChange={(e) => setSearchProduct(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          handleEnter();
-                        }
-                      }}
-                    />
-                  </SearchBarWrap>
-                )}
-              </RwdSearch>
-              <MenuBtn onClick={toggleHamburger}>
-                <Img src={menu} />
-              </MenuBtn>
-            </RwdBtns>
-            <RenderRWDMenu />
-            <RenderMenuItems />
-          </Wrap>
-          <Icon>
-            {!user && (
-              <ImgLink as={Link} to="/login">
-                <Img src={noLoginusericon} />
-              </ImgLink>
-            )}
-            {user && (
-              <ImgLink as={Link} to="/user">
-                <Img src={Loginusericon} />
-              </ImgLink>
-            )}
-            <ImgLink as={Link} to="#">
-              <Img src={cart} />
-            </ImgLink>
-            <ImgLink to="#">
+    <Router>
+      <Navbar ref={ref}>
+        <Wrap>
+          <Logo to="/">Fat Cat dessert ฅ</Logo>
+          <RwdBtns>
+            <RwdSearch to="#">
               <Img src={search} onClick={handleSearchBarClick} />
               {searchBarShow && (
-                <SearchBar
-                  type="text"
-                  placeholder="輸入商品名稱"
-                  value={searchProduct}
-                  onChange={(e) => setSearchProduct(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      handleEnter();
-                    }
-                  }}
-                />
+                <SearchBarWrap>
+                  <SearchBar
+                    type="text"
+                    placeholder="輸入商品名稱"
+                    value={searchProduct}
+                    onChange={(e) => setSearchProduct(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleEnter();
+                      }
+                    }}
+                  />
+                </SearchBarWrap>
               )}
+            </RwdSearch>
+            <MenuBtn onClick={toggleHamburger}>
+              <Img src={menu} />
+            </MenuBtn>
+          </RwdBtns>
+          <RenderRWDMenu />
+          <RenderMenuItems />
+        </Wrap>
+        <Icon>
+          {!user && (
+            <ImgLink as={Link} to="/login">
+              <Img src={noLoginusericon} />
             </ImgLink>
-            <ImgLink as={Link} to="/faq">
-              <Img src={faq} />
+          )}
+          {user && (
+            <ImgLink as={Link} to="/user">
+              <Img src={Loginusericon} />
             </ImgLink>
-          </Icon>
-        </Navbar>
-      </Router>
+          )}
+          <ImgLink as={Link} to="/cart">
+            <Img src={cart} />
+          </ImgLink>
+          <ImgLink to="#">
+            <Img src={search} onClick={handleSearchBarClick} />
+            {searchBarShow && (
+              <SearchBar
+                type="text"
+                placeholder="輸入商品名稱"
+                value={searchProduct}
+                onChange={(e) => setSearchProduct(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleEnter();
+                  }
+                }}
+              />
+            )}
+          </ImgLink>
+          <ImgLink as={Link} to="/faq">
+            <Img src={faq} />
+          </ImgLink>
+        </Icon>
+      </Navbar>
+    </Router>
   );
 }
 
