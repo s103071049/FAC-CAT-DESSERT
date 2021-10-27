@@ -125,9 +125,6 @@ const AdminProductsPage = () => {
   const {
     thcontexts, 
     tdcontexts,
-    dataAmount,
-    showDataIndex, 
-    setShowDataIndex,
     handleDeleteBtnClick,
     search,
     setSearch,
@@ -175,7 +172,6 @@ const AdminProductsPage = () => {
           </Tbody>
         </Table>
       </AdminProductsContent>
-      <PageChange dataAmount={dataAmount.current} showDataIndex={showDataIndex} setShowDataIndex={setShowDataIndex}/>
     </AdminProductsWrapper>
   );
 };
