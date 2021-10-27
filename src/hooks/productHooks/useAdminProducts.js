@@ -1,9 +1,7 @@
-import {
-  useHistory,
-} from "react-router-dom";
 import { useEffect, useState, useContext, useRef, useCallback } from "react";
-import { getAllProducts, deleteProduct, searchProducts } from "../../WEBAPI";
+import { getAllProducts, deleteProduct } from "../../WEBAPI";
 import { AuthLoadingContext } from '../../context'
+import usePagination from "../paginationHooks/usePagination";
 
 const useAdminProduct = () => {
   const thcontexts = [
@@ -15,12 +13,12 @@ const useAdminProduct = () => {
     "刪除",
     "編輯",
   ];
-  const history = useHistory();
   const dataAmount = useRef(null)
-  const [search, setSearch] = useState("");
+
+  const {eachPageAmount} = usePagination()
+  const [showDataIndex, setShowDataIndex] = useState(0)
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
-
   
   const fetchProducts = useCallback(()=> {
       const fetchingProduct = async() => {
@@ -28,24 +26,25 @@ const useAdminProduct = () => {
       const result = await getAllProducts()
       try {
         if(!result.success) {
-          setTdcontexts([])
-          return  history.goBack()
+         return  console.log(result)
         }
         let getProducts = result.products.filter(product => !product.is_deleted)
-        setTdcontexts(getProducts)
+        dataAmount.current = getProducts.length
+        const showDataArr = getProducts.slice(showDataIndex, showDataIndex+ eachPageAmount)
+
+        setTdcontexts(showDataArr)
         setLoading(false)
 
       } catch (err) {
-        return  history.goBack()
+        console.log(err)
       }
     }
     fetchingProduct()
-  },[setLoading,history])
+  },[eachPageAmount, setLoading, showDataIndex])
 
   useEffect(() => {
     fetchProducts()
   },[fetchProducts])
-
 
   const handleDeleteBtnClick = async(id) => {
     const result = await deleteProduct(id)
@@ -61,46 +60,13 @@ const useAdminProduct = () => {
     }
   }
 
-
-  const fetchSearchProduct = async (search) => {
-    setLoading(true)
-    const result = await searchProducts(search)
-    try {
-      console.log(result)
-      if(!result.success){
-        setTdcontexts([])
-        return setLoading(false)
-      }
-      let getSearchedProducts = result.data.filter(product => !product.is_deleted)
-
-      if (getSearchedProducts.success && getSearchedProducts.length === 0) {
-        setTdcontexts([])
-        return setLoading(false)
-      }
-      
-      dataAmount.current = getSearchedProducts.length
-
-      setTdcontexts(getSearchedProducts)
-      setLoading(false)
-
-    } catch(err) {
-      return setLoading(false)
-    }
-  }
-   const handleChange = (setValue) => (e) => setValue(e.target.value);
-
-
-
   return {
     thcontexts, 
     tdcontexts,
     dataAmount,
+    showDataIndex, 
+    setShowDataIndex,
     handleDeleteBtnClick,
-    fetchProducts,
-    search,
-    setSearch,
-    handleChange,
-    fetchSearchProduct
   }
 
 }

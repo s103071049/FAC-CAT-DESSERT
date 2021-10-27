@@ -4,6 +4,7 @@ import { useHistory,} from "react-router-dom";
 import { getAllProducts, searchProducts, updateProducts } from "../../WEBAPI";
 import { AuthLoadingContext } from '../../context'
 import { useEffect } from "react/cjs/react.development";
+import useDebounce from "../carts/useDebounce";
 
 const useAdminRestoreProduct = () => {
   const thcontexts = [
@@ -16,6 +17,7 @@ const useAdminRestoreProduct = () => {
     "編輯",
   ]
   const history = useHistory();
+  const debounce = useDebounce();
   const [search, setSearch] = useState('')
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
@@ -71,24 +73,33 @@ const useAdminRestoreProduct = () => {
 
   const fetchingSearchDeletedProduct = async (search) => {
     setLoading(true)
+    if(!search) return fetchDeletedProduct()
     const result = await searchProducts(search)
     try{
       if(!result.success){
         setTdcontexts([])
+        setSearch('')
         return setLoading(false)
       }
       let getSearchedProducts = result.data.filter(product=> product.is_deleted)
       if(result.success && getSearchedProducts.length === 0){
         setTdcontexts([])
+        setSearch('')
         return setLoading(false)
       }
 
       setTdcontexts(getSearchedProducts)
+      setSearch('')
+
       return setLoading(false)
 
     }catch(err) {
       return setLoading(false)
     }
+  }
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+    debounce(() => fetchingSearchDeletedProduct(e.target.value),1000)
   }
 
   return {
@@ -98,6 +109,7 @@ const useAdminRestoreProduct = () => {
     fetchingSearchDeletedProduct,
     search,
     setSearch,
+    handleChange,
     fetchDeletedProduct
   }
 }

@@ -107,23 +107,25 @@ const AdminProductsRestorePage = () => {
     handleRestoreBtnClick,
     fetchingSearchDeletedProduct,
     search,
-    setSearch,
+    handleChange,
     fetchDeletedProduct
   } = useAdminRestoreProduct()
+
+  
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>重上架已刪除商品</AdminProductsTitle>
       <AdminProductsInfo>
-        <SearchInput 
-          name="productSearch" 
-          placeholder="搜尋已刪除之商品" 
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyPress={(e) => {
-            if(e.key === 'Enter') {
-              search? fetchingSearchDeletedProduct(search):fetchDeletedProduct()
-            }
-          }}
-        />
+          <SearchInput 
+            name="productSearch" 
+            placeholder="搜尋已刪除之商品"
+            onChange={handleChange}
+            onKeyPress={(e) => {
+              if(e.key === 'Enter') {
+                search? fetchingSearchDeletedProduct(search):fetchDeletedProduct()
+              }
+            }}
+          />
       </AdminProductsInfo>
       <AdminProductsContent>
         <Table>
