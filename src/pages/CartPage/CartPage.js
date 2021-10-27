@@ -36,7 +36,7 @@ const CartPage = () => {
             handleDecreaseProduct={handleDecreaseProduct}
             handleIncreaseProduct={handleIncreaseProduct}
           />
-          <Shipping />
+          {/* <Shipping /> */}
         </ShoppinCartDetail>
       </CartWrapper>
     </>

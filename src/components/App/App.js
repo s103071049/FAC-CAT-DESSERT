@@ -81,9 +81,7 @@ function App() {
                 {!token && <Redirect push to="/" />}
                 {user && <UserPage />}
               </Route>
-              <Route path="/cart">
-                <CartPage />
-              </Route>
+              <Route path="/cart">{user && <CartPage />}</Route>
               <Route path="/transaction">
                 <TransactionPage />
               </Route>

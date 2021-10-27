@@ -15,9 +15,10 @@ const useAddCartItems = (dessert, count) => {
         setLoading(false);
         return alert("系統異常中，正迅速修復!");
       }
-      setLoading(false);
-      alert(`添加 ${count} 個 ${dessert.name} 到購物車!`);
     });
+    setLoading(false);
+    alert(`添加 ${count} 個 ${dessert.name} 到購物車!`);
+    console.log(`添加 ${count} 個 ${dessert.name} 到購物車!`);
   };
   return {
     handleAddProducts,
