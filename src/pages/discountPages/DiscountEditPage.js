@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import styled from "styled-components";
 import { FindDataAPI } from "../../API/fetchAPI";
 import InputItem from "./inputItem.js";
@@ -11,7 +12,25 @@ const Bottom = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
-
+const TitleButton = styled(Link)`
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #917856;
+  font-weight: bold;
+  padding: 16px;
+  background: white;
+  border: 1px solid rgba(201, 186, 152, 0.9);
+  margin: 0;
+  margin-top: 36px;
+  &: hover {
+    color: white;
+    background: rgba(201, 186, 152, 1.5);
+    transition: all 0.5s ease;
+  }
+  margin-bottom: 18px;
+`;
 const Wrapper = styled.div`
   max-width: 1024px;
   min-height: 80vh;
@@ -112,6 +131,7 @@ const DiscountEditPage = () => {
             handleChange={handleChange(setPrice)}
           />
           <Bottom>
+            <TitleButton to="/admin/discounts">返回</TitleButton>
             <Submit>提交</Submit>
           </Bottom>
         </form>

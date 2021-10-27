@@ -1,16 +1,20 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useRef } from "react";
 import { AuthLoadingContext } from "../../context";
 import { FindDataAPI, searchAPI } from "../../API/fetchAPI";
 import { getAuthToken } from "../../utils";
+import usePagination from "../paginationHooks/usePagination";
 
 export default function useDiscount(isRestore) {
   const [discounts, setDiscounts] = useState([]);
   const [search, setSearch] = useState("");
   const { loading, setLoading } = useContext(AuthLoadingContext);
+  const [showDataIndex, setShowDataIndex] = useState(0);
+  const { eachPageAmount } = usePagination();
+  const dataAmount = useRef(null);
 
   const fetchDiscounts = () => {
-    console.log("fetchDiscounts");
     setLoading(true);
+    console.log("fetchDiscounts");
     FindDataAPI({ authorization: getAuthToken() }, "/findAllDiscounts")
       .then((data) => {
         const { Discounts } = data;
@@ -20,7 +24,12 @@ export default function useDiscount(isRestore) {
             newDiscounts.push(discount);
           }
         });
-        setDiscounts(newDiscounts);
+        dataAmount.current = newDiscounts.length;
+        const showDataArr = newDiscounts.slice(
+          showDataIndex,
+          showDataIndex + eachPageAmount
+        );
+        setDiscounts(showDataArr);
         return setLoading(false);
       })
       .catch((err) => {
@@ -30,7 +39,6 @@ export default function useDiscount(isRestore) {
   };
 
   const searchDiscounts = (search) => {
-    console.log("searchDiscounts");
     setLoading(true);
     searchAPI(
       { authorization: getAuthToken(), key: search },
@@ -62,11 +70,14 @@ export default function useDiscount(isRestore) {
   return {
     discounts,
     search,
+    showDataIndex,
+    dataAmount,
 
     setDiscounts,
     setSearch,
     fetchDiscounts,
     searchDiscounts,
     handleChange,
+    setShowDataIndex,
   };
 }

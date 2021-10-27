@@ -135,10 +135,14 @@ const DiscountsPage = (isRestore) => {
   const {
     discounts,
     search,
+    showDataIndex,
+    dataAmount,
+
     fetchDiscounts,
     setSearch,
     searchDiscounts,
     handleChange,
+    setShowDataIndex,
   } = useDiscount(isRestore);
   const { loading, setLoading } = useContext(AuthLoadingContext);
   let location = useLocation();
@@ -159,7 +163,7 @@ const DiscountsPage = (isRestore) => {
 
   useEffect(() => {
     fetchDiscounts();
-  }, [location.pathname]);
+  }, [location.pathname, showDataIndex]);
 
   return (
     <AdminProductsWrapper>
@@ -204,7 +208,11 @@ const DiscountsPage = (isRestore) => {
           </Tbody>
         </Table>
       </AdminProductsContent>
-      <PageChange />
+      <PageChange
+        dataAmount={dataAmount.current}
+        showDataIndex={showDataIndex}
+        setShowDataIndex={setShowDataIndex}
+      />
     </AdminProductsWrapper>
   );
 };
