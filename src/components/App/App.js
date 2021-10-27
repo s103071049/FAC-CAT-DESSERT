@@ -111,7 +111,7 @@ function App() {
               <Route path="/admin/addProduct">
                 <AddProductPage />
               </Route>
-              <Route path="/admin/updateProduct">
+              <Route path="/admin/updateProduct/:id">
                 <UpdateProductPage />
               </Route>
               <Route path="/admin/orders">
