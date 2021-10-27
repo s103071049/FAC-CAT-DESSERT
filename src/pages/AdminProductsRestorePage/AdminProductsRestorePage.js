@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
-import PageChange from "../../components/common/PageChange";
 import { TdContext } from "./components/TdContext";
 import { thcontexts, tdcontexts } from "./components/contextItem";
 
@@ -125,7 +124,6 @@ const AdminProductsRestorePage = () => {
           </Tbody>
         </Table>
       </AdminProductsContent>
-      <PageChange />
     </AdminProductsWrapper>
   );
 };
