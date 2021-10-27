@@ -16,7 +16,7 @@ const useAdminRestoreProduct = () => {
     "編輯",
   ]
   const history = useHistory();
-
+  const [search, setSearch] = useState('')
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
 
@@ -69,10 +69,36 @@ const useAdminRestoreProduct = () => {
     }
   }
 
+  const fetchingSearchDeletedProduct = async (search) => {
+    setLoading(true)
+    const result = await searchProducts(search)
+    try{
+      if(!result.success){
+        setTdcontexts([])
+        return setLoading(false)
+      }
+      let getSearchedProducts = result.data.filter(product=> product.is_deleted)
+      if(result.success && getSearchedProducts.length === 0){
+        setTdcontexts([])
+        return setLoading(false)
+      }
+
+      setTdcontexts(getSearchedProducts)
+      return setLoading(false)
+
+    }catch(err) {
+      return setLoading(false)
+    }
+  }
+
   return {
     thcontexts,
     tdcontexts,
-    handleRestoreBtnClick
+    handleRestoreBtnClick,
+    fetchingSearchDeletedProduct,
+    search,
+    setSearch,
+    fetchDeletedProduct
   }
 }
 
