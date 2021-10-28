@@ -111,7 +111,7 @@ const Td = styled.td`
       justify-content:center;`
       
     }
-    &[data-title="商品介紹"] div {
+    &[data-title="商品介紹"] > div {
       display:inline-block;
     }
   }

@@ -102,6 +102,8 @@ justify-content:center;
       font-weight: 900;
       padding-right: 1rem;
     }
-
+    &[data-title="商品介紹"] > div {
+      display:inline-block;
+    }
   }
 `;
