@@ -45,6 +45,7 @@ export default function PageBtn({pageNext ,pageDetail}) {
     if(pagenum > 1) {
       setNum(num - pageSize)
       setPageNum(pagenum - 1)
+      
     }
   }
   useEffect(()=>{

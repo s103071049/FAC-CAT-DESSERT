@@ -1,4 +1,3 @@
-import React, { useCallback, useEffect,useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
 import { TdContext } from "./components/TdContext";
@@ -74,7 +73,7 @@ const Table = styled.table`
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
-  min-height:680px;
+  min-height:700px;
   font-size: 20px;
 
   & td,
@@ -134,7 +133,7 @@ const AdminProductsPage = () => {
     handleChange,
     fetchingSearchProduct
    } = useAdminProduct()
-   const pageSize =4
+   const pageSize =5
    const {pageDetail, pageNext} = usePagination(tdcontexts, pageSize)
    
   return (

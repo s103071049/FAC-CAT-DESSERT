@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
 import useAdminRestoreProduct from "../../hooks/productHooks/useAdminRestoreProducts";
 import { TdContext } from "./components/TdContext";
+import PageBtn from "../../components/common/PageBtn";
+
+import usePagination from "../../hooks/common/usePagination";
 
 const AdminProductsWrapper = styled.div`
   max-width: 1042px;
@@ -51,6 +54,7 @@ const Table = styled.table`
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
+
   font-size: 20px;
 
   & td,
@@ -71,7 +75,6 @@ const Table = styled.table`
 `;
 const Thead = styled.thead`
   & tr {
-    height: 60px;
     font-size: 24px;
     color: #917856;
     font-weight: bold;
@@ -84,6 +87,8 @@ const Tbody = styled.tbody`
   & tr {
     height: 60px;
     border-bottom: 1px solid #917856;
+    vertical-align: -webkit-baseline-middle;
+
   }
   & tr:last-child {
     border: 0;
@@ -98,7 +103,8 @@ const Tbody = styled.tbody`
 `;
 const Th = styled.th``;
 
-const Tr = styled.tr``;
+const Tr = styled.tr`
+`;
 
 const AdminProductsRestorePage = () => {
   const {
@@ -110,6 +116,8 @@ const AdminProductsRestorePage = () => {
     handleChange,
     fetchDeletedProduct
   } = useAdminRestoreProduct()
+  const pageSize =4
+  const {pageDetail, pageNext} = usePagination(tdcontexts, pageSize)
 
   
   return (
@@ -137,7 +145,7 @@ const AdminProductsRestorePage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {tdcontexts.map((tdcontext, index) => (
+            {pageDetail.indexList.map((tdcontext, index) => (
               <TdContext 
                 tdcontext={tdcontext} 
                 key={index} 
@@ -147,6 +155,7 @@ const AdminProductsRestorePage = () => {
             ))}
           </Tbody>
         </Table>
+        <PageBtn pageNext={pageNext} pageDetail={pageDetail}/>
       </AdminProductsContent>
     </AdminProductsWrapper>
   );
