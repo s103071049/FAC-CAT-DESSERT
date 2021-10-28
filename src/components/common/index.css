@@ -1,0 +1,73 @@
+.x-pagination-root {
+  height: 50px;
+  /* background-color: #199199; */
+}
+.x-clearfix {
+  display: flex;
+  align-items: center;
+}
+.x-clearfix::after {
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0;
+  display: block;
+}
+.x-pagination-item {
+  float: left;
+  color: #81858A;
+  padding: 2px 12px;
+  margin: 0 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #E8E7E7;
+  transition: all 0.1s linear;
+}
+.x-pagination-item:hover {
+  border: 1px solid #1397A8;
+}
+
+.x-pagination-actived {
+  color: #fff;
+  background-color: #1397A8;
+  border: 1px solid #1397A8;
+}
+
+
+.x-pagination-prev,.x-pagination-next {
+  outline: none;
+  background-color: transparent;
+}
+
+
+.x-pagination-prev:disabled,.x-pagination-next:disabled {
+  cursor: not-allowed;
+}
+
+
+
+
+/* 省略号 */
+.x-pagination-point-next,.x-pagination-point-prev {
+  position: relative;
+}
+
+.x-pagination-right::after,.x-pagination-left::after {
+  content: '···';
+}
+
+.x-pagination-point-next:hover  .x-pagination-right::after{
+  content: "»";
+  font-size: 14px;
+  font-family: '黑体';
+  vertical-align: middle;
+  color: #1397A8;
+}
+.x-pagination-point-prev:hover  .x-pagination-left::after{
+  content: "«";
+  font-size: 14px;
+  font-family: '黑体';
+  vertical-align: middle;
+  color: #1397A8;
+}

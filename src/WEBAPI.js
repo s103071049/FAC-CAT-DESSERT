@@ -113,7 +113,7 @@ export const searchProducts = async (searchKey) => {
 };
 
 
-export const updateProducts = async(name, desc, img_url, price,category, id) => {
+export const updateProducts = async(name, desc, img_url, price,category, id, is_deleted = false) => {
   const data = {
     name,
     desc,
@@ -123,7 +123,10 @@ export const updateProducts = async(name, desc, img_url, price,category, id) => 
     category,
     img_url,
     id,
+    is_deleted 
   }
+  console.log(is_deleted !==null)
+  console.log(data)
   const token = getAuthToken()
   const response = await fetch(`${BASE_URL}/updateProducts`,{
     method:'POST',
@@ -156,6 +159,16 @@ export const createProduct = async(name, desc, img_url, price, category) => {
     body:JSON.stringify(data),
   })
   return await response.json();
+}
+
+export const deleteProduct = async(id) => {
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/deleteProducts/${id}`, {
+     headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+  return response.json()
 }
 
 // order
