@@ -84,13 +84,11 @@ const Td = styled.td`
   & + & {
     margin-top: 10px;
   }
-  ${(props) =>
-    props.$photo &&
-    `
-width:100%;
-display:inline-flex;
-justify-content:center;
-`}
+  ${(props) => props.$photo &&`
+    width:100%;
+    display:inline-flex;
+    justify-content:center;
+  `}
   ${MEDIA_QUERY_MD} {
     padding-left: 10%;
     margin-bottom: 12px;
