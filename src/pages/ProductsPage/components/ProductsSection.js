@@ -55,10 +55,10 @@ const ProductListsImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  min-width: 200px;
   margin-right: 50px;
   @media screen and (max-width: 550px) {
-    width: 40%;
+    min-width: 100px;
     margin-right: 20px;
   }
 `;
@@ -305,7 +305,6 @@ export default function ProductsSection({selectedCategory}) {
     showDataIndex,
     setShowDataIndex,
     dataAmount,
-    loading,
   } = useFindProducts(selectedCategory)
 
   
