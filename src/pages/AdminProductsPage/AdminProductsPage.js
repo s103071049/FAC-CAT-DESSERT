@@ -5,6 +5,7 @@ import { TdContext } from "./components/TdContext";
 import { Link } from "react-router-dom";
 import useAdminProduct from "../../hooks/productHooks/useAdminProducts";
 import PageBtn from "../../components/common/PageBtn";
+import usePagination from "../../hooks/common/usePagination";
 
 
 const AdminProductsWrapper = styled.div`
@@ -134,50 +135,8 @@ const AdminProductsPage = () => {
     fetchingSearchProduct
    } = useAdminProduct()
    const pageSize =4
-   const [pageDetail, setPageDetail] = useState({
-      indexList:[],//當前渲染的頁面數據
-      totalData:tdcontexts,
-      current: 1, //當前頁碼
-      pageSize:pageSize, //每頁顯示的條數
-      goValue:0,  //要去的條數index
-      totalPage:0//總頁數
-   })
-  //const setPage = (num) => {
-  //  console.log(num)
-  //    setPageDetail(prevState => {
-  //      return {
-  //        ...prevState,
-  //        indexList:tdcontexts.slice(num,num+pageDetail.pageSize)
-  //      }
-  //  })
-  //}
-
-  const setPage = useCallback((num)=>{
-
-    setPageDetail(prevState => {
-          return {
-            ...prevState,
-            indexList:tdcontexts.slice(num,num+pageDetail.pageSize)
-          }
-    })
-
-  },[pageDetail.pageSize,tdcontexts])
-
-  const pageNext = useCallback((num) => {
-      setPage(num)
-  }, [setPage])
-  
-  useEffect(()=>{
-    setPageDetail(prevState=>{
-      return {
-        ...prevState,
-        indexList:tdcontexts.slice(0,pageDetail.pageSize),
-        totalPage:Math.ceil( tdcontexts.length/prevState.pageSize)
-      }
-    })
-  }, [tdcontexts,pageDetail.pageSize])
-
-
+   const {pageDetail, pageNext} = usePagination(tdcontexts, pageSize)
+   
   return (
     <AdminProductsWrapper>
       <AdminProductsTitle>商品管理</AdminProductsTitle>

@@ -39,12 +39,12 @@ export default function PageBtn({pageNext ,pageDetail}) {
   const [num, setNum] = useState(0)
   const [pagenum, setPageNum] =  useState(current)
   
+
   //上一頁
   const handlePreClick = () => {
     if(pagenum > 1) {
       setNum(num - pageSize)
       setPageNum(pagenum - 1)
-      pageNext(num)
     }
   }
   useEffect(()=>{
@@ -56,6 +56,7 @@ export default function PageBtn({pageNext ,pageDetail}) {
     if(pagenum < totalPage) {
       setNum(num + pageSize)
       setPageNum(pagenum+1)
+
     }
   }
   return (
