@@ -1,11 +1,9 @@
-import { useState, useEffect, useRef, useContext, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { getAllProducts } from "../../WEBAPI";
 import { useHistory } from "react-router-dom";
-import usePagination from "../paginationHooks/usePagination";
 import { AuthLoadingContext } from '../../context'
 
 const useFindProducts = (selectedCategory) => {
-  const {eachPageAmount} = usePagination()
   const {loading, setLoading} = useContext(AuthLoadingContext)
   const [products, setProducts] = useState([])
   const [section, setSection] = useState("sqares");
@@ -25,16 +23,15 @@ const useFindProducts = (selectedCategory) => {
         if(!result.success){
           return history.goBack()
         }
-        let getSelectedProducts = result.products
+        let getSelectedProducts = result.products.filter(product=> !product.is_deleted)
         
         if(selectedCategory !== '全部品項') {
           getSelectedProducts = getSelectedProducts.filter(product => product.category === selectedCategory)
         }
 
         dataAmount.current = getSelectedProducts.length
-        const showDataArr = getSelectedProducts.slice(showDataIndex, showDataIndex+eachPageAmount)
 
-        setProducts(showDataArr)
+        setProducts(getSelectedProducts)
         setLoading(false)
 
 
@@ -45,7 +42,7 @@ const useFindProducts = (selectedCategory) => {
 
     fetchAllproducts()
 
-  }, [history, showDataIndex, eachPageAmount,selectedCategory, setLoading])
+  }, [history, showDataIndex,selectedCategory, setLoading])
   
 
  

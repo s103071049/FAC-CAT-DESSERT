@@ -3,7 +3,6 @@ import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
 } from "../../../components/Style/style";
-import PageChange from "../../../components/common/PageChange";
 import ProductsSectionTiTleContent from "../../../components/common/ProductsSectionTiTleContent";
 import squares from "../../../components/img/icon/squares.svg";
 import list from "../../../components/img/icon/list.svg";
@@ -353,7 +352,6 @@ export default function ProductsSection({selectedCategory}) {
         products={products} 
         section={section} 
       />
-      <PageChange dataAmount={dataAmount.current} showDataIndex={showDataIndex} setShowDataIndex={setShowDataIndex}/>
     </div>
     </>
   );
