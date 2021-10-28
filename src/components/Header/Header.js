@@ -196,8 +196,8 @@ function Header() {
   const VistorItems = () => {
     return (
       <>
-        <Item to="#">新品上市</Item>
-        <Item to="#">促銷商品</Item>
+        <Item to="/newProducts">新品上市</Item>
+        <Item to="/hotProducts">促銷商品</Item>
         <Item to="/products">商品一覽</Item>
       </>
     );
@@ -245,10 +245,10 @@ function Header() {
         <MenuItem to="/about" onClick={toggleHamburger}>
           關於我們
         </MenuItem>
-        <MenuItem to="#" onClick={toggleHamburger}>
+        <MenuItem to="/newProducts" onClick={toggleHamburger}>
           新品上市
         </MenuItem>
-        <MenuItem to="#" onClick={toggleHamburger}>
+        <MenuItem to="/hotProducts" onClick={toggleHamburger}>
           促銷商品
         </MenuItem>
         <MenuItem to="/products" onClick={toggleHamburger}>
