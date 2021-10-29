@@ -68,6 +68,7 @@ const AdminProductsContent = styled.div`
 `;
 
 const Table = styled.table`
+  margin-bottom:40px;
   border-spacing: 1;
   border-collapse: collapse;
   border-radius: 6px;
@@ -130,9 +131,13 @@ const AdminProductsPage = () => {
     fetchProducts,
     search,
     handleChange,
-    fetchingSearchProduct
+    fetchingSearchProduct,
+    num,
+    setNum,
+    pagenum,
+    setPageNum
    } = useAdminProduct()
-   const pageSize =5
+   const pageSize = 4
    const {pageDetail, pageNext} = usePagination(tdcontexts, pageSize)
    
   return (
@@ -174,7 +179,14 @@ const AdminProductsPage = () => {
             ))}
           </Tbody>
         </Table>
-        <PageBtn pageNext={pageNext} pageDetail={pageDetail}/>
+        <PageBtn 
+          pageNext={pageNext} 
+          pageDetail={pageDetail}
+          num={num}
+          setNum={setNum}
+          pagenum={pagenum}
+          setPageNum={setPageNum}
+        />
       </AdminProductsContent>
     </AdminProductsWrapper>
   );
