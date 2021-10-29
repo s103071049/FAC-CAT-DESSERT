@@ -5,6 +5,7 @@ import {
 } from "../../../components/Style/style";
 import useFindHotProducts from "../../../hooks/productHooks/useFindHotProducts";
 import useFindRecommendProducts from "../../../hooks/productHooks/useFindRecommendProducts";
+import useAddCartItems from "../../../hooks/carts/useAddCartItems";
 
 const Section = styled.div`
   display: flex;
@@ -76,7 +77,7 @@ const DessertPrice = styled.div`
   color: #a96360;
   margin-bottom: 8px;
 `;
-const CartButton = styled.div`
+const CartButton = styled.button`
   margin: 0 auto;
   border: 2px solid #dac9a6;
   color: #dac9a6;
@@ -86,6 +87,16 @@ const CartButton = styled.div`
   cursor: pointer;
   transition: background 0.5s ease-out;
   white-space: nowrap;
+  transition: all 0.05s ease-out;
+  &:active {
+    background: #e8e8d0;
+    color: #616130;
+    border: 2px solid #616130;
+    transform: scale(0.8) perspective(1px);
+  }
+  &:hover {
+    background: #e8e8d0;
+  }
 `;
 const Img = styled.div``;
 function Advertisement({ enTitle, chTitle }) {
@@ -97,15 +108,17 @@ function Advertisement({ enTitle, chTitle }) {
     </>
   );
 }
-function Sales({ url, name, price }) {
+function Sales({ product }) {
+  const { handleAddProducts } = useAddCartItems(product, 1);
+
   return (
     <Dessert>
       <Img>
-        <DessertImg url={url} />
+        <DessertImg url={product.img_url} />
       </Img>
-      <DessertName>{name}</DessertName>
-      <DessertPrice>{price}</DessertPrice>
-      <CartButton>加入購物車</CartButton>
+      <DessertName>{product.name}</DessertName>
+      <DessertPrice>{product.price}</DessertPrice>
+      <CartButton onClick={handleAddProducts}>加入購物車</CartButton>
     </Dessert>
   );
 }
@@ -118,14 +131,7 @@ function HotSales() {
         <Advertisement enTitle={"Recommended Goods"} chTitle={"主廚推薦"} />
         <Section>
           {recommendProducts.map((product, index) => {
-            return (
-              <Sales
-                url={product.img_url}
-                name={product.name}
-                price={product.price}
-                key={index}
-              />
-            );
+            return <Sales product={product} key={index} />;
           })}
         </Section>
       </Category>
@@ -133,14 +139,7 @@ function HotSales() {
         <Advertisement enTitle={"Hot Sales"} chTitle={"熱銷甜點"} />
         <Section>
           {hotProducts.map((hotProduct, index) => {
-            return (
-              <Sales
-                url={hotProduct.Product.img_url}
-                name={hotProduct.Product.name}
-                price={hotProduct.Product.price}
-                key={index}
-              />
-            );
+            return <Sales product={hotProduct.Product} key={index} />;
           })}
         </Section>
       </Category>
