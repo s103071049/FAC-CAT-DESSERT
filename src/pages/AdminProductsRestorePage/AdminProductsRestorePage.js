@@ -49,6 +49,7 @@ const AdminProductsContent = styled.div`
 `;
 
 const Table = styled.table`
+  margin-bottom:40px;
   border-spacing: 1;
   border-collapse: collapse;
   border-radius: 6px;
@@ -112,9 +113,15 @@ const AdminProductsRestorePage = () => {
     fetchingSearchDeletedProduct,
     search,
     handleChange,
-    fetchDeletedProduct
+    fetchDeletedProduct,
+    num,
+    setNum,
+    pagenum,
+    setPageNum
   } = useAdminRestoreProduct()
-  const pageSize =4
+
+  //分頁
+  const pageSize = 4
   const {pageDetail, pageNext} = usePagination(tdcontexts, pageSize)
 
   
@@ -153,7 +160,14 @@ const AdminProductsRestorePage = () => {
             ))}
           </Tbody>
         </Table>
-        <PageBtn pageNext={pageNext} pageDetail={pageDetail}/>
+         <PageBtn 
+          pageNext={pageNext} 
+          pageDetail={pageDetail}
+          num={num}
+          setNum={setNum}
+          pagenum={pagenum}
+          setPageNum={setPageNum}
+        />
       </AdminProductsContent>
     </AdminProductsWrapper>
   );
