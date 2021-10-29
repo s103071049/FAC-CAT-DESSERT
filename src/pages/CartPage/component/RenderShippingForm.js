@@ -5,6 +5,8 @@ import card from "../../../components/img/icon/card.svg";
 import PayWarnningContent from "./PayWarnningContent";
 import { getUser, createOrder } from "../../../WEBAPI";
 import { AuthContexts } from "../../../context";
+import { getAuthToken } from "../../../utils";
+import { PostDataAPI } from "../../../API/fetchAPI";
 const Form = styled.form`
   margin-top: 20px;
 `;
@@ -157,31 +159,67 @@ const RenderShippingForm = ({ data }) => {
   const handleDonateInvoice = (e) => {
     setIsDonateInvoice(e.target.value);
   };
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    let order = {
-      userId: user.id,
-      buyerName: name,
-      buyerPhone: phone,
-      buyerAddress: address,
-      deliverDate: date,
-      receiverName: receiverName,
-      receiverPhone: receiverPhone,
-      receiverAddress: receiverAddress,
-      lastFiveNumber: transactionNumber,
-      donateInvoice: isDonateInvoice,
-      invoiceType: invoice,
-      invoiceNumber: companyInvoice,
-    };
-    console.log(order);
-    console.log(data);
-    createOrder(data, order).then((response) => {
-      console.log(response);
-    });
-  }, []);
+  // const handleSubmit = useCallback((e) => {
+  //   e.preventDefault();
+  //   let order = {
+  //     userId: user.id,
+  //     buyerName: name,
+  //     buyerPhone: phone,
+  //     buyerAddress: address,
+  //     deliverDate: date,
+  //     receiverName: receiverName,
+  //     receiverPhone: receiverPhone,
+  //     receiverAddress: receiverAddress,
+  //     lastFiveNumber: transactionNumber,
+  //     donateInvoice: isDonateInvoice,
+  //     invoiceType: invoice,
+  //     invoiceNumber: companyInvoice,
+  //   };
+  //   console.log(order);
+  //   console.log(data);
+  //   createOrder(data, order).then((response) => {
+  //     console.log(response);
+  //   });
+  // }, []);
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   // };
+  const handleSubmit = async (event) => {
+    console.log("handleSubmit");
+    event.preventDefault();
+    const orderInfo = {
+      order: {
+        userId: user.id,
+        buyerName: name,
+        buyerPhone: phone,
+        buyerAddress: address,
+        deliverDate: date,
+        receiverName: receiverName,
+        receiverPhone: receiverPhone,
+        receiverAddress: receiverAddress,
+        lastFiveNumber: transactionNumber,
+        donateInvoice: isDonateInvoice,
+        invoiceType: invoice,
+        invoiceNumber: companyInvoice,
+      },
+      products: data,
+    };
+
+    const res = await PostDataAPI(
+      {
+        data: orderInfo,
+        authorization: getAuthToken(),
+      },
+      "/newOrder"
+    );
+    if (res.success) {
+      alert("成功");
+      window.history.back(-1);
+    } else {
+      alert(res.message);
+    }
+  };
+
   useEffect(() => {
     getUser().then((response) => {
       console.log(response);
