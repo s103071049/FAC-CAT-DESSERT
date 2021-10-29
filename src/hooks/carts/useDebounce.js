@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 export default function useDebounce() {
-  const [clickTimeout, setclickTimeout] = useState("");
+  const [clickTimeout, setClickTimeout] = useState("");
   function debounce(func, wait) {
-    clearTimeout(clickTimeout);
+    clearTimeout(clickTimeout); // 重設計時器
     const timeout = setTimeout(() => {
       func();
     }, wait);
-    setclickTimeout(timeout);
+    setClickTimeout(timeout);
   }
   return debounce;
 }

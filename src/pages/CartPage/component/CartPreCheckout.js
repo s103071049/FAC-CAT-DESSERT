@@ -20,13 +20,7 @@ const CartPreCheckout = ({ items, shipments }) => {
   items.map((item) => {
     return (price += item.product_quantity * item["Product.price"]);
   });
-  let rules = shipments
-    .filter((item) => {
-      return item.is_deleted !== true;
-    })
-    .sort((a, b) => {
-      return a.threshold - b.threshold;
-    });
+  let rules = shipments;
   for (let i = 0; i < rules.length; i++) {
     if (price < rules[i].threshold) {
       shipment = rules[i].shipment;

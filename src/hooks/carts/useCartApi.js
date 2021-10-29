@@ -53,14 +53,6 @@ const useCartApi = () => {
       }
       return;
     });
-    await getAllCartItems().then((response) => {
-      if (!response.success) {
-        setLoading(false);
-        return alert("系統異常，非常抱歉");
-      }
-      setLoading(false);
-      return;
-    });
   };
   const handleDecreaseProduct = async (item) => {
     let quantity = item.product_quantity - 1;
@@ -76,19 +68,11 @@ const useCartApi = () => {
           };
         })
     );
-    debounce(async () => {
-      await updateCartItem(item.ProductId, quantity).then((response) => {
+    debounce(() => {
+      updateCartItem(item.ProductId, quantity).then((response) => {
         if (!response.success) {
           return alert("更新商品數量處理異常，系統修復中");
         }
-        return;
-      });
-      await getAllCartItems().then((response) => {
-        if (!response.success) {
-          setLoading(false);
-          return alert("系統異常，非常抱歉");
-        }
-        setLoading(false);
         return;
       });
     }, 1000);
@@ -104,19 +88,11 @@ const useCartApi = () => {
         };
       })
     );
-    debounce(async () => {
-      await updateCartItem(item.ProductId, quantity).then((response) => {
+    debounce(() => {
+      updateCartItem(item.ProductId, quantity).then((response) => {
         if (!response.success) {
           return alert("更新商品數量處理異常，系統修復中");
         }
-        return;
-      });
-      await getAllCartItems().then((response) => {
-        if (!response.success) {
-          setLoading(false);
-          return alert("系統異常，非常抱歉");
-        }
-        setLoading(false);
         return;
       });
     }, 1000);
