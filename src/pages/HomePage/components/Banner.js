@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import banner from './Image/banner3.jpg'
-import {MEDIA_QUERY_MD} from '../../../components/Style/style.js'
+import styled from "styled-components";
+import banner from "../../../components/img/banner/banner3.jpg";
+import { MEDIA_QUERY_MD } from "../../../components/Style/style";
 const Wrap = styled.div`
   margin-bottom: 28px;
   position: relative;
@@ -18,11 +18,11 @@ const Wrap = styled.div`
   ${MEDIA_QUERY_MD} {
     margin-bottom: 0;
   }
-`
+`;
 function Banner() {
   return (
     <div>
-      <Wrap/>
+      <Wrap />
     </div>
   );
 }
