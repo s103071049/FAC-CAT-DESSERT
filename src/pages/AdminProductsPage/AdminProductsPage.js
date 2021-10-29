@@ -73,7 +73,6 @@ const Table = styled.table`
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
-  min-height:700px;
   font-size: 20px;
   & td,
   & th {
@@ -93,7 +92,6 @@ const Table = styled.table`
 `;
 const Thead = styled.thead`
   & tr {
-    height: 60px;
     font-size: 24px;
     color: #917856;
     font-weight: bold;
@@ -106,6 +104,8 @@ const Tbody = styled.tbody`
   & tr {
     height: 60px;
     border-bottom: 1px solid #917856;
+    vertical-align: -webkit-baseline-middle;
+
   }
   & tr:last-child {
     border: 0;

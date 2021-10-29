@@ -22,6 +22,8 @@ const useAdminProduct = () => {
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
 
+  
+
   const fetchProducts = useCallback(()=> {
       const fetchingProduct = async() => {
       setLoading(true)
@@ -70,9 +72,9 @@ const useAdminProduct = () => {
     const result = await searchProducts(search)
     try{
       if(!result.success){
-        setTdcontexts([])
         setSearch('')
-        return setLoading(false)
+        setLoading(false)
+        return history.goBack()
       }
       let getSearchedProducts = result.data.filter(product=> !product.is_deleted)
       if(result.success && getSearchedProducts.length === 0){
@@ -87,7 +89,8 @@ const useAdminProduct = () => {
       return setLoading(false)
 
     }catch(err) {
-      return setLoading(false)
+      setLoading(false)
+      return history.goBack()
     }
   }
   const handleChange = (e) => {

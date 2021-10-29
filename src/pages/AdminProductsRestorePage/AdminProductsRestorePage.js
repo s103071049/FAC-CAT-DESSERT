@@ -54,9 +54,7 @@ const Table = styled.table`
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
-
   font-size: 20px;
-
   & td,
   & th {
     text-align: center;
