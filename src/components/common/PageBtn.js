@@ -35,10 +35,7 @@ const NextPageButton = styled(PreviousPageButton)`
 `;
 
 export default function PageBtn({pageNext ,pageDetail, num, setNum, pagenum, setPageNum}) {
-  const {totalPage,pageSize } = pageDetail
-  //const [num, setNum] = useState(0)
-  //const [pagenum, setPageNum] =  useState(current)
-  
+  const {totalPage,pageSize } = pageDetail  
 
   //上一頁
   const handlePreClick = () => {

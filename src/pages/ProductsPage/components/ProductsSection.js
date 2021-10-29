@@ -316,7 +316,7 @@ export default function ProductsSection({selectedCategory}) {
     setPageNum
   } = useFindProducts(selectedCategory)
 
-  //分頁
+  //分頁設置 pageSize 為 每頁要顯示的筆數
   const pageSize = 8
   const {pageDetail, pageNext} = usePagination(products, pageSize)
   
@@ -365,6 +365,7 @@ export default function ProductsSection({selectedCategory}) {
         products={pageDetail.indexList} 
         section={section} 
       />
+      {/* 分頁元件 */}
       <PageBtn 
         pageNext={pageNext} 
         pageDetail={pageDetail}

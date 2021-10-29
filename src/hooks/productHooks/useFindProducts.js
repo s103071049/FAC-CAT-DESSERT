@@ -12,6 +12,7 @@ const useFindProducts = (selectedCategory) => {
   const dataAmount = useRef(null)
   const history = useHistory();
   
+  //初始分頁
   const [num, setNum] = useState(0)
   const [pagenum, setPageNum] =  useState(1)
   
