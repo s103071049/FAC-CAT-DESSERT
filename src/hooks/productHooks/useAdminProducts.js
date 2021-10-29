@@ -21,17 +21,6 @@ const useAdminProduct = () => {
   const [search, setSearch] = useState('')
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
-  //分頁
-  const [pagination, setPagination] = useState({
-    indexList:[],//當前渲染的頁面數據
-    totalData:tdcontexts,
-    current: 1, //當前頁碼
-    pageSize:4, //每頁顯示的條數
-    goValue:0,  //要去的條數index
-    totalPage:0,//總頁數
-  })
-
-  
 
   const fetchProducts = useCallback(()=> {
       const fetchingProduct = async() => {

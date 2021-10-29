@@ -8,6 +8,8 @@ import squares from "../../../components/img/icon/squares.svg";
 import list from "../../../components/img/icon/list.svg";
 import { Link } from "react-router-dom";
 import useFindProducts from "../../../hooks/productHooks/useFindProducts";
+import PageBtn from "../../../components/common/PageBtn";
+import usePagination from "../../../hooks/common/usePagination";
 
 const ProductsSectionContentsWrapper = styled.div`
   margin-bottom:40px;
@@ -301,11 +303,10 @@ export default function ProductsSection({selectedCategory}) {
     handletoggleLists,
     handletoggleSquares,
     section,
-    showDataIndex,
-    setShowDataIndex,
     dataAmount,
   } = useFindProducts(selectedCategory)
-
+  const pageSize = 8
+  const {pageDetail, pageNext} = usePagination(products, pageSize)
   
   function ProductsSectionTiTle({
     handletoggleSquares,
@@ -349,9 +350,11 @@ export default function ProductsSection({selectedCategory}) {
         section={section}
       />
       <RenderContentSection 
-        products={products} 
+        products={pageDetail.indexList} 
         section={section} 
       />
+      <PageBtn pageNext={pageNext} pageDetail={pageDetail}/>
+
     </div>
     </>
   );
