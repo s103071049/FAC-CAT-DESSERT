@@ -104,6 +104,7 @@ const RenderShippingForm = ({ data }) => {
   const { user } = useContext(AuthContexts);
   const [isSameConsignee, setIsSameConsignee] = useState(true);
   const [isDonateInvoice, setIsDonateInvoice] = useState("withPackage");
+  const [dbIsDonateInvoice, setDbIsDonateInvoice] = useState(true);
   const [payment, setPayment] = useState("card");
   const [notes, setNotes] = useState("");
   const [name, setName] = useState("");
@@ -111,13 +112,12 @@ const RenderShippingForm = ({ data }) => {
   const [address, setAddress] = useState("");
   const [transactionNumber, setTransactionNumber] = useState("");
   const [date, setDate] = useState("");
+  const [dbDate, setDbDate] = useState();
   const [invoice, setInvoice] = useState("normal");
   const [companyInvoice, setCompanyInvoice] = useState("");
   const [receiverName, setReceiverName] = useState("");
   const [receiverPhone, setReceiverPhone] = useState("");
   const [receiverAddress, setReceiverAddress] = useState("");
-  const [prod, setProd] = useState(data);
-  console.log("data", data);
   // useCallback
   const handlePayment = (e) => {
     setPayment(e.target.value);
@@ -148,6 +148,8 @@ const RenderShippingForm = ({ data }) => {
   };
   const handleDate = (e) => {
     setDate(e.target.value);
+    let time = new Date(e.target.value);
+    setDbDate(time);
   };
   const handleInvoice = (e) => {
     setInvoice(e.target.value);
@@ -157,28 +159,58 @@ const RenderShippingForm = ({ data }) => {
   };
   const handleDonateInvoice = (e) => {
     setIsDonateInvoice(e.target.value);
+    if (e.target.value === "withPackage") setDbIsDonateInvoice(true);
+    if (e.target.value === "donate") setDbIsDonateInvoice(false);
   };
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    let order = {
-      userId: user.id,
-      buyerName: name,
-      buyerPhone: phone,
-      buyerAddress: address,
-      deliverDate: date,
-      receiverName: receiverName,
-      receiverPhone: receiverPhone,
-      receiverAddress: receiverAddress,
-      lastFiveNumber: transactionNumber,
-      donateInvoice: isDonateInvoice,
-      invoiceType: invoice,
-      invoiceNumber: companyInvoice,
-    };
-    console.log(prod);
-    createOrder(prod, order).then((response) => {
-      console.log(response);
-    });
-  }, []);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      let prods = data;
+      e.preventDefault();
+      let order = {
+        userId: user.id,
+        buyerName: name,
+        buyerPhone: phone,
+        buyerAddress: address,
+        deliverDate: dbDate,
+        receiverName: receiverName,
+        receiverPhone: receiverPhone,
+        receiverAddress: receiverAddress,
+        lastFiveNumber: transactionNumber,
+        donateInvoice: dbIsDonateInvoice,
+        invoiceType: invoice,
+        invoiceNumber: companyInvoice,
+      };
+      console.log("prods", prods);
+      let products = prods.map((prod) => {
+        return {
+          id: prod["Product.id"],
+          number: prod.product_quantity,
+        };
+      });
+      console.log("order", order);
+
+      console.log("products", products);
+      createOrder(products, order).then((response) => {
+        console.log(response);
+      });
+    },
+    [
+      data,
+      user.id,
+      name,
+      phone,
+      address,
+      companyInvoice,
+      dbDate,
+      receiverName,
+      receiverPhone,
+      receiverAddress,
+      transactionNumber,
+      dbIsDonateInvoice,
+      invoice,
+    ]
+  );
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   // };

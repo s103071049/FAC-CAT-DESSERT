@@ -2,7 +2,6 @@ import styled from "styled-components";
 import numeric1 from "../../../components/img/icon/numeric1.svg";
 import closeCircle from "../../../components/img/icon/close-circle.svg";
 import CartPreCheckout from "./CartPreCheckout";
-import { useEffect, useState, useContext } from "react";
 const Container = styled.div`
   margin-top: 50px;
   border: 1px solid #9ca4aa;

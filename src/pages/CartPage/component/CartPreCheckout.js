@@ -1,3 +1,4 @@
+import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 const Item = styled.div`
   padding: 10px 0;
@@ -14,21 +15,20 @@ const Total = styled.div`
   color: #e33333;
 `;
 
-const CartPreCheckout = ({ items, shipments }) => {
+function CartPreCheckout({ items, shipments }) {
+  let shipment = 0;
   let price = 0;
-  let shipment;
   items.map((item) => {
     return (price += item.product_quantity * item["Product.price"]);
   });
-  let rules = shipments;
-  for (let i = 0; i < rules.length; i++) {
-    if (price < rules[i].threshold) {
-      shipment = rules[i].shipment;
+
+  for (let i = 0; i < shipments.length; i++) {
+    if (price > shipments[i].threshold) {
+      shipment = shipments[i].shipment;
       break;
-    } else {
-      shipment = 0;
     }
   }
+  console.log("shipment", shipment);
   return (
     <>
       <Item>
@@ -47,5 +47,5 @@ const CartPreCheckout = ({ items, shipments }) => {
       </Item>
     </>
   );
-};
+}
 export default CartPreCheckout;

@@ -21,9 +21,9 @@ const useCartApi = () => {
       ]);
       setLoading(false);
       setDiscountRules(
-        DiscountRules.filter((rule) => rule.is_deleted === false).sort(
+        DiscountRules.filter((rule) => rule.is_deleted !== true).sort(
           (a, b) => {
-            return a.threshold - b.threshold;
+            return b.threshold - a.threshold;
           }
         )
       );

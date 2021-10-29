@@ -20,7 +20,6 @@ const Title = styled.div`
 const Body = styled.div``;
 
 const Shipping = ({ data }) => {
-  console.log(data);
   return (
     <Container>
       <Header>
