@@ -24,6 +24,7 @@ const TitleButton = styled(Link)`
   border: 1px solid rgba(201, 186, 152, 0.9);
   margin: 0;
   margin-top: 36px;
+  padding-top: 19px;
   &: hover {
     color: white;
     background: rgba(201, 186, 152, 1.5);
@@ -67,12 +68,10 @@ const DiscountEditPage = () => {
   const {
     threshold,
     shipment,
-    price,
     desc,
 
     setThreshold,
     setShipment,
-    setPrice,
     setDesc,
 
     changeDiscount,
@@ -122,13 +121,6 @@ const DiscountEditPage = () => {
             value={shipment}
             placeholder={"請輸入運費"}
             handleChange={handleChange(setShipment)}
-          />
-          <InputItem
-            columnName={"運費 price："}
-            name={"price"}
-            value={price}
-            placeholder={"請輸入 price"}
-            handleChange={handleChange(setPrice)}
           />
           <Bottom>
             <TitleButton to="/admin/discounts">返回</TitleButton>
