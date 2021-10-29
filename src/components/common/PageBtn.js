@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState,useEffect } from "react";
+import {useEffect } from "react";
 
 
 const PageChangeWrapper = styled.div`
@@ -34,7 +34,7 @@ const NextPageButton = styled(PreviousPageButton)`
   margin-left: 5px;
 `;
 
-export default function PageBtn({pageNext ,pageDetail, pagenum, setPageNum, num, setNum}) {
+export default function PageBtn({pageNext ,pageDetail, num, setNum, pagenum, setPageNum}) {
   const {totalPage,pageSize } = pageDetail
   //const [num, setNum] = useState(0)
   //const [pagenum, setPageNum] =  useState(current)
@@ -57,6 +57,7 @@ export default function PageBtn({pageNext ,pageDetail, pagenum, setPageNum, num,
     if(pagenum < totalPage) {
       setNum(num + pageSize)
       setPageNum(pagenum+1)
+
     }
   }
   return (

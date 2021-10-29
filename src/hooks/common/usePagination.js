@@ -29,7 +29,7 @@ const usePagination = (apiData, pageSize) => {
       return {
         ...prevState,
         indexList:apiData.slice(0,pageDetail.pageSize),
-        totalPage:Math.ceil( apiData.length/prevState.pageSize),
+        totalPage:Math.ceil( apiData.length/prevState.pageSize)
       }
     })
   }, [apiData,pageDetail.pageSize])

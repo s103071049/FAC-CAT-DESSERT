@@ -75,7 +75,6 @@ const Table = styled.table`
   width: 100%;
   min-height:700px;
   font-size: 20px;
-
   & td,
   & th {
     text-align: center;

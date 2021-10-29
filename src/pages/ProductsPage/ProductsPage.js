@@ -26,7 +26,7 @@ export default function ProductsPage() {
     selectedCategory,
     handleCategoryClick,
   } = useCategory()
-  
+
   return (
     <>
     <div>

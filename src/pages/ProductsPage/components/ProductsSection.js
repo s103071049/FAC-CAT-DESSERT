@@ -304,11 +304,13 @@ export default function ProductsSection({selectedCategory}) {
     handletoggleSquares,
     section,
     dataAmount,
-    pagenum,
-    setPageNum,
     num,
-    setNum
+    setNum,
+    pagenum,
+    setPageNum
   } = useFindProducts(selectedCategory)
+
+  //分頁
   const pageSize = 8
   const {pageDetail, pageNext} = usePagination(products, pageSize)
   
@@ -347,7 +349,7 @@ export default function ProductsSection({selectedCategory}) {
 
   return (
     <>
-    <div>
+    <div style={{marginBottom:"40px"}}>
       <ProductsSectionTiTle
         handletoggleSquares={handletoggleSquares}
         handletoggleLists={handletoggleLists}
@@ -357,8 +359,14 @@ export default function ProductsSection({selectedCategory}) {
         products={pageDetail.indexList} 
         section={section} 
       />
-      <PageBtn pageNext={pageNext} pageDetail={pageDetail} pagenum={pagenum} setPageNum={setPageNum} num={num} setNum={setNum}/>
-
+      <PageBtn 
+        pageNext={pageNext} 
+        pageDetail={pageDetail}
+        num={num}
+        setNum={setNum}
+        pagenum={pagenum}
+        setPageNum={setPageNum}
+      />
     </div>
     </>
   );
