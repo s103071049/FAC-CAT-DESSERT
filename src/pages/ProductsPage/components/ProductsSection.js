@@ -3,7 +3,6 @@ import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
 } from "../../../components/Style/style";
-import PageChange from "../../../components/common/PageChange";
 import ProductsSectionTiTleContent from "../../../components/common/ProductsSectionTiTleContent";
 import squares from "../../../components/img/icon/squares.svg";
 import list from "../../../components/img/icon/list.svg";
@@ -55,10 +54,10 @@ const ProductListsImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  min-width: 200px;
   margin-right: 50px;
   @media screen and (max-width: 550px) {
-    width: 40%;
+    min-width: 100px;
     margin-right: 20px;
   }
 `;
@@ -305,7 +304,6 @@ export default function ProductsSection({selectedCategory}) {
     showDataIndex,
     setShowDataIndex,
     dataAmount,
-    loading,
   } = useFindProducts(selectedCategory)
 
   
@@ -354,7 +352,6 @@ export default function ProductsSection({selectedCategory}) {
         products={products} 
         section={section} 
       />
-      <PageChange dataAmount={dataAmount.current} showDataIndex={showDataIndex} setShowDataIndex={setShowDataIndex}/>
     </div>
     </>
   );
