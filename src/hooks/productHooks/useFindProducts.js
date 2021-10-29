@@ -7,15 +7,18 @@ const useFindProducts = (selectedCategory) => {
   const {loading, setLoading} = useContext(AuthLoadingContext)
   const [products, setProducts] = useState([])
   const [section, setSection] = useState("sqares");
-  const [showDataIndex, setShowDataIndex] = useState(0)
-
   const dataAmount = useRef(null)
   const history = useHistory();
   
+  //分頁
+  const [pagenum, setPageNum] =  useState(1)
+  const [num, setNum] = useState(0)
+
   
   useEffect(()=> {
     setLoading(true)
-
+    setPageNum(1)
+    setNum(0)
     const fetchAllproducts = async() => {
       setLoading(true)
       const result = await getAllProducts()
@@ -42,7 +45,7 @@ const useFindProducts = (selectedCategory) => {
 
     fetchAllproducts()
 
-  }, [history, showDataIndex,selectedCategory, setLoading])
+  }, [history,selectedCategory, setLoading])
   
 
  
@@ -62,11 +65,13 @@ const useFindProducts = (selectedCategory) => {
     handletoggleSquares,
     section,
     setSection,
-    showDataIndex,
-    setShowDataIndex,
     dataAmount,
     loading,
-    setLoading
+    setLoading,
+    pagenum,
+    setPageNum,
+    num,
+    setNum
   }
 }
 

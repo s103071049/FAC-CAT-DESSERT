@@ -304,6 +304,10 @@ export default function ProductsSection({selectedCategory}) {
     handletoggleSquares,
     section,
     dataAmount,
+    pagenum,
+    setPageNum,
+    num,
+    setNum
   } = useFindProducts(selectedCategory)
   const pageSize = 8
   const {pageDetail, pageNext} = usePagination(products, pageSize)
@@ -353,7 +357,7 @@ export default function ProductsSection({selectedCategory}) {
         products={pageDetail.indexList} 
         section={section} 
       />
-      <PageBtn pageNext={pageNext} pageDetail={pageDetail}/>
+      <PageBtn pageNext={pageNext} pageDetail={pageDetail} pagenum={pagenum} setPageNum={setPageNum} num={num} setNum={setNum}/>
 
     </div>
     </>

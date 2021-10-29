@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from "react"
 
 const usePagination = (apiData, pageSize) => {
-  console.log(pageSize)
   const [pageDetail, setPageDetail] = useState({
       indexList:[],//當前渲染的頁面數據
       totalData:apiData,
@@ -30,7 +29,7 @@ const usePagination = (apiData, pageSize) => {
       return {
         ...prevState,
         indexList:apiData.slice(0,pageDetail.pageSize),
-        totalPage:Math.ceil( apiData.length/prevState.pageSize)
+        totalPage:Math.ceil( apiData.length/prevState.pageSize),
       }
     })
   }, [apiData,pageDetail.pageSize])

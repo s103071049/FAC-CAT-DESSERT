@@ -34,10 +34,10 @@ const NextPageButton = styled(PreviousPageButton)`
   margin-left: 5px;
 `;
 
-export default function PageBtn({pageNext ,pageDetail}) {
-  const {totalPage,current,pageSize, } = pageDetail
-  const [num, setNum] = useState(0)
-  const [pagenum, setPageNum] =  useState(current)
+export default function PageBtn({pageNext ,pageDetail, pagenum, setPageNum, num, setNum}) {
+  const {totalPage,pageSize } = pageDetail
+  //const [num, setNum] = useState(0)
+  //const [pagenum, setPageNum] =  useState(current)
   
 
   //上一頁
@@ -57,7 +57,6 @@ export default function PageBtn({pageNext ,pageDetail}) {
     if(pagenum < totalPage) {
       setNum(num + pageSize)
       setPageNum(pagenum+1)
-
     }
   }
   return (
