@@ -116,6 +116,7 @@ const RenderShippingForm = ({ data }) => {
   const [receiverName, setReceiverName] = useState("");
   const [receiverPhone, setReceiverPhone] = useState("");
   const [receiverAddress, setReceiverAddress] = useState("");
+  const [prod, setProd] = useState(data);
   console.log("data", data);
   // useCallback
   const handlePayment = (e) => {
@@ -173,9 +174,8 @@ const RenderShippingForm = ({ data }) => {
       invoiceType: invoice,
       invoiceNumber: companyInvoice,
     };
-    console.log(order);
-    console.log(data);
-    createOrder(data, order).then((response) => {
+    console.log(prod);
+    createOrder(prod, order).then((response) => {
       console.log(response);
     });
   }, []);
