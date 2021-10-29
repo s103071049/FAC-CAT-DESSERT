@@ -91,9 +91,10 @@ const ProductListsInfoSection = styled.div`
 `;
 const ProductListsName = styled.h3`
   margin: 0 0 10px 0;
-  font-size: 36px;
+  word-break: keep-all;
+  font-size: 30px;
   @media screen and (max-width: 550px) {
-    font-size: 24px;
+    font-size: 18px;
   }
 `;
 const ProductListsCaption = styled.p`
@@ -109,16 +110,21 @@ const ProductListsCaption = styled.p`
   /* white-space: nowrap; */
   text-overflow: ellipsis;
   ${MEDIA_QUERY_MD} {
-    -webkit-line-clamp: 2; //行數
+    -webkit-line-clamp: 2;
+    
+    @media screen and (max-width: 550px) {
+      display: none;
+    }
   }
-  @media screen and (max-width: 550px) {
-    display: none;
-  }
+  
 `;
 const ProductListsPrice = styled.p`
   font-size: 24px;
   color: #e55555;
   margin: 0;
+  @media screen and (max-width: 550px) {
+    font-size:16px;
+  }
 `;
 const ProductListsButtonWrapper = styled.div`
   display: flex;
@@ -257,7 +263,7 @@ const RenderCotentItemsSection = ({products, section}) => {
   return products.map(product => {
     return(
       <ProductsListsWrapper key={product.id}>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex"}}>
           <ProductListsImageWrapper>
             <Link to={`/product/${product.id}`} style={{ width: "100%" }}>
               <ProductListsImage img={product.img_url} />
