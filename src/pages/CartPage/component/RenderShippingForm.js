@@ -118,6 +118,7 @@ const RenderShippingForm = ({ data }) => {
   const [receiverName, setReceiverName] = useState("");
   const [receiverPhone, setReceiverPhone] = useState("");
   const [receiverAddress, setReceiverAddress] = useState("");
+  const [prod, setProd] = useState(data);
   console.log("data", data);
   // useCallback
   const handlePayment = (e) => {
