@@ -16,6 +16,7 @@ import { setAuthToken, removeAuthToken } from "../../utils";
 import { AuthContexts, AuthLoadingContext } from "../../context";
 import TransactionPage from "../../pages/TransactionPage";
 import useUser from "../../hooks/user/useUser";
+import SingleTransactionPage from "../SingleTransactionPage/SingleTransactionPage";
 
 const Wrapper = styled.div`
   max-width: 1042px;
@@ -170,6 +171,9 @@ const UserPage = () => {
               </Route>
               <Route path={`${path}/myorders`}>
                 <TransactionPage />
+              </Route>
+              <Route path={`${path}/myorder/:id`}>
+                <SingleTransactionPage />
               </Route>
             </Main>
           </Switch>
