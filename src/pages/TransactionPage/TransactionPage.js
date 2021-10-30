@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
-import PageChange from "../../components/common/PageChange.js";
 import useTransaction from "../../hooks/user/useTransaction";
 
 const Wrapper = styled.div`
@@ -80,7 +79,9 @@ const Row = styled.tr`
   ${MEDIA_QUERY_MD} {
     display: block;
     margin: 0 0 16px 0;
-    background: ${(props) => (props.id % 2 === 1 ? "#77969A" : "white")};
+    &:nth-child(odd){
+      background:#77969A;
+    }
   }
 `;
 const RowHeader = styled(Row)`
@@ -101,15 +102,6 @@ const TransactionPage = () => {
     transactions 
   } = useTransaction()
 
-  const data = [
-    { id: 1, title: "訂單編號", data: "ASSWQSCG" },
-    { id: 2, title: "總金額", data: "$2000" },
-    { id: 3, title: "收件者", data: "Peter 大" },
-    { id: 4, title: "交易日期", data: "2021-09-09 9:00" },
-    { id: 5, title: "收貨日期", data: "2021-09-11 11:00 前" },
-    { id: 6, title: "處理情形", data: "訂單處理中" },
-    { id: 7, title: "繳款情形", data: "已繳款" },
-  ];
 
   function Head() {
     return (
@@ -127,9 +119,7 @@ const TransactionPage = () => {
   function Body() {
   
     const listItems = transactions.map(transaction => {
-        const {id, price, receiverName,  accepted_at, deliverDate, is_accepted, is_completed} = transaction
-        console.log(Date.parse(accepted_at))
-        console.log(new Date(accepted_at).toLocaleString())
+        const {id, price, receiverName, createdAt, deliverDate, is_accepted, is_completed} = transaction
 
       return (
         <Row key={id}>
@@ -137,8 +127,8 @@ const TransactionPage = () => {
           <Column>{price}</Column>
           <Column>{receiverName}</Column>
           <Column>
-            {accepted_at ? (new Date(accepted_at).toLocaleString()):"-"}</Column>
-          <Column>{deliverDate}</Column>
+            {new Date(createdAt).toLocaleString()}</Column>
+          <Column>{new Date(deliverDate).toLocaleDateString()}</Column>
           <Column>
             {is_accepted ? "已接受":is_accepted === null? '待處理':'拒絕'}
           
@@ -159,12 +149,11 @@ const TransactionPage = () => {
   return (
     <>
       <Wrapper>
-        <Table>
+        {transactions.length ? (<Table>
           <Head />
           <Body />
-        </Table>
+        </Table>):(<p>尚未有訂單</p>)}
         <Page>
-          <PageChange></PageChange>
         </Page>
       </Wrapper>
     </>

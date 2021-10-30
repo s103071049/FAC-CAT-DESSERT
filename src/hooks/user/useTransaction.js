@@ -7,7 +7,7 @@ import { AuthLoadingContext } from '../../context'
 const useTransaction = () => {
   const transactionTableHeads = [
     { id: 1, 
-      title: "orderNum",
+      title: "訂單編號",
     },
     { id: 2, 
       title: "總金額", 
