@@ -112,7 +112,6 @@ export const searchProducts = async (searchKey) => {
   return await response.json();
 };
 
-
 export const updateProducts = async(name, desc, img_url, price,category, id, is_deleted = false) => {
   const data = {
     name,
@@ -210,6 +209,17 @@ export const deleteOrder = async (id) => {
   });
   return await response.json();
 };
+//抓取用戶者的所有orders
+export const getHistory = async () => {
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/getHistory`, {
+    headers:{
+      authorization:`Bearer ${token}`
+    }
+  })
+  return response.json()
+}
+
 
 //transaction
 export const getTractions = async (id) => {
