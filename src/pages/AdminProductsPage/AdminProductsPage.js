@@ -68,14 +68,13 @@ const AdminProductsContent = styled.div`
 `;
 
 const Table = styled.table`
+  margin-bottom:40px;
   border-spacing: 1;
   border-collapse: collapse;
   border-radius: 6px;
   overflow: hidden;
   width: 100%;
-  min-height:700px;
   font-size: 20px;
-
   & td,
   & th {
     text-align: center;
@@ -94,7 +93,6 @@ const Table = styled.table`
 `;
 const Thead = styled.thead`
   & tr {
-    height: 60px;
     font-size: 24px;
     color: #917856;
     font-weight: bold;
@@ -107,6 +105,8 @@ const Tbody = styled.tbody`
   & tr {
     height: 60px;
     border-bottom: 1px solid #917856;
+    vertical-align: -webkit-baseline-middle;
+
   }
   & tr:last-child {
     border: 0;
@@ -131,9 +131,13 @@ const AdminProductsPage = () => {
     fetchProducts,
     search,
     handleChange,
-    fetchingSearchProduct
+    fetchingSearchProduct,
+    num,
+    setNum,
+    pagenum,
+    setPageNum
    } = useAdminProduct()
-   const pageSize =5
+   const pageSize = 4
    const {pageDetail, pageNext} = usePagination(tdcontexts, pageSize)
    
   return (
@@ -175,7 +179,14 @@ const AdminProductsPage = () => {
             ))}
           </Tbody>
         </Table>
-        <PageBtn pageNext={pageNext} pageDetail={pageDetail}/>
+        <PageBtn 
+          pageNext={pageNext} 
+          pageDetail={pageDetail}
+          num={num}
+          setNum={setNum}
+          pagenum={pagenum}
+          setPageNum={setPageNum}
+        />
       </AdminProductsContent>
     </AdminProductsWrapper>
   );

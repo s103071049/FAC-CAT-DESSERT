@@ -12,10 +12,14 @@ const useFindProducts = (selectedCategory) => {
   const dataAmount = useRef(null)
   const history = useHistory();
   
+  //初始分頁
+  const [num, setNum] = useState(0)
+  const [pagenum, setPageNum] =  useState(1)
   
   useEffect(()=> {
     setLoading(true)
-
+    setNum(0)
+    setPageNum(1)
     const fetchAllproducts = async() => {
       setLoading(true)
       const result = await getAllProducts()
@@ -66,7 +70,11 @@ const useFindProducts = (selectedCategory) => {
     setShowDataIndex,
     dataAmount,
     loading,
-    setLoading
+    setLoading,
+    num,
+    setNum,
+    pagenum,
+    setPageNum
   }
 }
 
