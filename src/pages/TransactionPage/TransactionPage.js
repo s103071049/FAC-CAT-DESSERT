@@ -123,7 +123,7 @@ const TransactionPage = () => {
 
       return (
         <Row key={id}>
-          <Column>{id.slice(-10)}</Column>
+          <Column>{id.slice(-6)}</Column>
           <Column>{price}</Column>
           <Column>{receiverName}</Column>
           <Column>
