@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import useSingleTransaction from "../../hooks/user/useSingleTransaction";
 
 const Container = styled.div`
   margin: 20px auto;
@@ -19,7 +19,11 @@ const Title = styled.div`
   font-weight:bold;
 `;
 const Body = styled.div`
-  margin-top:50px;
+  margin-top:40px;
+
+  &:last-of-type{
+    margin-top:80px;
+  }
 `;
 
 const Table = styled.table`
@@ -48,6 +52,10 @@ const Table = styled.table`
   }
 `;
 const Thead = styled.thead`
+  background: #f0f1f3;
+  ${(props) => props.$active &&`
+    background: #FBF6EA;
+  `}
   & tr {
     height: 40px;
     font-size: 18px;
@@ -66,7 +74,6 @@ const Tbody = styled.tbody`
 `;
 
 const Th = styled.th`
-  background: #f0f1f3;
   font-weight: normal;
   text-align: left;
   padding: 0 8px;
@@ -161,39 +168,51 @@ const Total = styled.div`
   color: #e33333;
 `;
 const SingleTransactionPage = () => {
-  const { id } = useParams();
+  const {
+    id,
+    orderDetail
+  } = useSingleTransaction()
 
+  const {deliverDate, createdAt, is_accepted, lastFiveNumber,price, sum, invoiceNumber, invoiceType, receiverAddress, receiverName, receiverPhone} = orderDetail
   return (
     <Container>
       <Header>
         <Title>{id.slice(-6)} - 訂單內容</Title>
       </Header>
-        <Body>
+      <Body>
         <Table>
           <Thead>
             <Tr>
-              <Th>收件者</Th>
               <Th>交易日期</Th>
-              <Th>收貨日期</Th>
+              <Th>末五碼</Th>
               <Th>訂單狀態</Th>
+              <Th>發票類型</Th>
+              <Th>統編</Th>
             </Tr>
           </Thead>
           <Tbody>
             {/*{data.map((item) => {*/}
               {/*return (*/}
                 <Tr>
-                  <Td data-title="收件者" $show={true}>
-                    <CartItemInfo>Yang</CartItemInfo>
+                  <Td data-title="交易日期" $show={true}>
+                    <ItemPrice>{new Date(createdAt).toLocaleString()}</ItemPrice>
                   </Td>
-                  <Td data-title="交易日期">
-                    <ItemPrice>2021-10-30 下午01:30</ItemPrice>
-                  </Td>
-                  <Td data-title="收貨日期">
-                    <ItemPrice>2021-10-31</ItemPrice>
+                  <Td data-title="末五碼" >
+                    <CartItemInfo>{lastFiveNumber}</CartItemInfo>
                   </Td>
                   <Td data-title="訂單狀態">
                     <ItemPrice>
-                     待處理
+                     {is_accepted ? "已接受":is_accepted === null? '待處理':'拒絕'}
+                    </ItemPrice>
+                  </Td>
+                    <Td data-title="發票類型">
+                    <ItemPrice>
+                     {invoiceType}
+                    </ItemPrice>
+                  </Td>
+                    <Td data-title="統編">
+                    <ItemPrice>
+                     {invoiceNumber? invoiceNumber:'-'}
                     </ItemPrice>
                   </Td>
                 </Tr>
@@ -205,6 +224,40 @@ const SingleTransactionPage = () => {
       <Body>
         <Table>
           <Thead>
+            <Tr>
+              <Th>收件日期</Th>
+              <Th>收件人</Th>
+              <Th>收件手機</Th>
+              <Th colSpan="2">收件地址</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {/*{data.map((item) => {*/}
+              {/*return (*/}
+                <Tr>
+                  <Td data-title="收件日期" $show={true}>
+                    <ItemPrice>{new Date(deliverDate).toLocaleDateString()}</ItemPrice>
+                  </Td>
+                  <Td data-title="收件人">
+                    <ItemPrice>{receiverName}</ItemPrice>
+                  </Td>
+                  <Td data-title="收件手機">
+                    <ItemPrice>{receiverPhone}</ItemPrice>
+                  </Td>
+                  <Td data-title="收件地址"  colSpan="2">
+                    <ItemPrice>
+                     {receiverAddress}55584848we4fewfewf
+                    </ItemPrice>
+                  </Td>
+                </Tr>
+              {/*);*/}
+            {/*})}*/}
+          </Tbody>
+        </Table>
+      </Body>
+      <Body>
+        <Table>
+          <Thead $active={true}>
             <Tr>
               <Th>商品照片</Th>
               <Th>商品名稱</Th>
@@ -231,7 +284,7 @@ const SingleTransactionPage = () => {
                   </Td>
                   <Td data-title="小計">
                     <ItemPrice>
-                     $198
+                      198
                     </ItemPrice>
                   </Td>
                 </Tr>
@@ -239,22 +292,24 @@ const SingleTransactionPage = () => {
             {/*})}*/}
           </Tbody>
         </Table>
-        <Summary>
-          <Item>
-            <div>商品小計</div>
-            <div>198</div>
-          </Item>
-          <Item>
-            <div>運費</div>
-            <div>0</div>
-          </Item>
-          <Item>
-            <div>訂單總額</div>
-            <Total>
-              <span>198</span>
-            </Total>
-          </Item>
-        </Summary>
+        {is_accepted && (
+          <Summary>
+            <Item>
+              <div>商品小計</div>
+              <div>{price}</div>
+            </Item>
+            <Item>
+              <div>運費</div>
+              <div>{(sum-price) <= 0 ? '免運':(sum-price)}</div>
+            </Item>
+            <Item>
+              <div>訂單總額</div>
+              <Total>
+                <span>{sum}</span>
+              </Total>
+            </Item>
+          </Summary>
+        )}
         {/*{discountRules && (
           <CartPreCheckout items={data} shipments={discountRules} />
         )}*/}
