@@ -12,7 +12,11 @@ export default function useFindHotProducts() {
         }
         return array;
       };
-      setProducts(random(response.products).slice(0, 12));
+      setProducts(
+        random(
+          response.products.filter((product) => !product.is_deleted)
+        ).slice(0, 12)
+      );
     });
   }, []);
   return {

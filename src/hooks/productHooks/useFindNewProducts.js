@@ -5,7 +5,12 @@ export default function useFindNewProducts() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     getAllProducts().then((response) => {
-      setProducts(response.products.reverse().slice(0, 12));
+      setProducts(
+        response.products
+          .filter((product) => !product.is_deleted)
+          .reverse()
+          .slice(0, 12)
+      );
     });
   }, []);
   return {
