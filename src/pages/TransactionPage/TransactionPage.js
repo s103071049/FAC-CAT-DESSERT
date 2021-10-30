@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import PageChange from "../../components/common/PageChange.js";
+import useTransaction from "../../hooks/user/useTransaction";
 
 const Wrapper = styled.div`
   padding-top: 80px;
@@ -92,27 +93,14 @@ const RowHeader = styled(Row)`
 const Page = styled.div`
   margin-top:60px;
 `;
-function Head({ data }) {
-  const listItems = data.map((each) => (
-    <GrayColumn key={each.id}>{each.title}</GrayColumn>
-  ));
-  return (
-    <Thead>
-      <RowHeader>{listItems}</RowHeader>
-    </Thead>
-  );
-}
-function Body({ data, id }) {
-  const listItems = data.map((each) => (
-    <Column key={each.id}>{each.data}</Column>
-  ));
-  return (
-    <Tbody>
-      <Row id={id}>{listItems}</Row>
-    </Tbody>
-  );
-}
+
+
 const TransactionPage = () => {
+  const {
+    transactionTableHeads,
+    transactions 
+  } = useTransaction()
+
   const data = [
     { id: 1, title: "訂單編號", data: "ASSWQSCG" },
     { id: 2, title: "總金額", data: "$2000" },
@@ -122,14 +110,58 @@ const TransactionPage = () => {
     { id: 6, title: "處理情形", data: "訂單處理中" },
     { id: 7, title: "繳款情形", data: "已繳款" },
   ];
+
+  function Head() {
+    return (
+      <Thead>
+        <RowHeader>
+          { transactionTableHeads.map(head=>{
+            return <GrayColumn key={head.id}>{head.title}</GrayColumn>
+          }) }
+        </RowHeader>
+      </Thead>
+
+    )
+  }
+
+  function Body() {
+  
+    const listItems = transactions.map(transaction => {
+        const {id, price, receiverName,  accepted_at, deliverDate, is_accepted, is_completed} = transaction
+        console.log(Date.parse(accepted_at))
+        console.log(new Date(accepted_at).toLocaleString())
+
+      return (
+        <Row key={id}>
+          <Column>{id.slice(-10)}</Column>
+          <Column>{price}</Column>
+          <Column>{receiverName}</Column>
+          <Column>
+            {accepted_at ? (new Date(accepted_at).toLocaleString()):"-"}</Column>
+          <Column>{deliverDate}</Column>
+          <Column>
+            {is_accepted ? "已接受":is_accepted === null? '待處理':'拒絕'}
+          
+          </Column>
+          <Column>
+            {is_completed? '已付款':'待付款'}
+          </Column>
+        </Row>
+      )
+    });
+    return (
+      <Tbody>
+        {listItems}
+      </Tbody>
+    );
+  }
+
   return (
     <>
       <Wrapper>
         <Table>
-          <Head data={data} />
-          <Body data={data} id={1} />
-          <Body data={data} id={2} />
-          <Body data={data} id={3} />
+          <Head />
+          <Body />
         </Table>
         <Page>
           <PageChange></PageChange>
