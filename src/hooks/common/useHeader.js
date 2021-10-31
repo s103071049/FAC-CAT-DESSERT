@@ -11,11 +11,6 @@ const useHeader = () => {
   const history = useHistory();
   const { user } = useContext(AuthContexts);
   const toggleHamburger = () => {
-    if (hamburgerOpen) {
-      document.body.style.overflow = "auto";
-    } else {
-      document.body.style.overflow = "hidden";
-    }
     setHamburgerOpen(!hamburgerOpen);
     setSearchBarShow(false);
   };
