@@ -215,8 +215,6 @@ const SingleTransactionPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {/*{data.map((item) => {*/}
-              {/*return (*/}
                 <Tr>
                   <Td data-title="交易日期" $show={true}>
                     <ItemPrice>{new Date(createdAt).toLocaleString()}</ItemPrice>
@@ -240,8 +238,6 @@ const SingleTransactionPage = () => {
                     </ItemPrice>
                   </Td>
                 </Tr>
-              {/*);*/}
-            {/*})}*/}
           </Tbody>
         </Table>
       </Body>
@@ -256,8 +252,6 @@ const SingleTransactionPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {/*{data.map((item) => {*/}
-              {/*return (*/}
                 <Tr>
                   <Td data-title="收件日期" $show={true}>
                     <ItemPrice>{new Date(deliverDate).toLocaleDateString()}</ItemPrice>
@@ -274,8 +268,6 @@ const SingleTransactionPage = () => {
                     </ItemPrice>
                   </Td>
                 </Tr>
-              {/*);*/}
-            {/*})}*/}
           </Tbody>
         </Table>
       </Body>
@@ -326,7 +318,7 @@ const SingleTransactionPage = () => {
             </Item>
             <Item>
               <div>運費</div>
-              <div>{(sum-price) <= 0 ? '免運':(sum-price)}</div>
+              <div>{(sum-price) <= 0 ? '免運':toString(sum-price)}</div>
             </Item>
             <Item>
               <div>訂單總額</div>
@@ -335,9 +327,6 @@ const SingleTransactionPage = () => {
               </Total>
             </Item>
           </Summary>
-        {/*{discountRules && (
-          <CartPreCheckout items={data} shipments={discountRules} />
-        )}*/}
       </Body>
       <BackBtn onClick={handleBack}>回訂單列表</BackBtn>
     </Container>
