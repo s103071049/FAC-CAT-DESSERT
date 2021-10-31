@@ -42,7 +42,6 @@ const useTransaction = () => {
           setLoading(false)
           return history.goBack()
         }
-        console.log(result.data)
         setTransactions(result.data)
         setLoading(false)
       }catch(err){
