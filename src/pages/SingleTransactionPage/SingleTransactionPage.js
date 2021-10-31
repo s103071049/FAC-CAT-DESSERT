@@ -96,11 +96,11 @@ const Td = styled.td`
     display: inline-block;
   }
   ${(props) =>
-    props.$active &&
-    `
-    color:#E55555;
-    font-weight:bold;
-  `}
+    props.$active &&`
+      color:#E55555;
+      font-weight:bold;
+    `}
+
   @media screen and (max-width: 698px) {
     margin-bottom: 12px;
     &:first-child {
@@ -150,7 +150,12 @@ const Img = styled.div`
 `;
 const CartItemInfo = styled.div``;
 
-const ItemPrice = styled.div``;
+const ItemPrice = styled.div`
+  ${(props) =>
+    props.$is_accepted === null  &&`
+      color:#E55555;
+   `}
+`;
 
 const Summary = styled.div``
 const Item = styled.div`
@@ -167,12 +172,31 @@ const Item = styled.div`
 const Total = styled.div`
   color: #e33333;
 `;
+
+const BackBtn = styled.button`
+  font-size: 18px;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #917856;
+  background: #fff;
+  border: 1px #c9ba98 solid;
+  margin-left: 20px;
+  margin: 60px auto;
+  display: block;
+  &:hover {
+    background: #c9ba98;
+    color: #fff;
+  }
+`
+
 const SingleTransactionPage = () => {
   const {
     id,
-    orderDetail
+    orderDetail,
+    orderProducts,
+    handleBack
   } = useSingleTransaction()
-
   const {deliverDate, createdAt, is_accepted, lastFiveNumber,price, sum, invoiceNumber, invoiceType, receiverAddress, receiverName, receiverPhone} = orderDetail
   return (
     <Container>
@@ -201,7 +225,7 @@ const SingleTransactionPage = () => {
                     <CartItemInfo>{lastFiveNumber}</CartItemInfo>
                   </Td>
                   <Td data-title="訂單狀態">
-                    <ItemPrice>
+                    <ItemPrice $is_accepted={is_accepted}>
                      {is_accepted ? "已接受":is_accepted === null? '待處理':'拒絕'}
                     </ItemPrice>
                   </Td>
@@ -246,7 +270,7 @@ const SingleTransactionPage = () => {
                   </Td>
                   <Td data-title="收件地址"  colSpan="2">
                     <ItemPrice>
-                     {receiverAddress}55584848we4fewfewf
+                     {receiverAddress}
                     </ItemPrice>
                   </Td>
                 </Tr>
@@ -267,32 +291,34 @@ const SingleTransactionPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {/*{data.map((item) => {*/}
-              {/*return (*/}
-                <Tr>
-                  <Td data-title="">
-                    <Img $url={"https://upload.cc/i1/2021/10/07/PdnSq5.jpg"} />
-                  </Td>
-                  <Td data-title="商品名稱">
-                    <CartItemInfo>藍色珠寶盒</CartItemInfo>
-                  </Td>
-                  <Td data-title="商品單價">
-                    <ItemPrice>$99</ItemPrice>
-                  </Td>
-                  <Td data-title="數量">
-                    <ItemPrice>2</ItemPrice>
-                  </Td>
-                  <Td data-title="小計">
-                    <ItemPrice>
-                      198
-                    </ItemPrice>
-                  </Td>
-                </Tr>
-              {/*);*/}
-            {/*})}*/}
+                {
+                  orderProducts.map(product => {
+                    const { quantity,img_url, price, name, id } = product
+                    return (
+                      <Tr key={id}>
+                        <Td data-title="">
+                          <Img $url={img_url} />
+                        </Td>
+                        <Td data-title="商品名稱">
+                          <CartItemInfo>{name}</CartItemInfo>
+                        </Td>
+                        <Td data-title="商品單價">
+                          <ItemPrice>{price}</ItemPrice>
+                        </Td>
+                        <Td data-title="數量">
+                          <ItemPrice>{quantity}</ItemPrice>
+                        </Td>
+                        <Td data-title="小計">
+                          <ItemPrice>
+                            {quantity * price}
+                          </ItemPrice>
+                        </Td>
+                      </Tr>
+                    )
+                  })
+                }
           </Tbody>
         </Table>
-        {is_accepted && (
           <Summary>
             <Item>
               <div>商品小計</div>
@@ -309,11 +335,11 @@ const SingleTransactionPage = () => {
               </Total>
             </Item>
           </Summary>
-        )}
         {/*{discountRules && (
           <CartPreCheckout items={data} shipments={discountRules} />
         )}*/}
       </Body>
+      <BackBtn onClick={handleBack}>回訂單列表</BackBtn>
     </Container>
   )
 }

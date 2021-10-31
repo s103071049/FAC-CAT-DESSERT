@@ -38,9 +38,16 @@ const useSingleTransaction = () => {
       const result = await getTractions(id)
       try{
         setLoading(false)
-        const getProducts = result.map(item=> item.Product)
-        console.log(getProducts)
-
+        const getProducts = result.map(item=> {
+          return {
+            quantity :item.quantity,
+            id:item.Product.id,
+            name: item.Product.name,
+            price: item.Product.price,
+            img_url: item.Product.img_url
+          }
+        })
+        setOrderProducts(getProducts)
       }catch(err){
         setLoading(false)
         return history.goBack()
@@ -54,10 +61,14 @@ const useSingleTransaction = () => {
     fetchOrderProduct()
   },[fetchOrderDetail, fetchOrderProduct])
 
+  const handleBack = () => {
+    history.push("/user/myorders");
+  };
   return {
     id,
     orderDetail,
-    orderProducts
+    orderProducts,
+    handleBack
   }
 }
 
