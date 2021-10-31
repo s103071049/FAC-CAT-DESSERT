@@ -7,7 +7,7 @@ const ProductWapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30%;
+  width: 23%;
   padding: 10px 0;
   margin-bottom: 20px;
   ${MEDIA_QUERY_MD} {
