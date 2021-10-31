@@ -152,7 +152,7 @@ const CartItemInfo = styled.div``;
 
 const ItemPrice = styled.div`
   ${(props) =>
-    props.$is_accepted === null  &&`
+    props.$is_accepted === false  &&`
       color:#E55555;
    `}
 `;

@@ -37,6 +37,11 @@ const IDLink = styled(Link)`
 const Column = styled.td`
   border: 1px solid #bdc0ba;
   padding: 12px;
+
+  ${props => props.$is_accepted === false &&`
+    color:#E33333;
+  `}
+
   ${MEDIA_QUERY_MD} {
     display: block;
     font-size: 16px;
@@ -140,7 +145,7 @@ const TransactionPage = () => {
           <Column>
             {new Date(createdAt).toLocaleString()}</Column>
           <Column>{new Date(deliverDate).toLocaleDateString()}</Column>
-          <Column>
+          <Column $is_accepted={is_accepted}>
             {is_accepted ? "已接受":is_accepted === null? '待處理':'拒絕'}
           
           </Column>
