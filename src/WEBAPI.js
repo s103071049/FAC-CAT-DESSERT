@@ -287,6 +287,18 @@ export const updateCartItem = async (id, quantity) => {
   });
   return await response.json();
 };
+// delete All Cart items
+export const deleteAllCartItems = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/deleteAllCartItems`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+  });
+  return await response.json();
+};
 // discounts
 // findAll
 export const findAllDiscount = async () => {

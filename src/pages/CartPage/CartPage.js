@@ -22,7 +22,6 @@ const CartPage = () => {
     handleDecreaseProduct,
     handleIncreaseProduct,
   } = useCartApi();
-  console.log("discountRules", discountRules);
   return (
     <>
       <CartWrapper>

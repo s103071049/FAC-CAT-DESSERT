@@ -28,7 +28,6 @@ function CartPreCheckout({ items, shipments }) {
       break;
     }
   }
-  console.log("shipment", shipment);
   return (
     <>
       <Item>

@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useCallback, useContext } from "react";
 import styled from "styled-components";
 import cash from "../../../components/img/icon/cash.svg";
 import card from "../../../components/img/icon/card.svg";
 import PayWarnningContent from "./PayWarnningContent";
-import { getUser, createOrder } from "../../../WEBAPI";
 import { AuthContexts } from "../../../context";
+import errorMessenger from "../../../hooks/carts/shipping/errorMessenger";
+import useShipping from "../../../hooks/carts/useShipping";
+import userShippingApi from "../../../hooks/carts/useShippingApi";
 const Form = styled.form`
   margin-top: 20px;
 `;
@@ -102,176 +104,57 @@ const FormBtn = styled.button`
 
 const RenderShippingForm = ({ data }) => {
   const { user } = useContext(AuthContexts);
-  const [isSameConsignee, setIsSameConsignee] = useState(true);
-  const [isDonateInvoice, setIsDonateInvoice] = useState("withPackage");
-  const [dbIsDonateInvoice, setDbIsDonateInvoice] = useState(true);
-  const [payment, setPayment] = useState("card");
-  const [notes, setNotes] = useState("");
-  const [name, setName] = useState(""); // 收件人同購買者
-  const [errorName, setErrorName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [errorPhone, setErrorPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [errorAddress, setErrorAddress] = useState("");
-  const [date, setDate] = useState(""); // 資料型別 string
-  const [dbDate, setDbDate] = useState(); // 資料型別 date
-  const [errorDate, setErrorDate] = useState();
-  const [transactionNumber, setTransactionNumber] = useState("");
-  const [errorLastFiveNumber, setErrorLastFiveNumber] = useState("");
-  const [invoice, setInvoice] = useState("normal");
-  const [companyInvoice, setCompanyInvoice] = useState("");
-  const [receiverName, setReceiverName] = useState("");
-  const [receiverPhone, setReceiverPhone] = useState("");
-  const [receiverAddress, setReceiverAddress] = useState("");
-  // useCallback
-  console.log(errorAddress);
-  const handlePayment = (e) => {
-    setPayment(e.target.value);
-  };
-  const handleNoteChange = (e) => {
-    setNotes(e.target.value);
-  };
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-    setErrorName("");
-  };
-  const handleReceiverName = (e) => {
-    setReceiverName(e.target.value);
-  };
-  const handleReceiverPhone = (e) => {
-    setReceiverPhone(e.target.value);
-    setErrorPhone("");
-  };
-  const handleReceiverAddress = (e) => {
-    setReceiverAddress(e.target.value);
-  };
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
-  };
-  const handleAddress = (e) => {
-    setAddress(e.target.value);
-    setErrorAddress("");
-  };
-  const handleTransactionNumber = (e) => {
-    setTransactionNumber(e.target.value);
-    setErrorLastFiveNumber("");
-  };
-  const handleDate = (e) => {
-    setDate(e.target.value);
-    let time = new Date(e.target.value);
-    setDbDate(time);
-    setErrorDate("");
-  };
-  const handleInvoice = (e) => {
-    setInvoice(e.target.value);
-  };
-  const handleCompanyInvoice = (e) => {
-    setCompanyInvoice(e.target.value);
-  };
-  const handleDonateInvoice = (e) => {
-    setIsDonateInvoice(e.target.value);
-    if (e.target.value === "withPackage") setDbIsDonateInvoice(true);
-    if (e.target.value === "donate") setDbIsDonateInvoice(false);
-  };
+  const {
+    handlePayment,
+    handleNameChange,
+    handlePhoneChange,
+    handleAddress,
+    handleDate,
+    handleTransactionNumber,
+    handleDonateInvoice,
+    handleInvoice,
+    handleCompanyInvoice,
+    handleConsignee,
+    handleReceiverName,
+    handleReceiverPhone,
+    handleReceiverAddress,
+    handleCheckOne,
+    handleCheckTwo,
+    formState,
+    errorState,
+    dispatchErr,
+  } = useShipping();
+  const { orderDone } = userShippingApi();
   const handleSubmit = useCallback(
     (e) => {
-      let prods = data;
       e.preventDefault();
+      let prods = data;
       let order = {
         userId: user.id,
-        buyerName: name,
-        buyerPhone: phone,
-        buyerAddress: address,
-        deliverDate: dbDate,
-        receiverName: receiverName,
-        receiverPhone: receiverPhone,
-        receiverAddress: receiverAddress,
-        lastFiveNumber: transactionNumber,
-        donateInvoice: dbIsDonateInvoice,
-        invoiceType: invoice,
-        invoiceNumber: companyInvoice,
+        buyerName: formState.name,
+        buyerPhone: formState.phone,
+        buyerAddress: formState.address,
+        deliverDate: formState.dbDate,
+        receiverName: formState.receiverName,
+        receiverPhone: formState.receiverPhone,
+        receiverAddress: formState.receiverAddress,
+        lastFiveNumber: formState.transactionNumber,
+        donateInvoice: formState.dbIsDonateInvoice,
+        invoiceType: formState.invoice,
+        invoiceNumber: formState.companyInvoice,
       };
-
-      console.log("isSameConsignee", isSameConsignee);
       let products = prods.map((prod) => {
         return {
           id: prod["Product.id"],
           number: prod.product_quantity,
         };
       });
-      console.log("order", order);
-      console.log("products", products);
-      if (products.length === 0) {
-        alert("購物車還沒有商品");
-        return;
-      }
-      if (!order.userId) {
-        alert("請登入再進行購買");
-        return;
-      }
-      // 配送日期繳款後五碼未填
-      if (!order.deliverDate) {
-        setErrorDate("*尚未選定配送時間");
-      }
-      if (order.deliverDate < new Date()) {
-        setErrorDate("*配送時間不得為過去");
-      }
-      if (!order.lastFiveNumber) {
-        setErrorLastFiveNumber("*尚未輸入信用卡或轉帳帳號的後五碼");
-      }
-      if (order.lastFiveNumber !== /^[0-9]{5}$/) {
-        setErrorLastFiveNumber("*資料格式須為五碼數字");
-      }
-      // 收件人同購買人
-      if (isSameConsignee) {
-        if (!order.buyerName) {
-          setErrorName("*尚未填寫姓名");
-        }
-        if (!order.buyerPhone) {
-          setErrorPhone(" *尚未填寫手機號碼");
-        }
-        if (order.buyerPhone !== /^09[0-9]{8}$/) {
-          setErrorPhone(" *手機格式不符");
-        }
-        if (!order.buyerAddress) {
-          setErrorAddress(" *尚未填寫配送地址");
-        }
-      }
-      // createOrder(products, order)
-      //   .then((response) => {
-      //     console.log(response);
-      //   })
-      //   .catch((err) => {
-      //     alert("系統處理異常，非常抱歉。請致電肥貓甜點將盡快為您服務!");
-      //   });
+      errorMessenger(formState, errorState, dispatchErr);
+      // 通過錯誤處理後，呼叫 api，寫入訂單及清除購物車資料!
+      orderDone(products, order);
     },
-    [
-      data,
-      user.id,
-      name,
-      phone,
-      address,
-      companyInvoice,
-      dbDate,
-      receiverName,
-      receiverPhone,
-      receiverAddress,
-      transactionNumber,
-      dbIsDonateInvoice,
-      invoice,
-      isSameConsignee,
-    ]
+    [data, dispatchErr, errorState, formState, user.id, orderDone]
   );
-
-  useEffect(() => {
-    getUser().then((response) => {
-      console.log(response);
-      setName(`${response.user.firstname + response.user.lastname}`);
-      setPhone(response.user.phone);
-      setAddress(response.user.address);
-    });
-  }, []);
-
   return (
     <Form>
       <FormItemWrapper>
@@ -290,8 +173,8 @@ const RenderShippingForm = ({ data }) => {
               type="radio"
               name="payMethod"
               value="card"
-              checked={payment === "card"}
-              onChange={handlePayment}
+              checked={formState.payment === "card"}
+              onChange={(e) => handlePayment(e)}
             />
             <Span>
               <img src={card} alt="credit card" />
@@ -303,23 +186,14 @@ const RenderShippingForm = ({ data }) => {
               type="radio"
               name="payMethod"
               value="ATM"
-              checked={payment === "ATM"}
-              onChange={handlePayment}
+              checked={formState.payment === "ATM"}
+              onChange={(e) => handlePayment(e)}
             />
             <Span>
               <img src={cash} alt="cash" />
             </Span>
             <Span>ATM</Span>
           </FormRadioLabel>
-        </FormContent>
-        <SubTitle>備註</SubTitle>
-        <FormContent>
-          <Input
-            type="text"
-            name="shipping_note"
-            value={notes}
-            onChange={handleNoteChange}
-          />
         </FormContent>
         <SubTitle>結帳須知</SubTitle>
         <FormContent>
@@ -332,27 +206,27 @@ const RenderShippingForm = ({ data }) => {
         <SubTitle>購買人資訊</SubTitle>
         <FormContent>
           <FormInputLabel htmlFor="fullname">
-            姓名<span style={{ color: "red" }}>{errorName}</span>
+            姓名<span style={{ color: "red" }}>{errorState.errorName}</span>
           </FormInputLabel>
-
           <Input
             type="text"
             id="fullname"
+            name="name"
             placeholder="請輸入姓名"
-            value={name}
-            onChange={handleNameChange}
+            value={formState.name}
+            onChange={(e) => handleNameChange(e)}
           />
         </FormContent>
         <FormContent>
           <FormInputLabel htmlFor="phone">
-            手機<span style={{ color: "red" }}> {errorPhone}</span>
+            手機<span style={{ color: "red" }}> {errorState.errorPhone}</span>
           </FormInputLabel>
           <Input
-            type="text"
+            type="number"
             id="phone"
             placeholder="請輸入手機號碼"
-            value={phone}
-            onChange={handlePhoneChange}
+            value={formState.phone}
+            onChange={(e) => handlePhoneChange(e)}
           />
           <AdviceText>
             *取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321
@@ -360,38 +234,41 @@ const RenderShippingForm = ({ data }) => {
         </FormContent>
         <FormContent>
           <FormInputLabel htmlFor="address">
-            配送地址<span style={{ color: "red" }}>{errorAddress}</span>
+            配送地址
+            <span style={{ color: "red" }}>{errorState.errorAddress}</span>
           </FormInputLabel>
           <Input
             type="text"
             id="address"
             placeholder="請填寫配送地址"
-            value={address}
-            onChange={handleAddress}
+            value={formState.address}
+            onChange={(e) => handleAddress(e)}
           />
         </FormContent>
         <FormContent>
           <FormInputLabel htmlFor="shippingDate">
-            配送日期<span style={{ color: "red" }}>{errorDate}</span>
+            配送日期<span style={{ color: "red" }}>{errorState.errorDate}</span>
           </FormInputLabel>
           <Input
             type="date"
             id="shippingDate"
-            value={date}
-            onChange={handleDate}
+            value={formState.date}
+            onChange={(e) => handleDate(e)}
           />
         </FormContent>
         <FormContent>
           <FormInputLabel htmlFor="last5Number">
             帳號/信用卡 後五碼
-            <span style={{ color: "red" }}>{errorLastFiveNumber}</span>
+            <span style={{ color: "red" }}>
+              {errorState.errorLastFiveNumber}
+            </span>
           </FormInputLabel>
           <Input
             type="number"
             id="last5Number"
             placeholder="請輸入信用卡或轉帳帳號的後五碼"
-            value={transactionNumber}
-            onChange={handleTransactionNumber}
+            value={formState.transactionNumber}
+            onChange={(e) => handleTransactionNumber(e)}
           />
         </FormContent>
       </FormItemWrapper>
@@ -403,8 +280,10 @@ const RenderShippingForm = ({ data }) => {
               type="radio"
               name="invoice"
               value="withPackage"
-              checked={isDonateInvoice === "withPackage"}
-              onChange={handleDonateInvoice}
+              checked={formState.isDonateInvoice === "withPackage"}
+              onChange={(e) => {
+                handleDonateInvoice(e);
+              }}
             />
             <Span>是</Span>
           </FormRadioLabel>
@@ -413,21 +292,26 @@ const RenderShippingForm = ({ data }) => {
               type="radio"
               name="invoice"
               value="donate"
-              checked={isDonateInvoice === "donate"}
-              onChange={handleDonateInvoice}
+              checked={formState.isDonateInvoice === "donate"}
+              onChange={(e) => {
+                handleDonateInvoice(e);
+              }}
             />
             <Span>捐贈</Span>
           </FormRadioLabel>
         </FormContent>
-        <SubTitle>發票類型</SubTitle>
+        <SubTitle>
+          發票類型
+          <span style={{ color: "red" }}>{errorState.errorInvoice}</span>
+        </SubTitle>
         <FormContent>
           <FormRadioLabel>
             <input
               type="radio"
               name="inVoiceType"
               value="normal"
-              checked={invoice === "normal"}
-              onChange={handleInvoice}
+              checked={formState.invoice === "normal"}
+              onChange={(e) => handleInvoice(e)}
             />
             <Span>二聯式</Span>
           </FormRadioLabel>
@@ -436,17 +320,17 @@ const RenderShippingForm = ({ data }) => {
               type="radio"
               name="inVoiceType"
               value="withCompanyNum"
-              checked={invoice === "withCompanyNum"}
-              onChange={handleInvoice}
+              checked={formState.invoice === "withCompanyNum"}
+              onChange={(e) => handleInvoice(e)}
             />
             <Span>開立統編</Span>
-            {invoice === "withCompanyNum" && (
+            {formState.invoice === "withCompanyNum" && (
               <InlineInput
                 type="text"
                 name="companuNum"
                 placeholder="請輸入統編"
-                value={companyInvoice}
-                onChange={handleCompanyInvoice}
+                value={formState.companyInvoice}
+                onChange={(e) => handleCompanyInvoice(e)}
               />
             )}
           </FormRadioLabel>
@@ -468,9 +352,9 @@ const RenderShippingForm = ({ data }) => {
             <input
               type="radio"
               name="consignee"
-              value={isSameConsignee}
-              checked={isSameConsignee}
-              onChange={(e) => setIsSameConsignee(!isSameConsignee)}
+              value={formState.isSameConsignee}
+              checked={formState.isSameConsignee}
+              onChange={(e) => handleConsignee(e)}
             />
             <Span>同購買人</Span>
           </FormRadioLabel>
@@ -478,36 +362,40 @@ const RenderShippingForm = ({ data }) => {
             <input
               type="radio"
               name="consignee"
-              value={!isSameConsignee}
-              checked={!isSameConsignee}
-              onChange={(e) => setIsSameConsignee(!isSameConsignee)}
+              value={!formState.isSameConsignee}
+              checked={!formState.isSameConsignee}
+              onChange={(e) => handleConsignee(e)}
             />
             <Span>收件與購買不同人</Span>
           </FormRadioLabel>
-          {!isSameConsignee && (
+          {!formState.isSameConsignee && (
             <FormItemWrapper $isInlineFormItem={true}>
               <FormContent>
                 <FormInputLabel htmlFor="consignee">
                   收件人姓名
-                  <span style={{ color: "red" }}>*尚未輸入收件人姓名</span>
+                  <span style={{ color: "red" }}>
+                    {errorState.errorReceiverName}
+                  </span>
                 </FormInputLabel>
                 <Input
                   type="text"
                   id="consignee"
-                  value={receiverName}
-                  onChange={handleReceiverName}
+                  value={formState.receiverName}
+                  onChange={(e) => handleReceiverName(e)}
                 />
               </FormContent>
               <FormContent>
                 <FormInputLabel htmlFor="consigneePhone">
                   手機
-                  <span style={{ color: "red" }}>*尚未輸入收件人手機號碼</span>
+                  <span style={{ color: "red" }}>
+                    {errorState.errorReceiverPhone}
+                  </span>
                 </FormInputLabel>
                 <Input
-                  type="text"
+                  type="number"
                   id="consigneePhone"
-                  value={receiverPhone}
-                  onChange={handleReceiverPhone}
+                  value={formState.receiverPhone}
+                  onChange={(e) => handleReceiverPhone(e)}
                 />
                 <AdviceText>
                   *取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321
@@ -516,13 +404,15 @@ const RenderShippingForm = ({ data }) => {
               <FormContent>
                 <FormInputLabel htmlFor="consigneeAddress">
                   配送地址
-                  <span style={{ color: "red" }}>*尚未填寫配送地址</span>
+                  <span style={{ color: "red" }}>
+                    {errorState.errorReceiverAddress}
+                  </span>
                 </FormInputLabel>
                 <Input
                   type="text"
                   id="consigneeAddress"
-                  value={receiverAddress}
-                  onChange={handleReceiverAddress}
+                  value={formState.receiverAddress}
+                  onChange={(e) => handleReceiverAddress(e)}
                 />
               </FormContent>
             </FormItemWrapper>
@@ -532,18 +422,24 @@ const RenderShippingForm = ({ data }) => {
             <FormNote>
               <div>
                 收件人:
-                {isSameConsignee && <span>{name}</span>}
-                {!isSameConsignee && <span>{receiverName}</span>}
+                {formState.isSameConsignee && <span>{formState.name}</span>}
+                {!formState.isSameConsignee && (
+                  <span>{formState.receiverName}</span>
+                )}
               </div>
               <div>
                 聯絡電話:
-                {isSameConsignee && <span>{phone}</span>}
-                {!isSameConsignee && <span>{receiverPhone}</span>}
+                {formState.isSameConsignee && <span>{formState.phone}</span>}
+                {!formState.isSameConsignee && (
+                  <span>{formState.receiverPhone}</span>
+                )}
               </div>
               <div>
                 收件地址:
-                {isSameConsignee && <span>{address}</span>}
-                {!isSameConsignee && <span>{receiverAddress}</span>}
+                {formState.isSameConsignee && <span>{formState.address}</span>}
+                {!formState.isSameConsignee && (
+                  <span>{formState.receiverAddress}</span>
+                )}
               </div>
             </FormNote>
           </FormContent>
@@ -552,15 +448,26 @@ const RenderShippingForm = ({ data }) => {
       <FormItemWrapper>
         <FormContent>
           <ForCheckboxItem>
-            <input type="checkbox" name="dataPolicy" />
+            <input
+              type="checkbox"
+              name="dataPolicy"
+              value={formState.checkOne}
+              onChange={(e) => handleCheckOne(e)}
+            />
             <Span>同意會員責任規範及個資聲明與商家會員條款</Span>
           </ForCheckboxItem>
           <ForCheckboxItem>
-            <input type="checkbox" name="orderPolicy" />
+            <input
+              type="checkbox"
+              name="orderPolicy"
+              value={formState.checkTwo}
+              onChange={(e) => handleCheckTwo(e)}
+            />
             <Span>
               為保障彼此之權益，賣家在收到您的訂單後仍保有決定是否接受訂單及出貨與否之權利
             </Span>
           </ForCheckboxItem>
+          <span style={{ color: "red" }}>{errorState.errorLaw}</span>
         </FormContent>
       </FormItemWrapper>
       <FormBtn type="submit" onClick={handleSubmit}>
