@@ -6,7 +6,13 @@ export default function useFindHotProducts(sliceLimit) {
   useEffect(() => {
     FindDataAPI({}, "/getHotSell").then((response) => {
       const sliceEND = Math.min(response.length, sliceLimit);
-      setProducts(response.slice(0, sliceEND));
+      const Products = [];
+      for (let i = 0; i <= sliceEND; i++) {
+        if (response[i].Product.is_deleted === false) {
+          Products.push(response[i].Product);
+        }
+      }
+      setProducts(Products);
     });
   }, []);
   return products;

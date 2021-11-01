@@ -6,6 +6,7 @@ import {
 import useFindHotProducts from "../../../hooks/productHooks/useFindHotProducts";
 import useFindRecommendProducts from "../../../hooks/productHooks/useFindRecommendProducts";
 import useAddCartItems from "../../../hooks/carts/useAddCartItems";
+import { Link } from "react-router-dom";
 
 const Section = styled.div`
   display: flex;
@@ -114,7 +115,9 @@ function Sales({ product }) {
   return (
     <Dessert>
       <Img>
-        <DessertImg url={product.img_url} />
+        <Link to={`/product/${product.id}`}>
+          <DessertImg url={product.img_url} />
+        </Link>
       </Img>
       <DessertName>{product.name}</DessertName>
       <DessertPrice>{product.price}</DessertPrice>
@@ -139,7 +142,7 @@ function HotSales() {
         <Advertisement enTitle={"Hot Sales"} chTitle={"熱銷甜點"} />
         <Section>
           {hotProducts.map((hotProduct, index) => {
-            return <Sales product={hotProduct.Product} key={index} />;
+            return <Sales product={hotProduct} key={index} />;
           })}
         </Section>
       </Category>

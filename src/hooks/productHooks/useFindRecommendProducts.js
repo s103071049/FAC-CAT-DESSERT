@@ -12,7 +12,10 @@ export default function useFindRecommendProducts(sliceLimit) {
   };
   useEffect(() => {
     FindDataAPI({}, "/findAllProducts").then((response) => {
-      setProducts(random(response.products).slice(0, sliceLimit));
+      const newProducts = response.products.filter((product) => {
+        return product.is_deleted === false;
+      });
+      setProducts(random(newProducts).slice(0, sliceLimit));
     });
   }, []);
   return products;
