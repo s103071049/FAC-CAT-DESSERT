@@ -149,8 +149,25 @@ const RenderShippingForm = ({ data }) => {
           number: prod.product_quantity,
         };
       });
+      console.log("order", order);
       errorMessenger(formState, errorState, dispatchErr);
       // 通過錯誤處理後，呼叫 api，寫入訂單及清除購物車資料!
+      if (
+        errorState.errorReceiverAddress ||
+        errorState.errorReceiverPhone ||
+        errorState.errorReceiverName ||
+        errorState.errorAddress ||
+        errorState.errorPhone ||
+        errorState.errorName ||
+        errorState.errorLastFiveNumber ||
+        errorState.errorDate
+      ) {
+        return;
+      }
+      if (errorState.errorLaw) {
+        alert("為保障雙方權益，送出訂單前請同意下列條款");
+        return;
+      }
       orderDone(products, order);
     },
     [data, dispatchErr, errorState, formState, user.id, orderDone]

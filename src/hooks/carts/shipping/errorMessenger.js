@@ -77,22 +77,5 @@ function errorMessenger(formState, errorState, dispatchErr) {
       payload: "*尚未填寫配送地址",
     });
   }
-  if (
-    errorState.errorReceiverAddress ||
-    errorState.errorReceiverPhone ||
-    errorState.errorReceiverName ||
-    errorState.errorAddress ||
-    errorState.errorPhone ||
-    errorState.errorName ||
-    errorState.errorLastFiveNumber ||
-    errorState.errorDate
-  ) {
-    alert("資料未填寫齊全或格式有誤 QAQ");
-    return;
-  }
-  if (errorState.errorLaw) {
-    alert("為保障雙方權益，送出訂單前請同意下列條款");
-    return;
-  }
 }
 export default errorMessenger;

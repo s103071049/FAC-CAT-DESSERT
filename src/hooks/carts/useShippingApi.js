@@ -7,7 +7,6 @@ const ShippingApi = () => {
     try {
       const response = await createOrder(products, order);
       if (response.message === "please provide order info") {
-        alert("訂單資料未填寫齊全");
         return;
       }
       if (response.message === "please provide products and order") {
