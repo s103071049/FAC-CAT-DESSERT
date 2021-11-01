@@ -107,9 +107,9 @@ const OrderContentPendingTr = ({ order, index }) => {
     <Tr>
       <Td style={{ paddingLeft: "15px" }}>{index + 1}</Td>
       <Td>
-        <OrderNumber to={`/admin/order/${order.id}`}>{order.id}</OrderNumber>
+        <OrderNumber to={`/admin/order/${order.id}`}>{order.id.slice(-10)}</OrderNumber>
       </Td>
-      <Td>{order.createdAt}</Td>
+      <Td>{new Date(order.createdAt).toLocaleString()}</Td>
     </Tr>
   );
 };
@@ -118,10 +118,10 @@ const OrderContentSolvedTr = ({ order, index }) => {
     <Tr>
       <Td style={{ paddingLeft: "15px" }}>{index + 1}</Td>
       <Td>
-        <OrderNumber to={`/admin/order/${order.id}`}>{order.id}</OrderNumber>
+        <OrderNumber to={`/admin/order/${order.id}`}>{order.id.slice(-10)}</OrderNumber>
       </Td>
-      <Td>{order.createdAt}</Td>
-      <Td>{order.accepted_at ? order.accepted_at : "-"}</Td>
+      <Td>{new Date(order.createdAt).toLocaleString()}</Td>
+      <Td>{order.accepted_at ? new Date(order.accepted_at).toLocaleString() : "-"}</Td>
       <Td>
         {order.is_accepted && "接受"}
         {order.is_accepted === false && "拒單"}

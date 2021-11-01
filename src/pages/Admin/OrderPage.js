@@ -44,7 +44,7 @@ const OrderPage = () => {
     pagenum,
     setPageNum,
   } = useFindAllOrder();
-  const pageSize = 5;
+  const pageSize = 10;
   const { pageDetail, pageNext } = usePagination(currentOrders, pageSize);
   return (
     <Wrapper>

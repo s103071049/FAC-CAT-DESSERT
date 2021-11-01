@@ -34,10 +34,10 @@ const useFindAllOrder = () => {
       return setLoading(false);
     }
     getAllOrder().then((response) => {
-      setFackOrders(response.data);
+      setFackOrders(response.data.sort((a,b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)));
       setLoading(false);
     });
-  }, [history, user.authority]);
+  }, [history, user.authority, setLoading]);
   useEffect(() => {
     setNum(0);
     setPageNum(1);
