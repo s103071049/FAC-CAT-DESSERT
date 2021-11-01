@@ -1,21 +1,20 @@
 {
   "files": {
     "main.css": "/finalProjectUI/static/css/main.aa724a6e.chunk.css",
-    "main.js": "/finalProjectUI/static/js/main.f886b7d0.chunk.js",
-    "main.js.map": "/finalProjectUI/static/js/main.f886b7d0.chunk.js.map",
+    "main.js": "/finalProjectUI/static/js/main.a5febcde.chunk.js",
+    "main.js.map": "/finalProjectUI/static/js/main.a5febcde.chunk.js.map",
     "runtime-main.js": "/finalProjectUI/static/js/runtime-main.4b08a675.js",
     "runtime-main.js.map": "/finalProjectUI/static/js/runtime-main.4b08a675.js.map",
-    "static/js/2.9d23b4ea.chunk.js": "/finalProjectUI/static/js/2.9d23b4ea.chunk.js",
-    "static/js/2.9d23b4ea.chunk.js.map": "/finalProjectUI/static/js/2.9d23b4ea.chunk.js.map",
+    "static/js/2.d90bbb1b.chunk.js": "/finalProjectUI/static/js/2.d90bbb1b.chunk.js",
+    "static/js/2.d90bbb1b.chunk.js.map": "/finalProjectUI/static/js/2.d90bbb1b.chunk.js.map",
     "static/js/3.b9112b0c.chunk.js": "/finalProjectUI/static/js/3.b9112b0c.chunk.js",
     "static/js/3.b9112b0c.chunk.js.map": "/finalProjectUI/static/js/3.b9112b0c.chunk.js.map",
     "index.html": "/finalProjectUI/index.html",
     "static/css/main.aa724a6e.chunk.css.map": "/finalProjectUI/static/css/main.aa724a6e.chunk.css.map",
-    "static/js/2.9d23b4ea.chunk.js.LICENSE.txt": "/finalProjectUI/static/js/2.9d23b4ea.chunk.js.LICENSE.txt",
+    "static/js/2.d90bbb1b.chunk.js.LICENSE.txt": "/finalProjectUI/static/js/2.d90bbb1b.chunk.js.LICENSE.txt",
     "static/media/arrowUp.32f62e1a.svg": "/finalProjectUI/static/media/arrowUp.32f62e1a.svg",
     "static/media/banner3.e8d438a2.jpg": "/finalProjectUI/static/media/banner3.e8d438a2.jpg",
     "static/media/cake.3691e49b.jpg": "/finalProjectUI/static/media/cake.3691e49b.jpg",
-    "static/media/cake2.bef16be9.jpg": "/finalProjectUI/static/media/cake2.bef16be9.jpg",
     "static/media/cake3.6603d24b.jpg": "/finalProjectUI/static/media/cake3.6603d24b.jpg",
     "static/media/cake4.953571f6.jpg": "/finalProjectUI/static/media/cake4.953571f6.jpg",
     "static/media/camera.949eaeb5.svg": "/finalProjectUI/static/media/camera.949eaeb5.svg",
@@ -45,8 +44,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.4b08a675.js",
-    "static/js/2.9d23b4ea.chunk.js",
+    "static/js/2.d90bbb1b.chunk.js",
     "static/css/main.aa724a6e.chunk.css",
-    "static/js/main.f886b7d0.chunk.js"
+    "static/js/main.a5febcde.chunk.js"
   ]
 }
