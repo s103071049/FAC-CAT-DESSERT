@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAllProducts } from "../../WEBAPI";
+import { AuthLoadingContext } from "../../context";
 
 export default function useFindHotProducts() {
+  const { setLoading } = useContext(AuthLoadingContext);
   const [products, setProducts] = useState([]);
   useEffect(() => {
+    setLoading(true);
     getAllProducts().then((response) => {
       const random = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -17,8 +20,9 @@ export default function useFindHotProducts() {
           response.products.filter((product) => !product.is_deleted)
         ).slice(0, 12)
       );
+      setLoading(false);
     });
-  }, []);
+  }, [setLoading]);
   return {
     products,
   };

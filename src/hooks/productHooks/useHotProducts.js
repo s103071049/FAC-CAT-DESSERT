@@ -14,6 +14,6 @@ export default function useFindHotProducts(sliceLimit) {
       }
       setProducts(Products);
     });
-  }, []);
+  }, [sliceLimit]);
   return products;
 }
