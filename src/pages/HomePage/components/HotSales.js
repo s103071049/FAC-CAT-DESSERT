@@ -3,7 +3,7 @@ import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
 } from "../../../components/Style/style";
-import useFindHotProducts from "../../../hooks/productHooks/useFindHotProducts";
+import useHotProducts from "../../../hooks/productHooks/useHotProducts";
 import useFindRecommendProducts from "../../../hooks/productHooks/useFindRecommendProducts";
 import useAddCartItems from "../../../hooks/carts/useAddCartItems";
 import { Link } from "react-router-dom";
@@ -126,7 +126,7 @@ function Sales({ product }) {
   );
 }
 function HotSales() {
-  const hotProducts = useFindHotProducts(4);
+  const hotProducts = useHotProducts(4);
   const recommendProducts = useFindRecommendProducts(4);
   return (
     <div>
