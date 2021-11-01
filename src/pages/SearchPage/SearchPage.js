@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
 import SearchItem from "./components/SearchItem";
-import PageChange from "../../components/common/PageChange";
 import { useParams } from "react-router";
 import { searchProducts } from "../../WEBAPI";
 import { AuthLoadingContext } from "../../context";
@@ -37,7 +36,6 @@ const SearchPage = () => {
         {productOptions && (
           <SearchItem searchKey={context} productOptions={productOptions} />
         )}
-        {productOptions.length !== 0 && <PageChange />}
       </SearchWrapper>
     </div>
   );
