@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAllProducts } from "../../WEBAPI";
+import { AuthLoadingContext } from "../../context";
 
 export default function useFindNewProducts() {
+  const { setLoading } = useContext(AuthLoadingContext);
   const [products, setProducts] = useState([]);
   useEffect(() => {
+    setLoading(true);
     getAllProducts().then((response) => {
       setProducts(
         response.products
@@ -11,8 +14,9 @@ export default function useFindNewProducts() {
           .reverse()
           .slice(0, 12)
       );
+      setLoading(false);
     });
-  }, []);
+  }, [setLoading]);
   return {
     products,
   };
