@@ -198,6 +198,7 @@ const SingleTransactionPage = () => {
     handleBack
   } = useSingleTransaction()
   const {deliverDate, createdAt, is_accepted, lastFiveNumber,price, sum, invoiceNumber, invoiceType, receiverAddress, receiverName, receiverPhone} = orderDetail
+  console.log(orderDetail)
   return (
     <Container>
       <Header>
@@ -229,7 +230,7 @@ const SingleTransactionPage = () => {
                   </Td>
                     <Td data-title="發票類型">
                     <ItemPrice>
-                     {invoiceType}
+                     {invoiceType === 'normal'? '二聯式':'開立統編'}
                     </ItemPrice>
                   </Td>
                     <Td data-title="統編">
