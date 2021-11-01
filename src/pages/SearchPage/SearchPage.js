@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
 import SearchItem from "./components/SearchItem";
-import useSearchProducts from "../../hooks/productHooks/useSearchProducts";
-import usePagination from "../../hooks/common/usePagination";
-import PageBtn from "../../components/common/PageBtn";
+import { useParams } from "react-router";
+import { searchProducts } from "../../WEBAPI";
+import { AuthLoadingContext } from "../../context";
+
 
 const SearchWrapper = styled.div`
   max-width: 1024px;

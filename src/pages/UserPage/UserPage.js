@@ -121,7 +121,6 @@ const SideBarLogout = styled.div`
   display: block;
   color: #808080;
   padding: 20px;
-  border-bottom: 1px solid #808080;
   &:hover {
     color: #d49e6a;
     cursor: pointer;
