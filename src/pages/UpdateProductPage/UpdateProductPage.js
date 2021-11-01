@@ -182,7 +182,7 @@ const AddProductPage = () => {
     desc,
     price,
     category,
-    currentDBimage
+    img_url
   } = useUpdateProduct()
 
   function UploadImg({ name, desc }) {
@@ -276,7 +276,7 @@ const AddProductPage = () => {
           <Content>
             <Column>目前照片</Column>
               <Wrap>
-                <Img url={currentDBimage.current}/>
+                <Img url={img_url}/>
               </Wrap>
           </Content>
           <UploadImg name="img_url" desc={`${imgLoadingDesc}`} />

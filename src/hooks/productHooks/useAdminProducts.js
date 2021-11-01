@@ -11,6 +11,7 @@ const useAdminProduct = () => {
     "商品名",
     "商品介紹",
     "商品圖",
+    "類別",
     "價格",
     "刪除",
     "編輯",
@@ -21,21 +22,15 @@ const useAdminProduct = () => {
   const [search, setSearch] = useState('')
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
-  //分頁
-  const [pagination, setPagination] = useState({
-    indexList:[],//當前渲染的頁面數據
-    totalData:tdcontexts,
-    current: 1, //當前頁碼
-    pageSize:4, //每頁顯示的條數
-    goValue:0,  //要去的條數index
-    totalPage:0,//總頁數
-  })
 
-  
+  const [num, setNum] = useState(0)
+  const [pagenum, setPageNum] =  useState(1)
 
   const fetchProducts = useCallback(()=> {
       const fetchingProduct = async() => {
       setLoading(true)
+      setNum(0)
+      setPageNum(1)
       const result = await getAllProducts()
       try {
         if(!result.success) {
@@ -43,11 +38,9 @@ const useAdminProduct = () => {
           setLoading(false)
           return  history.goBack()
         }
-        let getProducts = result.products.filter(product => !product.is_deleted)
+        let getProducts = result.products.filter(product => !product.is_deleted).sort((a,b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
         if(getProducts.length === 0) setTdcontexts([])
         setTdcontexts(getProducts)
-      
-
         
         setLoading(false)
 
@@ -81,9 +74,9 @@ const useAdminProduct = () => {
     const result = await searchProducts(search)
     try{
       if(!result.success){
-        setTdcontexts([])
         setSearch('')
-        return setLoading(false)
+        setLoading(false)
+        return history.goBack()
       }
       let getSearchedProducts = result.data.filter(product=> !product.is_deleted)
       if(result.success && getSearchedProducts.length === 0){
@@ -98,7 +91,8 @@ const useAdminProduct = () => {
       return setLoading(false)
 
     }catch(err) {
-      return setLoading(false)
+      setLoading(false)
+      return history.goBack()
     }
   }
   const handleChange = (e) => {
@@ -113,7 +107,11 @@ const useAdminProduct = () => {
     fetchProducts,
     search,
     handleChange,
-    fetchingSearchProduct
+    fetchingSearchProduct,
+    num,
+    setNum,
+    pagenum,
+    setPageNum
   }
 
 }

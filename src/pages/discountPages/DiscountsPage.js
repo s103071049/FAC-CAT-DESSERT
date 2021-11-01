@@ -1,14 +1,7 @@
-import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
-import PageChange from "../../components/common/PageChange";
 import { TdContext, thcontexts } from "./TdContext";
 import { Link } from "react-router-dom";
-import { FindDataAPI } from "../../API/fetchAPI";
-import { useState } from "react";
-import { getAuthToken } from "../../utils";
-import { useLocation } from "react-router";
-import { AuthContexts, AuthLoadingContext } from "../../context";
 import useDiscount from "../../hooks/discountHooks/useDiscount";
 
 const AdminProductsWrapper = styled.div`
@@ -132,20 +125,8 @@ const Th = styled.th``;
 const Tr = styled.tr``;
 
 const DiscountsPage = (isRestore) => {
-  const {
-    discounts,
-    search,
-    showDataIndex,
-    dataAmount,
-
-    fetchDiscounts,
-    setSearch,
-    searchDiscounts,
-    handleChange,
-    setShowDataIndex,
-  } = useDiscount(isRestore);
-  const { loading, setLoading } = useContext(AuthLoadingContext);
-  let location = useLocation();
+  const { discounts, search, setSearch, searchDiscounts, handleChange } =
+    useDiscount(isRestore);
 
   const restoreData = isRestore.isRestore
     ? {
@@ -160,10 +141,6 @@ const DiscountsPage = (isRestore) => {
         returnUrl: "/admin/discounts/restore",
         returnName: "還原刪除規則",
       };
-
-  useEffect(() => {
-    fetchDiscounts();
-  }, [location.pathname, showDataIndex]);
 
   return (
     <AdminProductsWrapper>
@@ -208,11 +185,6 @@ const DiscountsPage = (isRestore) => {
           </Tbody>
         </Table>
       </AdminProductsContent>
-      <PageChange
-        dataAmount={dataAmount.current}
-        showDataIndex={showDataIndex}
-        setShowDataIndex={setShowDataIndex}
-      />
     </AdminProductsWrapper>
   );
 };

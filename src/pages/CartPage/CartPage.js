@@ -22,7 +22,6 @@ const CartPage = () => {
     handleDecreaseProduct,
     handleIncreaseProduct,
   } = useCartApi();
-
   return (
     <>
       <CartWrapper>
@@ -36,7 +35,7 @@ const CartPage = () => {
             handleDecreaseProduct={handleDecreaseProduct}
             handleIncreaseProduct={handleIncreaseProduct}
           />
-          {/* <Shipping /> */}
+          <Shipping data={data} />
         </ShoppinCartDetail>
       </CartWrapper>
     </>

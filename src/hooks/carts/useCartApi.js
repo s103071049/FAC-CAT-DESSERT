@@ -21,9 +21,9 @@ const useCartApi = () => {
       ]);
       setLoading(false);
       setDiscountRules(
-        DiscountRules.filter((rule) => rule.is_deleted === false).sort(
+        DiscountRules.filter((rule) => rule.is_deleted !== true).sort(
           (a, b) => {
-            return a.threshold - b.threshold;
+            return b.threshold - a.threshold;
           }
         )
       );
@@ -68,8 +68,8 @@ const useCartApi = () => {
           };
         })
     );
-    debounce(async () => {
-      await updateCartItem(item.ProductId, quantity).then((response) => {
+    debounce(() => {
+      updateCartItem(item.ProductId, quantity).then((response) => {
         if (!response.success) {
           return alert("更新商品數量處理異常，系統修復中");
         }
@@ -88,8 +88,8 @@ const useCartApi = () => {
         };
       })
     );
-    debounce(async () => {
-      await updateCartItem(item.ProductId, quantity).then((response) => {
+    debounce(() => {
+      updateCartItem(item.ProductId, quantity).then((response) => {
         if (!response.success) {
           return alert("更新商品數量處理異常，系統修復中");
         }

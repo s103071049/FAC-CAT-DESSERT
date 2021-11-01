@@ -3,12 +3,14 @@ import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
 } from "../../../components/Style/style";
-import PageChange from "../../../components/common/PageChange";
 import ProductsSectionTiTleContent from "../../../components/common/ProductsSectionTiTleContent";
 import squares from "../../../components/img/icon/squares.svg";
 import list from "../../../components/img/icon/list.svg";
 import { Link } from "react-router-dom";
 import useFindProducts from "../../../hooks/productHooks/useFindProducts";
+import PageBtn from "../../../components/common/PageBtn";
+import usePagination from "../../../hooks/common/usePagination";
+import useAddCartItems from "../../../hooks/carts/useAddCartItems";
 
 const ProductsSectionContentsWrapper = styled.div`
   margin-bottom:40px;
@@ -55,10 +57,10 @@ const ProductListsImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  min-width: 200px;
   margin-right: 50px;
   @media screen and (max-width: 550px) {
-    width: 40%;
+    min-width: 100px;
     margin-right: 20px;
   }
 `;
@@ -90,9 +92,10 @@ const ProductListsInfoSection = styled.div`
 `;
 const ProductListsName = styled.h3`
   margin: 0 0 10px 0;
-  font-size: 36px;
+  word-break: keep-all;
+  font-size: 30px;
   @media screen and (max-width: 550px) {
-    font-size: 24px;
+    font-size: 18px;
   }
 `;
 const ProductListsCaption = styled.p`
@@ -108,16 +111,21 @@ const ProductListsCaption = styled.p`
   /* white-space: nowrap; */
   text-overflow: ellipsis;
   ${MEDIA_QUERY_MD} {
-    -webkit-line-clamp: 2; //行數
+    -webkit-line-clamp: 2;
+    
+    @media screen and (max-width: 550px) {
+      display: none;
+    }
   }
-  @media screen and (max-width: 550px) {
-    display: none;
-  }
+  
 `;
 const ProductListsPrice = styled.p`
   font-size: 24px;
   color: #e55555;
   margin: 0;
+  @media screen and (max-width: 550px) {
+    font-size:16px;
+  }
 `;
 const ProductListsButtonWrapper = styled.div`
   display: flex;
@@ -236,49 +244,65 @@ const ProductButton = styled.button`
   }
 `;
 
+const RenderProduct = ({product, section}) => {
+  const { handleAddProducts } = useAddCartItems(product, 1);
+
+  if(section === 'sqares') {
+    return (
+      <ProductWapper>
+        <ProductImageWrapper>
+          <Link to={`/product/${product.id}`}>
+            <ProductImage img={product.img_url} />
+          </Link>
+        </ProductImageWrapper>
+        <ProductName>{product.name}</ProductName>
+        <ProductPrice>NT$ {product.price}</ProductPrice>
+        <ProductButton onClick={handleAddProducts}>加入購物車</ProductButton>
+      </ProductWapper>
+    )
+  }
+
+  return (
+    <ProductsListsWrapper>
+      <div style={{ display: "flex"}}>
+        <ProductListsImageWrapper>
+          <Link to={`/product/${product.id}`} style={{ width: "100%" }}>
+            <ProductListsImage img={product.img_url} />
+          </Link>
+        </ProductListsImageWrapper>
+        <ProductListsInfo>
+          <ProductListsInfoSection>
+            <div>
+              <ProductListsName>{product.name}</ProductListsName>
+              <ProductListsCaption>
+                {product.desc}
+              </ProductListsCaption>
+            </div>
+            <ProductListsPrice>NT$ {product.price}</ProductListsPrice>
+            <ProductListsMDButton onClick={handleAddProducts}>加入購物車</ProductListsMDButton>
+          </ProductListsInfoSection>
+        </ProductListsInfo>
+      </div>
+      <ProductListsButtonWrapper>
+        <ProductListsButton onClick={handleAddProducts}>加入購物車</ProductListsButton>
+      </ProductListsButtonWrapper>
+    </ProductsListsWrapper>
+  )
+  
+}
+
 const RenderCotentItemsSection = ({products, section}) => {
+  
   if(section === 'sqares') {
     return products.map(product => {
       return (
-        <ProductWapper key={product.id}>
-          <ProductImageWrapper>
-            <Link to={`/product/${product.id}`}>
-              <ProductImage img={product.img_url} />
-            </Link>
-          </ProductImageWrapper>
-          <ProductName>{product.name}</ProductName>
-          <ProductPrice>NT$ {product.price}</ProductPrice>
-          <ProductButton>加入購物車</ProductButton>
-        </ProductWapper>
+        <RenderProduct product={product}  key={product.id} section={section}/>
       )
     })
   }
   return products.map(product => {
     return(
-      <ProductsListsWrapper key={product.id}>
-        <div style={{ display: "flex" }}>
-          <ProductListsImageWrapper>
-            <Link to={`/product/${product.id}`} style={{ width: "100%" }}>
-              <ProductListsImage img={product.img_url} />
-            </Link>
-          </ProductListsImageWrapper>
-          <ProductListsInfo>
-            <ProductListsInfoSection>
-              <div>
-                <ProductListsName>{product.name}</ProductListsName>
-                <ProductListsCaption>
-                  {product.desc}
-                </ProductListsCaption>
-              </div>
-              <ProductListsPrice>NT$ {product.price}</ProductListsPrice>
-              <ProductListsMDButton>加入購物車</ProductListsMDButton>
-            </ProductListsInfoSection>
-          </ProductListsInfo>
-        </div>
-        <ProductListsButtonWrapper>
-          <ProductListsButton>加入購物車</ProductListsButton>
-        </ProductListsButtonWrapper>
-      </ProductsListsWrapper>
+      <RenderProduct product={product}  key={product.id} section={section}/>
     )
   })
 }
@@ -302,12 +326,16 @@ export default function ProductsSection({selectedCategory}) {
     handletoggleLists,
     handletoggleSquares,
     section,
-    showDataIndex,
-    setShowDataIndex,
     dataAmount,
-    loading,
+    num,
+    setNum,
+    pagenum,
+    setPageNum
   } = useFindProducts(selectedCategory)
 
+  //分頁設置 pageSize 為 每頁要顯示的筆數
+  const pageSize = 12
+  const {pageDetail, pageNext} = usePagination(products, pageSize)
   
   function ProductsSectionTiTle({
     handletoggleSquares,
@@ -344,17 +372,25 @@ export default function ProductsSection({selectedCategory}) {
 
   return (
     <>
-    <div>
+    <div style={{marginBottom:"40px"}}>
       <ProductsSectionTiTle
         handletoggleSquares={handletoggleSquares}
         handletoggleLists={handletoggleLists}
         section={section}
       />
       <RenderContentSection 
-        products={products} 
+        products={pageDetail.indexList} 
         section={section} 
       />
-      <PageChange dataAmount={dataAmount.current} showDataIndex={showDataIndex} setShowDataIndex={setShowDataIndex}/>
+      {/* 分頁元件 */}
+      <PageBtn 
+        pageNext={pageNext} 
+        pageDetail={pageDetail}
+        num={num}
+        setNum={setNum}
+        pagenum={pagenum}
+        setPageNum={setPageNum}
+      />
     </div>
     </>
   );

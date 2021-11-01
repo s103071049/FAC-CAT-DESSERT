@@ -1,11 +1,11 @@
-import { useReducer } from "react";
+import { useReducer, useContext, useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
+import { AuthLoadingContext } from '../../context'
 import cameraIcon from "../../components/img/icon/camera.svg";
 import { imgurApi } from "../../API/imgurAPI";
-import {useState, useRef} from 'react'
 import { updateProducts, getProduct } from "../../WEBAPI";
-import { useEffect } from "react/cjs/react.development";
+
 
 const initFormState = {
   name:"",
@@ -17,7 +17,7 @@ const initFormState = {
 
 
 const useAddProducts = () => {
-
+  const {setLoading} = useContext(AuthLoadingContext)
   const [selectedFile, setSelectedFile] = useState(null);
   const [ImgSrc, setImgSrc] = useState(cameraIcon);
   const history = useHistory();
@@ -26,25 +26,25 @@ const useAddProducts = () => {
   const [formValue, setFormValue] = useReducer((currentValues, newValues)=>({...currentValues, ...newValues}), initFormState)
 
   const inputFileRef = useRef();
-  const currentDBimage = useRef()
 
   useEffect(()=>{
     const fetchProduct = async () => {
+     setLoading(true)
      const result = await getProduct(id)
      try {
        if(!result.success){
-         console.log(result)
+         setLoading(false)
          return history.goBack()
        }
+       setLoading(false)
        setFormValue(result.product)
-       currentDBimage.current = result.product.img_url
      } catch(err) {
-       console.log(err)
+      setLoading(false)
       return history.goBack()
      }
     }
     fetchProduct()
-  },[history,id])
+  },[history,id, setLoading])
 
   const {
     name,
@@ -139,7 +139,6 @@ const useAddProducts = () => {
     price,
     category,
     img_url,
-    currentDBimage
   }
 }
 

@@ -21,9 +21,14 @@ const useAdminRestoreProduct = () => {
   const [tdcontexts, setTdcontexts] = useState([])
   const {setLoading} = useContext(AuthLoadingContext)
 
+  const [num, setNum] = useState(0)
+  const [pagenum, setPageNum] =  useState(1)
+
   const fetchDeletedProduct = useCallback(() => {
     const fetchingDeletedProduct = async () => {
       setLoading(true)
+      setNum(0)
+      setPageNum(1)
       const result = await getAllProducts()
       try {
         if(!result.success) {
@@ -106,7 +111,11 @@ const useAdminRestoreProduct = () => {
     search,
     setSearch,
     handleChange,
-    fetchDeletedProduct
+    fetchDeletedProduct,
+    num,
+    setNum,
+    pagenum,
+    setPageNum
   }
 }
 

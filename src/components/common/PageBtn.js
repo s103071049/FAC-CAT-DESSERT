@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState,useEffect } from "react";
+import {useEffect } from "react";
 
 
 const PageChangeWrapper = styled.div`
@@ -34,11 +34,8 @@ const NextPageButton = styled(PreviousPageButton)`
   margin-left: 5px;
 `;
 
-export default function PageBtn({pageNext ,pageDetail}) {
-  const {totalPage,current,pageSize, } = pageDetail
-  const [num, setNum] = useState(0)
-  const [pagenum, setPageNum] =  useState(current)
-  
+export default function PageBtn({pageNext ,pageDetail, num, setNum, pagenum, setPageNum}) {
+  const {totalPage,pageSize } = pageDetail  
 
   //上一頁
   const handlePreClick = () => {

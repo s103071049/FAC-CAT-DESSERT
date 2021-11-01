@@ -1,21 +1,12 @@
-import { useContext } from "react";
 import styled from "styled-components";
-import {
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import IconMark from "../../components/common/IconMark";
 import UserInfo from "./components/UserInfo.js";
 import EditPassword from "./components/EditPassword.js";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
-import { setAuthToken, removeAuthToken } from "../../utils";
-import { AuthContexts, AuthLoadingContext } from "../../context";
 import TransactionPage from "../../pages/TransactionPage";
 import useUser from "../../hooks/user/useUser";
+import SingleTransactionPage from "../SingleTransactionPage/SingleTransactionPage";
 
 const Wrapper = styled.div`
   max-width: 1042px;
@@ -120,23 +111,13 @@ const SideBarLogout = styled.div`
   display: block;
   color: #808080;
   padding: 20px;
-  border-bottom: 1px solid #808080;
   &:hover {
     color: #d49e6a;
     cursor: pointer;
   }
 `;
 const UserPage = () => {
-  const {
-    location,
-    path,
-    url,
-    user,
-    setUser,
-    loading,
-    setLoading,
-    handleLogout,
-  } = useUser();
+  const { location, path, url, setLoading, handleLogout } = useUser();
   const SideBarItems = ({ toUrl, title }) => {
     let newUrl = url + toUrl;
     return (
@@ -170,6 +151,9 @@ const UserPage = () => {
               </Route>
               <Route path={`${path}/myorders`}>
                 <TransactionPage />
+              </Route>
+              <Route path={`${path}/myorder/:id`}>
+                <SingleTransactionPage />
               </Route>
             </Main>
           </Switch>

@@ -1,12 +1,8 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { MEDIA_QUERY_SD } from "../../../components/Style/style";
+import { MEDIA_QUERY_MD } from "../../../components/Style/style";
 import SearchContextProduct from "./SearchContextProduct";
-import cake1 from "../../../components/img/product/cake.jpg";
-import cake2 from "../../../components/img/product/cake4.jpg";
-import cake3 from "../../../components/img/product/cake3.jpg";
 import ProductsSectionTiTleContent from "../../../components/common/ProductsSectionTiTleContent";
-import { searchProducts } from "../../../WEBAPI";
 
 const SearchContextProducts = styled.div`
   display: flex;
@@ -15,14 +11,21 @@ const SearchContextProducts = styled.div`
   flex-wrap: wrap;
   margin-top: 20px;
 `;
+const ProductWapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 23%;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  ${MEDIA_QUERY_MD} {
+    width: 47%;
+  }
+  @media screen and (max-width: 460px) {
+    width: 98%;
+  }
+`;
 export default function SearchItem({ productOptions }) {
-  // const [productOptions, setProductOptions] = useState("");
-  // useLayoutEffect(() => {
-  //   searchProducts(searchKey).then((response) => {
-  //     setProductOptions(response.data);
-  //   });
-  // }, [searchKey]);
-
   return (
     <div style={{ padding: "15px" }}>
       {productOptions && (
@@ -38,6 +41,8 @@ export default function SearchItem({ productOptions }) {
                 key={productOption.id}
               />
             ))}
+            <ProductWapper />
+            <ProductWapper />
           </SearchContextProducts>
         </div>
       )}

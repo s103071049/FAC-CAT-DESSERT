@@ -14,25 +14,17 @@ const Total = styled.div`
   color: #e33333;
 `;
 
-const CartPreCheckout = ({ items, shipments }) => {
+function CartPreCheckout({ items, shipments }) {
+  let shipment = 0;
   let price = 0;
-  let shipment;
   items.map((item) => {
     return (price += item.product_quantity * item["Product.price"]);
   });
-  let rules = shipments
-    .filter((item) => {
-      return item.is_deleted !== true;
-    })
-    .sort((a, b) => {
-      return a.threshold - b.threshold;
-    });
-  for (let i = 0; i < rules.length; i++) {
-    if (price < rules[i].threshold) {
-      shipment = rules[i].shipment;
+
+  for (let i = 0; i < shipments.length; i++) {
+    if (price > shipments[i].threshold) {
+      shipment = shipments[i].shipment;
       break;
-    } else {
-      shipment = 0;
     }
   }
   return (
@@ -53,5 +45,5 @@ const CartPreCheckout = ({ items, shipments }) => {
       </Item>
     </>
   );
-};
+}
 export default CartPreCheckout;
