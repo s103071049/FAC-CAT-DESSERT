@@ -38,11 +38,11 @@ const useAdminProduct = () => {
           setLoading(false)
           return  history.goBack()
         }
-        let getProducts = result.products.filter(product => !product.is_deleted)
+        let getProducts = result.products.filter(product => !product.is_deleted).sort((a,b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
         if(getProducts.length === 0) setTdcontexts([])
         setTdcontexts(getProducts)
-      
-
+        getProducts.map(item => console.log(Date.parse(item.updatedAt)))
+        console.log(getProducts)
         
         setLoading(false)
 

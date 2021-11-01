@@ -6,7 +6,6 @@ import {
 import { Link } from "react-router-dom";
 import PopModal from '../../../components/common/PopModal'
 export const TdContext = ({ tdcontext, index, handleDeleteBtnClick}) => {
-  console.log(tdcontext)
   const {id, name, img_url, price, desc, category} = tdcontext
   return (
     <Tr>
