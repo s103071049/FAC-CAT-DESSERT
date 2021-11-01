@@ -3,10 +3,10 @@ import {
   MEDIA_QUERY_MD,
   MEDIA_QUERY_SD,
 } from "../../../components/Style/style";
-import cake from "../../../components/img/product/cake.jpg";
-import cake3 from "../../../components/img/product/cake3.jpg";
-import cake4 from "../../../components/img/product/cake4.jpg";
-import orangePie from "../../../components/img/product/orangePie.jpg";
+import useHotProducts from "../../../hooks/productHooks/useHotProducts";
+import useFindRecommendProducts from "../../../hooks/productHooks/useFindRecommendProducts";
+import useAddCartItems from "../../../hooks/carts/useAddCartItems";
+import { Link } from "react-router-dom";
 
 const Section = styled.div`
   display: flex;
@@ -78,7 +78,7 @@ const DessertPrice = styled.div`
   color: #a96360;
   margin-bottom: 8px;
 `;
-const CartButton = styled.div`
+const CartButton = styled.button`
   margin: 0 auto;
   border: 2px solid #dac9a6;
   color: #dac9a6;
@@ -88,6 +88,16 @@ const CartButton = styled.div`
   cursor: pointer;
   transition: background 0.5s ease-out;
   white-space: nowrap;
+  transition: all 0.05s ease-out;
+  &:active {
+    background: #e8e8d0;
+    color: #616130;
+    border: 2px solid #616130;
+    transform: scale(0.8) perspective(1px);
+  }
+  &:hover {
+    background: #e8e8d0;
+  }
 `;
 const Img = styled.div``;
 function Advertisement({ enTitle, chTitle }) {
@@ -99,37 +109,41 @@ function Advertisement({ enTitle, chTitle }) {
     </>
   );
 }
-function Sales({ url, name, price }) {
+function Sales({ product }) {
+  const { handleAddProducts } = useAddCartItems(product, 1);
+
   return (
     <Dessert>
       <Img>
-        <DessertImg url={url} />
+        <Link to={`/product/${product.id}`}>
+          <DessertImg url={product.img_url} />
+        </Link>
       </Img>
-      <DessertName>{name}</DessertName>
-      <DessertPrice>{price}</DessertPrice>
-      <CartButton>加入購物車</CartButton>
+      <DessertName>{product.name}</DessertName>
+      <DessertPrice>{product.price}</DessertPrice>
+      <CartButton onClick={handleAddProducts}>加入購物車</CartButton>
     </Dessert>
   );
 }
 function HotSales() {
+  const hotProducts = useHotProducts(4);
+  const recommendProducts = useFindRecommendProducts(4);
   return (
     <div>
       <Category>
         <Advertisement enTitle={"Recommended Goods"} chTitle={"主廚推薦"} />
         <Section>
-          <Sales url={cake} name={"阿嬤的蘋果派"} price={"NT$ 160"} />
-          <Sales url={cake4} name={"我的梅果花園"} price={"NT$ 180"} />
-          <Sales url={orangePie} name={"青春橘子派"} price={"NT$ 260"} />
-          <Sales url={cake3} name={"藍莓珠寶盒"} price={"NT$ 100"} />
+          {recommendProducts.map((product, index) => {
+            return <Sales product={product} key={index} />;
+          })}
         </Section>
       </Category>
       <Category>
         <Advertisement enTitle={"Hot Sales"} chTitle={"熱銷甜點"} />
         <Section>
-          <Sales url={cake} name={"阿嬤的蘋果派"} price={"NT$ 160"} />
-          <Sales url={cake4} name={"我的梅果花園"} price={"NT$ 180"} />
-          <Sales url={orangePie} name={"青春橘子派"} price={"NT$ 260"} />
-          <Sales url={cake3} name={"藍莓珠寶盒"} price={"NT$ 100"} />
+          {hotProducts.map((hotProduct, index) => {
+            return <Sales product={hotProduct} key={index} />;
+          })}
         </Section>
       </Category>
     </div>
