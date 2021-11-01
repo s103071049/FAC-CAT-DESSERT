@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAllProducts } from "../../../WEBAPI";
 import useFindNewProducts from "../../../hooks/productHooks/useFindNewProducts";
+import useAddCartItems from "../../../hooks/carts/useAddCartItems";
 
 const ProductsSectionContentsWrapper = styled.div`
   margin-bottom: 40px;
@@ -85,27 +86,28 @@ const ProductButton = styled.button`
   }
 `;
 
-const RenderCotentItemsSection = ({ products }) => {
-  return products.map((product) => {
-    return (
-      <ProductWapper key={product.id}>
-        <ProductImageWrapper>
-          <Link to={`/product/${product.id}`}>
-            <ProductImage img={product.img_url} />
-          </Link>
-        </ProductImageWrapper>
-        <ProductName>{product.name}</ProductName>
-        <ProductPrice>NT$ {product.price}</ProductPrice>
-        <ProductButton>加入購物車</ProductButton>
-      </ProductWapper>
-    );
-  });
+const RenderCotentItemsSection = ({ product }) => {
+  const { handleAddProducts } = useAddCartItems(product, 1);
+  return (
+    <ProductWapper key={product.id}>
+      <ProductImageWrapper>
+        <Link to={`/product/${product.id}`}>
+          <ProductImage img={product.img_url} />
+        </Link>
+      </ProductImageWrapper>
+      <ProductName>{product.name}</ProductName>
+      <ProductPrice>NT$ {product.price}</ProductPrice>
+      <ProductButton onClick={handleAddProducts}>加入購物車</ProductButton>
+    </ProductWapper>
+  );
 };
 
 const RenderContentSection = ({ products }) => {
   return (
     <ProductsSectionContentsWrapper>
-      <RenderCotentItemsSection products={products} />
+      {products.map((product, i) => (
+        <RenderCotentItemsSection product={product} key={i} />
+      ))}
       <ProductWapper />
       <ProductWapper />
     </ProductsSectionContentsWrapper>
