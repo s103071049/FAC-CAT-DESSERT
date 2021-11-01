@@ -1,12 +1,7 @@
-import React, { useEffect, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
-import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { FindDataAPI } from "../../API/fetchAPI";
 import InputItem from "./inputItem.js";
 import useEditDiscount from "../../hooks/discountHooks/useEditDiscount";
-import { getAuthToken } from "../../utils";
-import { AuthLoadingContext } from "../../context";
 
 const Bottom = styled.div`
   display: flex;
@@ -24,8 +19,9 @@ const TitleButton = styled(Link)`
   border: 1px solid rgba(201, 186, 152, 0.9);
   margin: 0;
   margin-top: 36px;
+  margin-right: 15px;
   padding-top: 19px;
-  &: hover {
+  &:hover {
     color: white;
     background: rgba(201, 186, 152, 1.5);
     transition: all 0.5s ease;
@@ -54,7 +50,7 @@ const Submit = styled.button`
   border: 1px solid rgba(201, 186, 152, 0.9);
   margin: 0;
   margin-top: 36px;
-  &: hover {
+  &:hover {
     color: white;
     background: rgba(201, 186, 152, 1.5);
     transition: all 0.5s ease;
@@ -63,37 +59,16 @@ const Submit = styled.button`
 `;
 
 const DiscountEditPage = () => {
-  const { loading, setLoading } = useContext(AuthLoadingContext);
-  const { id } = useParams();
   const {
     threshold,
     shipment,
     desc,
-
     setThreshold,
     setShipment,
     setDesc,
-
-    changeDiscount,
     handleChange,
     handleSubmit,
-  } = useEditDiscount(id);
-
-  useEffect(() => {
-    if (id) {
-      setLoading(true);
-      FindDataAPI({ authorization: getAuthToken() }, `/findDiscounts/${id}`)
-        .then((data) => {
-          const { Discount } = data;
-          changeDiscount(Discount);
-          return setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          return setLoading(false);
-        });
-    }
-  }, []);
+  } = useEditDiscount();
 
   return (
     <div>

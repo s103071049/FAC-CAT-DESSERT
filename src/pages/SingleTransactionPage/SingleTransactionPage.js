@@ -15,14 +15,14 @@ const Header = styled.div`
 `;
 const Title = styled.div`
   margin: 0 auto;
-  font-size:22px;
-  font-weight:bold;
+  font-size: 22px;
+  font-weight: bold;
 `;
 const Body = styled.div`
-  margin-top:40px;
+  margin-top: 40px;
 
-  &:last-of-type{
-    margin-top:80px;
+  &:last-of-type {
+    margin-top: 80px;
   }
 `;
 
@@ -53,7 +53,9 @@ const Table = styled.table`
 `;
 const Thead = styled.thead`
   background: #f0f1f3;
-  ${(props) => props.$active &&`
+  ${(props) =>
+    props.$active &&
+    `
     background: #FBF6EA;
   `}
   & tr {
@@ -96,7 +98,8 @@ const Td = styled.td`
     display: inline-block;
   }
   ${(props) =>
-    props.$active &&`
+    props.$active &&
+    `
       color:#E55555;
       font-weight:bold;
     `}
@@ -116,7 +119,9 @@ const Td = styled.td`
       padding-right: 1rem;
       text-decoration: underline;
     }
-    ${(props) => props.$show && `
+    ${(props) =>
+      props.$show &&
+      `
       &:first-child {
         text-align: left;
         margin-bottom: 10px;
@@ -130,7 +135,7 @@ const Td = styled.td`
         padding-right: 1rem;
         text-decoration: underline;
       }
-    `
+    `}
   }
 `;
 const Img = styled.div`
@@ -152,12 +157,13 @@ const CartItemInfo = styled.div``;
 
 const ItemPrice = styled.div`
   ${(props) =>
-    props.$is_accepted === false  &&`
+    props.$is_accepted === false &&
+    `
       color:#E55555;
    `}
 `;
 
-const Summary = styled.div``
+const Summary = styled.div``;
 const Item = styled.div`
   padding: 10px 0;
   color: #8e979e;
@@ -188,16 +194,23 @@ const BackBtn = styled.button`
     background: #c9ba98;
     color: #fff;
   }
-`
+`;
 
 const SingleTransactionPage = () => {
+  const { id, orderDetail, orderProducts, handleBack } = useSingleTransaction();
   const {
-    id,
-    orderDetail,
-    orderProducts,
-    handleBack
-  } = useSingleTransaction()
-  const {deliverDate, createdAt, is_accepted, lastFiveNumber,price, sum, invoiceNumber, invoiceType, receiverAddress, receiverName, receiverPhone} = orderDetail
+    deliverDate,
+    createdAt,
+    is_accepted,
+    lastFiveNumber,
+    price,
+    sum,
+    invoiceNumber,
+    invoiceType,
+    receiverAddress,
+    receiverName,
+    receiverPhone,
+  } = orderDetail;
   return (
     <Container>
       <Header>
@@ -238,6 +251,7 @@ const SingleTransactionPage = () => {
                     </ItemPrice>
                   </Td>
                 </Tr>
+
           </Tbody>
         </Table>
       </Body>
@@ -252,22 +266,22 @@ const SingleTransactionPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-                <Tr>
-                  <Td data-title="收件日期" $show={true}>
-                    <ItemPrice>{new Date(deliverDate).toLocaleDateString()}</ItemPrice>
-                  </Td>
-                  <Td data-title="收件人">
-                    <ItemPrice>{receiverName}</ItemPrice>
-                  </Td>
-                  <Td data-title="收件手機">
-                    <ItemPrice>{receiverPhone}</ItemPrice>
-                  </Td>
-                  <Td data-title="收件地址"  colSpan="2">
-                    <ItemPrice>
-                     {receiverAddress}
-                    </ItemPrice>
-                  </Td>
-                </Tr>
+            <Tr>
+              <Td data-title="收件日期" $show={true}>
+                <ItemPrice>
+                  {new Date(deliverDate).toLocaleDateString()}
+                </ItemPrice>
+              </Td>
+              <Td data-title="收件人">
+                <ItemPrice>{receiverName}</ItemPrice>
+              </Td>
+              <Td data-title="收件手機">
+                <ItemPrice>{receiverPhone}</ItemPrice>
+              </Td>
+              <Td data-title="收件地址" colSpan="2">
+                <ItemPrice>{receiverAddress}</ItemPrice>
+              </Td>
+            </Tr>
           </Tbody>
         </Table>
       </Body>
@@ -279,36 +293,32 @@ const SingleTransactionPage = () => {
               <Th>商品名稱</Th>
               <Th>單價</Th>
               <Th>數量</Th>
-              <Th >小計</Th>
+              <Th>小計</Th>
             </Tr>
           </Thead>
           <Tbody>
-                {
-                  orderProducts.map(product => {
-                    const { quantity,img_url, price, name, id } = product
-                    return (
-                      <Tr key={id}>
-                        <Td data-title="">
-                          <Img $url={img_url} />
-                        </Td>
-                        <Td data-title="商品名稱">
-                          <CartItemInfo>{name}</CartItemInfo>
-                        </Td>
-                        <Td data-title="商品單價">
-                          <ItemPrice>{price}</ItemPrice>
-                        </Td>
-                        <Td data-title="數量">
-                          <ItemPrice>{quantity}</ItemPrice>
-                        </Td>
-                        <Td data-title="小計">
-                          <ItemPrice>
-                            {quantity * price}
-                          </ItemPrice>
-                        </Td>
-                      </Tr>
-                    )
-                  })
-                }
+            {orderProducts.map((product) => {
+              const { quantity, img_url, price, name, id } = product;
+              return (
+                <Tr key={id}>
+                  <Td data-title="">
+                    <Img $url={img_url} />
+                  </Td>
+                  <Td data-title="商品名稱">
+                    <CartItemInfo>{name}</CartItemInfo>
+                  </Td>
+                  <Td data-title="商品單價">
+                    <ItemPrice>{price}</ItemPrice>
+                  </Td>
+                  <Td data-title="數量">
+                    <ItemPrice>{quantity}</ItemPrice>
+                  </Td>
+                  <Td data-title="小計">
+                    <ItemPrice>{quantity * price}</ItemPrice>
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
           <Summary>
@@ -323,10 +333,11 @@ const SingleTransactionPage = () => {
               </Total>
             </Item>
           </Summary>
+       
       </Body>
       <BackBtn onClick={handleBack}>回訂單列表</BackBtn>
     </Container>
-  )
-}
+  );
+};
 
-export default SingleTransactionPage
+export default SingleTransactionPage;

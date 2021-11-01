@@ -1,4 +1,4 @@
-import React, {
+import {
   useState,
   useContext,
   useEffect,
@@ -7,16 +7,14 @@ import React, {
 } from "react";
 import { useHistory } from "react-router";
 import { AuthContexts } from "../../context";
-import OrderStatusFilter from "../../pages/Admin/components/OrderStatusFilter";
 import { getAllOrder } from "../../WEBAPI";
 import { AuthLoadingContext } from "../../context";
 
 const useFindAllOrder = () => {
-  const { user, setUser } = useContext(AuthContexts);
-  const { loading, setLoading } = useContext(AuthLoadingContext);
+  const { user } = useContext(AuthContexts);
+  const { setLoading } = useContext(AuthLoadingContext);
   const [fackOrders, setFackOrders] = useState([]);
   const [currentOrders, setCurrentOrders] = useState([]);
-  const [time, setTime] = useState(false);
   const dataAmount = useRef(null);
   //pending(未處理),solved(以處理),all
   const [selectOrderStatus, setSelectOrderStatus] = useState("pending");
@@ -60,14 +58,10 @@ const useFindAllOrder = () => {
     }, 600000);
 
     return () => clearInterval(interval);
-  }, [fackOrders, selectOrderStatus, time]);
+  }, [fackOrders, selectOrderStatus]);
   return {
-    user,
-    setUser,
     currentOrders,
-    setCurrentOrders,
     selectOrderStatus,
-    setSelectOrderStatus,
     handleOrderFilterClick,
     num,
     setNum,

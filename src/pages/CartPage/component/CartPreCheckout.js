@@ -1,4 +1,3 @@
-import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 const Item = styled.div`
   padding: 10px 0;

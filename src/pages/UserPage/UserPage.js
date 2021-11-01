@@ -1,19 +1,9 @@
-import { useContext } from "react";
 import styled from "styled-components";
-import {
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import IconMark from "../../components/common/IconMark";
 import UserInfo from "./components/UserInfo.js";
 import EditPassword from "./components/EditPassword.js";
 import { MEDIA_QUERY_MD } from "../../components/Style/style";
-import { setAuthToken, removeAuthToken } from "../../utils";
-import { AuthContexts, AuthLoadingContext } from "../../context";
 import TransactionPage from "../../pages/TransactionPage";
 import useUser from "../../hooks/user/useUser";
 import SingleTransactionPage from "../SingleTransactionPage/SingleTransactionPage";
@@ -127,16 +117,7 @@ const SideBarLogout = styled.div`
   }
 `;
 const UserPage = () => {
-  const {
-    location,
-    path,
-    url,
-    user,
-    setUser,
-    loading,
-    setLoading,
-    handleLogout,
-  } = useUser();
+  const { location, path, url, setLoading, handleLogout } = useUser();
   const SideBarItems = ({ toUrl, title }) => {
     let newUrl = url + toUrl;
     return (

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { login, getUser } from "../../WEBAPI";
 import { setAuthToken } from "../../utils";
 import { AuthContexts, AuthLoadingContext } from "../../context";
@@ -8,9 +8,8 @@ export default function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const history = useHistory();
-  const { user, setUser } = useContext(AuthContexts);
-  const { loading, setLoading } = useContext(AuthLoadingContext);
+  const { setUser } = useContext(AuthContexts);
+  const { setLoading } = useContext(AuthLoadingContext);
   //填寫資料改變
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -45,11 +44,8 @@ export default function useLogin() {
   };
   return {
     email,
-    setEmail,
     password,
-    setPassword,
     errorMessage,
-    setErrorMessage,
     handleLogin,
     handleEmailChange,
     handlePasswordChange,

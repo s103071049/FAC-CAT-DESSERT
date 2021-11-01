@@ -1,11 +1,8 @@
-import React, { useContext, useState } from "react";
 import styled from "styled-components";
 
 import * as UFS from "./UserLayout/UserFormStyle";
 
 import UserActionBtn from "./UserLayout/UserActionBtn";
-import { AuthContexts } from "../../../context";
-import { updatePassword } from "../../../WEBAPI";
 import { MEDIA_QUERY_SD } from "../../../components/Style/style";
 import useUpdatePassword from "../../../hooks/user/useUpadtePassword";
 // import ErrorMessage from "../../../components/common/Errormessage";
@@ -23,10 +20,6 @@ const ErrorMessage = styled.p`
 
 export default function EditPassword() {
   const {
-    user,
-    setUser,
-    loading,
-    setLoading,
     oldPassword,
     setOldPassword,
     newPassword,
@@ -34,7 +27,6 @@ export default function EditPassword() {
     newPassword2,
     setNewPassword2,
     errorMessage,
-    setErrorMessage,
     handleEmpty,
     handleUpdatePassword,
   } = useUpdatePassword();

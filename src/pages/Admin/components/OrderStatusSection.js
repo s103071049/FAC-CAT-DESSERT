@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 
 const OrderSection = styled.section`
   margin-top: 90px;

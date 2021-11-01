@@ -1,24 +1,19 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthLoadingContext } from "../../context";
 import { PostDataAPI } from "../../API/fetchAPI";
 import { getAuthToken } from "../../utils";
+import { useParams } from "react-router-dom";
+import { FindDataAPI } from "../../API/fetchAPI";
 
-export default function useEditDiscount(id) {
+export default function useEditDiscount() {
+  const { id } = useParams();
   const [threshold, setThreshold] = useState("");
   const [shipment, setShipment] = useState("");
   const [price, setPrice] = useState("");
   const [desc, setDesc] = useState("");
-  const { loading, setLoading } = useContext(AuthLoadingContext);
+  const { setLoading } = useContext(AuthLoadingContext);
 
   const api = id ? "/updateDiscounts" : "/createDiscounts";
-  const changeDiscount = (discount) => {
-    if (discount) {
-      setThreshold(discount.threshold);
-      setShipment(discount.shipment);
-      setPrice(discount.price);
-      setDesc(discount.desc);
-    }
-  };
 
   const handleChange = (setValue) => (e) => setValue(e.target.value);
 
@@ -56,7 +51,26 @@ export default function useEditDiscount(id) {
       return setLoading(false);
     }
   };
-
+  useEffect(() => {
+    if (id) {
+      setLoading(true);
+      FindDataAPI({ authorization: getAuthToken() }, `/findDiscounts/${id}`)
+        .then((data) => {
+          const { Discount } = data;
+          if (Discount) {
+            setThreshold(Discount.threshold);
+            setShipment(Discount.shipment);
+            setPrice(Discount.price);
+            setDesc(Discount.desc);
+          }
+          return setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          return setLoading(false);
+        });
+    }
+  }, [id, setLoading]);
   return {
     threshold,
     shipment,
@@ -67,8 +81,6 @@ export default function useEditDiscount(id) {
     setShipment,
     setPrice,
     setDesc,
-
-    changeDiscount,
     handleChange,
     handleSubmit,
   };

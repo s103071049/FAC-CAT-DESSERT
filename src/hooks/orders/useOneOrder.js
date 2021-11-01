@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useLayoutEffect } from "react";
-import { useParams, useHistory, Redirect } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import {
   getOneOrder,
   acceptOrder,
@@ -9,13 +9,13 @@ import {
 import { AuthLoadingContext, AuthContexts } from "../../context";
 
 export default function useOneOrder() {
-  const { user, setUser } = useContext(AuthContexts);
+  const { user } = useContext(AuthContexts);
   const [popup, setPopup] = useState(false);
   const [order, setOrder] = useState(null);
   const [transations, setTransations] = useState(null);
   const [orderState, setOrderState] = useState(null);
   const history = useHistory();
-  const { loading, setLoading } = useContext(AuthLoadingContext);
+  const { setLoading } = useContext(AuthLoadingContext);
   const { id } = useParams();
   useLayoutEffect(() => {
     setLoading(true);
@@ -73,18 +73,9 @@ export default function useOneOrder() {
   };
   return {
     id,
-    user,
-    setUser,
     popup,
-    setPopup,
     order,
-    setOrder,
     transations,
-    orderState,
-    setOrderState,
-    history,
-    loading,
-    setLoading,
     handleUpdateOrder,
     handleACceptPopup,
     handleRejectPopup,
