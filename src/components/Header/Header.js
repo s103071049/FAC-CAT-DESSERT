@@ -173,7 +173,6 @@ function Header() {
     user,
     toggleHamburger,
     handleSearchBarClick,
-    handleAdminViewClick,
     handleEnter,
     ref,
   } = useHeader();
@@ -262,40 +261,16 @@ function Header() {
         <Menu hamburgerOpen={hamburgerOpen}>
           {adminViewOpen ? (
             <>
-              <MenuItem
-                to="/user"
-              >
-                會員中心
-              </MenuItem>
-              <MenuItem
-                to="/admin/products"
-              >
-                商品管理
-              </MenuItem>
-              <MenuItem
-                to="/admin/discounts"
-              >
-                促銷管理
-              </MenuItem>
-              <MenuItem
-                to="/admin/orders"
-              >
-                訂單管理
-              </MenuItem>
-              <MenuItem
-                to="/"
-              >
-                訪問前台
-              </MenuItem>
+              <MenuItem to="/user">會員中心</MenuItem>
+              <MenuItem to="/admin/products">商品管理</MenuItem>
+              <MenuItem to="/admin/discounts">促銷管理</MenuItem>
+              <MenuItem to="/admin/orders">訂單管理</MenuItem>
+              <MenuItem to="/">訪問前台</MenuItem>
             </>
           ) : (
             <>
               <RenderRWDItems />
-              <MenuItem
-                to="/admin/orders"
-              >
-                訪問後台
-              </MenuItem>
+              <MenuItem to="/admin/orders">訪問後台</MenuItem>
             </>
           )}
         </Menu>

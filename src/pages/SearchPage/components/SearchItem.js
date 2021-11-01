@@ -10,10 +10,6 @@ const SearchContextProducts = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 20px;
-  /* &:after {
-    content: " ";
-    flex: auto;
-  } */
 `;
 const ProductWapper = styled.div`
   display: flex;

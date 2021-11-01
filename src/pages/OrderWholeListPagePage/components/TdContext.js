@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD } from "../../../components/Style/style";
-import { Link } from "react-router-dom";
 
 export const TdContext = ({ tdcontext, index }) => {
   const { Product } = tdcontext;

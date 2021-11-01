@@ -1,13 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
 import ErrorMessage from "../../components/common/Errormessage";
 import ProductsSectionTiTleContent from "../../components/common/ProductsSectionTiTleContent";
 import LoginFormContext from "./components/LoginFormContext";
-import { Link, useHistory } from "react-router-dom";
-import { login, getUser } from "../../WEBAPI";
-import { setAuthToken, getAuthToken } from "../../utils";
-import { AuthContexts, AuthLoadingContext } from "../../context";
+import { Link } from "react-router-dom";
 import useLogin from "../../hooks/user/useLogin";
 
 const LoginWrapper = styled.div`
@@ -85,11 +81,8 @@ const RegesterLink = styled(PasswordForget)`
 const LoginPage = () => {
   const {
     email,
-    setEmail,
     password,
-    setPassword,
     errorMessage,
-    setErrorMessage,
     handleLogin,
     handleEmailChange,
     handlePasswordChange,

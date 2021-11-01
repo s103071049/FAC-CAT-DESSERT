@@ -1,4 +1,3 @@
-import React, { useContext, useReducer, useState } from "react";
 import * as UFS from "./UserLayout/UserFormStyle";
 import UserActionBtn from "./UserLayout/UserActionBtn";
 import EachErrorMessage from "../../../components/common/EachErrorMessage";
@@ -7,9 +6,6 @@ import useUpdateUserInfo from "../../../hooks/user/useUpdateUserInfo";
 export default function UserInfo() {
   const {
     user,
-    setUser,
-    loading,
-    setLoading,
     lastname,
     firstname,
     username,
