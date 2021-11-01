@@ -1,12 +1,9 @@
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
-// import { Link } from "react-router-dom"
 import ProductsCategory from "./components/ProductsCategory";
 import ProductsSection from "./components/ProductsSection";
 import productsbanner from "../../components/img/banner/productsbanner.jpg";
 import useCategory from "../../hooks/productHooks/useCategory";
-import Loading from "../../components/common/Loading";
-import useFindProducts from "../../hooks/productHooks/useFindProducts";
 
 const ProductsWrapper = styled.div`
   max-width: 1024px;

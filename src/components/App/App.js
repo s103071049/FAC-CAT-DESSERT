@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   HashRouter as Router,
@@ -13,6 +13,8 @@ import Header from "../Header";
 import Footer from "../Footer";
 import HomePage from "../../pages/HomePage";
 import ProductsPage from "../../pages/ProductsPage";
+import NewProductsPage from "../../pages/NewProductsPage";
+import HotProductsPage from "../../pages/HotProductsPage";
 import AboutPage from "../../pages/AboutPage";
 import FaqPage from "../../pages/FaqPage";
 import UserPage from "../../pages/UserPage";
@@ -87,6 +89,12 @@ function App() {
               </Route>
               <Route path="/products">
                 <ProductsPage />
+              </Route>
+              <Route path="/newProducts">
+                <NewProductsPage />
+              </Route>
+              <Route path="/hotProducts">
+                <HotProductsPage />
               </Route>
               <Route path="/product/:id">
                 <SingleProductPage />

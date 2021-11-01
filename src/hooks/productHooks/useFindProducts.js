@@ -1,11 +1,9 @@
-import { useState, useEffect, useRef, useContext, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { getAllProducts } from "../../WEBAPI";
 import { useHistory } from "react-router-dom";
-import usePagination from "../paginationHooks/usePagination";
 import { AuthLoadingContext } from '../../context'
 
 const useFindProducts = (selectedCategory) => {
-  const {eachPageAmount} = usePagination()
   const {loading, setLoading} = useContext(AuthLoadingContext)
   const [products, setProducts] = useState([])
   const [section, setSection] = useState("sqares");
@@ -14,10 +12,14 @@ const useFindProducts = (selectedCategory) => {
   const dataAmount = useRef(null)
   const history = useHistory();
   
+  //初始分頁
+  const [num, setNum] = useState(0)
+  const [pagenum, setPageNum] =  useState(1)
   
   useEffect(()=> {
     setLoading(true)
-
+    setNum(0)
+    setPageNum(1)
     const fetchAllproducts = async() => {
       setLoading(true)
       const result = await getAllProducts()
@@ -25,16 +27,15 @@ const useFindProducts = (selectedCategory) => {
         if(!result.success){
           return history.goBack()
         }
-        let getSelectedProducts = result.products
+        let getSelectedProducts = result.products.filter(product=> !product.is_deleted)
         
         if(selectedCategory !== '全部品項') {
           getSelectedProducts = getSelectedProducts.filter(product => product.category === selectedCategory)
         }
 
         dataAmount.current = getSelectedProducts.length
-        const showDataArr = getSelectedProducts.slice(showDataIndex, showDataIndex+eachPageAmount)
 
-        setProducts(showDataArr)
+        setProducts(getSelectedProducts)
         setLoading(false)
 
 
@@ -45,7 +46,7 @@ const useFindProducts = (selectedCategory) => {
 
     fetchAllproducts()
 
-  }, [history, showDataIndex, eachPageAmount,selectedCategory, setLoading])
+  }, [history, showDataIndex,selectedCategory, setLoading])
   
 
  
@@ -69,7 +70,11 @@ const useFindProducts = (selectedCategory) => {
     setShowDataIndex,
     dataAmount,
     loading,
-    setLoading
+    setLoading,
+    num,
+    setNum,
+    pagenum,
+    setPageNum
   }
 }
 

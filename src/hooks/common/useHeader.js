@@ -1,62 +1,58 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContexts } from "../../context";
-import {
-  useHistory,
-  useLocation
-} from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useHeader = () => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [searchProduct, setSearchProduct] = useState("");
-  const [adminViewOpen, setAdminViewOpen] = useState(false)
-  let location = useLocation()
+  const [adminViewOpen, setAdminViewOpen] = useState(false);
+  let location = useLocation();
 
   const history = useHistory();
   const { user } = useContext(AuthContexts);
   const toggleHamburger = () => {
-    if (hamburgerOpen) {
-      document.body.style.overflow = "auto";
-    } else {
-      document.body.style.overflow = "hidden";
-    }
     setHamburgerOpen(!hamburgerOpen);
-    setSearchBarShow(false)
+    setSearchBarShow(false);
   };
   const [searchBarShow, setSearchBarShow] = useState(false);
-  const ref = useRef()
+  const ref = useRef();
   const handleSearchBarClick = () => {
-    setHamburgerOpen(false)
+    setHamburgerOpen(false);
     setSearchBarShow(!searchBarShow);
   };
 
-
-  useEffect(()=>{
-    const regex = new RegExp('/admin')
-    if(regex.test(location.pathname)){
-      setAdminViewOpen(true)
-    }
-  },[location])
-
-  useEffect(()=>{
-    const handleBodyClick = (event) => {
-      if(ref.current.contains(event.target)){
-        return
-      }
-      setSearchBarShow(false)
-      setHamburgerOpen(false)
-    }
-
-    document.body.addEventListener('click', handleBodyClick, {capture:true})
+  useEffect(() => {
     
-    return () => {
-      document.body.removeEventListener('click', handleBodyClick, {capture:true})
+    setHamburgerOpen(false);
+    const regex = new RegExp("/admin");
+    if (regex.test(location.pathname)) {
+      return setAdminViewOpen(true);
     }
-  }, [])
-  
+    return setAdminViewOpen(false);
+  }, [location, setHamburgerOpen]);
+
+  useEffect(() => {
+    const handleBodyClick = (event) => {
+      if (ref.current.contains(event.target)) {
+        return;
+      }
+      setSearchBarShow(false);
+      setHamburgerOpen(false);
+    };
+
+    document.body.addEventListener("click", handleBodyClick, { capture: true });
+
+    return () => {
+      document.body.removeEventListener("click", handleBodyClick, {
+        capture: true,
+      });
+    };
+  }, []);
+
   const handleAdminViewClick = () => {
-    setAdminViewOpen(!adminViewOpen)
-    toggleHamburger()
-  }
+    setAdminViewOpen(!adminViewOpen);
+    toggleHamburger();
+  };
 
   const handleEnter = () => {
     if (searchProduct) {
@@ -78,8 +74,8 @@ const useHeader = () => {
     handleAdminViewClick,
     handleEnter,
     ref,
-    setAdminViewOpen
-  }
-}
+    setAdminViewOpen,
+  };
+};
 
-export default useHeader
+export default useHeader;

@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
-import PageChange from "../../components/common/PageChange";
 import { getAllOrder } from "../../WEBAPI";
 import OrderStatusFilter from "./components/OrderStatusFilter";
 import OrderStatusSection from "./components/OrderStatusSection";
 import { AuthContexts } from "../../context";
 import useFindAllOrder from "../../hooks/orders/useFIndAllOrder";
-import useHeader from "../../components/Header/useHeader";
+import PageBtn from "../../components/common/PageBtn";
+import usePagination from "../../hooks/common/usePagination";
 
 const Wrapper = styled.div`
   max-width: 1042px;
@@ -43,9 +43,14 @@ const OrderPage = () => {
     selectOrderStatus,
     setSelectOrderStatus,
     handleOrderFilterClick,
+    num,
+    setNum,
+    pagenum,
+    setPageNum,
   } = useFindAllOrder();
-
-
+  const pageSize = 5;
+  const { pageDetail, pageNext } = usePagination(currentOrders, pageSize);
+  console.log(pageDetail);
   return (
     <Wrapper>
       <IconMark>訂單管理</IconMark>
@@ -55,11 +60,19 @@ const OrderPage = () => {
           handleOrderFilterClick={handleOrderFilterClick}
         />
         <OrderStatusSection
-          orders={currentOrders}
+          orders={pageDetail.indexList}
           selectOrderStatus={selectOrderStatus}
         />
       </Main>
-      <PageChange />
+      {/* 分頁元件 */}
+      <PageBtn
+        pageNext={pageNext}
+        pageDetail={pageDetail}
+        num={num}
+        setNum={setNum}
+        pagenum={pagenum}
+        setPageNum={setPageNum}
+      />
     </Wrapper>
   );
 };

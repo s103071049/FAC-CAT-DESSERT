@@ -8,7 +8,7 @@ import menu from "../img/icon/menu.svg";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../Style/style";
 import { HashRouter as Router, Link } from "react-router-dom";
 
-import useHeader from "./useHeader";
+import useHeader from "../../hooks/common/useHeader";
 
 const Navbar = styled.div`
   background: #fbf3ea;
@@ -182,13 +182,9 @@ function Header() {
     return (
       <>
         {adminViewOpen ? (
-          <Item to="/" onClick={handleAdminViewClick}>
-            訪問前台
-          </Item>
+          <Item to="/">訪問前台</Item>
         ) : (
-          <Item to="/admin/orders" onClick={handleAdminViewClick}>
-            訪問後台
-          </Item>
+          <Item to="/admin/orders">訪問後台</Item>
         )}
       </>
     );
@@ -196,8 +192,8 @@ function Header() {
   const VistorItems = () => {
     return (
       <>
-        <Item to="#">新品上市</Item>
-        <Item to="#">促銷商品</Item>
+        <Item to="/newProducts">新品上市</Item>
+        <Item to="/hotProducts">促銷商品</Item>
         <Item to="/products">商品一覽</Item>
       </>
     );
@@ -245,10 +241,10 @@ function Header() {
         <MenuItem to="/about" onClick={toggleHamburger}>
           關於我們
         </MenuItem>
-        <MenuItem to="#" onClick={toggleHamburger}>
+        <MenuItem to="/newProducts" onClick={toggleHamburger}>
           新品上市
         </MenuItem>
-        <MenuItem to="#" onClick={toggleHamburger}>
+        <MenuItem to="/hotProducts" onClick={toggleHamburger}>
           促銷商品
         </MenuItem>
         <MenuItem to="/products" onClick={toggleHamburger}>
@@ -266,26 +262,38 @@ function Header() {
         <Menu hamburgerOpen={hamburgerOpen}>
           {adminViewOpen ? (
             <>
-              <MenuItem to="/user" onClick={toggleHamburger}>
+              <MenuItem
+                to="/user"
+              >
                 會員中心
               </MenuItem>
-              <MenuItem to="/admin/products" onClick={toggleHamburger}>
+              <MenuItem
+                to="/admin/products"
+              >
                 商品管理
               </MenuItem>
-              <MenuItem to="/admin/discounts" onClick={toggleHamburger}>
+              <MenuItem
+                to="/admin/discounts"
+              >
                 促銷管理
               </MenuItem>
-              <MenuItem to="/admin/orders" onClick={toggleHamburger}>
+              <MenuItem
+                to="/admin/orders"
+              >
                 訂單管理
               </MenuItem>
-              <MenuItem to="/" onClick={handleAdminViewClick}>
+              <MenuItem
+                to="/"
+              >
                 訪問前台
               </MenuItem>
             </>
           ) : (
             <>
               <RenderRWDItems />
-              <MenuItem to="/admin/orders" onClick={handleAdminViewClick}>
+              <MenuItem
+                to="/admin/orders"
+              >
                 訪問後台
               </MenuItem>
             </>

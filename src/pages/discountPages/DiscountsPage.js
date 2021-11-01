@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERY_MD, MEDIA_QUERY_SD } from "../../components/Style/style";
-import PageChange from "../../components/common/PageChange";
 import { TdContext, thcontexts } from "./TdContext";
 import { Link } from "react-router-dom";
 import { FindDataAPI } from "../../API/fetchAPI";
@@ -208,11 +207,7 @@ const DiscountsPage = (isRestore) => {
           </Tbody>
         </Table>
       </AdminProductsContent>
-      <PageChange
-        dataAmount={dataAmount.current}
-        showDataIndex={showDataIndex}
-        setShowDataIndex={setShowDataIndex}
-      />
+     
     </AdminProductsWrapper>
   );
 };

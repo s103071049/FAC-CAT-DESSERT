@@ -111,15 +111,9 @@ export const searchProducts = async (searchKey) => {
   const response = await fetch(`${BASE_URL}/searchProducts/${searchKey}`);
   return await response.json();
 };
-// 更新商品資訊
-export const updateProducts = async (
-  name,
-  desc,
-  img_url,
-  price,
-  category,
-  id
-) => {
+
+// 編輯商品
+export const updateProducts = async(name, desc, img_url, price,category, id, is_deleted = false) => {
   const data = {
     name,
     desc,
@@ -129,11 +123,12 @@ export const updateProducts = async (
     category,
     img_url,
     id,
+    is_deleted
   };
-  const token = getAuthToken();
-  const response = await fetch(`${BASE_URL}/updateProducts`, {
-    method: "POST",
-    headers: {
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/updateProducts`,{
+    method:'POST',
+    headers:{
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
@@ -163,6 +158,16 @@ export const createProduct = async (name, desc, img_url, price, category) => {
   });
   return await response.json();
 };
+
+export const deleteProduct = async(id) => {
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/deleteProducts/${id}`, {
+     headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+  return response.json()
+}
 
 // order
 // 抓取所有order
@@ -205,6 +210,7 @@ export const deleteOrder = async (id) => {
   });
   return await response.json();
 };
+
 // 訂單成立
 export const createOrder = async (products, order) => {
   const token = getAuthToken();
@@ -222,6 +228,19 @@ export const createOrder = async (products, order) => {
   return await response.json();
 };
 //transaction
+
+//抓取用戶者的所有orders
+export const getHistory = async () => {
+  const token = getAuthToken()
+  const response = await fetch(`${BASE_URL}/getHistory`, {
+    headers:{
+      authorization:`Bearer ${token}`
+    }
+  })
+  return response.json()
+}
+
+//transaction by orderId
 export const getTractions = async (id) => {
   const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/getTransactions/${id}`, {
