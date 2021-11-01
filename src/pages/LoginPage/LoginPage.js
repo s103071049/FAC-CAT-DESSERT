@@ -23,17 +23,6 @@ const LoginContentWrapper = styled.div`
 const LoginContentTitle = styled.h2`
   font-size: 24px;
 `;
-const FBButton = styled.button`
-  color: #fff;
-  background: #3a59a4;
-  border: none;
-  box-shadow: 3px 3px 3px #6f89c7;
-  border-radius: 8px;
-  padding: 5px 40px;
-  font-size: 24px;
-  cursor: pointer;
-  margin-bottom: 15px;
-`;
 const Hr = styled.hr`
   border: 0;
   height: 1px;
@@ -61,13 +50,6 @@ const LoginFormSubmit = styled.button`
   font-size: 24px;
   cursor: pointer;
 `;
-const KeepLogin = styled.div`
-  padding-top: 10px;
-`;
-const LoginFormContextCheckboxInput = styled.input``;
-const LoginFormContextCheckboxInputlabel = styled.label`
-  margin-left: 15px;
-`;
 const LoginAnotherInfo = styled.div``;
 
 const PasswordForget = styled(Link)`
@@ -94,7 +76,6 @@ const LoginPage = () => {
         <ProductsSectionTiTleContent>會員登入</ProductsSectionTiTleContent>
         <LoginContentWrapper>
           <LoginContentTitle>歡迎回來</LoginContentTitle>
-          <FBButton>快速登入</FBButton>
           <Hr />
           <LoginForm onSubmit={handleLogin}>
             <LoginFormContext
@@ -119,17 +100,6 @@ const LoginPage = () => {
             </LoginFormContext>
             <TextAlignStartWrapper>
               <LoginFormSubmit>會員登入</LoginFormSubmit>
-              <KeepLogin>
-                <LoginFormContextCheckboxInput
-                  type="checkbox"
-                  name="keepLogin"
-                  id="keepLogin"
-                  value="yes"
-                />
-                <LoginFormContextCheckboxInputlabel htmlFor="keepLogin">
-                  保持登入
-                </LoginFormContextCheckboxInputlabel>
-              </KeepLogin>
               {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             </TextAlignStartWrapper>
           </LoginForm>

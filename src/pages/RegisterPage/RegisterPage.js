@@ -23,18 +23,9 @@ const RegisterContentWrapper = styled.div`
 `;
 const RegisterContentTitle = styled.h2`
   margin: 0px;
+  padding-bottom: 15px;
+  padding-top: 15px;
   font-size: 24px;
-`;
-const FBButton = styled.button`
-  color: #fff;
-  background: #3a59a4;
-  border: none;
-  box-shadow: 3px 3px 3px #6f89c7;
-  border-radius: 8px;
-  padding: 5px 40px;
-  font-size: 24px;
-  cursor: pointer;
-  margin-bottom: 15px;
 `;
 const Hr = styled.hr`
   border: 0;
@@ -62,14 +53,6 @@ const RegisterFormSubmit = styled.button`
   padding: 5px 0;
   font-size: 24px;
   cursor: pointer;
-`;
-const KeepRegister = styled.div`
-  padding-top: 10px;
-`;
-
-const RegisterFormContextCheckboxInput = styled.input``;
-const RegisterFormContextCheckboxInputlabel = styled.label`
-  margin-left: 15px;
 `;
 const RegisterAnotherInfo = styled.div``;
 const IsmemberInfo = styled.div`
@@ -115,7 +98,6 @@ const RegisterPage = () => {
         <ProductsSectionTiTleContent>註冊新帳號</ProductsSectionTiTleContent>
         <RegisterContentWrapper>
           <RegisterContentTitle>加入會員享受輕鬆購物</RegisterContentTitle>
-          <FBButton>快速註冊</FBButton>
           <Hr />
           <RegisterContentTitle>電子郵件註冊</RegisterContentTitle>
           <RegisterForm onSubmit={handleRegister}>
@@ -226,17 +208,6 @@ const RegisterPage = () => {
             </RegisterFormContext>
             <TextAlignStartWrapper>
               <RegisterFormSubmit>加入會員</RegisterFormSubmit>
-              <KeepRegister>
-                <RegisterFormContextCheckboxInput
-                  type="checkbox"
-                  name="noSubscription"
-                  id="noSubscription"
-                  value="noSubscription"
-                />
-                <RegisterFormContextCheckboxInputlabel htmlFor="noSubscription">
-                  不訂閱店家優惠
-                </RegisterFormContextCheckboxInputlabel>
-              </KeepRegister>
             </TextAlignStartWrapper>
           </RegisterForm>
           <RegisterAnotherInfo>
