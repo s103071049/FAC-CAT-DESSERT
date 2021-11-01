@@ -6,17 +6,20 @@ import {
 import { Link } from "react-router-dom";
 import PopModal from '../../../components/common/PopModal'
 export const TdContext = ({ tdcontext, index, handleDeleteBtnClick}) => {
- 
-  const {id, name, img_url, price, desc} = tdcontext
+  console.log(tdcontext)
+  const {id, name, img_url, price, desc, category} = tdcontext
   return (
     <Tr>
       <Td data-title=" ">{index+1}</Td>
       <Td data-title="商品名">{name}</Td>
       <Td data-title="商品介紹">
-        <PopModal desc={desc} img_url={img_url} btnTitle={"詳細資訊"} title={name}/>
+        <PopModal desc={desc}  img_url={img_url} btnTitle={"詳細資訊"} title={name}/>
       </Td>
       <Td data-title="商品圖" $photo={true}>
         <Photo img={img_url} />
+      </Td>
+      <Td data-title="類別">
+        {category}
       </Td>
       <Td data-title="價格">
         <Pricespan>{price}</Pricespan>
