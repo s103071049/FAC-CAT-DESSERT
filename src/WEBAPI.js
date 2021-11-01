@@ -112,20 +112,19 @@ export const searchProducts = async (searchKey) => {
   return await response.json();
 };
 
+// 編輯商品
 export const updateProducts = async(name, desc, img_url, price,category, id, is_deleted = false) => {
   const data = {
     name,
     desc,
     price: +price,
     market_price: +price,
-    limited:999,
+    limited: 999,
     category,
     img_url,
     id,
-    is_deleted 
-  }
-  console.log(is_deleted !==null)
-  console.log(data)
+    is_deleted
+  };
   const token = getAuthToken()
   const response = await fetch(`${BASE_URL}/updateProducts`,{
     method:'POST',
@@ -133,32 +132,32 @@ export const updateProducts = async(name, desc, img_url, price,category, id, is_
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    body:JSON.stringify(data),
-  })
+    body: JSON.stringify(data),
+  });
   return await response.json();
-}
+};
 
-export const createProduct = async(name, desc, img_url, price, category) => {
+export const createProduct = async (name, desc, img_url, price, category) => {
   const data = {
     name,
     desc,
     price: +price,
     market_price: +price,
-    limited:999,
+    limited: 999,
     category,
     img_url,
-  }
-  const token = getAuthToken()
-  const response = await fetch(`${BASE_URL}/createProducts`,{
-    method:'POST',
-    headers:{
+  };
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/createProducts`, {
+    method: "POST",
+    headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    body:JSON.stringify(data),
-  })
+    body: JSON.stringify(data),
+  });
   return await response.json();
-}
+};
 
 export const deleteProduct = async(id) => {
   const token = getAuthToken()
@@ -191,6 +190,7 @@ export const getOneOrder = async (id) => {
   });
   return await response.json();
 };
+// 接單
 export const acceptOrder = async (id) => {
   const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/acceptOrder/${id}`, {
@@ -200,6 +200,7 @@ export const acceptOrder = async (id) => {
   });
   return await response.json();
 };
+// 刪除訂單
 export const deleteOrder = async (id) => {
   const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/deleteOrder/${id}`, {
@@ -209,6 +210,25 @@ export const deleteOrder = async (id) => {
   });
   return await response.json();
 };
+
+// 訂單成立
+export const createOrder = async (products, order) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/newOrder`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      products,
+      order,
+    }),
+  });
+  return await response.json();
+};
+//transaction
+
 //抓取用戶者的所有orders
 export const getHistory = async () => {
   const token = getAuthToken()
@@ -283,6 +303,18 @@ export const updateCartItem = async (id, quantity) => {
     body: JSON.stringify({
       quantity,
     }),
+  });
+  return await response.json();
+};
+// delete All Cart items
+export const deleteAllCartItems = async (id) => {
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/deleteAllCartItems`, {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    },
   });
   return await response.json();
 };
