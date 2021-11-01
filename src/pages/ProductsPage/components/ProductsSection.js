@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import useFindProducts from "../../../hooks/productHooks/useFindProducts";
 import PageBtn from "../../../components/common/PageBtn";
 import usePagination from "../../../hooks/common/usePagination";
+import useAddCartItems from "../../../hooks/carts/useAddCartItems";
 
 const ProductsSectionContentsWrapper = styled.div`
   margin-bottom:40px;
@@ -243,49 +244,65 @@ const ProductButton = styled.button`
   }
 `;
 
+const RenderProduct = ({product, section}) => {
+  const { handleAddProducts } = useAddCartItems(product, 1);
+
+  if(section === 'sqares') {
+    return (
+      <ProductWapper>
+        <ProductImageWrapper>
+          <Link to={`/product/${product.id}`}>
+            <ProductImage img={product.img_url} />
+          </Link>
+        </ProductImageWrapper>
+        <ProductName>{product.name}</ProductName>
+        <ProductPrice>NT$ {product.price}</ProductPrice>
+        <ProductButton onClick={handleAddProducts}>加入購物車</ProductButton>
+      </ProductWapper>
+    )
+  }
+
+  return (
+    <ProductsListsWrapper>
+      <div style={{ display: "flex"}}>
+        <ProductListsImageWrapper>
+          <Link to={`/product/${product.id}`} style={{ width: "100%" }}>
+            <ProductListsImage img={product.img_url} />
+          </Link>
+        </ProductListsImageWrapper>
+        <ProductListsInfo>
+          <ProductListsInfoSection>
+            <div>
+              <ProductListsName>{product.name}</ProductListsName>
+              <ProductListsCaption>
+                {product.desc}
+              </ProductListsCaption>
+            </div>
+            <ProductListsPrice>NT$ {product.price}</ProductListsPrice>
+            <ProductListsMDButton onClick={handleAddProducts}>加入購物車</ProductListsMDButton>
+          </ProductListsInfoSection>
+        </ProductListsInfo>
+      </div>
+      <ProductListsButtonWrapper>
+        <ProductListsButton onClick={handleAddProducts}>加入購物車</ProductListsButton>
+      </ProductListsButtonWrapper>
+    </ProductsListsWrapper>
+  )
+  
+}
+
 const RenderCotentItemsSection = ({products, section}) => {
+  
   if(section === 'sqares') {
     return products.map(product => {
       return (
-        <ProductWapper key={product.id}>
-          <ProductImageWrapper>
-            <Link to={`/product/${product.id}`}>
-              <ProductImage img={product.img_url} />
-            </Link>
-          </ProductImageWrapper>
-          <ProductName>{product.name}</ProductName>
-          <ProductPrice>NT$ {product.price}</ProductPrice>
-          <ProductButton>加入購物車</ProductButton>
-        </ProductWapper>
+        <RenderProduct product={product}  key={product.id} section={section}/>
       )
     })
   }
   return products.map(product => {
     return(
-      <ProductsListsWrapper key={product.id}>
-        <div style={{ display: "flex"}}>
-          <ProductListsImageWrapper>
-            <Link to={`/product/${product.id}`} style={{ width: "100%" }}>
-              <ProductListsImage img={product.img_url} />
-            </Link>
-          </ProductListsImageWrapper>
-          <ProductListsInfo>
-            <ProductListsInfoSection>
-              <div>
-                <ProductListsName>{product.name}</ProductListsName>
-                <ProductListsCaption>
-                  {product.desc}
-                </ProductListsCaption>
-              </div>
-              <ProductListsPrice>NT$ {product.price}</ProductListsPrice>
-              <ProductListsMDButton>加入購物車</ProductListsMDButton>
-            </ProductListsInfoSection>
-          </ProductListsInfo>
-        </div>
-        <ProductListsButtonWrapper>
-          <ProductListsButton>加入購物車</ProductListsButton>
-        </ProductListsButtonWrapper>
-      </ProductsListsWrapper>
+      <RenderProduct product={product}  key={product.id} section={section}/>
     )
   })
 }
@@ -317,7 +334,7 @@ export default function ProductsSection({selectedCategory}) {
   } = useFindProducts(selectedCategory)
 
   //分頁設置 pageSize 為 每頁要顯示的筆數
-  const pageSize = 8
+  const pageSize = 12
   const {pageDetail, pageNext} = usePagination(products, pageSize)
   
   function ProductsSectionTiTle({
