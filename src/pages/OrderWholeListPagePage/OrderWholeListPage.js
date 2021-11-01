@@ -138,17 +138,9 @@ const thcontexts = ["id", "商品名稱", "價格", "數量", "備註", "小計"
 export default function OrderWholeListPage() {
   const {
     id,
-    user,
-    setUser,
     popup,
-    setPopup,
     order,
-    setOrder,
     transations,
-    orderState,
-    setOrderState,
-    loading,
-    setLoading,
     handleUpdateOrder,
     handleACceptPopup,
     handleRejectPopup,
@@ -160,7 +152,7 @@ export default function OrderWholeListPage() {
       {order && transations && (
         <OrderPopupWrapper>
           <OrderPopupContext>訂單編號 : {id}</OrderPopupContext>
-          <OrderPopupContext>訂單時間 : {order.createdAt}</OrderPopupContext>
+          <OrderPopupContext>訂單時間 : {new Date(order.createdAt).toLocaleString()}</OrderPopupContext>
           <OrderPopupContext>
             訂單狀態 : {order.is_accepted === null && "未處理"}
             {order.is_accepted === false && "拒單"}
@@ -184,7 +176,7 @@ export default function OrderWholeListPage() {
           </OrderSection>
           <OrderTotal>
             <TotalSpan>總計</TotalSpan>
-            {order.price}
+            {order.sum}
           </OrderTotal>
           {order.is_accepted === null && (
             <OrderRejectConfirm>
