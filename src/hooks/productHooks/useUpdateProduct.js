@@ -1,12 +1,11 @@
-import { useReducer, useContext } from "react";
+import { useReducer, useContext, useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import { AuthLoadingContext } from '../../context'
 import cameraIcon from "../../components/img/icon/camera.svg";
 import { imgurApi } from "../../API/imgurAPI";
-import {useState, useRef} from 'react'
 import { updateProducts, getProduct } from "../../WEBAPI";
-import { useEffect } from "react/cjs/react.development";
+
 
 const initFormState = {
   name:"",
