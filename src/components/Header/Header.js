@@ -264,31 +264,26 @@ function Header() {
             <>
               <MenuItem
                 to="/user"
-                 onClick={toggleHamburger}x
               >
                 會員中心
               </MenuItem>
               <MenuItem
                 to="/admin/products"
-                 onClick={toggleHamburger}
               >
                 商品管理
               </MenuItem>
               <MenuItem
                 to="/admin/discounts"
-                 onClick={toggleHamburger}
               >
                 促銷管理
               </MenuItem>
               <MenuItem
                 to="/admin/orders"
-                 onClick={toggleHamburger}
               >
                 訂單管理
               </MenuItem>
               <MenuItem
                 to="/"
-                 onClick={handleAdminViewClick}
               >
                 訪問前台
               </MenuItem>
@@ -298,7 +293,6 @@ function Header() {
               <RenderRWDItems />
               <MenuItem
                 to="/admin/orders"
-                onClick={handleAdminViewClick}
               >
                 訪問後台
               </MenuItem>

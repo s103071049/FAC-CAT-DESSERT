@@ -22,12 +22,14 @@ const useHeader = () => {
   };
 
   useEffect(() => {
+    
+    setHamburgerOpen(false);
     const regex = new RegExp("/admin");
     if (regex.test(location.pathname)) {
       return setAdminViewOpen(true);
     }
     return setAdminViewOpen(false);
-  }, [location]);
+  }, [location, setHamburgerOpen]);
 
   useEffect(() => {
     const handleBodyClick = (event) => {
