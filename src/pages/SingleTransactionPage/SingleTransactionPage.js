@@ -228,29 +228,30 @@ const SingleTransactionPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td data-title="交易日期" $show={true}>
-                <ItemPrice>{new Date(createdAt).toLocaleString()}</ItemPrice>
-              </Td>
-              <Td data-title="末五碼">
-                <CartItemInfo>{lastFiveNumber}</CartItemInfo>
-              </Td>
-              <Td data-title="訂單狀態">
-                <ItemPrice $is_accepted={is_accepted}>
-                  {is_accepted
-                    ? "已接受"
-                    : is_accepted === null
-                    ? "待處理"
-                    : "拒絕"}
-                </ItemPrice>
-              </Td>
-              <Td data-title="發票類型">
-                <ItemPrice>{invoiceType}</ItemPrice>
-              </Td>
-              <Td data-title="統編">
-                <ItemPrice>{invoiceNumber ? invoiceNumber : "-"}</ItemPrice>
-              </Td>
-            </Tr>
+                <Tr>
+                  <Td data-title="交易日期" $show={true}>
+                    <ItemPrice>{new Date(createdAt).toLocaleString()}</ItemPrice>
+                  </Td>
+                  <Td data-title="末五碼" >
+                    <CartItemInfo>{lastFiveNumber}</CartItemInfo>
+                  </Td>
+                  <Td data-title="訂單狀態">
+                    <ItemPrice $is_accepted={is_accepted}>
+                     {is_accepted ? "已接受":is_accepted === null? '待處理':'拒絕'}
+                    </ItemPrice>
+                  </Td>
+                    <Td data-title="發票類型">
+                    <ItemPrice>
+                     {invoiceType === 'normal'? '二聯式':'開立統編'}
+                    </ItemPrice>
+                  </Td>
+                    <Td data-title="統編">
+                    <ItemPrice>
+                     {invoiceNumber? invoiceNumber:'-'}
+                    </ItemPrice>
+                  </Td>
+                </Tr>
+
           </Tbody>
         </Table>
       </Body>
@@ -320,22 +321,19 @@ const SingleTransactionPage = () => {
             })}
           </Tbody>
         </Table>
-        <Summary>
-          <Item>
-            <div>商品小計</div>
-            <div>{price}</div>
-          </Item>
-          <Item>
-            <div>運費</div>
-            <div>{sum - price <= 0 ? "免運" : toString(sum - price)}</div>
-          </Item>
-          <Item>
-            <div>訂單總額</div>
-            <Total>
-              <span>{sum}</span>
-            </Total>
-          </Item>
-        </Summary>
+          <Summary>
+            <Item>
+              <div>運費</div>
+              <div>{(sum-price) <= 0 ? '免運':toString(sum-price)}</div>
+            </Item>
+            <Item>
+              <div>訂單總額</div>
+              <Total>
+                <span>{sum}</span>
+              </Total>
+            </Item>
+          </Summary>
+       
       </Body>
       <BackBtn onClick={handleBack}>回訂單列表</BackBtn>
     </Container>

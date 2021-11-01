@@ -26,9 +26,8 @@ const OrderPage = () => {
     pagenum,
     setPageNum,
   } = useFindAllOrder();
-  const pageSize = 5;
+  const pageSize = 10;
   const { pageDetail, pageNext } = usePagination(currentOrders, pageSize);
-  console.log(pageDetail);
   return (
     <Wrapper>
       <IconMark>訂單管理</IconMark>
@@ -42,7 +41,6 @@ const OrderPage = () => {
           selectOrderStatus={selectOrderStatus}
         />
       </Main>
-      {/* 分頁元件 */}
       <PageBtn
         pageNext={pageNext}
         pageDetail={pageDetail}

@@ -151,7 +151,7 @@ export default function OrderWholeListPage() {
       {order && transations && (
         <OrderPopupWrapper>
           <OrderPopupContext>訂單編號 : {id}</OrderPopupContext>
-          <OrderPopupContext>訂單時間 : {order.createdAt}</OrderPopupContext>
+          <OrderPopupContext>訂單時間 : {new Date(order.createdAt).toLocaleString()}</OrderPopupContext>
           <OrderPopupContext>
             訂單狀態 : {order.is_accepted === null && "未處理"}
             {order.is_accepted === false && "拒單"}
@@ -175,7 +175,7 @@ export default function OrderWholeListPage() {
           </OrderSection>
           <OrderTotal>
             <TotalSpan>總計</TotalSpan>
-            {order.price}
+            {order.sum}
           </OrderTotal>
           {order.is_accepted === null && (
             <OrderRejectConfirm>
