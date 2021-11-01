@@ -14,7 +14,7 @@ export default function useSearchProducts() {
     setNum(0);
     setPageNum(1);
     searchProducts(context).then((response) => {
-      setProductOptions(response.data);
+      setProductOptions(response.data.filter((product) => !product.is_deleted));
     });
     setLoading(false);
   }, [context, setLoading]);
