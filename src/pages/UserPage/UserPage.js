@@ -16,6 +16,7 @@ import { setAuthToken, removeAuthToken } from "../../utils";
 import { AuthContexts, AuthLoadingContext } from "../../context";
 import TransactionPage from "../../pages/TransactionPage";
 import useUser from "../../hooks/user/useUser";
+import SingleTransactionPage from "../SingleTransactionPage/SingleTransactionPage";
 
 const Wrapper = styled.div`
   max-width: 1042px;
@@ -120,7 +121,6 @@ const SideBarLogout = styled.div`
   display: block;
   color: #808080;
   padding: 20px;
-  border-bottom: 1px solid #808080;
   &:hover {
     color: #d49e6a;
     cursor: pointer;
@@ -170,6 +170,9 @@ const UserPage = () => {
               </Route>
               <Route path={`${path}/myorders`}>
                 <TransactionPage />
+              </Route>
+              <Route path={`${path}/myorder/:id`}>
+                <SingleTransactionPage />
               </Route>
             </Main>
           </Switch>

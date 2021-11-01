@@ -11,11 +11,6 @@ const useHeader = () => {
   const history = useHistory();
   const { user } = useContext(AuthContexts);
   const toggleHamburger = () => {
-    if (hamburgerOpen) {
-      document.body.style.overflow = "auto";
-    } else {
-      document.body.style.overflow = "hidden";
-    }
     setHamburgerOpen(!hamburgerOpen);
     setSearchBarShow(false);
   };
@@ -27,12 +22,14 @@ const useHeader = () => {
   };
 
   useEffect(() => {
+    
+    setHamburgerOpen(false);
     const regex = new RegExp("/admin");
     if (regex.test(location.pathname)) {
       return setAdminViewOpen(true);
     }
     return setAdminViewOpen(false);
-  }, [location]);
+  }, [location, setHamburgerOpen]);
 
   useEffect(() => {
     const handleBodyClick = (event) => {

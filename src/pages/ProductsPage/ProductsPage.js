@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
-// import { Link } from "react-router-dom"
 import ProductsCategory from "./components/ProductsCategory";
 import ProductsSection from "./components/ProductsSection";
 import productsbanner from "../../components/img/banner/productsbanner.jpg";

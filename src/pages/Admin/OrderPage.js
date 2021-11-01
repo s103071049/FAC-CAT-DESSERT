@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import IconMark from "../../components/common/IconMark";
-import PageChange from "../../components/common/PageChange";
 import { getAllOrder } from "../../WEBAPI";
 import OrderStatusFilter from "./components/OrderStatusFilter";
 import OrderStatusSection from "./components/OrderStatusSection";
