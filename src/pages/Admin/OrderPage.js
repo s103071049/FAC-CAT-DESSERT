@@ -36,12 +36,8 @@ const fakeOrders = [
 
 const OrderPage = () => {
   const {
-    user,
-    setUser,
     currentOrders,
-    setCurrentOrders,
     selectOrderStatus,
-    setSelectOrderStatus,
     handleOrderFilterClick,
     num,
     setNum,
@@ -50,7 +46,6 @@ const OrderPage = () => {
   } = useFindAllOrder();
   const pageSize = 5;
   const { pageDetail, pageNext } = usePagination(currentOrders, pageSize);
-  console.log(pageDetail);
   return (
     <Wrapper>
       <IconMark>訂單管理</IconMark>
@@ -64,7 +59,6 @@ const OrderPage = () => {
           selectOrderStatus={selectOrderStatus}
         />
       </Main>
-      {/* 分頁元件 */}
       <PageBtn
         pageNext={pageNext}
         pageDetail={pageDetail}
