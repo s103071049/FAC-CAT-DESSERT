@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import Popup from "./components/Popup";
 import { TdContext } from "./components/TdContext";
-import { tdcontexts } from "./components/popupItem";
 import useOneOrder from "../../hooks/orders/useOneOrder";
 
 const OrderPopupWrapper = styled.div`
@@ -138,17 +137,9 @@ const thcontexts = ["id", "商品名稱", "價格", "數量", "備註", "小計"
 export default function OrderWholeListPage() {
   const {
     id,
-    user,
-    setUser,
     popup,
-    setPopup,
     order,
-    setOrder,
     transations,
-    orderState,
-    setOrderState,
-    loading,
-    setLoading,
     handleUpdateOrder,
     handleACceptPopup,
     handleRejectPopup,

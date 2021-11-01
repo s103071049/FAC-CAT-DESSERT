@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 
-import { AuthContexts, AuthLoadingContext } from "../../context";
+import { AuthLoadingContext } from "../../context";
 import { updatePassword } from "../../WEBAPI";
 export default function useUpdatePassword() {
-  const { user, setUser } = useContext(AuthContexts);
-  const { loading, setLoading } = useContext(AuthLoadingContext);
+  const { setLoading } = useContext(AuthLoadingContext);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
@@ -45,10 +44,6 @@ export default function useUpdatePassword() {
     setLoading(false);
   };
   return {
-    user,
-    setUser,
-    loading,
-    setLoading,
     oldPassword,
     setOldPassword,
     newPassword,
@@ -56,7 +51,6 @@ export default function useUpdatePassword() {
     newPassword2,
     setNewPassword2,
     errorMessage,
-    setErrorMessage,
     handleEmpty,
     handleUpdatePassword,
   };

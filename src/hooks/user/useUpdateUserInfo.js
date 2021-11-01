@@ -3,8 +3,8 @@ import { useContext, useReducer } from "react";
 import { AuthContexts, AuthLoadingContext } from "../../context";
 import { updateUser } from "../../WEBAPI";
 export default function useUpdateUserInfo() {
-  const { user, setUser } = useContext(AuthContexts);
-  const { loading, setLoading } = useContext(AuthLoadingContext);
+  const { user } = useContext(AuthContexts);
+  const { setLoading } = useContext(AuthLoadingContext);
   const phoneRe = /^0\d{9}$/;
   const initFormValue = {
     lastname: user.lastname,
@@ -75,9 +75,6 @@ export default function useUpdateUserInfo() {
   };
   return {
     user,
-    setUser,
-    loading,
-    setLoading,
     lastname,
     firstname,
     username,

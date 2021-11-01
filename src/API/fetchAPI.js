@@ -1,4 +1,3 @@
-const path = require("path");
 require("dotenv").config();
 const BASE_URL = `https://website-of-bakery.herokuapp.com`;
 

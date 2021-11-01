@@ -22,7 +22,6 @@ const useHeader = () => {
   };
 
   useEffect(() => {
-    
     setHamburgerOpen(false);
     const regex = new RegExp("/admin");
     if (regex.test(location.pathname)) {
@@ -49,11 +48,6 @@ const useHeader = () => {
     };
   }, []);
 
-  const handleAdminViewClick = () => {
-    setAdminViewOpen(!adminViewOpen);
-    toggleHamburger();
-  };
-
   const handleEnter = () => {
     if (searchProduct) {
       history.push(`/search/${searchProduct}`);
@@ -71,7 +65,6 @@ const useHeader = () => {
     user,
     toggleHamburger,
     handleSearchBarClick,
-    handleAdminViewClick,
     handleEnter,
     ref,
     setAdminViewOpen,

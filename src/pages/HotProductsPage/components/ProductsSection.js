@@ -6,8 +6,6 @@ import {
 import ProductsSectionTiTleContent from "../../../components/common/ProductsSectionTiTleContent";
 
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getAllProducts } from "../../../WEBAPI";
 import useFindHotProducts from "../../../hooks/productHooks/useFindHotProducts";
 import useAddCartItems from "../../../hooks/carts/useAddCartItems";
 

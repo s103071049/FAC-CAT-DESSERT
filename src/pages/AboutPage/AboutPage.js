@@ -10,16 +10,6 @@ const AboutWrapper = styled.div`
   min-height: 73vh;
 `;
 
-const Icon = styled.img`
-  padding: 0 px;
-  width: 15px;
-  height: 15px;
-`;
-
-const Mark = styled.p`
-  padding-left: 8px;
-  margin: 0;
-`;
 const AboutContentWrapper = styled.section`
   padding: 60px;
   font-size: 18px;
