@@ -198,7 +198,6 @@ const SingleTransactionPage = () => {
     handleBack
   } = useSingleTransaction()
   const {deliverDate, createdAt, is_accepted, lastFiveNumber,price, sum, invoiceNumber, invoiceType, receiverAddress, receiverName, receiverPhone} = orderDetail
-  console.log(orderDetail)
   return (
     <Container>
       <Header>
@@ -313,10 +312,6 @@ const SingleTransactionPage = () => {
           </Tbody>
         </Table>
           <Summary>
-            <Item>
-              <div>商品小計</div>
-              <div>{price}</div>
-            </Item>
             <Item>
               <div>運費</div>
               <div>{(sum-price) <= 0 ? '免運':toString(sum-price)}</div>

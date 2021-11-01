@@ -42,7 +42,8 @@ const useTransaction = () => {
           setLoading(false)
           return history.goBack()
         }
-        setTransactions(result.data)
+        const getTransactions = result.data.sort((a,b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
+        setTransactions(getTransactions)
         setLoading(false)
       }catch(err){
         setLoading(false)
