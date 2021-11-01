@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
 import useTransaction from "../../hooks/user/useTransaction";
 
@@ -26,9 +28,20 @@ const Tbody = styled.tbody`
     display: block;
   }
 `;
+const IDLink = styled(Link)`
+  color:#000;
+  &:hover{
+    color:#789C9A;
+  }
+`
 const Column = styled.td`
   border: 1px solid #bdc0ba;
   padding: 12px;
+
+  ${props => props.$is_accepted === false &&`
+    color:#E33333;
+  `}
+
   ${MEDIA_QUERY_MD} {
     display: block;
     font-size: 16px;
@@ -123,13 +136,16 @@ const TransactionPage = () => {
 
       return (
         <Row key={id}>
-          <Column>{id.slice(-10)}</Column>
+          <Column>
+            <IDLink to={`/user/myorder/${id}`}>{id.slice(-6)}
+            </IDLink>
+          </Column>
           <Column>{price}</Column>
           <Column>{receiverName}</Column>
           <Column>
             {new Date(createdAt).toLocaleString()}</Column>
           <Column>{new Date(deliverDate).toLocaleDateString()}</Column>
-          <Column>
+          <Column $is_accepted={is_accepted}>
             {is_accepted ? "已接受":is_accepted === null? '待處理':'拒絕'}
           
           </Column>

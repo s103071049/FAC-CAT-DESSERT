@@ -220,8 +220,7 @@ export const getHistory = async () => {
   return response.json()
 }
 
-
-//transaction
+//transaction by orderId
 export const getTractions = async (id) => {
   const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/getTransactions/${id}`, {
