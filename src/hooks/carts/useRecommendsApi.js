@@ -27,7 +27,7 @@ const useRecommendsApi = (totalRecommends) => {
           return alert("QQ 推薦商品處理異常，非常抱歉!");
         }
         setLoading(false);
-        let data = response.products.filter((each) => each.id !== id);
+        let data = response.products.filter((each) => each.id !== id).filter(each => !each.is_deleted);
         return data;
       })
       .then((data) => {
