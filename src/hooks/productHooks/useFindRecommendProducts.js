@@ -13,7 +13,7 @@ export default function useFindRecommendProducts(sliceLimit) {
   useEffect(() => {
     FindDataAPI({}, "/findAllProducts").then((response) => {
       const newProducts = response.products.filter((product) => {
-        return product.is_deleted === false;
+        return product.is_deleted !== true;
       });
       setProducts(random(newProducts).slice(0, sliceLimit));
     });
