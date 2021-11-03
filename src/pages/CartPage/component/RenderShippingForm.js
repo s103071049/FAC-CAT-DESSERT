@@ -100,7 +100,7 @@ const FormBtn = styled.button`
   font-size: 18px;
   color: #fff;
   padding: 12px 0;
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const RenderShippingForm = ({ data }) => {
@@ -150,18 +150,7 @@ const RenderShippingForm = ({ data }) => {
           number: prod.product_quantity,
         };
       });
-      errorMessenger(formState, errorState, dispatchErr);
-      // 通過錯誤處理後，呼叫 api，寫入訂單及清除購物車資料!
-      if (
-        errorState.errorReceiverAddress ||
-        errorState.errorReceiverPhone ||
-        errorState.errorReceiverName ||
-        errorState.errorAddress ||
-        errorState.errorPhone ||
-        errorState.errorName ||
-        errorState.errorLastFiveNumber ||
-        errorState.errorDate
-      ) {
+      if (!errorMessenger(formState, errorState, dispatchErr)) {
         return;
       }
       if (errorState.errorLaw) {
