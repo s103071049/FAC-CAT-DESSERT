@@ -1,8 +1,8 @@
 # FAT-CAT-DESSERT
 
 網站連結：[肥貓甜點](https://s103071049.github.io/FAC-CAT-DESSERT/#/)
-介紹影片：
 
+![React App_page-0001](https://user-images.githubusercontent.com/47899484/140013172-80b7b06c-36e6-4b4b-b6c5-d2b4cf2b5997.jpg)
 
 ## 專案簡介
 **為疫情不開放內用，提供之外帶、外送服務之訂餐平台。本平台提供客戶線上訂餐之優惠。**
@@ -21,7 +21,8 @@ clone [法米](http://www.lafamille.com.tw/)部分功能的線上訂購甜點平
     * 促銷管理：新增、修改、刪除、搜尋運費資訊
 
 ## 如何執行
-
+(萱)
+`npm install`
 ## 使用技術
 * React Hooks
 * 套件：
@@ -29,7 +30,13 @@ clone [法米](http://www.lafamille.com.tw/)部分功能的線上訂購甜點平
 * 第三方套件：
   * imgur api
 ## 專案架構
+// 功能結構(萱)
+
 ## 目錄結構說明
+// 幻幻的這區
 ## 專案 DEMO
+// 洋洋這區是給你的
 ## 專案後端
+肥貓甜點訂購甜點平台後端，採用 Express 和 Sequelize 進行
+* 專案連結 // 維尼記得補
 ## 團隊分工
