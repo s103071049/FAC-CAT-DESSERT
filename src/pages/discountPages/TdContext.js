@@ -17,7 +17,8 @@ export const TdContext = ({ tdcontext, isRestore }) => {
     if (res.success === true) {
       window.location.reload();
     } else {
-      console.log(res.message);
+      //console.log(res.message);
+      alert('請稍後再試')
     }
   };
   return (

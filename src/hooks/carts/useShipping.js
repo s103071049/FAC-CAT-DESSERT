@@ -45,7 +45,6 @@ const useShipping = () => {
   };
   const handleNameChange = (e) => {
     // setErrorName("");
-    console.log("e.target.name", e.target.name);
     dispatch({
       type: "TYPE_BUYER_NAME",
       payload: e.target.value,

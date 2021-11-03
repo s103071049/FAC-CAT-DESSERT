@@ -13,7 +13,6 @@ export default function useDiscount(isRestore) {
   const dataAmount = useRef(null);
   useEffect(() => {
     setLoading(true);
-    console.log("fetchDiscounts");
     FindDataAPI({ authorization: getAuthToken() }, "/findAllDiscounts")
       .then((data) => {
         const { Discounts } = data;
@@ -32,7 +31,6 @@ export default function useDiscount(isRestore) {
         return setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         return setLoading(false);
       });
   }, [eachPageAmount, isRestore.isRestore, setLoading, showDataIndex]);
@@ -59,7 +57,6 @@ export default function useDiscount(isRestore) {
         return setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         return setLoading(false);
       });
   };

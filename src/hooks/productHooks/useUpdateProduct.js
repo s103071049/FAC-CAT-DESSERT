@@ -116,7 +116,6 @@ const useAddProducts = () => {
           setFormValue({img_url:result.data.link})
         })
         .catch((error) => {
-          console.log(error)
           alert("圖片處理異常，請稍後再試!");
           return;
         });

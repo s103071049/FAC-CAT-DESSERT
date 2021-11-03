@@ -324,7 +324,7 @@ const SingleTransactionPage = () => {
           <Summary>
             <Item>
               <div>運費</div>
-              {(price-sum) <=0 && <div>'免運'</div>}
+              {(price-sum) <=0 && <div>免運</div>}
               {(price-sum) >0 && <div>{price-sum}</div>}
             </Item>
             <Item>
