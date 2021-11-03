@@ -15,7 +15,7 @@
     "styled-components": "^5.3.1",
     "web-vitals": "^1.1.2"
   },
-  "homepage": "https://s103071049.github.io/finalProjectUI",
+  "homepage": "https://s103071049.github.io/FAC-CAT-DESSERT",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

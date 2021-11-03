@@ -120,7 +120,7 @@ function Sales({ product }) {
         </Link>
       </Img>
       <DessertName>{product.name}</DessertName>
-      <DessertPrice>{product.price}</DessertPrice>
+      <DessertPrice>NT${product.price}</DessertPrice>
       <CartButton onClick={handleAddProducts}>加入購物車</CartButton>
     </Dessert>
   );
