@@ -21,16 +21,28 @@ clone [法米](http://www.lafamille.com.tw/)部分功能的線上訂購甜點平
     * 促銷管理：新增、修改、刪除、搜尋運費資訊
 
 ## 如何執行
-(萱)
-`npm install`
+`npm install` 
+安裝此專案所需的第三方套件
+
+`npm run start`
+在 http://localhost:3000 上啟動此專案
+
+`npm run build`
+在 `build` 資料夾中建立此專案的 production 版本
+
+`npm run deploy`
+在 GitHub Page 上部屬此專案網站
+
 ## 使用技術
 * React Hooks
 * 套件：
   * React Router
 * 第三方套件：
   * imgur api
-## 專案架構
-// 功能結構(萱)
+## 功能結構
+![image](https://user-images.githubusercontent.com/47899484/140026846-6a130ef1-615a-4355-93aa-6e81fa910527.png)
+
+
 
 ## 目錄結構說明
 // 幻幻的這區
@@ -40,3 +52,28 @@ clone [法米](http://www.lafamille.com.tw/)部分功能的線上訂購甜點平
 肥貓甜點訂購甜點平台後端，採用 Express 和 Sequelize 進行
 * 專案連結 // 維尼記得補
 ## 團隊分工
+* s103071049 (萱)
+  * 前端
+    *   購物車系統串接、訂單成立串接、推薦商品串接
+    *   漢堡包實作
+  * 後端
+    *   購物車 api 實作
+* backas36 (洋洋)
+  * 前端
+    *   商品管理系統串接、多項商品功能串接、訂單查詢串接
+    *   navbar 實作
+    *   分頁功能
+  * 後端
+    *   會員系統 api 實作
+* halloju Wan-Chu Lin (維尼)
+  * 前端
+    *   促銷管理系統串接
+    *   首頁熱銷商品、主廚推薦串接
+  * 後端
+    *   deploy
+    *   商品、訂單、交易資訊、運費規則功能之 api 實作
+* k1325699 (幻幻)
+  * 前端
+    *   會員系統串接
+    *   商品搜尋串接、單項商品串接、熱銷商品、推薦商品頁面串接
+    *   loading 功能
