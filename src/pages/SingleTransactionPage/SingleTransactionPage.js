@@ -324,12 +324,13 @@ const SingleTransactionPage = () => {
           <Summary>
             <Item>
               <div>運費</div>
-              <div>{(sum-price) <= 0 ? '免運':toString(sum-price)}</div>
+              {(price-sum) <=0 && <div>'免運'</div>}
+              {(price-sum) >0 && <div>{price-sum}</div>}
             </Item>
             <Item>
               <div>訂單總額</div>
               <Total>
-                <span>{sum}</span>
+                <span>{price}</span>
               </Total>
             </Item>
           </Summary>
