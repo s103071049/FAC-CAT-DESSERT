@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { searchProducts } from "../../WEBAPI";
+import { searchProducts } from "../../API/WEBAPI";
 import { AuthLoadingContext } from "../../context";
 
 export default function useSearchProducts() {

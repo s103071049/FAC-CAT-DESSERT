@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { getUser } from "../../WEBAPI";
+import { getUser } from "../../API/WEBAPI";
 
 function PrivateRoute({ component: Component, ...restOfProps }) {
   const user = getUser();

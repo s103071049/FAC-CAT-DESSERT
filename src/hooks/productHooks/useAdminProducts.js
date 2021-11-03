@@ -1,8 +1,12 @@
 import { useEffect, useState, useContext, useCallback } from "react";
-import { useHistory,} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import { getAllProducts,searchProducts, deleteProduct } from "../../WEBAPI";
-import { AuthLoadingContext } from '../../context'
+import {
+  getAllProducts,
+  searchProducts,
+  deleteProduct,
+} from "../../API/WEBAPI";
+import { AuthLoadingContext } from "../../context";
 import useDebounce from "../carts/useDebounce";
 
 const useAdminProduct = () => {
@@ -19,89 +23,91 @@ const useAdminProduct = () => {
   const history = useHistory();
 
   const debounce = useDebounce();
-  const [search, setSearch] = useState('')
-  const [tdcontexts, setTdcontexts] = useState([])
-  const {setLoading} = useContext(AuthLoadingContext)
+  const [search, setSearch] = useState("");
+  const [tdcontexts, setTdcontexts] = useState([]);
+  const { setLoading } = useContext(AuthLoadingContext);
 
-  const [num, setNum] = useState(0)
-  const [pagenum, setPageNum] =  useState(1)
+  const [num, setNum] = useState(0);
+  const [pagenum, setPageNum] = useState(1);
 
-  const fetchProducts = useCallback(()=> {
-      const fetchingProduct = async() => {
-      setLoading(true)
-      setNum(0)
-      setPageNum(1)
-      const result = await getAllProducts()
+  const fetchProducts = useCallback(() => {
+    const fetchingProduct = async () => {
+      setLoading(true);
+      setNum(0);
+      setPageNum(1);
+      const result = await getAllProducts();
       try {
-        if(!result.success) {
-          setTdcontexts([])
-          setLoading(false)
-          return  history.goBack()
+        if (!result.success) {
+          setTdcontexts([]);
+          setLoading(false);
+          return history.goBack();
         }
-        let getProducts = result.products.filter(product => !product.is_deleted).sort((a,b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
-        if(getProducts.length === 0) setTdcontexts([])
-        setTdcontexts(getProducts)
-        
-        setLoading(false)
+        let getProducts = result.products
+          .filter((product) => !product.is_deleted)
+          .sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt));
+        if (getProducts.length === 0) setTdcontexts([]);
+        setTdcontexts(getProducts);
 
+        setLoading(false);
       } catch (err) {
-        return history.goBack()
+        return history.goBack();
       }
-    }
-    fetchingProduct()
-  },[setLoading, history])
+    };
+    fetchingProduct();
+  }, [setLoading, history]);
 
   useEffect(() => {
-    fetchProducts()
-  },[fetchProducts])
+    fetchProducts();
+  }, [fetchProducts]);
 
-  const handleDeleteBtnClick = async(id) => {
-    const result = await deleteProduct(id)
-    setLoading(true)
-    
+  const handleDeleteBtnClick = async (id) => {
+    const result = await deleteProduct(id);
+    setLoading(true);
+
     try {
-      if(!result.message){
-        return console.log(result)
+      if (!result.message) {
+        return console.log(result);
       }
-      fetchProducts()
-    }catch(err) {
-      console.log(err)
+      fetchProducts();
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
   const fetchingSearchProduct = async (search) => {
-    setLoading(true)
-    if(!search) return fetchProducts()
-    const result = await searchProducts(search)
-    try{
-      if(!result.success){
-        setSearch('')
-        setLoading(false)
-        return history.goBack()
+    setLoading(true);
+    if (!search) return fetchProducts();
+    const result = await searchProducts(search);
+    try {
+      if (!result.success) {
+        setSearch("");
+        setLoading(false);
+        return history.goBack();
       }
-      let getSearchedProducts = result.data.filter(product=> !product.is_deleted)
-      if(result.success && getSearchedProducts.length === 0){
-        setTdcontexts([])
-        setSearch('')
-        return setLoading(false)
+      let getSearchedProducts = result.data.filter(
+        (product) => !product.is_deleted
+      );
+      if (result.success && getSearchedProducts.length === 0) {
+        setTdcontexts([]);
+        setSearch("");
+        return setLoading(false);
       }
 
-      setTdcontexts(getSearchedProducts)
-      setSearch('')
+      setTdcontexts(getSearchedProducts);
+      setSearch("");
 
-      return setLoading(false)
-
-    }catch(err) {
-      setLoading(false)
-      return history.goBack()
+      return setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      return history.goBack();
     }
-  }
+  };
   const handleChange = (e) => {
-    setSearch(e.target.value)
-    debounce(() => fetchingSearchProduct(e.target.value),1000)
-  }
+    setSearch(e.target.value);
+    debounce(() => fetchingSearchProduct(e.target.value), 1000);
+  };
 
   return {
-    thcontexts, 
+    thcontexts,
     tdcontexts,
     handleDeleteBtnClick,
     fetchProducts,
@@ -111,9 +117,8 @@ const useAdminProduct = () => {
     num,
     setNum,
     pagenum,
-    setPageNum
-  }
+    setPageNum,
+  };
+};
 
-}
-
-export default useAdminProduct
+export default useAdminProduct;

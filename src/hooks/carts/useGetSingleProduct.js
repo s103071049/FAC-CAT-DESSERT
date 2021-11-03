@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { AuthLoadingContext } from "../../context";
-import { getProduct } from "../../WEBAPI";
+import { getProduct } from "../../API/WEBAPI";
 const useGetSingleProduct = () => {
   const [dessert, setDessert] = useState("");
   const { setLoading } = useContext(AuthLoadingContext);

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 
 import { AuthLoadingContext } from "../../context";
-import { updatePassword } from "../../WEBAPI";
+import { updatePassword } from "../../API/WEBAPI";
 export default function useUpdatePassword() {
   const { setLoading } = useContext(AuthLoadingContext);
   const [oldPassword, setOldPassword] = useState("");

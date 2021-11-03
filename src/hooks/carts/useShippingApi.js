@@ -1,4 +1,4 @@
-import { createOrder, deleteAllCartItems } from "../../WEBAPI";
+import { createOrder, deleteAllCartItems } from "../../API/WEBAPI";
 import { useHistory } from "react-router-dom";
 
 const ShippingApi = () => {

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
-import { login, getUser } from "../../WEBAPI";
+import { login, getUser } from "../../API/WEBAPI";
 import { setAuthToken } from "../../utils";
 import { AuthContexts, AuthLoadingContext } from "../../context";
 
