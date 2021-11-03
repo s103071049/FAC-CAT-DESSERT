@@ -21,11 +21,11 @@ const useCartApi = () => {
       ]);
       setLoading(false);
       setDiscountRules(
-        DiscountRules.filter((rule) => rule.is_deleted !== true).sort(
-          (a, b) => {
+        DiscountRules.filter((rule) => rule.is_deleted !== true)
+          .filter((rule) => rule.is_deleted !== null)
+          .sort((a, b) => {
             return b.threshold - a.threshold;
-          }
-        )
+          })
       );
       setData(AllCartItems.filter((item) => item.product_quantity > 0));
     };
