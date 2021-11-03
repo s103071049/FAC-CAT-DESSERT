@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MEDIA_QUERY_SD, MEDIA_QUERY_MD } from "../../components/Style/style";
-
+import { Link } from "react-router-dom";
 import useAddProducts from "../../hooks/productHooks/useAddProduct";
 
 const imgLoadingDesc = `
@@ -14,8 +14,7 @@ const Wrapper = styled.div`
   padding: 12px;
 `;
 
-const Form = styled.form`
-`
+const Form = styled.form``;
 
 const Title = styled.h2`
   color: #333;
@@ -55,12 +54,12 @@ const RadioWrapper = styled.div`
   color: #917856;
   font-weight: bold;
   & label {
-      margin-right:16px;
+    margin-right: 16px;
   }
   & span {
-    padding-left:8px;
+    padding-left: 8px;
   }
-`
+`;
 const Row = styled.input`
   padding: 8px;
   width: 100%;
@@ -163,15 +162,35 @@ const Upload = styled.div`
     margin: 0 auto;
   }
 `;
+const TitleButton = styled(Link)`
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #917856;
+  font-weight: bold;
+  padding: 16px;
+  background: white;
+  border: 1px solid rgba(201, 186, 152, 0.9);
+  margin: 0;
+  margin-top: 36px;
+  margin-right: 15px;
+  padding-top: 19px;
+  &:hover {
+    color: white;
+    background: rgba(201, 186, 152, 1.5);
+    transition: all 0.5s ease;
+  }
+  margin-bottom: 18px;
+`;
 const Bottom = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
 
-
 const AddProductPage = () => {
   const {
-    ImgSrc, 
+    ImgSrc,
     inputFileRef,
     fileSelectorHandler,
     inputFileRefHandler,
@@ -182,7 +201,7 @@ const AddProductPage = () => {
     desc,
     price,
     category,
-  } = useAddProducts()
+  } = useAddProducts();
 
   function UploadImg({ name, desc }) {
     return (
@@ -212,12 +231,12 @@ const AddProductPage = () => {
   }
 
   const InputsRadio = () => {
-    const categories = ['餅乾', '蛋糕', '巧克力', '手工飲料']
+    const categories = ["餅乾", "蛋糕", "巧克力", "手工飲料"];
     return (
       <Content>
         <Column>商品類型：</Column>
         <RadioWrapper>
-          {categories.map(item => {
+          {categories.map((item) => {
             return (
               <label key={item}>
                 <input
@@ -226,16 +245,15 @@ const AddProductPage = () => {
                   value={item}
                   onChange={handleInputChange}
                   checked={category === item}
-                  />
+                />
                 <span>{item}</span>
               </label>
-            )
+            );
           })}
         </RadioWrapper>
-       
       </Content>
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -251,7 +269,7 @@ const AddProductPage = () => {
               placeholder={"請輸入產品名稱"}
             />
           </Content>
-           <Content>
+          <Content>
             <Column>商品描述</Column>
             <Row
               name="desc"
@@ -270,11 +288,12 @@ const AddProductPage = () => {
               placeholder={"請輸入產品售價"}
             />
           </Content>
-         
-          <InputsRadio/>
-         
+
+          <InputsRadio />
+
           <UploadImg name="img_url" desc={`${imgLoadingDesc}`} />
           <Bottom>
+            <TitleButton to="/admin/products">返回</TitleButton>
             <Submit>提交</Submit>
           </Bottom>
         </Form>

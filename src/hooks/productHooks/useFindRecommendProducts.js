@@ -17,6 +17,6 @@ export default function useFindRecommendProducts(sliceLimit) {
       });
       setProducts(random(newProducts).slice(0, sliceLimit));
     });
-  }, []);
+  }, [sliceLimit]);
   return products;
 }
