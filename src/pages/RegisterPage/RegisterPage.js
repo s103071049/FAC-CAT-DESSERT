@@ -71,12 +71,6 @@ const LoginLink = styled(Link)`
   margin-left: 15px;
 `;
 
-const ServerList = styled(Link)`
-  text-decoration: none;
-  color: #33a4e8;
-  font-size: 16px;
-`;
-const Statement = styled(ServerList)``;
 const RegisterPage = () => {
   const {
     username,
@@ -215,12 +209,6 @@ const RegisterPage = () => {
               <IsmemberTitle>我已經有會員帳號了？</IsmemberTitle>
               <LoginLink to="/login">回登入頁面</LoginLink>
             </IsmemberInfo>
-            <div style={{ fontSize: "16px" }}>
-              註冊表示同意 &nbsp;
-              <ServerList to="#">商店服務條例</ServerList>
-              &nbsp;與 &nbsp;
-              <Statement to="#">會員責任規範及個資聲明</Statement>
-            </div>
           </RegisterAnotherInfo>
         </RegisterContentWrapper>
       </RegisterWrapper>
