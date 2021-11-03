@@ -32,7 +32,7 @@ import { DiscountEditPage, DiscountsPage } from "../../pages/discountPages";
 
 import OrderPage from "../../pages/Admin/OrderPage";
 import TransactionPage from "../../pages/TransactionPage";
-import { getUser } from "../../WEBAPI";
+import { getUser } from "../../API/WEBAPI";
 import CartPage from "../../pages/CartPage";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 

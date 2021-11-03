@@ -1,8 +1,12 @@
 import { useCallback, useContext, useState, useEffect } from "react";
-import { useHistory,} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import { getAllProducts, searchProducts, updateProducts } from "../../WEBAPI";
-import { AuthLoadingContext } from '../../context'
+import {
+  getAllProducts,
+  searchProducts,
+  updateProducts,
+} from "../../API/WEBAPI";
+import { AuthLoadingContext } from "../../context";
 import useDebounce from "../carts/useDebounce";
 
 const useAdminRestoreProduct = () => {
@@ -14,94 +18,105 @@ const useAdminRestoreProduct = () => {
     "價格",
     "重上架",
     "編輯",
-  ]
+  ];
   const history = useHistory();
   const debounce = useDebounce();
-  const [search, setSearch] = useState('')
-  const [tdcontexts, setTdcontexts] = useState([])
-  const {setLoading} = useContext(AuthLoadingContext)
+  const [search, setSearch] = useState("");
+  const [tdcontexts, setTdcontexts] = useState([]);
+  const { setLoading } = useContext(AuthLoadingContext);
 
-  const [num, setNum] = useState(0)
-  const [pagenum, setPageNum] =  useState(1)
+  const [num, setNum] = useState(0);
+  const [pagenum, setPageNum] = useState(1);
 
   const fetchDeletedProduct = useCallback(() => {
     const fetchingDeletedProduct = async () => {
-      setLoading(true)
-      setNum(0)
-      setPageNum(1)
-      const result = await getAllProducts()
+      setLoading(true);
+      setNum(0);
+      setPageNum(1);
+      const result = await getAllProducts();
       try {
-        if(!result.success) {
-          setTdcontexts([])
-          setLoading(false)
-          return  history.goBack()
+        if (!result.success) {
+          setTdcontexts([]);
+          setLoading(false);
+          return history.goBack();
         }
-        let getDeletedProducts = result.products.filter(product => product.is_deleted)
-        if(getDeletedProducts.length === 0) setTdcontexts([])
-        setTdcontexts(getDeletedProducts)
-        setLoading(false)
-      } catch(err) {
-        return history.goBack()
+        let getDeletedProducts = result.products.filter(
+          (product) => product.is_deleted
+        );
+        if (getDeletedProducts.length === 0) setTdcontexts([]);
+        setTdcontexts(getDeletedProducts);
+        setLoading(false);
+      } catch (err) {
+        return history.goBack();
       }
-    }
-      fetchingDeletedProduct()
-
-  },[setLoading, history])
+    };
+    fetchingDeletedProduct();
+  }, [setLoading, history]);
 
   useEffect(() => {
-    fetchDeletedProduct()
-  }, [fetchDeletedProduct])
+    fetchDeletedProduct();
+  }, [fetchDeletedProduct]);
 
-  const handleRestoreBtnClick = async(selectedProduct) => {
-    let {name, desc, img_url, price, category, id, is_deleted} = selectedProduct
+  const handleRestoreBtnClick = async (selectedProduct) => {
+    let { name, desc, img_url, price, category, id, is_deleted } =
+      selectedProduct;
 
-    is_deleted = false
+    is_deleted = false;
 
-    const result = await updateProducts(name, desc, img_url, price, category, id, is_deleted)
-    setLoading(true)
-    
+    const result = await updateProducts(
+      name,
+      desc,
+      img_url,
+      price,
+      category,
+      id,
+      is_deleted
+    );
+    setLoading(true);
+
     try {
-      if(!result.message){
-        setLoading(false)
-        return  history.goBack()
+      if (!result.message) {
+        setLoading(false);
+        return history.goBack();
       }
-      fetchDeletedProduct()
-    }catch(err) {
-      setLoading(false)
-      return  history.goBack()
+      fetchDeletedProduct();
+    } catch (err) {
+      setLoading(false);
+      return history.goBack();
     }
-  }
+  };
 
   const fetchingSearchDeletedProduct = async (search) => {
-    setLoading(true)
-    if(!search) return fetchDeletedProduct()
-    const result = await searchProducts(search)
-    try{
-      if(!result.success){
-        setTdcontexts([])
-        setSearch('')
-        return setLoading(false)
+    setLoading(true);
+    if (!search) return fetchDeletedProduct();
+    const result = await searchProducts(search);
+    try {
+      if (!result.success) {
+        setTdcontexts([]);
+        setSearch("");
+        return setLoading(false);
       }
-      let getSearchedProducts = result.data.filter(product=> product.is_deleted)
-      if(result.success && getSearchedProducts.length === 0){
-        setTdcontexts([])
-        setSearch('')
-        return setLoading(false)
+      let getSearchedProducts = result.data.filter(
+        (product) => product.is_deleted
+      );
+      if (result.success && getSearchedProducts.length === 0) {
+        setTdcontexts([]);
+        setSearch("");
+        return setLoading(false);
       }
 
-      setTdcontexts(getSearchedProducts)
-      setSearch('')
+      setTdcontexts(getSearchedProducts);
+      setSearch("");
 
-      return setLoading(false)
-
-    }catch(err) {
-      return setLoading(false)
+      return setLoading(false);
+    } catch (err) {
+      return setLoading(false);
     }
-  }
+  };
   const handleChange = (e) => {
-    setSearch(e.target.value)
-    debounce(() => fetchingSearchDeletedProduct(e.target.value),1000)
-  }
+    setSearch(e.target.value);
+    debounce(() => fetchingSearchDeletedProduct(e.target.value), 1000);
+  };
 
   return {
     thcontexts,
@@ -115,8 +130,8 @@ const useAdminRestoreProduct = () => {
     num,
     setNum,
     pagenum,
-    setPageNum
-  }
-}
+    setPageNum,
+  };
+};
 
-export default useAdminRestoreProduct
+export default useAdminRestoreProduct;

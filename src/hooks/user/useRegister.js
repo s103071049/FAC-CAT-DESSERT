@@ -1,6 +1,6 @@
 import { useContext, useReducer } from "react";
 import { useHistory } from "react-router-dom";
-import { getUser, register } from "../../WEBAPI";
+import { getUser, register } from "../../API/WEBAPI";
 import { setAuthToken } from "../../utils";
 import { AuthContexts, AuthLoadingContext } from "../../context";
 export default function useRegister() {

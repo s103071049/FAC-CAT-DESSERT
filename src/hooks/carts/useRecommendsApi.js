@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { getAllProducts } from "../../WEBAPI";
+import { getAllProducts } from "../../API/WEBAPI";
 import { AuthLoadingContext } from "../../context";
 import { useParams } from "react-router-dom";
 function randomArr(allProducts, totalRecommends) {
@@ -27,7 +27,9 @@ const useRecommendsApi = (totalRecommends) => {
           return alert("QQ 推薦商品處理異常，非常抱歉!");
         }
         setLoading(false);
-        let data = response.products.filter((each) => each.id !== id).filter(each => !each.is_deleted);
+        let data = response.products
+          .filter((each) => each.id !== id)
+          .filter((each) => !each.is_deleted);
         return data;
       })
       .then((data) => {

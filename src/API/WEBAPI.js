@@ -1,4 +1,4 @@
-import { getAuthToken } from "./utils";
+import { getAuthToken } from "../utils";
 const BASE_URL = `https://website-of-bakery.herokuapp.com`;
 // 會員系統
 //登入
@@ -113,7 +113,15 @@ export const searchProducts = async (searchKey) => {
 };
 
 // 編輯商品
-export const updateProducts = async(name, desc, img_url, price,category, id, is_deleted = false) => {
+export const updateProducts = async (
+  name,
+  desc,
+  img_url,
+  price,
+  category,
+  id,
+  is_deleted = false
+) => {
   const data = {
     name,
     desc,
@@ -123,12 +131,12 @@ export const updateProducts = async(name, desc, img_url, price,category, id, is_
     category,
     img_url,
     id,
-    is_deleted
+    is_deleted,
   };
-  const token = getAuthToken()
-  const response = await fetch(`${BASE_URL}/updateProducts`,{
-    method:'POST',
-    headers:{
+  const token = getAuthToken();
+  const response = await fetch(`${BASE_URL}/updateProducts`, {
+    method: "POST",
+    headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
@@ -159,15 +167,15 @@ export const createProduct = async (name, desc, img_url, price, category) => {
   return await response.json();
 };
 
-export const deleteProduct = async(id) => {
-  const token = getAuthToken()
+export const deleteProduct = async (id) => {
+  const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/deleteProducts/${id}`, {
-     headers: {
+    headers: {
       authorization: `Bearer ${token}`,
     },
-  })
-  return response.json()
-}
+  });
+  return response.json();
+};
 
 // order
 // 抓取所有order
@@ -231,14 +239,14 @@ export const createOrder = async (products, order) => {
 
 //抓取用戶者的所有orders
 export const getHistory = async () => {
-  const token = getAuthToken()
+  const token = getAuthToken();
   const response = await fetch(`${BASE_URL}/getHistory`, {
-    headers:{
-      authorization:`Bearer ${token}`
-    }
-  })
-  return response.json()
-}
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return response.json();
+};
 
 //transaction by orderId
 export const getTractions = async (id) => {

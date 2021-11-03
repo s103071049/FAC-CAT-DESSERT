@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useHistory } from "react-router";
 import { AuthContexts } from "../../context";
-import { getAllOrder } from "../../WEBAPI";
+import { getAllOrder } from "../../API/WEBAPI";
 import { AuthLoadingContext } from "../../context";
 
 const useFindAllOrder = () => {
@@ -32,7 +32,11 @@ const useFindAllOrder = () => {
       return setLoading(false);
     }
     getAllOrder().then((response) => {
-      setFackOrders(response.data.sort((a,b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)));
+      setFackOrders(
+        response.data.sort(
+          (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)
+        )
+      );
       setLoading(false);
     });
   }, [history, user.authority, setLoading]);

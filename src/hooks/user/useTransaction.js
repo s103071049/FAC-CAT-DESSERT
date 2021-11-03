@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { getHistory } from "../../WEBAPI";
+import { getHistory } from "../../API/WEBAPI";
 import { AuthLoadingContext } from "../../context";
 
 const useTransaction = () => {

@@ -1,7 +1,7 @@
 import { useContext, useReducer } from "react";
 
 import { AuthContexts, AuthLoadingContext } from "../../context";
-import { updateUser } from "../../WEBAPI";
+import { updateUser } from "../../API/WEBAPI";
 export default function useUpdateUserInfo() {
   const { user } = useContext(AuthContexts);
   const { setLoading } = useContext(AuthLoadingContext);

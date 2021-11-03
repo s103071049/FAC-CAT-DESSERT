@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { getAllProducts } from "../../WEBAPI";
+import { getAllProducts } from "../../API/WEBAPI";
 import { AuthLoadingContext } from "../../context";
 
 export default function useFindNewProducts() {
