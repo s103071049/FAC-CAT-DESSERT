@@ -2,7 +2,8 @@
 
 網站連結：[肥貓甜點](https://s103071049.github.io/FAC-CAT-DESSERT/#/)
 
-![React App_page-0001](https://user-images.githubusercontent.com/47899484/140013172-80b7b06c-36e6-4b4b-b6c5-d2b4cf2b5997.jpg)
+![20211104_210933](https://user-images.githubusercontent.com/47899484/140320798-43d03a71-4cfd-4662-a065-09b640d8a325.gif)
+
 
 ## 專案簡介
 **為疫情不開放內用，提供之外帶、外送服務之訂餐平台。本平台提供客戶線上訂餐之優惠。**
