@@ -36,7 +36,6 @@ const useShipping = () => {
   };
   const [formState, dispatch] = useReducer(formReducer, initialFormState);
   const [errorState, dispatchErr] = useReducer(errorReducer, initalErrState);
-  // useCallback
   const handlePayment = (e) => {
     dispatch({
       type: "CHANGE_PAYMENT",
@@ -44,7 +43,6 @@ const useShipping = () => {
     });
   };
   const handleNameChange = (e) => {
-    // setErrorName("");
     dispatch({
       type: "TYPE_BUYER_NAME",
       payload: e.target.value,
