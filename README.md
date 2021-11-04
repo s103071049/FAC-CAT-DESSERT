@@ -84,7 +84,7 @@ WE present to you 肥貓甜點，為疫情提供之外帶、外送訂餐平台
 ![20211104_232414](https://user-images.githubusercontent.com/47899484/140354243-3a8ed309-e8cb-4d5a-83c9-c4b98b0f9135.gif)
 #### 訂單管理
 管理者可以決定是否接受消費者送出之訂單，並透過 filter 功能瀏覽訂單狀態
-![Uploading 20211104_232202.gif…]()
+![20211104_234218](https://user-images.githubusercontent.com/47899484/140365415-22978f7f-8159-42b2-b568-0bdd5b344ea0.gif)
 #### 運費管理
 管理者可以新增、刪除、更改運費規則，或復原已刪除之運費規則
 ![20211104_233907](https://user-images.githubusercontent.com/47899484/140363188-98ac31a4-d024-4926-9052-00e6275ffdd7.gif)
