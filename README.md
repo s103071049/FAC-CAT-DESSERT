@@ -77,7 +77,7 @@ WE present to you 肥貓甜點，為疫情提供之外帶、外送訂餐平台
 ![20211104_225923](https://user-images.githubusercontent.com/47899484/140338015-ad666474-3f6a-472c-b395-3dcfc53feeb8.gif)
 #### 購買商品
 可以將商品加入購物車，查看欲購買的商品內容及金額，並成立訂單。可以從會員專區的訂單瀏覽訂單狀態，還有訂單明細
-![20211104_230605](https://user-images.githubusercontent.com/47899484/140346523-d059a524-4dce-4588-bf6f-3e00fa071d1e.gif)
+![20211104_235358 (2)](https://user-images.githubusercontent.com/47899484/140373909-1997dda2-a513-4daa-97e4-61ab2a516696.gif)
 ### 二、後台功能 demo
 #### 商品管理
 管理者可以新增、刪除、更改商品資訊，或重上架已停售之商品
