@@ -90,7 +90,7 @@ WE present to you 肥貓甜點，為疫情提供之外帶、外送訂餐平台
 ![20211104_233907](https://user-images.githubusercontent.com/47899484/140363188-98ac31a4-d024-4926-9052-00e6275ffdd7.gif)
 ## 專案後端
 肥貓甜點訂購甜點平台後端，採用 Express 和 Sequelize 進行
-* 專案連結 // 維尼記得補
+* 專案連結 [finalProjectBackend](https://github.com/halloju/finalProjectBackend)
 ## 團隊分工
 共同完成：userStory、wireframe、設計稿、切版、資料庫規劃、重構、規格文件撰寫
 * s103071049 (萱)
