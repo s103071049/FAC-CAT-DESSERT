@@ -15,7 +15,6 @@ import HomePage from "../../pages/HomePage";
 import ProductsPage from "../../pages/ProductsPage";
 import NewProductsPage from "../../pages/NewProductsPage";
 import HotProductsPage from "../../pages/HotProductsPage";
-import AboutPage from "../../pages/AboutPage";
 import FaqPage from "../../pages/FaqPage";
 import UserPage from "../../pages/UserPage";
 import SearchPage from "../../pages/SearchPage";
@@ -101,9 +100,6 @@ function App() {
               </Route>
               <Route path="/search/:context">
                 <SearchPage />
-              </Route>
-              <Route path="/about">
-                <AboutPage />
               </Route>
               <Route path="/faq">
                 <FaqPage />
