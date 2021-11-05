@@ -64,8 +64,8 @@ WE present to you 肥貓甜點，為疫情提供之外帶、外送訂餐平台
 `npm run deploy`
 在 GitHub Page 上部屬此專案網站
 
-訪客帳密：visitor@gmail.com；s12345
-使用者帳密：user@gmail.com ; s12345
+* 訪客帳密：visitor@gmail.com；s12345
+* 使用者帳密：user@gmail.com ; s12345
 
 ## 使用技術
 
