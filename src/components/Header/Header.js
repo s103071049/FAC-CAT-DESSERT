@@ -226,9 +226,14 @@ function Header() {
     return (
       <>
         {user ? (
+          <>
           <MenuItem to="/user" onClick={toggleHamburger}>
             會員中心
           </MenuItem>
+          <MenuItem to="/cart" onClick={toggleHamburger}>
+            購物車
+          </MenuItem>
+          </>
         ) : (
           <MenuItem to="/login" onClick={toggleHamburger}>
             會員登入
@@ -245,9 +250,6 @@ function Header() {
         </MenuItem>
         <MenuItem to="/products" onClick={toggleHamburger}>
           商品一覽
-        </MenuItem>
-        <MenuItem to="/cart" onClick={toggleHamburger}>
-          購物車
         </MenuItem>
       </>
     );
