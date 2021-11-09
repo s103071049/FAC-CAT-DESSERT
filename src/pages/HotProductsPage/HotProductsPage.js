@@ -19,7 +19,7 @@ export default function HotProductsPage() {
   return (
     <>
       <div>
-        <IconMark>促銷商品</IconMark>
+        <IconMark>推薦商品</IconMark>
         <ProductsWrapper>
           <ProductsBanner />
           <ProductsSection />
