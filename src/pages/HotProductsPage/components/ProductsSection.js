@@ -115,7 +115,7 @@ const RenderContentSection = ({ products }) => {
 function ProductsSectionTiTle() {
   return (
     <ProductsSectionTiTleWapper>
-      <ProductsSectionTiTleContent>促銷商品</ProductsSectionTiTleContent>
+      <ProductsSectionTiTleContent>推薦商品</ProductsSectionTiTleContent>
     </ProductsSectionTiTleWapper>
   );
 }
